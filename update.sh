@@ -1,14 +1,11 @@
 #!/bin/bash
 
-
-
 git checkout master -- Drafts
 
 cat start.html > index.html
 rm content.html
 
 cd Drafts
-
 for FILE in `ls -l`
 do
     if test -d $FILE
@@ -24,8 +21,6 @@ do
           echo "<a href=Drafts/$FILE/${HTMLFILE%%.*}.txt> [txt] </a>" >> ../../content.html
           echo "<a href=Drafts/$FILE/${HTMLFILE%%.*}.raw.txt> [raw.txt] </a>" >> ../../content.html
           echo "</p>" >> ../../content.html
-          
-
       done
       cd ..
     fi
@@ -37,6 +32,4 @@ cat end.html >>index.html
 
 git add Drafts
 git commit -a -m "Sync docs from master branch to docs gh-pages directory"
-
-
-git push origin gh-pages
+git push
