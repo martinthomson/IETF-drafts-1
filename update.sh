@@ -35,4 +35,8 @@ cd ..
 cat content.html >>index.html
 cat end.html >>index.html
 
-rm -rf Drafts
+git add Drafts
+git commit -a -m "Sync docs from master branch to docs gh-pages directory"
+
+
+git push origin gh-pages
