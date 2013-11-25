@@ -13,6 +13,8 @@ Expires: May 29, 2014                                  November 25, 2013
 
 Abstract
 
+   Rewrite this as well??
+
    It can be useful for applications to provide flow metadata
    information to on-path devices to influence flow treatment in the
    network.  Provided that the network is able to provide useful
@@ -45,10 +47,8 @@ Status of This Memo
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
 
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+
 
 
 
@@ -57,6 +57,11 @@ Martinsen & Zamfir        Expires May 29, 2014                  [Page 1]
 
 Internet-Draft                   MALICE                    November 2013
 
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
@@ -85,7 +90,7 @@ Table of Contents
    1.  Problem Statement . . . . . . . . . . . . . . . . . . . . . .   2
    2.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   3
      2.1.  Normative References  . . . . . . . . . . . . . . . . . .   3
-     2.2.  Informational References  . . . . . . . . . . . . . . . .   3
+     2.2.  Informational References  . . . . . . . . . . . . . . . .   4
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
 
 1.  Problem Statement
@@ -101,11 +106,6 @@ Table of Contents
    information is known only to the endpoint.  These considerations,
    coupled with the trend to use encryption for browser-to-browser
    communication [I-D.ietf-rtcweb-security-arch], imply that access
-   lists, deep packet inspection and other static prioritization methods
-   cannot be employed successfully to prioritize packet flows.  It can
-   also be useful for the endpoints to provide flow metadata and receive
-   network feedback in order select an optimal media communication path.
-   This specification describes how these problems can be solved at
 
 
 
@@ -114,6 +114,11 @@ Martinsen & Zamfir        Expires May 29, 2014                  [Page 2]
 Internet-Draft                   MALICE                    November 2013
 
 
+   lists, deep packet inspection and other static prioritization methods
+   cannot be employed successfully to prioritize packet flows.  It can
+   also be useful for the endpoints to provide flow metadata and receive
+   network feedback in order select an optimal media communication path.
+   This specification describes how these problems can be solved at
    different points in the network by using either STUN [RFC5389]
    packets sent during ICE's [RFC5245] connectivity check phase during
    establishment of a media session, or as part a slightly modified
@@ -152,6 +157,19 @@ Internet-Draft                   MALICE                    November 2013
               Traversal for Offer/Answer Protocols", RFC 5245, April
               2010.
 
+
+
+
+
+
+
+
+
+Martinsen & Zamfir        Expires May 29, 2014                  [Page 3]
+
+Internet-Draft                   MALICE                    November 2013
+
+
 2.2.  Informational References
 
    [I-D.ietf-rtcweb-security-arch]
@@ -162,13 +180,6 @@ Internet-Draft                   MALICE                    November 2013
               Perumal, M., Wing, D., R, R., and T. Reddy, "STUN Usage
               for Consent Freshness", draft-muthu-behave-consent-
               freshness-04 (work in progress), July 2013.
-
-
-
-Martinsen & Zamfir        Expires May 29, 2014                  [Page 3]
-
-Internet-Draft                   MALICE                    November 2013
-
 
 Authors' Addresses
 
@@ -188,17 +199,6 @@ Authors' Addresses
    Switzerland
 
    Email: ancaz@cisco.com
-
-
-
-
-
-
-
-
-
-
-
 
 
 
