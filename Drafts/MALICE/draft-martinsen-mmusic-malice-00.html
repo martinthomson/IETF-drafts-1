@@ -1,0 +1,1360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Meta-data Attribute signaLling with ICE</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";3
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Problem Statement"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Terminology"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Overview of MALICE"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Metadata Attributes"/>
+<link href="#rfc.section.3.1.1" rel="Chapter" title="3.1.1 Sending and Receiving"/>
+<link href="#rfc.section.3.1.2" rel="Chapter" title="3.1.2 Directionality and Asymmetry"/>
+<link href="#rfc.section.3.1.3" rel="Chapter" title="3.1.3 Network Element Processing"/>
+<link href="#rfc.section.3.1.4" rel="Chapter" title="3.1.4 MALICE Client and Server Processing"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Connectivity Checks"/>
+<link href="#rfc.section.3.2.1" rel="Chapter" title="3.2.1 MALICE to non-MALICE"/>
+<link href="#rfc.section.3.2.2" rel="Chapter" title="3.2.2 MALICE to MALICE"/>
+<link href="#rfc.section.3.3" rel="Chapter" title="3.3 Keepalives"/>
+<link href="#rfc.section.3.4" rel="Chapter" title="3.4 Aggressive Nomination"/>
+<link href="#rfc.section.3.5" rel="Chapter" title="3.5 Implications on Concluding ICE"/>
+<link href="#rfc.section.3.6" rel="Chapter" title="3.6 Lite Implementations and MALICE"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Performing Connectivity Checks"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 MALICE Client Procedures"/>
+<link href="#rfc.section.4.1.1" rel="Chapter" title="4.1.1 Building the MALICE Request"/>
+<link href="#rfc.section.4.1.2" rel="Chapter" title="4.1.2 Processing MALICE Responses"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 MALICE Network Element Procedures"/>
+<link href="#rfc.section.4.2.1" rel="Chapter" title="4.2.1 Adding a new Metadata IE"/>
+<link href="#rfc.section.4.2.2" rel="Chapter" title="4.2.2 Removing a Metadata IE"/>
+<link href="#rfc.section.4.2.3" rel="Chapter" title="4.2.3 Changing a metadata IE"/>
+<link href="#rfc.section.4.2.4" rel="Chapter" title="4.2.4 Network Element Response Change"/>
+<link href="#rfc.section.4.2.5" rel="Chapter" title="4.2.5 Solving Conflicts in Metadata Attribute Values"/>
+<link href="#rfc.section.4.2.6" rel="Chapter" title="4.2.6 Conflict Resolution "/>
+<link href="#rfc.section.4.3" rel="Chapter" title="4.3 MALICE Server Procedures"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Concluding MALICE Processing"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Subsequent Connectivity Checks"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Security Considerations"/>
+<link href="#rfc.section.7.1" rel="Chapter" title="7.1 STUN Inspection"/>
+<link href="#rfc.section.7.2" rel="Chapter" title="7.2 Authentication"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 STUN Extensions"/>
+<link href="#rfc.section.8.1" rel="Chapter" title="8.1 New Attributes "/>
+<link href="#rfc.section.9" rel="Chapter" title="9 IANA Considerations"/>
+<link href="#rfc.section.9.1" rel="Chapter" title="9.1 STUN Attribute TLV Definitions"/>
+<link href="#rfc.section.9.1.1" rel="Chapter" title="9.1.1 MD-AGENT Attribute"/>
+<link href="#rfc.section.9.1.2" rel="Chapter" title="9.1.2 MD-RESP-UP and MD-RESP-DN Attributes"/>
+<link href="#rfc.section.9.1.3" rel="Chapter" title="9.1.3 MD-PEER-CHECK Attribute"/>
+<link href="#rfc.section.9.2" rel="Chapter" title="9.2 Metadata Attributes sub-TLV Definitions"/>
+<link href="#rfc.section.9.2.1" rel="Chapter" title="9.2.1 FLOWDATA Request"/>
+<link href="#rfc.section.9.2.2" rel="Chapter" title="9.2.2 FLOWDATA Response"/>
+<link href="#rfc.section.9.2.3" rel="Chapter" title="9.2.3 Usage Example"/>
+<link href="#rfc.section.10" rel="Chapter" title="10 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="11 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="11.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="11.2 Informational References"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Penno, R., Ed., Martinsen, P., Wing, D., and A. Zamfir" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-martinsen-mmusic-malice-00" />
+  <meta name="dct.issued" scheme="ISO8601" content="2013-11-25" />
+  <meta name="dct.abstract" content="It can be useful for applications to provide flow metadata information to on-path devices to influence flow treatment in the network. Provided that the network is able to provide useful feedback, this can also influence path selection if an application have multiple flow paths to choose from." />
+  <meta name="description" content="It can be useful for applications to provide flow metadata information to on-path devices to influence flow treatment in the network. Provided that the network is able to provide useful feedback, this can also influence path selection if an application have multiple flow paths to choose from." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">MMUSIC</td>
+  <td class="right">R. Penno, Ed.</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">P. Martinsen</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Standards Track</td>
+  <td class="right">D. Wing</td>
+</tr>
+<tr>
+  <td class="left">Expires: May 29, 2014</td>
+  <td class="right">A. Zamfir</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">Cisco</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">November 25, 2013</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Meta-data Attribute signaLling with ICE<br />
+  <span class="filename">draft-martinsen-mmusic-malice-00</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>It can be useful for applications to provide flow metadata information to on-path devices to influence flow treatment in the network. Provided that the network is able to provide useful feedback, this can also influence path selection if an application have multiple flow paths to choose from.</p>
+<p>This draft describes how this can be achieved by adding metadata to the STUN packets sent during the ICE connectivity checks or a slightly modified version of the keep-alive mechanism. Devices on the media path can use the metadata information to prioritize the flow, perform traffic engineering, or provide network analytics and notifications as requested by the endpoints. On-path devices can append or modify the existing metadata information in the STUN/ICE messages to enable feedback to other on-path devices or the applications in both ends of the media session.</p>
+<p>This document describes a framework mechanism for how such metadata can be transported by STUN when ICE is in use and it covers the endpoint and on path device processing. The functionality described here is referred to as MALICE.</p>
+<h1>
+  <a>Requirements Language</a>
+</h1>
+<p>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="#RFC2119">RFC 2119</a> <cite title="NONE">[RFC2119]</cite>.</p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on May 29, 2014.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2013 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Problem Statement</a></li>
+<li>2.   <a href="#rfc.section.2">Terminology</a></li>
+<li>3.   <a href="#rfc.section.3">Overview of MALICE</a></li>
+<li>3.1.   <a href="#rfc.section.3.1">Metadata Attributes</a></li>
+<li>3.1.1.   <a href="#rfc.section.3.1.1">Sending and Receiving</a></li>
+<li>3.1.2.   <a href="#rfc.section.3.1.2">Directionality and Asymmetry</a></li>
+<li>3.1.3.   <a href="#rfc.section.3.1.3">Network Element Processing</a></li>
+<li>3.1.4.   <a href="#rfc.section.3.1.4">MALICE Client and Server Processing</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Connectivity Checks</a></li>
+<li>3.2.1.   <a href="#rfc.section.3.2.1">MALICE to non-MALICE</a></li>
+<li>3.2.2.   <a href="#rfc.section.3.2.2">MALICE to MALICE</a></li>
+<li>3.3.   <a href="#rfc.section.3.3">Keepalives</a></li>
+<li>3.4.   <a href="#rfc.section.3.4">Aggressive Nomination</a></li>
+<li>3.5.   <a href="#rfc.section.3.5">Implications on Concluding ICE</a></li>
+<li>3.6.   <a href="#rfc.section.3.6">Lite Implementations and MALICE</a></li>
+<li>4.   <a href="#rfc.section.4">Performing Connectivity Checks</a></li>
+<li>4.1.   <a href="#rfc.section.4.1">MALICE Client Procedures</a></li>
+<li>4.1.1.   <a href="#rfc.section.4.1.1">Building the MALICE Request</a></li>
+<li>4.1.2.   <a href="#rfc.section.4.1.2">Processing MALICE Responses</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">MALICE Network Element Procedures</a></li>
+<li>4.2.1.   <a href="#rfc.section.4.2.1">Adding a new Metadata IE</a></li>
+<li>4.2.2.   <a href="#rfc.section.4.2.2">Removing a Metadata IE</a></li>
+<li>4.2.3.   <a href="#rfc.section.4.2.3">Changing a metadata IE</a></li>
+<li>4.2.4.   <a href="#rfc.section.4.2.4">Network Element Response Change</a></li>
+<li>4.2.5.   <a href="#rfc.section.4.2.5">Solving Conflicts in Metadata Attribute Values</a></li>
+<li>4.2.6.   <a href="#rfc.section.4.2.6">Conflict Resolution </a></li>
+<li>4.3.   <a href="#rfc.section.4.3">MALICE Server Procedures</a></li>
+<li>5.   <a href="#rfc.section.5">Concluding MALICE Processing</a></li>
+<li>6.   <a href="#rfc.section.6">Subsequent Connectivity Checks</a></li>
+<li>7.   <a href="#rfc.section.7">Security Considerations</a></li>
+<li>7.1.   <a href="#rfc.section.7.1">STUN Inspection</a></li>
+<li>7.2.   <a href="#rfc.section.7.2">Authentication</a></li>
+<li>8.   <a href="#rfc.section.8">STUN Extensions</a></li>
+<li>8.1.   <a href="#rfc.section.8.1">New Attributes </a></li>
+<li>9.   <a href="#rfc.section.9">IANA Considerations</a></li>
+<li>9.1.   <a href="#rfc.section.9.1">STUN Attribute TLV Definitions</a></li>
+<li>9.1.1.   <a href="#rfc.section.9.1.1">MD-AGENT Attribute</a></li>
+<li>9.1.2.   <a href="#rfc.section.9.1.2">MD-RESP-UP and MD-RESP-DN Attributes</a></li>
+<li>9.1.3.   <a href="#rfc.section.9.1.3">MD-PEER-CHECK Attribute</a></li>
+<li>9.2.   <a href="#rfc.section.9.2">Metadata Attributes sub-TLV Definitions</a></li>
+<li>9.2.1.   <a href="#rfc.section.9.2.1">FLOWDATA Request</a></li>
+<li>9.2.2.   <a href="#rfc.section.9.2.2">FLOWDATA Response</a></li>
+<li>9.2.3.   <a href="#rfc.section.9.2.3">Usage Example</a></li>
+<li>10.   <a href="#rfc.section.10">Acknowledgements</a></li>
+<li>11.   <a href="#rfc.references">References</a></li>
+<li>11.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>11.2.   <a href="#rfc.references.2">Informational References</a></li>
+<li><a href="#rfc.authors">Authors' Addresses</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> Problem Statement</h1>
+<p id="rfc.section.1.p.1">In the context of Content, Mobile, Fixed Service, Service Providers, Enterprise and Private networks have a need to prioritize packet flows end-to-end. These flows are often dynamic, time-bound, encrypted, peer-to-peer, possibly asymmetric, and might have different priorities depending on network conditions, direction, time of the day, dynamic user preferences and other factors. These factors may be time variant, and thus need to be signalled. Moreover, in many cases of peer-to-peer communication, flow information is known only to the endpoint. These considerations, coupled with the trend to use encryption for browser-to-browser communication <a href="#I-D.ietf-rtcweb-security-arch">[I-D.ietf-rtcweb-security-arch]</a>, imply that access lists, deep packet inspection and other static prioritization methods cannot be employed successfully to prioritize packet flows. It can also be useful for the endpoints to provide flow metadata and receive network feedback in order select an optimal media communication path. This specification describes how these problems can be solved at different points in the network by using either STUN <a href="#RFC5389">[RFC5389]</a> packets sent during ICE's <a href="#RFC5245">[RFC5245]</a> connectivity check phase during establishment of a  media session, or as part a slightly modified keep-alive mechanism after the session is established. Devices on the media path can use the metadata information to prioritize the flow, perform traffic engineering, or provide network analytics and notifications as requested by the endpoints. On-path devices can append or modify the existing metadata information in the STUN/ICE messages. The ICE agents may use this information to learn about the status of their requests at on-path devices.</p>
+<p id="rfc.section.1.p.2">This document describes a framework mechanism for how such metadata can be transported by STUN when ICE is in use with UDP based media and it covers the endpoint and middlebox processing. The functionality described here is referred to as MALICE.</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> Terminology</h1>
+<p/>
+
+<dl>
+  <dt>Metadata -</dt>
+  <dd style="margin-left: 8">Information and actions associated with a flow but not used for matching. For example, firewall and NAT actions, application name, Diffserv marking actions, media-type, amongst others.</dd>
+  <dt>Flow -</dt>
+  <dd style="margin-left: 8">5-tuple composed on source and destination IP addresses, IP protocol, source and destination ports.</dd>
+  <dt>MALICE Agent -</dt>
+  <dd style="margin-left: 8">An ICE agent <a href="#RFC5245">[RFC5245]</a> that supports this specification</dd>
+  <dt>MALICE Check -</dt>
+  <dd style="margin-left: 8">An ICE connectivity check that includes client metadata and that may include the results from network elements that have processed the request.</dd>
+  <dt>MALICE Message -</dt>
+  <dd style="margin-left: 8">An ICE connectivity check message (STUN Binding request or response) that carries metadata attributes.</dd>
+  <dt>Metadata Attribute -</dt>
+  <dd style="margin-left: 8">A STUN attribute that contains a set of information elements in the form of type-lenght-values (TLVs).</dd>
+  <dt>Information Elements -</dt>
+  <dd style="margin-left: 8">Information elements (IE) are TLVs that contain the actual metadata such as minimum bandwidth, delay tolerance, firewall action, etc.</dd>
+  <dt>Network Elements -</dt>
+  <dd style="margin-left: 8">Devices such as middleboxes, routers, Wireless Access LAN controller, amongst others. The terms network element and node are used interchangeably in the text.</dd>
+</dl>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Overview of MALICE</h1>
+<p id="rfc.section.3.p.1">In a typical ICE deployment there are two endpoints, known as agents in ICE terminology, that attempt ICE message exchanges in order to discover one or more paths over which they can send and recieve media. The ICE exchange protocol is defined in <a href="#RFC5245">[RFC5245]</a>. This specification proposes an extension to the ICE protocol that allows applications to request services from the network, and learn about the status of these requests and of the media paths they use. This is achieved by signaling flow and network metadata attributes between endpoints and network elements (NEs).</p>
+<p id="rfc.section.3.p.2">The means by which an implementation determines the metadata IEs to be signaled is out of the scope of this specification. <a href="#IANA">Section 9</a> covers different scenarios where metadata may be of use.  This specification defines three types of transaction that can be signaled by a MALICE agent and acted upon by NEs.</p>
+<p/>
+
+<ul>
+  <li>Binding Transaction (REQ-RESP): Endpoint requests flow prioritization, e.g. by signaling the desired service class (<a href="#IANA">Section 9</a>) that includes the minimum and maximum bandwidth, loss and delay tolerance. The following are examples of services that could be offered by network elements:<ul><li>IntServ: Network elements on path may perform admission control against the desired service class. If resources are not available, a middlebox may return an error (or allocated BW = 0) or it may try to admit the flow in a lower service class. In the latter case, the middlebox will update the response with the new service class. If resources are available, they are allocated for the flow and guaranteed (in a stable network) for the lifetime of the flow.</li><li>DiffServ: A middlebox may perform flow classification. Flows are guaranteed QoS as long as there is no oversubscription. If the corresponding service queue becomes full, drops and delays affect all flows in that service class.</li></ul></li>
+  <li>Advisory Transaction (REQ-RESP):<ul><li>Notification Subscription: An endpoint may request the network to send notifications when certain conditions occur. One example described in <a href="#IANA">Section 9</a> is notification when congestion is about to occur in the class of service associated with the flow. Other services in this category may be defined in the future.</li><li>Query : Endpoints may request information from the network.  One example described in <a href="#IANA">Section 9</a> is an endpoint requesting the currently available bandwidth, delay and loss tolerance of the service class associated with the flow. Network elements update the response STUN attributes if local values are more restrictive than the ones carried in the message. At the end of the request/response check, the endpoint has the information about the end-to-end b/w, delay and loss characteristics of the path.</li></ul></li>
+  <li>Informational Transaction (INFO-ONLY):<ul><li>Endpoints send INFO-ONLY attributes to describe their flows.  This service can be used in managed environments like enterprise or data center.</li></ul></li>
+</ul>
+<p id="rfc.section.3.p.4">The following new comprehensive-optional STUN attributes are defined in order to support this functionality:</p>
+<p/>
+
+<ul>
+  <li>MD-AGENT: includes client agent metadata information for the flow described by the 5-tuple identified in the STUN/ICE header.</li>
+  <li>MD-RES-UP: contains the result of the request processing by the network elements on upstream path.</li>
+  <li>MD-RES-DN: includes the result of the request processing by the network elements on downstream path.</li>
+  <li>MD-PEER-CHECK-RES: contains the result of the MALICE check performed by the peer agent.</li>
+  <li>MD-INFO: contains flow descriptive information.</li>
+</ul>
+<p id="rfc.section.3.p.6">The client agent includes a combination of MD-AGENT, MD-RESP-UP and MD-RESP-DN to create one of the three transaction types described above.  In addition, the FLOWDATA sub-TLV is defined to support flow prioritization through a Binding Transaction. </p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> Metadata Attributes</h1>
+<p id="rfc.section.3.1.p.1">The main focus of this specification is around the services described in the previous section which are implemented through REQ-RESP attribute signaling. For these services, most of the actions described here apply.</p>
+<h1 id="rfc.section.3.1.1"><a href="#rfc.section.3.1.1">3.1.1.</a> Sending and Receiving</h1>
+<p id="rfc.section.3.1.1.p.1">Sending metadata can be done early in the connectivity check phase of ICE <a href="#RFC5245">[RFC5245]</a> section-7 and the result of metadata processing may be taken into account by the controlling agent during the nomination process. Once a candidate pair is selected to be used for media, MALICE agents use the consent freshness mechanism described in <a href="#I-D.muthu-behave-consent-freshness">[I-D.muthu-behave-consent-freshness]</a> to signal metadata attributes.</p>
+<p id="rfc.section.3.1.1.p.2">If a server agent supports MALICE, it MUST reflect back in the STUN Binding Response message the metadata attributes that were received in the STUN Binding Request. It is up to the server agent whether to use the metadata present in the binding request for its own purposes, for example adjusting the metadata it will put in its own binding request.</p>
+<p id="rfc.section.3.1.1.p.3">Network Elements on the path that are MALICE capable may intercept and read the metadata attributes from the connectivity or consent freshness checks. They may also update the message with the result of a REQ-RESP request. When doing so, the NEs MUST NOT add significant delay while attribute processing is in progress and SHOULD wait for the next refresh message for result update.</p>
+<h1 id="rfc.section.3.1.2"><a href="#rfc.section.3.1.2">3.1.2.</a> Directionality and Asymmetry</h1>
+<p id="rfc.section.3.1.2.p.1">It is important to mention that some attributes may be bidirectional in nature, while others may be associated with a given direction. A bi-directional attribute is represented by individual upstream and downstream attributes.</p>
+<p id="rfc.section.3.1.2.p.2">In order to take into account directionality and routing asymmetry the following rules are proposed for the STUN Binding request/response messages used in connectivity check and consent freshness mechanism:</p>
+<p/>
+
+<dl>
+  <dt>STUN Request</dt>
+  <dd style="margin-left: 8">On-path devices only process upstream attributes and if necessary update the original request message with the result.</dd>
+  <dt>STUN Response</dt>
+  <dd style="margin-left: 8">On-path devices only process downstream attributes and if necessary update the original response message with the result.</dd>
+</dl>
+
+<p>Due to asymmetric routing, a NE may see only binding request or response messages for a given candidate pair and therefore it may read and process metadata for upstream only, downstream only or both. In some cases, upstream and downstream paths may span the same node but over different interfaces and in this case a middlebox may need to use different ingress and/or egress interface policies for the two directions of the media.</p>
+<h1 id="rfc.section.3.1.3"><a href="#rfc.section.3.1.3">3.1.3.</a> Network Element Processing</h1>
+<p id="rfc.section.3.1.3.p.1">When processing MALICE messages, NEs generally perform the following steps:</p>
+<p/>
+
+<ol>
+  <li>Intercept and read the metadata attributes from the connectivity or consent freshness checks.</li>
+  <li>Depending on the metadata information elements carried in the message and on the current state (e.g. resource availability, policies, etc.), a node may perform certain actions (e.g. install local policies for the flow described by the message, start monitoring the flow, perform marking, etc.).</li>
+  <li>If the results of these actions are readily available, the network element should include them in the currently intercepted message. Otherwise any required response is conveyed in the next refresh message.</li>
+  <li>Forwards the MALICE message downstream.</li>
+</ol>
+
+<p>The current specification makes sure that network elements do not have to change the STUN message size, instead the MD-RESP-* attributes are inserted as place holders for updates from network.</p>
+<h1 id="rfc.section.3.1.4"><a href="#rfc.section.3.1.4">3.1.4.</a> MALICE Client and Server Processing</h1>
+<p id="rfc.section.3.1.4.p.1">The MALICE client agent includes metadata information elements in the new MD-AGENT STUN attribute defined in this specification. The MD-AGENT attribute MUST be included before INTEGRITY. If a response is required for all or a subset of these information elements, the client agent may also include the new MD-RESP-DN (before INTEGRITY) and MD-RESP-UP (after INTEGRITY) as place holders that can be used by on-path devices to provide a response.</p>
+<p id="rfc.section.3.1.4.p.2">When a MALICE server agent receives a Binding Request, it copies the MD-AGENT and the MD-RESP-UP TLV in the response, adds the INTEGRITY attribute and then inserts the MD-RESP-DN attribute to be filled by on path nodes for the downstream direction. When forming the response (success or error), the agent running the server follows the rules of Section 6 of <a href="#RFC5389">[RFC5389]</a>. It MUST NOT send an 'Error Response' message class if the processing of metadata attributes is the only one that has failed.  Instead the MALICE error indications are included in the MD-RESP-UP to communicate to the client the success/error indications for the metadata processing.</p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> Connectivity Checks</h1>
+<p id="rfc.section.3.2.p.1">Connectivity checks are extended by this specification to include metadata attributes in both request and response messages. In the presence of REQ-RESP metadata attributes, a MALICE agent may consider the connectivity check successful if responses for the check received indicate success. It is not necessary that the metadata attribute results, if present, also indicate success.</p>
+<p id="rfc.section.3.2.p.2">The MALICE Server agent MAY also include the new MD-PEER-CHECK-RES TLV defined in this specification if it has already performed a MALICE check and has the result available. This is useful if the MALICE Server is the controlled agent and wishes to influence the nomination process at MALICE Client (controlling agent).</p>
+<h1 id="rfc.section.3.2.1"><a href="#rfc.section.3.2.1">3.2.1.</a> MALICE to non-MALICE</h1>
+<p id="rfc.section.3.2.1.p.1">A MALICE client agent does not have prior knowledge if the peer supports this specification. If the peer agent is not MALICE capable, it will not reflect back the metadata STUN attributes.  Therefore a MALICE client agent will know if peer is MALICE capable after the first exchange of the connectivity check. The client may choose to continue to signal the metadata attributes to benefit from possible upstream network element processing but should not expect any results from the network.</p>
+<h1 id="rfc.section.3.2.2"><a href="#rfc.section.3.2.2">3.2.2.</a> MALICE to MALICE</h1>
+<p id="rfc.section.3.2.2.p.1">A remote MALICE agent echoes back in the Binding Response message all metadata received in the request. In the example below MALICE upstream network elements (router1 in the diagram below) processes MD-AGENT and MD-RESP-UP attributes present in the STUN binding request while MD-AGENT and MD-RESP-DOWN attributes present in the STUN binding response are processed by network elements (router2) in the downstream path.</p>
+<pre>  
+  Alice                router1            router2              Bob
+   |                      |                   |                  |
+   |Binding_Request       |                   |                  |
+(1)|---------------------&gt;|(2)                |                  |
+   |                      |                   |                  |
+   |                      |Binding_Request    |                  |
+   |                      |-------------------------------------&gt;|
+   |                      |                   |                  |
+   |                      |                   | Binding_Response |
+   |                      |                   |&lt;-----------------|(3)
+   |                      |  Binding_Response |                  |
+   |&lt;-----------------------------------------|(4)               |
+   |(5)                   |                   |                  |
+
+</pre>
+<p class="figure">FLOW-METADATA MALICE to MALICE</p>
+<p/>
+
+<ol>
+  <li>Alice creates a Binding Request, adds MD-AGENT and result (MD-RESP-UP and MD-RESP-DN) attributes with desired metadata information elements.</li>
+  <li>Router1 inspects the Request message and, if allowed (based on realm, security and policy considerations), reads MD-AGENT attribute and its information elements. If the result of processing is available, router1 writes the result in the MD-RESP-UP attribute. It then forwards the request.</li>
+  <li>Bob processes the Binding Request as described in the ICE RFC <a href="#RFC5245">[RFC5245]</a>(Section 7.2). When Bob builds the response, it copies the metadata attribute MD-AGENT and the MD-RESP-UP attributes into the Binding Response and adds MD-RESP-DN after the integrity attribute. Bob then transmits the message.</li>
+  <li>Router2 (first MALICE network element for the downstream direction) inspects the Response message, reads the metadata attribute and MAY change the result (MD-RESP-DN) including the local results if available. It then transmits the message.</li>
+  <li>When Alice receives the Binding Response message, the same processing described in ICE RFC <a href="#RFC5245">[RFC5245]</a> (Section 7.1.3) applies. Then it extracts the metadata upstream and downstream attributes. If Alice's agent has the controlling role, it may take into account this information during the candidate pair selection step (if this check was part of the initial connectivity check sequence).</li>
+</ol>
+<h1 id="rfc.section.3.3"><a href="#rfc.section.3.3">3.3.</a> Keepalives</h1>
+<p id="rfc.section.3.3.p.1">This specification proposes the use of consent freshness messages <a href="#I-D.muthu-behave-consent-freshness">[I-D.muthu-behave-consent-freshness]</a> in place of indications in order to have up to date results on the MALICE checks used by media. This is required since network conditions may change during the lifetime of a flow resulting in changes, including new failure indications, in MALICE responses. </p>
+<h1 id="rfc.section.3.4"><a href="#rfc.section.3.4">3.4.</a> Aggressive Nomination</h1>
+<p id="rfc.section.3.4.p.1">With aggressive nomination, the controlling agent includes the nominated flag in every connectivity check it sends for all media components. Once the first check for a component succeeds, it is added to the valid list with the nominated flag set. The nominated candidate pair may start being used by the media at any time after. This lowers the chance of MALICE results to be collected. Therefore, if the controlling MALICE agent expects to consider the metadata attribute processing result into the candidate pair selection process, it SHOULD NOT use aggressive nomination. The controlled MALICE agent does not have a way to influence the peer with respect to the nomination procedure used. If the peer is non-MALICE, the agent SHOULD NOT signal any MD attributes. If a MALICE agent chooses to use the aggressive nomination, the endpoints should be prepared for transient candidate selection as described in Section 8.1.1.2 of <a href="#RFC5245">[RFC5245]</a>.  Using aggressive nomination is an implementation trade-off between quick call initiation versus waiting to determine the best path (using regular nomination and waiting until MALICE checks finish).</p>
+<h1 id="rfc.section.3.5"><a href="#rfc.section.3.5">3.5.</a> Implications on Concluding ICE</h1>
+<p id="rfc.section.3.5.p.1">When the MALICE client agent receives the STUN binding response it extracts the metadata results. A controlling agent may choose to ignore the received metadata information or consider it in the decision process. The figure below shows MALICE used in a regular nomination process.</p>
+<pre>   L(Malice)                            R(Malice)
+   ---------                            ---------
+
+          &lt;---- STUN request + {MDrl(i)}     \  R's
+     STUN response -------------&gt;            /  check
+     + {MDrl(i)}
+                                       local result: MDrl
+                                         
+ 
+     STUN request + {MDlr(i)} ---------&gt;     \  L's
+              &lt;----- STUN response           /  check
+                     + {MDlr(i)}
+                     + MDrl (result)
+
+     local result: MDlr
+     e2e result: comp(MDlr, MDrl)
+ 
+     STUN request + {MDlr(i)} + flag ----&gt;   \  L's
+              &lt;----- STUN response           /  check
+                     + {MDlr(i)}</pre>
+<p class="figure"></p>
+<p id="rfc.section.3.5.p.2">Notations:</p>
+<p id="rfc.section.3.5.p.3">L is the controlling agent.</p>
+<p id="rfc.section.3.5.p.4">{MDrl(i)} is the set of metadata attributes sent from R to L in the request. In the (2nd, 3rd,..) response back they will also include the result. Similar notation for the checks in the other direction.</p>
+<p id="rfc.section.3.5.p.5">MDrl is a an overall success/fail type of indication for the MALICE check R-&gt;L</p>
+<p id="rfc.section.3.5.p.6">comp(MDlr, MDrl) - is a function that determines the overall end to end MALICE result based on both local check result and the one from the peer.</p>
+<p id="rfc.section.3.5.p.7">If a connectivity check response is received for an already nominated pair, the controlling agent may inform the application but MUST NOT restart the nomination process. In the case where the result of a MALICE check is not available in the response at the time of nomination, any subsequent MALICE results become informative.</p>
+<h1 id="rfc.section.3.6"><a href="#rfc.section.3.6">3.6.</a> Lite Implementations and MALICE</h1>
+<p id="rfc.section.3.6.p.1">As described in <a href="#RFC5245">[RFC5245]</a>, lite ICE implementations do not send connectivity checks but only reply to them. A lite ICE implementation may be extended to become a lite MALICE implementation by adding the functionality associated with the MALICE Server. When a lite MALICE server agent receives a STUN binding request, it copies the metadata related attributes as described in earlier sections. A lite MALICE implementation will never include an MD-PEER-CHECK-RES attribute in the STUN binding response, since it never runs ICE or MALICE checks.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Performing Connectivity Checks</h1>
+<p id="rfc.section.4.p.1">This section describes how MALICE agents perform connectivity checks and how network elements process and modify the information in the connectivity check messages.</p>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> MALICE Client Procedures</h1>
+<h1 id="rfc.section.4.1.1"><a href="#rfc.section.4.1.1">4.1.1.</a> Building the MALICE Request</h1>
+<p id="rfc.section.4.1.1.p.1">This section describes how STUN and ICE are extended to include metadata attributes and refers to them in generic terms. The new attributes and their usage defined in <a href="#IANA">Section 9</a> are included in the connectivity checks performed by MALICE agents.</p>
+<p id="rfc.section.4.1.1.p.2">The Client agent starts the connectivity check by sending a STUN binding request following the procedures described in Section 7.1.2 of <a href="#RFC5245">[RFC5245]</a>. A MALICE client MAY include metadata attributes in the request. The way the application determines the attributes to be sent to the MALICE agent for signaling is outside the scope of this specification. The client agent may reduce the attribute set based on other factors (e.g. MTU considerations).</p>
+<p id="rfc.section.4.1.1.p.3">The client encodes metadata information in the MD-AGENT attribute. It then builds the MD-RESP-UP and MD-RESP-DN attributes, including an information element for each REQ-RESP attribute for which a response is desired. The values in these IEs are initialized as described in the corresponding metadata information element section. MD-AGENT and MD-RESP-DN MUST be included before INTEGRITY, and MD-RESP-UP after INTEGRITY so that it can be changed by on-path devices.</p>
+<h1 id="rfc.section.4.1.2"><a href="#rfc.section.4.1.2">4.1.2.</a> Processing MALICE Responses</h1>
+<p id="rfc.section.4.1.2.p.1">A MALICE agent processes a STUN binding response and depending on the presence of metadata attributes, their contents, and the procedures of <a href="#RFC5245">[RFC5245]</a> section 7.1.3.1 the result of MALICE connectivity check is considered unknown, failure or success as described below</p>
+<h1 id="rfc.section.4.1.2.1"><a href="#rfc.section.4.1.2.1">4.1.2.1.</a> Unknown</h1>
+<p id="rfc.section.4.1.2.1.p.1">If the STUN response message does not include any metadata related STUN attributes, this is an indication that the peer is not MALICE capable. In this case the client should change the pair state to Succeeded.</p>
+<p id="rfc.section.4.1.2.1.p.2">It is possible that the STUN Client receives a response that includes metadata STUN attributes, but doesn't include any valid results from NEs or STUN Server. This can happen if NEs are not MALICE enabled.</p>
+<h1 id="rfc.section.4.1.2.2"><a href="#rfc.section.4.1.2.2">4.1.2.2.</a> Failure</h1>
+<p id="rfc.section.4.1.2.2.p.1">In the presence of a MALICE peer, a MALICE check is considered failed if either of the following is true:</p>
+<p/>
+
+<ul>
+  <li>the ICE check has failed as described in Section 7.1.3.1 of <a href="#RFC5245">[RFC5245]</a>.</li>
+  <li>the client determines that the metadata included by an on-path device in the Binding response does not meet its criteria for success. The success criteria is application dependent and outside the scope of this specification.</li>
+</ul>
+<h1 id="rfc.section.4.1.2.3"><a href="#rfc.section.4.1.2.3">4.1.2.3.</a> Success</h1>
+<p id="rfc.section.4.1.2.3.p.1">A MALICE check is considered successful if all of the following are true:</p>
+<p/>
+
+<ul>
+  <li>the ICE check as described in Section 7.1.3.1 of <a href="#RFC5245">[RFC5245]</a> has succeeded.</li>
+  <li>the Binding response indicates that MALICE NEs have satisfactorily processed all the RESP-REQ information elements.</li>
+</ul>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> MALICE Network Element Procedures</h1>
+<p id="rfc.section.4.2.p.1">A MALICE network element intercepts ICE request and response messages, reads metadata information from the MD-AGENT attribute and triggers corresponding processing. When the result of this processing is available, the MALICE node MAY update the MD-RESP-xx attribute carried in the message. As a consequence, it is recommended (and stated <a href="#RFC5245">[RFC5245]</a>) that the agent perform a few identical checks in order to allow NEs to react to and communicate the result of the metadata processing.</p>
+<p id="rfc.section.4.2.p.2">MALICE NEs consume router resources to maintain per flow state and, depending on the information elements and requests, to enforce per flow QoS or perform monitoring. State and associated attributes are considered alive as long as periodic refresh messages that include those attributes are received. In the absence of refreshes <a href="#I-D.muthu-behave-consent-freshness">[I-D.muthu-behave-consent-freshness]</a> or if attributes cease to be present in those refreshes, attributes time out, associated resources are released and state may be removed.</p>
+<p id="rfc.section.4.2.p.3">MALICE agents can signal the same metadata information elements for a flow. Therefore it is possible that different STUN messages types containing the same information elements, with same or different values, are seen by NEs. It is also possible that the two agents signal different metadata for the same flow.</p>
+<p id="rfc.section.4.2.p.4">During the lifetime of a session, agents can change the values of information elements, remove or add new IEs. It is also possible that a NE changes the result values over the lifetime of a session. A NE should determine if a newly intercepted STUN message indicates a refresh versus a change as compared to the previously intercepted message. A refresh resets the lifetime of an IE and state. A change indicates if new IEs are being created or if existing ones are being modified or removed.</p>
+<h1 id="rfc.section.4.2.1"><a href="#rfc.section.4.2.1">4.2.1.</a> Adding a new Metadata IE</h1>
+<p id="rfc.section.4.2.1.p.1">When a new IE is signaled in a STUN message, a network element should create state for the flow if not already present, and trigger any required processing. If the network element, while processing the metadata attribute, will add significant delay and cause timeouts in the agent state machines, it is recommended that it forwards the STUN message and use the next refresh message to provide the results. When the next STUN message is received, the NE should provide the result of processing this information element only if the locally stored (and acted upon) value is the same as the one in the newly received message. Otherwise a removal or modification has occurred.</p>
+<p id="rfc.section.4.2.1.p.2">The diagram below illustrates the exchange and processing when a new IE is added. Alice sends a STUN request upstream with attribute MD-RESP-UP, MD-AGENT and IE X=A. The network element creates the f(L,R) state where it stores the requested metadata value (m: X=A), the context it was received from (s: MALICE request) and the result of processing (r: x=N). It then updates the response attribute MD-RESP-UP in the STUN request with X=N and forwards it to Bob. Bob reflects back the original metadata requested value and the result.</p>
+<pre>   Alice(L)          NE                Bob(R)
+   --------          ---                ------
+
+   Alice's STUN Request                     
+    x=A for Upstream (L-&gt;R)
+          
+   IE   x=A                         IE   x=A
+   resp x=&lt;&gt;                        resp x=N
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): create:
+                   m: x=A, s: req
+                   r: x=N
+
+   &lt;---------...................------------
+                                    IE   x=A
+                                    resp x=N
+                      
+
+</pre>
+<p class="figure">Upstream Attribute Initial Signaling</p>
+<p id="rfc.section.4.2.1.p.3">Similar processing happens for downstream attributes except that the NE's actions (intercept, flow state creation, etc.) happen when a STUN response is intercepted.</p>
+<p id="rfc.section.4.2.1.p.4">There are many possible transaction types for "X=A". For example:</p>
+<p/>
+
+<ul>
+  <li>Endpoint requests a particular service: "Reserve BW=5Mbps", the endpoint requests a 5Mbps reservation.</li>
+  <li>Endpoint requests network notification: "Notify if BW &lt; 5Mbps", the endpoint requires a notification when the queue capacity used for this flow falls below the 5Mbps limit.</li>
+  <li>Endpoint request statistics for the flow path: "BW=&lt;&gt;", where &lt;&gt; is the unspecified value for attribute BW, the endpoint requires a response with the current available queue capacity used for this flow.</li>
+</ul>
+
+<p>It is assumed in the rest of this specification that the attribute, information element and/or context unambiguously identify the actions required at network element.</p>
+<h1 id="rfc.section.4.2.2"><a href="#rfc.section.4.2.2">4.2.2.</a> Removing a Metadata IE</h1>
+<p id="rfc.section.4.2.2.p.1">Flow state and all its metadata ages out and should be removed when the state has not been refreshed recently by a request or response message. The way to determine the timeout interval is described in <a href="#I-D.muthu-behave-consent-freshness">[I-D.muthu-behave-consent-freshness]</a>.</p>
+<p id="rfc.section.4.2.2.p.2">In addition, metadata must be immediately deleted and associated resources released if the IE is not present in any subsequent messages for the flow. An IE should be considered stale and removed if it ceases to appear in STUN requests or responses (section 3.1.2) having the same 5-tuple flow. As illustrated in the diagram below, a NE implementation should keep track of the source and value of the IEs received and detect per source addition, change and removal.  More details are provided in the next sections. In the diagram below Bob's messages do not go through the NE element: </p>
+
+<ol>
+  <li>Alice signals metadata X=A for the first time. Actions are described in the previous section.</li>
+  <li>Bob signals the same value and equivalent direction for X and in his STUN request, this is copied in the STUN Response from Alice to Bob. When the NE intercepts this L-&gt;R response message, it extracts X=A, retrieves the existing information f(L,R) and adds MALICE Response as a new source.</li>
+  <li>Alice sends a new check without any metadata attributes. The NE retrieves the f(L,R) state and removes the MALICE Request from the source list. The flow state is maintained as the NE still sees refreshes for X in the L-&gt;R responses to Bob's checks.</li>
+  <li>Bob sends a new STUN connectivity check without any attributes. The NE retrieves the f(L,R) state and removes the MALICE Response from the source list. Since X has no source, it also removes X from the metadata information element list and releases any resources associated with X. And because the flow state has no more attributes, it also removes the state.</li>
+</ol>
+<pre>   Alice(L)          NE                Bob(R)
+   --------          ---                ------
+
+   Alice's STUN Request                       (1)
+    x=A for Upstream (L-&gt;R)
+          
+   IE   x=A                         IE   x=A
+   resp x=&lt;&gt;                        resp x=N
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): create:
+                   m: x=A, s: req
+                   r: x=N
+
+   &lt;---------...................------------
+                                    IE   x=A
+                                    resp x=N
+
+
+               
+                          Bob's STUN Request  (2)
+                   x=A for Downstream (L-&gt;R)
+
+                                    IE  x=A
+                                   resp x=&lt;&gt;
+   &lt;---------...................&lt;-----------
+
+   IE   x=A                         IE   x=A
+   resp x=&lt;&gt;                        resp x=N
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): update
+                   a: x=A, s: req
+                      x=A, s: resp
+                   r: x=N
+
+
+   Alice's STUN Request                       (3)
+    no attributes
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): update
+                   a: x=A, s: resp
+                   r: x=N
+
+   &lt;---------...................------------
+
+
+                          Bob's STUN Request  (4)
+                               no attributes
+   &lt;---------...................&lt;-----------
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): update
+                   a: &lt;none&gt;, s:&lt;none&gt;
+                   r: x=N
+                 f(L,R): release resources for X
+                         remove state
+
+</pre>
+<p class="figure">Upstream Attribute Removal</p>
+<h1 id="rfc.section.4.2.3"><a href="#rfc.section.4.2.3">4.2.3.</a> Changing a metadata IE</h1>
+<p id="rfc.section.4.2.3.p.1">It is possible for a client to change an IE value. Every request/ response message contains an MD-RESP-xx attribute with &#8220;not specified&#8221; values when sent from the agent. In other words, the agent does not include the result from previous check. When a node detects a change in an attribute value it should trigger the appropriate actions. Like in the case of initial attribute creation, the node should provide the answer in the next refresh message if the answer is not immediately available.</p>
+<p id="rfc.section.4.2.3.p.2">In the diagram below, Alice changes the value of information element X from A to B in the second STUN request which causes the network element to provide a different response.</p>
+<pre>   Alice(L)          NE                Bob(R)
+   --------          ---                ------
+
+   Alice's STUN Request                       (1)
+    x=A for Upstream (L-&gt;R)
+          
+   IE   x=A                         IE   x=A
+   resp x=&lt;&gt;                        resp x=N
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): create
+                   m: x=A, s: req
+                   r: x=N
+
+   &lt;---------...................------------
+                                    IE   x=A
+                                    resp x=N
+                      
+  Alice's STUN Request                       (2)
+    x=B for Upstream (L-&gt;R)
+
+   IE   x=B                         IE   x=B
+   resp x=&lt;&gt;                        resp x=M
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): update
+                   m: x=B, s: req
+                   r: x=M
+
+   &lt;---------...................------------
+                                    IE   x=B
+                                    resp x=M
+
+</pre>
+<p class="figure">Upstream Attribute Change</p>
+<h1 id="rfc.section.4.2.4"><a href="#rfc.section.4.2.4">4.2.4.</a> Network Element Response Change</h1>
+<p id="rfc.section.4.2.4.p.1">It is possible that the network element result of processing of an IE changes as resource availability changes, e.g. new links are added and removed, new flows come and go, etc. For example, a NE can change the bandwidth available for a flow and may need to update the MD-RESP-xx attribute if the local value is more restrictive (e.g.  less bandwidth, lower delay tolerance, etc.) than the one included in the message. Again, it is important for this node to check that the MD-AGENT attribute includes the same attribute and value for which the answer is provided.</p>
+<h1 id="rfc.section.4.2.5"><a href="#rfc.section.4.2.5">4.2.5.</a> Solving Conflicts in Metadata Attribute Values</h1>
+<p id="rfc.section.4.2.5.p.1">A conflict in a metadata information element occurs when the two agents signal different values for same IE and for the same direction of the flow.</p>
+<p id="rfc.section.4.2.5.p.2">A conflict occurs for an IE X in the upstream direction if the values of X in the L check request are different than in the R check response. When a NE detects an IE conflict it SHOULD keep both values. If the IE is part of binding request, the MALICE node must perform conflict resolution as described in the diagram below and act on the result.</p>
+<p/>
+
+<ol>
+  <li>Alice sends a request for X with value A for the upstream direction. The NE intercepts the message, creates f(L,R) state and stores X=A remembering this was received in Alice's request.  The NE then determines that the response to A should be N, therefore it updates the STUN message and forwards it to Bob.</li>
+  <li>Bob sends a request for X with value B for the upstream direction. The NE intercepts the response for the Bob-&gt;Alice request, extracts X=B from the response, looks up f(L,R) flow state, stores (x=B, s:resp) and determines that a conflict has occurred for attribute X since (x=A, s: req) is present in the state. The NE runs the conflict resolution and determines that x=B should be the value used, determines that the result of processing B is M, updates the STUN response and forwards the response to Bob.</li>
+  <li>When the next refresh for X with value A is received from Alice, the NE updates the result to M and forwards the request to Bob. Bob reflects back the result in the response and Alice receives the changed result.</li>
+</ol>
+<pre>   Alice(L)          NE               Bob(R)
+   --------          --               ------
+
+   Alice's STUN Request                       (1)
+    x=A for Upstream (L-&gt;R)
+          
+   IE   x=A                         IE   x=A
+   resp x=&lt;&gt;                        resp x=N
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): create:
+                   m: x=A, s: req
+                   r: x=N
+
+   &lt;---------...................------------
+                                IE UP(x=A)
+                                resp UP(x=N)
+
+
+               
+                          Bob's STUN Request  (2)
+                   x=A for Downstream (L-&gt;R)
+
+                                    IE  x=B
+                                   resp x=&lt;&gt;
+   &lt;---------...................&lt;-----------
+
+   IE   x=B                         IE   x=B
+   resp x=&lt;&gt;                        resp x=M
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): update
+                   m: x=A, s: req
+                      x=B, s: resp  
+                       &lt;- conflict detected!
+                       &lt;- resolution x=B 
+                   r: x=M
+
+
+
+   Alice's STUN Request                       (3)
+    x=A for Upstream (L-&gt;R)
+          
+   IE   x=A                         IE   x=A
+   resp x=&lt;&gt;                        resp x=M
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): refresh:
+                   m: x=A, s: req
+                      x=B, s: resp 
+                   r: x=M
+
+   &lt;---------...................------------
+                                attr UP(x=A)
+                                resp UP(x=M)
+
+                      </pre>
+<p class="figure">Upstream Attribute Conflict</p>
+<p id="rfc.section.4.2.5.p.4">Note that for INFO-ONLY and ADVISORY transactions a conflict resolution cannot occur and, therefore, results should be kept per source. Typical NE resources allocated for these attributes are monitors created to detect conditions or collect network statistics.  It is up to the implementation to decide on what can be shared in terms of resources in this case. In the diagram below, for illustration purposes, a second monitor is created for Bob's notification request.</p>
+<pre>   Alice(L)          Mid                Bob(R)
+   --------          ---                ------
+
+   Alice's STUN Request                       (1)
+    Notif for UP BW &lt; 10Mbps 
+          
+   IE   bw=10Mbps                  IE  bw=10M
+   resp bw=&lt;&gt;                     resp bw=&lt;&gt;
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): create:
+                   m: bw=10M, s: req
+                   r: bw=&lt;&gt;, start monitor
+
+   &lt;---------...................------------
+                                 attr bw=10M
+                                 resp bw=&lt;&gt;
+
+
+   Alice's STUN Request                       (2)
+    First refresh after condition 
+          
+   IE   bw=10Mbps                   IE bw=10Mbps
+   resp bw=&lt;&gt;                     resp bw=8Mbps
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): create:
+                   m: bw=10Mbps, s: req
+                   r: bw=8Mbps, keep monitor
+
+   &lt;---------...................------------
+                                    IE bw=10Mbps
+                                  resp bw=8Mbps
+ 
+
+                          Bob's STUN Request  (3)
+                   x=A for Downstream (L-&gt;R)
+
+                                  IE   bw=6Mbps
+                                  resp bw=&lt;&gt;
+   &lt;---------...................&lt;-----------
+
+   IE   bw=6Mbps                    IE bw=6Mbps
+   resp bw=&lt;&gt;                     resp bw=&lt;&gt;
+   ----------------&gt;      -----------------&gt; 
+                 f(L,R): update
+                   m: bw=10Mbps, s: req
+                   r: bw=8Mbps, keep monitor
+                   m: bw=6Mbps, s: resp
+                   r: bw=&lt;&gt;, start monitor2
+
+                      </pre>
+<p class="figure">Network Analytics and Notifications</p>
+<h1 id="rfc.section.4.2.6"><a href="#rfc.section.4.2.6">4.2.6.</a> Conflict Resolution </h1>
+<p id="rfc.section.4.2.6.p.1">The definition/description of an information element must include a description of how conflict resolution should be done by network elements. Below are a few examples:</p>
+<p/>
+
+<ul>
+  <li>Informational only transactions: the IEs included are signaled in the upstream direction only and they are processed by middleboxes on path with the STUN request. They should never generate conflicts.</li>
+  <li>Binding transactions (QoS): the following attributes are currently defined:<ul><li>Bandwidth: UP/DOWN Max Bandwidth, UP/DOWN Min Bandwidth</li><li>Service Class: UP/DOWN Delay, Loss and Jitter tolerance - specified as: 0=undefined, 1=very low, 2=low, 3=medium, 4=high</li><li>Priority: UP/DOWN DSCP</li></ul><p>For all these attributes the conflicts are resolved by choosing the less strict values (apply a MIN function). For example, assume Alice and Bob request the same service class. If Alice requests 10Mbps UP bandwidth, Bob requests 5Mbps DOWN bandwidth and there are 7Mbps available for the service class specified in the request, the middlebox should allocate 5Mbps and update the result in Alice's check STUN Response. If Alice and Bob request different service classes, the less restrictive is first selected and then the MIN function is applied to the bandwidth values.</p></li>
+  <li>Advisory transactions (Network Analytics): there should not be any conflict resolution applied to these attributes. It is perfectly valid for Alice to request different network analytics than Bob or different thresholds for congestion notifications.  As shown in the previous diagram, middleboxes should keep track of the different sources for a given attribute and, in case of network attributes, keep per source results and maybe resources.</li>
+</ul>
+<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> MALICE Server Procedures</h1>
+<p id="rfc.section.4.3.p.1">When the Malice Server agent receives a STUN Request it follows the same rules described in Section 7.2 of <a href="#RFC5245">[RFC5245]</a>. In addition, when building the STUN Response the following rules MUST be followed:</p>
+
+<ul>
+  <li>MD-AGENT and MD-RESP-UP attributes are inserted before INTEGRITY</li>
+  <li>If the result of the local MALICE check is present, an MD-PEER-CHECK-RES attribute with the result is included before INTEGRITY</li>
+  <li>A copy of the MD-RESP-DN attribute received in the STUN Request is included unmodified after INTEGRITY</li>
+</ul>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> Concluding MALICE Processing</h1>
+<p id="rfc.section.5.p.1">A MALICE Controlling agent is expected to run regular nomination only. This specification also reinforces the recommendation to run a number of checks before nominating a pair. This increases the probability of receiving network element and peer MALICE responses and therefore having more information for the nomination process.</p>
+<p id="rfc.section.5.p.2">When nominating a pair, the controlling agent may consider the MALICE information received in the last STUN Response and give preference to the pair whose connectivity check indicated favorable network conditions.</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> Subsequent Connectivity Checks</h1>
+<p id="rfc.section.6.p.1">It is possible for a MALICE Client to request a service and include metadata attributes after the nomination process. It is also possible that a successful MALICE check for the nominated (active) pair fails during the media session lifetime. The MALICE Client will have at all times the current status of the MALICE check for the active pair. The actions that the client takes when these change are currently out of the scope of this document. In the absence of support for other specification, these MALICE check status changes are informative only.</p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> Security Considerations</h1>
+<h1 id="rfc.section.7.1"><a href="#rfc.section.7.1">7.1.</a> STUN Inspection</h1>
+<p id="rfc.section.7.1.p.1">Network elements processing STUN packets are open to denial of service attacks from endpoints when there is no previous authorization and indication of which STUN messages should be inspected. The vulnerability and attack vector is similar to those documented for the IP router alert option in <a href="#RFC6398">[RFC6398]</a>.</p>
+<p id="rfc.section.7.1.p.2">Flooding a NE with bogus (or simply undesired) STUN messages that contain metadata could impact its operation in undesirable ways. For example, if the NE punts the datagrams containing STUN messages to the slow path, such an attack could consume a significant share of the NE's slow path and could also lead to packet drops in the slow path (affecting operation of all other applications and protocols operating in the slow path), thereby resulting in a denial of service (DoS) <a href="#RFC4732">[RFC4732]</a>. Like with other protocols, it is recommended that network elements that implement this functionality use rate limited queues when punting STUN messages. In addition, it is recommended that the implementation enforces limits on the number of states created by the MALICE connectivity checks.</p>
+<p id="rfc.section.7.1.p.3">However, the main issue is that the STUN message does not provide a convenient universal mechanism to accurately and reliably distinguish between interesting and unwanted messages. This, in turn, creates a security concern when the STUN metadata attribute is used, because, short of appropriate network element- implementation-specific mechanisms, the NE slow path is at risk of being flooded by unwanted traffic.</p>
+<p id="rfc.section.7.1.p.4">One solution to this problem is to include a precursor authorization step where a third-party device authorizes the endpoint and populates the NE with 5-tuple information of the packet carrying the STUN message. [TODO: Reference third party authorization draft]</p>
+<h1 id="rfc.section.7.2"><a href="#rfc.section.7.2">7.2.</a> Authentication</h1>
+<p id="rfc.section.7.2.p.1">While endpoints are able to authenticate STUN messages received by a peer endpoint, network elements are unable to authenticate STUN messages. Further, endpoints are not fully trusted by network elements, so network elements need some assurance that what is signaled has been authorized by an application server that defines policies or attributes for a given media flow. Even if an endpoint is well-behaved, the network elements need a means of ensuring STUN messages are not altered during transmission.</p>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#STUN_Extensions" id="STUN_Extensions">STUN Extensions</a></h1>
+<h1 id="rfc.section.8.1"><a href="#rfc.section.8.1">8.1.</a> New Attributes </h1>
+<p id="rfc.section.8.1.p.1">This specification defines five new attributes, MD-AGENT, MD-REALM, MD-RESP-UP, MD-RESP-DN and MD-PEER-CHECK.</p>
+<p/>
+
+<ul>
+  <li>The MD-AGENT is inserted in the Binding request by the client agent and copied in the Binding response by the server agent. It includes the flow metadata generated by the client agent.</li>
+  <li>The MD-RESP-UP is inserted by the client agent in the Binding request and updated by MALICE nodes on upstream path. A MALICE server agent copies this attribute in the response message.</li>
+  <li>The MD-PEER-CHECK attribute is inserted by the MALICE server agent in the response message and includes the result of the MALICE check executed by the server agent.</li>
+  <li>The MD-RESP-DN is inserted by the client agent in the Binding request, copied by the MALICE server agent in the response and updated by MALICE nodes on downstream path.</li>
+</ul>
+
+<p>In addition, two new sub-TLVs are defined to provide flow prioritization service. This specification allows for easy addition of IEs in the future.</p>
+
+<ul>
+  <li>FLOWDATA Request sub-TLV is included in the MD-AGENT STUN attribute and indicates the desired flow treatment</li>
+  <li>FLOWDATA Response sub-TLV is included in the MD-RESP-* STUN attributes and indicates, when received by the client in the STUN Binding Response, the result of the processing</li>
+</ul>
+<h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> <a href="#IANA" id="IANA">IANA Considerations</a></h1>
+<p id="rfc.section.9.p.1">This specification registers five new STUN attributes. All attributes include metadata informational elements. Section 10.2 describes a possible STUN specific encoding for these. Another proposal can be found in [I-D.draft-flow-metadata-encoding] and [I-D.draft-flow-metadata-framework]</p>
+<h1 id="rfc.section.9.1"><a href="#rfc.section.9.1">9.1.</a> STUN Attribute TLV Definitions</h1>
+<p id="rfc.section.9.1.p.1">This section registers four new STUN attributes per the procedures in <a href="#RFC5389">[RFC5389]</a>.</p>
+<pre>
+        
+     0x0C02: MD-AGENT
+     0x0C03: MD-RESP-UP
+     0x0C04: MD-RESP-DN
+     0x0C05: MD-PEER-CHECK
+      </pre>
+<p class="figure"></p>
+<h1 id="rfc.section.9.1.1"><a href="#rfc.section.9.1.1">9.1.1.</a> MD-AGENT Attribute</h1>
+<p id="rfc.section.9.1.1.p.1">Metadata attributes are encoded in sub-TLV format with each sub-TLV corresponding to an information element or metadata. Section 10.3 describes in detail the information elements that can be included in the MD-AGENT attribute. When parsing the STUN request and response, the MD-AGENT STUN attribute Length should be used to identify the location of next STUN attribute.</p>
+<div id="rfc.figure.1"/>
+<div id="MD-AGENT"/>
+<pre>
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|          MD-AGENT              |            Length            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                 &lt;Attribute Block sub-TLV format&gt;              |    
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+      </pre>
+<p class="figure">Figure 1: MD-AGENT Attribute</p>
+<h1 id="rfc.section.9.1.2"><a href="#rfc.section.9.1.2">9.1.2.</a> MD-RESP-UP and MD-RESP-DN Attributes</h1>
+<p id="rfc.section.9.1.2.p.1">Network Metadata attributes are encoded in sub-TLV format with each sub-TLV corresponding to an information element or metadata.  Section 10.3 describes in detail the network information elements that can be included. When parsing the STUN request and response, the MD-RESP-XX STUN attribute Length should be used to identify the location of next STUN attribute.</p>
+<div id="rfc.figure.2"/>
+<div id="MD-RESP-"/>
+<pre>
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|            MD-RESP-*          |            Length             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                 &lt;Attribute Block sub-TLV format&gt;              |    
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+      </pre>
+<p class="figure">Figure 2: MD-RESP- Attribute</p>
+<p id="rfc.section.9.1.2.p.2">Where MD-RESP-* = {MD-RESP-UP | MD-RESP-DN}</p>
+<h1 id="rfc.section.9.1.3"><a href="#rfc.section.9.1.3">9.1.3.</a> MD-PEER-CHECK Attribute</h1>
+<div id="rfc.figure.3"/>
+<div id="MD-PEER-CHECK"/>
+<pre>
+0                   1                   2                   3
+0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|     MD-PEER-CHECK-RES         |            Length             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|         Reserved              |   Peer Malice Check Result    |    
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+      </pre>
+<p class="figure">Figure 3: MD-PEER-CHECK Attribute</p>
+<p id="rfc.section.9.1.3.p.1">Peer Malice Check Result - "Success" or "Failure".</p>
+<h1 id="rfc.section.9.2"><a href="#rfc.section.9.2">9.2.</a> Metadata Attributes sub-TLV Definitions</h1>
+<p id="rfc.section.9.2.p.1">Metadata information elements are encoded in sub-TLV format and included in MD-AGENT and MD-RESP-* STUN attributes described earlier.</p>
+<h1 id="rfc.section.9.2.1"><a href="#rfc.section.9.2.1">9.2.1.</a> FLOWDATA Request</h1>
+<p id="rfc.section.9.2.1.p.1">The FLOWDATA IE has the following format.</p>
+<div id="rfc.figure.4"/>
+<div id="flowdata_request"/>
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|    Type=TBD   |   Reserved    |             Length            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                    Instance Identifier                        |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| uDT | uLT | uJT |   RSVD1     | dDT | dLT | dJT |    RSVD2    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                   Upstream Min Bandwidth                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                   Downstream Min Bandwidth                    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                   Upstream Max Bandwidth                      |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                   Downstream Max Bandwidth                    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</pre>
+<p class="figure">Figure 4: FLOWDATA Request</p>
+<p/>
+
+<dl>
+  <dt>Type:</dt>
+  <dd style="margin-left: 8">TBD (optional to process)</dd>
+  <dt>Reserved:</dt>
+  <dd style="margin-left: 8">Must be 0 and ignored by the server.</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Option Length is 32 octets.</dd>
+  <dt>May appear in:</dt>
+  <dd style="margin-left: 8">STUN/ICE Binding Request and Response, inside the MD-AGENT STUN attribute</dd>
+  <dt>Maximum occurrences:</dt>
+  <dd style="margin-left: 8">1</dd>
+</dl>
+
+<p>Description of the fields:</p>
+<p/>
+
+<dl>
+  <dt>Instance Identifier:</dt>
+  <dd style="margin-left: 8">Instance identifier, see below for description.</dd>
+  <dt>uDT:</dt>
+  <dd style="margin-left: 8">Upstream Delay Tolerance, 0 means no information is available. 1=very low, 2=low, 3=medium, 4=high.</dd>
+  <dt>uLT:</dt>
+  <dd style="margin-left: 8">Upstream Loss Tolerance, 0 means no information is available. 1=very low, 2=low, 3=medium, 4=high.</dd>
+  <dt>uJT:</dt>
+  <dd style="margin-left: 8">Upstream Jitter Tolerance, 0 means no information is available. 1=very low, 2=low, 3=medium, 4=high.</dd>
+  <dt>RSVD1:</dt>
+  <dd style="margin-left: 8">Reserved (7 bits), MUST be ignored on reception and MUST be 0 on transmission</dd>
+  <dt>dDT:</dt>
+  <dd style="margin-left: 8">Downstream Delay Tolerance, 0 means no information is available. 1=very low, 2=low, 3=medium, 4=high.</dd>
+  <dt>dLT:</dt>
+  <dd style="margin-left: 8">Downstream Loss Tolerance, 0 means no information is available. 1=very low, 2=low, 3=medium, 4=high.</dd>
+  <dt>dJT:</dt>
+  <dd style="margin-left: 8">Downstream Jitter Tolerance, 0 means no information available. 1=very low, 2=low, 3=medium, 4=high.</dd>
+  <dt>RSVD2:</dt>
+  <dd style="margin-left: 8">Reserved (7 bits), MUST be ignored on reception and MUST be 0 on transmission.</dd>
+  <dt>Upstream Minimum Bandwidth</dt>
+  <dd style="margin-left: 8">Minimum Upstream bandwidth in bytes per second, 0 means no information is available.</dd>
+  <dt>Downstream Minimum Bandwidth:</dt>
+  <dd style="margin-left: 8">Minimum Downstream bandwidth in bytes per second, 0 means no information is available.</dd>
+  <dt>Upstream Maximum Bandwidth:</dt>
+  <dd style="margin-left: 8">Maximum Upstream bandwidth in bytes per second, 0 means no information is available.</dd>
+  <dt>Downstream Maximum Bandwidth:</dt>
+  <dd style="margin-left: 8">Maximum Downstream bandwidth in bytes per second, 0 means no information is available.</dd>
+</dl>
+
+<p>The instance identifier accommodates network traffic where multiple 5-tuples exist for a particular data flow, but the bandwidth flows only over the aggregate of the multiple 5-tuples.  One example of this are a phone call which rings on two phones. Only one of those phones will answer first (and send data). FLOWDATA is signaled for both of those phone's IP addresses and ports, using the same Instance Identifier, indicating to the network that the flow data is being shared with those two different 5-tuples. Another example is TCP video streaming which retrieves short pieces of the movie, often over separate TCP connections for load balancing, which would use the same Instance Identifier for each TCP connection. The way the instance identifier is determined is out of the scope of this document.</p>
+<h1 id="rfc.section.9.2.2"><a href="#rfc.section.9.2.2">9.2.2.</a> FLOWDATA Response</h1>
+<p id="rfc.section.9.2.2.p.1">This IE is meant for responses from network to endpoint. It can be included in MD-RESP-UP or MD-RESP-DN, therefore indicating the direction for which the response applies.</p>
+<div id="rfc.figure.5"/>
+<div id="flowdata_response"/>
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|    Type=TBD   |  Reserved     |            Length             |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+|                        Reserved                               |
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|  DT |  LT |  JT |                 Reserved                    |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                        Min Bandwidth                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                        Min Bandwidth                          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+</pre>
+<p class="figure">Figure 5: FLOWDATA Response</p>
+<p/>
+
+<dl>
+  <dt>Type:</dt>
+  <dd style="margin-left: 8">TBD (optional to process)</dd>
+  <dt>Reserved:</dt>
+  <dd style="margin-left: 8">Must be 0 and ignored by the server.</dd>
+  <dt>Length:</dt>
+  <dd style="margin-left: 8">Option Length is 24 octets.</dd>
+  <dt>May appear in:</dt>
+  <dd style="margin-left: 8">STUN/ICE Binding Request and Response, inside the MD-RESP-UP and/or MD-RESP-DN STUN attributes.</dd>
+  <dt>Maximum occurrences:</dt>
+  <dd style="margin-left: 8">1</dd>
+</dl>
+
+<p>When included in MD-RESP-UP TLV the FLOWDATA Response indicate the response from middleboxes that are on the upstream path. When included in MD-RESP-DN TLV the FLOWDATA Response indicate the response from middleboxes that are on the downsteam path.</p>
+<p id="rfc.section.9.2.2.p.3">Description of the fields: </p>
+
+<dl>
+  <dt>Reserved:</dt>
+  <dd style="margin-left: 8">96 bits, MUST be ignored on reception and MUST be 0 on transmission.</dd>
+  <dt>DT:</dt>
+  <dd style="margin-left: 8">Delay Tolerance, 0 means no information is available.</dd>
+  <dt>LT:</dt>
+  <dd style="margin-left: 8">Loss Tolerance, 0 means no information is available.</dd>
+  <dt>JT:</dt>
+  <dd style="margin-left: 8">Jitter Tolerance, 0 means no information is available.</dd>
+  <dt>Reserved:</dt>
+  <dd style="margin-left: 8">Reserved (7 bits), MUST be ignored on reception and MUST be 0 on transmission</dd>
+  <dt>Minimum Bandwidth</dt>
+  <dd style="margin-left: 8">Minimum bandwidth in bytes per second, 0 means no information is available.</dd>
+  <dt>Maximum Bandwidth:</dt>
+  <dd style="margin-left: 8">Maximum bandwidth in bytes per second, 0 means no information is available.</dd>
+</dl>
+<h1 id="rfc.section.9.2.3"><a href="#rfc.section.9.2.3">9.2.3.</a> Usage Example</h1>
+<p id="rfc.section.9.2.3.p.1">This section describes how the STUN protocol elements defined above are used to implement flow prioritization.</p>
+
+<ul>
+  <li>Endpoint Metadata Request (REQ-RESP) - Flow Prioritization: Endpoint asks flow prioritization by including in the Binding request non-0 values in the FLOWDATA Request and values initialized to 0 in MD-RESP-UP and MD-RESP-DN TLVs. Upstream MALICE nodes update the MD-RESP-UP with the results. Peer includes in the Binding response the received MD STUN TLVs and the MD-PEER-CHECK-RESP. Downstream MALICE nodes update the MD-RESP-DN TLV. In the example below, the endpoint received the required prioritization for the upstream direction and a lower than requested one for downstream.<ul><li>Binding Request sent by MALICE Client:<ul><li>MD-AGENT (InstID=0, uDT=1, uLT=1, uJT=1, dDT=2, dLT=2, dJT=2, uMinBW=4mbps, uMaxBW=5mbps, uMinBW=5mbps, MaxBW=10mbps)</li><li>MD-RESP-UP (DT=0, LT=0, JT=0, MinBW=0mbps, MaxBW=0mbps)</li><li>MD-RESP-DN (DT=0, LT=0, JT=0, MinBW=0mbps, MaxBW=0mbps)</li></ul></li><li>Binding Response received by MALICE Client:<ul><li>MD-AGENT (InstID=0, uDT=1, uLT=1, uJT=1, dDT=2, dLT=2, dJT=2, uMinBW=4mbps, uMaxBW=5mbps, uMinBW=5mbps, MaxBW=10mbps)</li><li>MD-ATTR-UP (DT=1, LT=1, JT=1, MinBW=4mbps, MaxBW=5mbps)</li><li>MD-ATTR-DN (DT=2, LT=2, JT=2, MinBW=4mbps, MaxBW=5mbps)</li><li>MD-PEER-CHECK-RES ("Success")</li></ul></li></ul></li>
+</ul>
+<h1 id="rfc.section.10"><a href="#rfc.section.10">10.</a> <a href="#ack" id="ack">Acknowledgements</a></h1>
+<p id="rfc.section.10.p.1">Authors would like to thank Paul Jones, Sergio Mena de la Cruz and Tirumaleswar Reddy for their comments and review.</p>
+<h1 id="rfc.references"><a href="#rfc.references">11.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">11.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[RFC2119]</b>
+      </td>
+      <td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, March 1997.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4732">[RFC4732]</b>
+      </td>
+      <td class="top"><a>Handley, M.</a>, <a>Rescorla, E.</a>, <a>IAB</a>, "<a href="http://tools.ietf.org/html/rfc4732">Internet Denial-of-Service Considerations</a>", RFC 4732, December 2006.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5389">[RFC5389]</b>
+      </td>
+      <td class="top"><a>Rosenberg, J.</a>, <a>Mahy, R.</a>, <a>Matthews, P.</a> and <a>D. Wing</a>, "<a href="http://tools.ietf.org/html/rfc5389">Session Traversal Utilities for NAT (STUN)</a>", RFC 5389, October 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6398">[RFC6398]</b>
+      </td>
+      <td class="top"><a>Le Faucheur, F.</a>, "<a href="http://tools.ietf.org/html/rfc6398">IP Router Alert Considerations and Usage</a>", BCP 168, RFC 6398, October 2011.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5245">[RFC5245]</b>
+      </td>
+      <td class="top"><a>Rosenberg, J.</a>, "<a href="http://tools.ietf.org/html/rfc5245">Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols</a>", RFC 5245, April 2010.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">11.2.</a> Informational References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-rtcweb-security-arch">[I-D.ietf-rtcweb-security-arch]</b>
+      </td>
+      <td class="top"><a>Rescorla, E.</a>, "<a href="http://tools.ietf.org/html/draft-ietf-rtcweb-security-arch-07">WebRTC Security Architecture</a>", Internet-Draft draft-ietf-rtcweb-security-arch-07, July 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.muthu-behave-consent-freshness">[I-D.muthu-behave-consent-freshness]</b>
+      </td>
+      <td class="top"><a>Perumal, M.</a>, <a>Wing, D.</a>, <a>R, R.</a> and <a>T. Reddy</a>, "<a href="http://tools.ietf.org/html/draft-muthu-behave-consent-freshness-04">STUN Usage for Consent Freshness</a>", Internet-Draft draft-muthu-behave-consent-freshness-04, July 2013.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Reinaldo Penno</span> (editor)
+	  <span class="n hidden">
+		<span class="family-name">Penno</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span>170 West Tasman Drive</span>
+
+	  <span class="vcardline">
+		<span class="locality">San Jose</span>,  
+		<span class="region"></span>
+		<span class="code">95134</span>
+	  </span>
+	  <span class="country-name vcardline">USA</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:repenno@cisco.com">repenno@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Paal-Erik Martinsen</span> 
+	  <span class="n hidden">
+		<span class="family-name">Martinsen</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span>Philip Pedersens vei 20</span>
+
+	  <span class="vcardline">
+		<span class="locality">Lysaker</span>,  
+		<span class="region">Akershus</span> 
+		<span class="code">1366</span>
+	  </span>
+	  <span class="country-name vcardline">Norway</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:palmarti@cisco.com">palmarti@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Dan Wing</span> 
+	  <span class="n hidden">
+		<span class="family-name">Wing</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span>170 West Tasman Drive</span>
+
+	  <span class="vcardline">
+		<span class="locality">San Jose</span>,  
+		<span class="region">CA</span> 
+		<span class="code">95134</span>
+	  </span>
+	  <span class="country-name vcardline">USA</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:dwing@cisco.com">dwing@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Anca Zamfir</span> 
+	  <span class="n hidden">
+		<span class="family-name">Zamfir</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span>EPFL, Quartier de l'Innovation</span>
+
+	  <span class="vcardline">
+		<span class="locality">Ecublens</span>,  
+		<span class="region">Vaud</span> 
+		<span class="code">1015</span>
+	  </span>
+	  <span class="country-name vcardline">Switzerland</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:ancaz@cisco.com">ancaz@cisco.com</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>

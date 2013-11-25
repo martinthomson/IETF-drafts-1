@@ -2,7 +2,7 @@
 
 
 
-git checkout -- Drafts
+git checkout master -- Drafts
 
 cat start.html > index.html
 rm content.html
