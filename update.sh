@@ -1,11 +1,13 @@
 #!/bin/bash
 
-git checkout master -- Drafts
+#git checkout master -- Drafts
+
+cp -r Drafts/* DraftStorage
 
 cat start.html > index.html
 rm content.html
 
-cd Drafts
+cd DraftStorage
 for FILE in `ls -l`
 do
     if test -d $FILE
@@ -17,9 +19,9 @@ do
       do
           #echo "Procsessing file: $HTMLFILE"
           echo "<p>" >> ../../content.html
-          echo "${HTMLFILE%%.*} <a href=Drafts/$FILE/$HTMLFILE> [html] </a>" >> ../../content.html
-          echo "<a href=Drafts/$FILE/${HTMLFILE%%.*}.txt> [txt] </a>" >> ../../content.html
-          echo "<a href=Drafts/$FILE/${HTMLFILE%%.*}.raw.txt> [raw.txt] </a>" >> ../../content.html
+          echo "${HTMLFILE%%.*} <a href=DraftStorage/$FILE/$HTMLFILE> [html] </a>" >> ../../content.html
+          echo "<a href=DraftStorage/$FILE/${HTMLFILE%%.*}.txt> [txt] </a>" >> ../../content.html
+          echo "<a href=DraftStorage/$FILE/${HTMLFILE%%.*}.raw.txt> [raw.txt] </a>" >> ../../content.html
           echo "</p>" >> ../../content.html
       done
       cd ..
@@ -30,6 +32,6 @@ cd ..
 cat content.html >>index.html
 cat end.html >>index.html
 
-git add Drafts
-git commit -a -m "Sync docs from master branch to docs gh-pages directory"
-git push
+git add DraftStorage
+git commit -a -m "Sync generated drafs to gh-pages directory"
+git push origin gh-pages
