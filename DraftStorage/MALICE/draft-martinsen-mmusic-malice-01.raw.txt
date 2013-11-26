@@ -13,8 +13,6 @@ Expires: May 30, 2014                                  November 26, 2013
 
 Abstract
 
-   Rewrite this as well??
-
    It can be useful for applications to provide flow metadata
    information to on-path devices to influence flow treatment in the
    network.  Provided that the network is able to provide useful
@@ -93,8 +91,6 @@ Expires: May 30, 2014                                  November 26, 2013
                     draft-martinsen-mmusic-malice-01
 
 Abstract
-
-   Rewrite this as well??
 
    It can be useful for applications to provide flow metadata
    information to on-path devices to influence flow treatment in the
