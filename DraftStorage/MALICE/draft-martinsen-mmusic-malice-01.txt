@@ -5,7 +5,7 @@
 MMUSIC                                                      P. Martinsen
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                                   Cisco
-Expires: May 30, 2014                                  November 26, 2013
+Expires: June 15, 2014                                 December 12, 2013
 
 
                 Meta-data Attribute signaLling with ICE
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Martinsen & Zamfir        Expires May 30, 2014                  [Page 1]
+Martinsen & Zamfir        Expires June 15, 2014                 [Page 1]
 
-Internet-Draft                   MALICE                    November 2013
+Internet-Draft                   MALICE                    December 2013
 
 
    Internet-Drafts are draft documents valid for a maximum of six months
@@ -63,7 +63,7 @@ Internet-Draft                   MALICE                    November 2013
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 30, 2014.
+   This Internet-Draft will expire on June 15, 2014.
 
 Copyright Notice
 
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Martinsen & Zamfir        Expires May 30, 2014                  [Page 2]
+Martinsen & Zamfir        Expires June 15, 2014                 [Page 2]
 
-Internet-Draft                   MALICE                    November 2013
+Internet-Draft                   MALICE                    December 2013
 
 
    different points in the network by using either STUN [RFC5389]
@@ -165,9 +165,9 @@ Internet-Draft                   MALICE                    November 2013
 
 
 
-Martinsen & Zamfir        Expires May 30, 2014                  [Page 3]
+Martinsen & Zamfir        Expires June 15, 2014                 [Page 3]
 
-Internet-Draft                   MALICE                    November 2013
+Internet-Draft                   MALICE                    December 2013
 
 
 Authors' Addresses
@@ -221,4 +221,4 @@ Authors' Addresses
 
 
 
-Martinsen & Zamfir        Expires May 30, 2014                  [Page 4]
+Martinsen & Zamfir        Expires June 15, 2014                 [Page 4]

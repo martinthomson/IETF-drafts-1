@@ -5,8 +5,8 @@
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: May 30, 2014                                              Cisco
-                                                       November 26, 2013
+Expires: June 15, 2014                                             Cisco
+                                                       December 12, 2013
 
 
                     Happy Eyeballs Extension for ICE
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 30, 2014.
+   This Internet-Draft will expire on June 15, 2014.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Reddy, et al.             Expires May 30, 2014                  [Page 1]
+Reddy, et al.             Expires June 15, 2014                 [Page 1]
 
-Internet-Draft           Happy Eyeballs for ICE            November 2013
+Internet-Draft           Happy Eyeballs for ICE            December 2013
 
 
 Table of Contents
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Reddy, et al.             Expires May 30, 2014                  [Page 2]
+Reddy, et al.             Expires June 15, 2014                 [Page 2]
 
-Internet-Draft           Happy Eyeballs for ICE            November 2013
+Internet-Draft           Happy Eyeballs for ICE            December 2013
 
 
    IPv6 and IPv4 candidates get a fair chance during connectivity
@@ -165,9 +165,9 @@ Internet-Draft           Happy Eyeballs for ICE            November 2013
 
 
 
-Reddy, et al.             Expires May 30, 2014                  [Page 3]
+Reddy, et al.             Expires June 15, 2014                 [Page 3]
 
-Internet-Draft           Happy Eyeballs for ICE            November 2013
+Internet-Draft           Happy Eyeballs for ICE            December 2013
 
 
 7.  Normative References
@@ -221,4 +221,4 @@ Authors' Addresses
 
 
 
-Reddy, et al.             Expires May 30, 2014                  [Page 4]
+Reddy, et al.             Expires June 15, 2014                 [Page 4]

@@ -1,0 +1,560 @@
+
+
+
+
+Internet Engineering Task Force                                 C. Eckel
+Internet-Draft                                                  T. Reddy
+Intended status: Informational                       Cisco Systems, Inc.
+Expires: June 15, 2014                                 December 12, 2013
+
+
+             Application Enabled Open Networking Use Cases
+                     draft-eckel-aeon-use-cases-00
+
+Abstract
+
+   This document describes application enabled open networking use
+   cases.  Application enabled open networking (AEON) is a framework in
+   which applications explicitly signal their flow characteristics to
+   the network.  This provides network nodes with visibility of the
+   application flow characteristics, which enables them to apply the
+   correct flow treatment and provide feedback to applications.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on June 15, 2014.
+
+Copyright Notice
+
+   Copyright (c) 2013 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+
+
+
+
+
+
+
+
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 1]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
+   2.  Use Cases . . . . . . . . . . . . . . . . . . . . . . . . . .   3
+     2.1.  Home: Consistent experience of video conferencing with
+           competing traffic . . . . . . . . . . . . . . . . . . . .   4
+       2.1.1.  Description of Problem  . . . . . . . . . . . . . . .   4
+       2.1.2.  User Benefit  . . . . . . . . . . . . . . . . . . . .   4
+       2.1.3.  Operator Benefit  . . . . . . . . . . . . . . . . . .   4
+       2.1.4.  Flow characteristics provided by application  . . . .   4
+       2.1.5.  Action taken by network as result of receiving flow
+               characteristics . . . . . . . . . . . . . . . . . . .   4
+       2.1.6.  Feedback provided by network  . . . . . . . . . . . .   4
+     2.2.  Firewall Traversal: Identification of new applications  .   5
+       2.2.1.  Description of Problem  . . . . . . . . . . . . . . .   5
+       2.2.2.  User Benefit  . . . . . . . . . . . . . . . . . . . .   5
+       2.2.3.  Operator Benefit  . . . . . . . . . . . . . . . . . .   5
+       2.2.4.  Flow characteristics provided by application  . . . .   6
+       2.2.5.  Action taken by firewall as result of receiving flow
+               characteristics . . . . . . . . . . . . . . . . . . .   6
+       2.2.6.  Feedback provided by firewall . . . . . . . . . . . .   6
+     2.3.  Load Balancing: Identification of application for better
+           load balancing without solely relying on inspection
+           techniques  . . . . . . . . . . . . . . . . . . . . . . .   6
+       2.3.1.  Description of Problem  . . . . . . . . . . . . . . .   6
+       2.3.2.  User Benefit  . . . . . . . . . . . . . . . . . . . .   6
+       2.3.3.  Operator Benefit  . . . . . . . . . . . . . . . . . .   6
+       2.3.4.  Flow characteristics provided by application  . . . .   6
+       2.3.5.  Action taken by network as result of receiving flow
+               characteristics . . . . . . . . . . . . . . . . . . .   6
+       2.3.6.  Feedback provided by network  . . . . . . . . . . . .   6
+     2.4.  Scavenger class: Creation of a scavenger class. Use
+           metadata to shift high-bandwidth, low priority traffic to
+           off-peak hours  . . . . . . . . . . . . . . . . . . . . .   6
+       2.4.1.  Description of Problem  . . . . . . . . . . . . . . .   6
+       2.4.2.  User Benefit  . . . . . . . . . . . . . . . . . . . .   7
+       2.4.3.  Operator Benefit  . . . . . . . . . . . . . . . . . .   7
+       2.4.4.  Flow characteristics provided by application  . . . .   7
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 2]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+       2.4.5.  Action taken by network as result of receiving flow
+               characteristics . . . . . . . . . . . . . . . . . . .   7
+       2.4.6.  Feedback provided by network  . . . . . . . . . . . .   7
+     2.5.  Video Adaptation: Use client metadata to help video bit
+           rate selection  . . . . . . . . . . . . . . . . . . . . .   7
+       2.5.1.  Description of Problem  . . . . . . . . . . . . . . .   7
+       2.5.2.  User Benefit  . . . . . . . . . . . . . . . . . . . .   7
+       2.5.3.  Operator Benefit  . . . . . . . . . . . . . . . . . .   7
+       2.5.4.  Flow characteristics provided by application  . . . .   8
+       2.5.5.  Action taken by network as result of receiving flow
+               characteristics . . . . . . . . . . . . . . . . . . .   8
+       2.5.6.  Feedback provided by network  . . . . . . . . . . . .   8
+     2.6.  Mobile Host/App Metadata: Use metadata for
+           troubleshooting and network planning  . . . . . . . . . .   8
+       2.6.1.  Description of Problem  . . . . . . . . . . . . . . .   8
+       2.6.2.  User Benefit  . . . . . . . . . . . . . . . . . . . .   8
+       2.6.3.  Operator Benefit  . . . . . . . . . . . . . . . . . .   8
+       2.6.4.  Flow characteristics provided by application  . . . .   8
+       2.6.5.  Action taken by network as result of receiving flow
+               characteristics . . . . . . . . . . . . . . . . . . .   8
+       2.6.6.  Feedback provided by network  . . . . . . . . . . . .   8
+     2.7.  Multi-interface selection: Use metadata to help interface
+           selection or prioritization . . . . . . . . . . . . . . .   8
+       2.7.1.  Description of Problem  . . . . . . . . . . . . . . .   9
+       2.7.2.  User Benefit  . . . . . . . . . . . . . . . . . . . .   9
+       2.7.3.  Operator Benefit  . . . . . . . . . . . . . . . . . .   9
+       2.7.4.  Flow characteristics provided by application  . . . .   9
+   3.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
+   4.  Informative References  . . . . . . . . . . . . . . . . . . .   9
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
+
+1.  Introduction
+
+   This document describes application enabled open networking use
+   cases.  Application enabled open networking (AEON) is a framework in
+   which applications explicitly signal their flow characteristics to
+   the network.  This provides network nodes with visibility of the
+   application flow characteristics, which enables them to apply the
+   correct flow treatment and provide feedback to applications.
+   Additional details on this framework are provided in
+   [I-D.eckert-intarea-flow-metadata-framework]
+
+2.  Use Cases
+
+   The following use cases have been identified.
+
+   1.  Home: Consistent experience of video conferencing with competing
+       traffic.
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 3]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+   2.  Firewall Traversal: Identification of new applications.
+
+   3.  Load Balancing: Identification of application for better load
+       balancing without solely relying on inspection techniques.
+
+   4.  Scavenger class: Creation of a scavenger class.  Use metadata to
+       shift high-bandwidth, low priority traffic to off-peak hours.
+
+   5.  Video Adaptation: Use client metadata to help video bit rate
+       selection.
+
+   6.  Mobile Host/App Metadata: Use metadata for troubleshooting and
+       network planning.
+
+   7.  Multi-interface selection: Use metadata to help interface
+       selection or prioritization.
+
+   In describing each use case, the following information is provided.
+
+   o  description of the problem
+
+   o  user benefit
+
+   o  operator benefit
+
+   o  flow characteristics provided by application
+
+   o  action taken by network as result of receiving flow
+      characteristics
+
+   o  feedback provided by network
+
+2.1.  Home: Consistent experience of video conferencing with competing
+      traffic
+
+2.1.1.  Description of Problem
+
+2.1.2.  User Benefit
+
+2.1.3.  Operator Benefit
+
+2.1.4.  Flow characteristics provided by application
+
+2.1.5.  Action taken by network as result of receiving flow
+        characteristics
+
+2.1.6.  Feedback provided by network
+
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 4]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+2.2.  Firewall Traversal: Identification of new applications
+
+2.2.1.  Description of Problem
+
+   Modern firewalls use application-layer gateways (ALGs) to perform
+   policy enforcement.  For example firewalls implement SIP-aware
+   Application Layer Gateway function, which examines the SIP signaling
+   and opens the appropriate pinholes for the RTP media.  In particular
+   firewall extracts media transport addresses, transport protocol and
+   ports from session description and creates a dynamic mapping for
+   media to flow through.  This model will not work in the following
+   cases:
+
+   1.  Session signaling is end-to-end encrypted (say, using TLS).
+
+   2.  Firewall does not understand the session signaling protocol, or
+       extensions to the protocol, used by the endpoints (e.g.  WebRTC
+       signaling protocols).
+
+   3.  Session signaling and media traverse different firewalls (e.g.,
+       signaling exits a network via one firewall whereas media exits a
+       network via a different firewall).
+
+   This problem can be addressed by the host getting authorization from
+   the Application Server trusted by the network in order to install
+   flows and associated actions (e.g., policies).  PCP third party
+   authorization (draft-wing-pcp-third-party-authz-01) solves this
+   problem by associating the media session with the signaling session.
+   This is done by sending a cryptographic token in the signaling which
+   authorizes the firewall mapping for the media session.
+
+2.2.2.  User Benefit
+
+   New applications can be deployed in the Enterprise Network at a
+   faster rate.  This mechanism can be used by any other Application
+   Function trusted by the network to permit time-bound, encrypted,
+   peer-to-peer traffic.
+
+2.2.3.  Operator Benefit
+
+   Enterprise firewalls can enforce restrictive policies without the
+   need to be enhanced to perform ALG on new applications.  For example
+   Enterprise firewall could have granular policies to permit peer-to-
+   peer UDP media session only when the call is initiated using the
+   selected WebRTC server (Dr. Good) it trusts and block others (Dr.
+   Evil).  PCP-aware firewalls can enforce such granular security
+   policies without performing ALG on the session signaling protocols.
+
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 5]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+2.2.4.  Flow characteristics provided by application
+
+   The client requests dynamic mappings to permit flows required by the
+   application.  This request includes a cryptographic token and
+   characteristics of the flow, such as the anticipated bandwidth needs
+   as well as the tolerance to delay, loss, and jitter.
+
+2.2.5.  Action taken by firewall as result of receiving flow
+        characteristics
+
+   The firewall uses the client request to permit and prioritize the
+   traffic associated with those flows.  The cryptographic token
+   provides authorization for the flows and their prioritization.
+
+2.2.6.  Feedback provided by firewall
+
+   Firewall matches the authorization data with what is requested in the
+   request sent by the client.  If the authorization sets match, the
+   firewall honors the request made by the client.  If the token is
+   invalid or the request exceeds what is authorized by the token then
+   firewall rejects the request with appropriate error response.
+
+2.3.  Load Balancing: Identification of application for better load
+      balancing without solely relying on inspection techniques
+
+2.3.1.  Description of Problem
+
+2.3.2.  User Benefit
+
+2.3.3.  Operator Benefit
+
+2.3.4.  Flow characteristics provided by application
+
+2.3.5.  Action taken by network as result of receiving flow
+        characteristics
+
+2.3.6.  Feedback provided by network
+
+2.4.  Scavenger class: Creation of a scavenger class.  Use metadata to
+      shift high-bandwidth, low priority traffic to off-peak hours
+
+2.4.1.  Description of Problem
+
+
+
+
+
+
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 6]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+2.4.2.  User Benefit
+
+2.4.3.  Operator Benefit
+
+2.4.4.  Flow characteristics provided by application
+
+2.4.5.  Action taken by network as result of receiving flow
+        characteristics
+
+2.4.6.  Feedback provided by network
+
+2.5.  Video Adaptation: Use client metadata to help video bit rate
+      selection
+
+   HTTP Adaptive Streaming (HAS) is an umbrella term for various HTTP-
+   based streaming technologies that allow a client to adaptively switch
+   between multiple bitrates, depending on current network conditions.
+   HAS client first requests and receives a Manifest File, and then,
+   after parsing the information in the Manifest File, proceeds with
+   sequentially requesting the chunks listed in the Manifest File.
+
+2.5.1.  Description of Problem
+
+   The problems with HAS are:
+
+   o  HAS client has to select the initial bitrate without knowing the
+      current network conditions.
+
+   o  HAS client does not have a mechanism to signal the flow
+      characteristics and flow priority to the network.
+
+   o  Content Providers may have tie-up with ISPs and need a mechanism
+      to convey the flow characteristics and flow priority to the ISP.
+
+   o  HAS client needs a mechanism to be notified by the network
+      whenever the link characteristics change so that it can switchover
+      to a different bitrate for subsequent chunks.
+
+2.5.2.  User Benefit
+
+   AEON helps increase the average play quality, reduces the start-up
+   delay and frame freezes etc thus improving the quality of experience
+   for end user.
+
+2.5.3.  Operator Benefit
+
+   Network Operators do not have to perform Deep Packet Inspection (DPI)
+   to recognize one-way video streaming content.  If ISP has tie-up with
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 7]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+   content provider then HAS client can use third party authorization to
+   request network resources.  At a high level, this authorization works
+   by the client first obtaining a cryptographic token from the
+   authorizing network element and includes that token in the request.
+   ISP validates the token and grants the request.
+
+2.5.4.  Flow characteristics provided by application
+
+   HAS client signals the flow characteristics such as the anticipated
+   bandwidth needs as well as the tolerance to delay, loss, and jitter.
+
+2.5.5.  Action taken by network as result of receiving flow
+        characteristics
+
+   The network might examine its static configuration and do bandwidth
+   counting, or it might reconfigure the underlying network so that
+   additional bandwidth is made available for this particular flow, or
+   might perform other actions.
+
+2.5.6.  Feedback provided by network
+
+   The network responds that the client request can be fully or
+   partially accommodated.
+
+2.6.  Mobile Host/App Metadata: Use metadata for troubleshooting and
+      network planning
+
+2.6.1.  Description of Problem
+
+2.6.2.  User Benefit
+
+2.6.3.  Operator Benefit
+
+2.6.4.  Flow characteristics provided by application
+
+2.6.5.  Action taken by network as result of receiving flow
+        characteristics
+
+2.6.6.  Feedback provided by network
+
+2.7.  Multi-interface selection: Use metadata to help interface
+      selection or prioritization
+
+
+
+
+
+
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 8]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+2.7.1.  Description of Problem
+
+   A host with multiple interfaces needs to choose the best interface
+   for communication.  Oftentimes, this decision is based on a static
+   configuration and does not consider the link characteristics of that
+   interface, which may affect the user experience.  The network
+   interfaces may have different link characteristics, but that will not
+   be known without the awareness of the upstream and downstream
+   characteristics of the access link.
+
+2.7.2.  User Benefit
+
+   Applications can choose the best interface for communication using
+   AEON.
+
+2.7.3.  Operator Benefit
+
+   Network Operator which can provide the requested flow characteristics
+   will be selected by the application thus increasing the subscriber
+   base of the operator.
+
+2.7.4.  Flow characteristics provided by application
+
+   Application signals flow characteristics to multiple interfaces and
+   based on the response from its various interfaces sorts the source
+   addresses according to the link capacity characteristics.  Source
+   addresses from the interface which best fulfills the desired flow
+   characteristics are assigned the highest priority and would be tried
+   first to communicate with the server or remote peer.  For example
+   draft-reddy-mmusic-ice-best-interface-pcp-00 explains the mechanism
+   where Interactive Connectivity Establishment (ICE) agent on a host
+   with multiple interfaces uses AEON to determine the link
+   characteristics of the host's interfaces, which influences the ICE
+   candidate priority.  Similarly draft-wing-mptcp-pcp-00 explains how
+   Multipath TCP (MPTCP) can select the best path when multiple paths
+   are available.
+
+3.  Acknowledgements
+
+   The authors would like those you attended the bar BoF and contributed
+   to the set of use cases.
+
+4.  Informative References
+
+   [I-D.eckert-intarea-flow-metadata-framework]
+
+
+
+
+
+
+Eckel & Reddy             Expires June 15, 2014                 [Page 9]
+
+Internet-Draft               AEON Use Cases                December 2013
+
+
+              Eckert, T., Penno, R., Choukir, A., and C. Eckel, "A
+              Framework for Signaling Flow Characteristics between
+              Applications and the Network", draft-eckert-intarea-flow-
+              metadata-framework-02 (work in progress), October 2013.
+
+Authors' Addresses
+
+   Charles Eckel
+   Cisco Systems, Inc.
+   170 West Tasman Drive
+   San Jose, CA  95134
+   US
+
+   Email: eckelcu@cisco.com
+
+
+   Tirumaleswar Reddy
+   Cisco Systems, Inc.
+   Cessna Business Park, Varthur Hobli
+   Sarjapur Marathalli Outer Ring Road
+   Bangalore, Karnataka  560103
+   India
+
+   Email: tireddy@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Eckel & Reddy             Expires June 15, 2014                [Page 10]

@@ -5,7 +5,7 @@
 MMUSIC                                                      P. Martinsen
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                                   Cisco
-Expires: May 30, 2014                                  November 26, 2013
+Expires: June 15, 2014                                 December 12, 2013
 
 
                 Meta-data Attribute signaLling with ICE
@@ -55,7 +55,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 30, 2014.
+   This Internet-Draft will expire on June 15, 2014.
 
 Copyright Notice
 
@@ -84,7 +84,7 @@ Table of Contents
 MMUSIC                                                      P. Martinsen
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                                   Cisco
-Expires: May 30, 2014                                  November 26, 2013
+Expires: June 15, 2014                                 December 12, 2013
 
 
                 Meta-data Attribute signaLling with ICE
@@ -134,7 +134,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 30, 2014.
+   This Internet-Draft will expire on June 15, 2014.
 
 Copyright Notice
 
