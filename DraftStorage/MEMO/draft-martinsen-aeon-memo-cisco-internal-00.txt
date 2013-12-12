@@ -1,0 +1,448 @@
+
+
+
+
+AEON                                                   P. Martinsen, Ed.
+Internet-Draft                                                     Cisco
+Intended status: Standards Track                       December 12, 2013
+Expires: June 15, 2014
+
+
+          Markings for Enhancing Multiplexed Ordonance (MEMO)
+                      draft-martinsen-aeon-memo-00
+
+Abstract
+
+   To make sure an clients mediastream is treated the best way possible
+   by the network it is necsesary for the agent to provide hints.  Such
+   hints can be on individual packet level in for example a video stream
+   describing how important a packet id for decoding the stream.  Also
+   with multiplexing technologies like BUNDLE
+   [I-D.holmberg-mmusic-sdp-bundle-negotiation] individual frame marking
+   might help the network to provide a better service to the client.
+   This specification decribes how a small shim packet can be used for
+   such fram markings in attition to how to make sure the remote client
+   and the network path also support the markings.
+
+Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on June 15, 2014.
+
+Copyright Notice
+
+
+
+
+
+Martinsen                 Expires June 15, 2014                 [Page 1]
+
+Internet-Draft                    MEMO                     December 2013
+
+
+   Copyright (c) 2013 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  MEMO overview . . . . . . . . . . . . . . . . . . . . . . . .   3
+   3.  MEMO message structure  . . . . . . . . . . . . . . . . . . .   3
+     3.1.  Generic Type Specific Field . . . . . . . . . . . . . . .   4
+     3.2.  Audio Type Specific Field . . . . . . . . . . . . . . . .   4
+     3.3.  Video Type Specific Field . . . . . . . . . . . . . . . .   4
+   4.  Detecting Remote agent and Network Path Support . . . . . . .   5
+     4.1.  ICE Connecivity Checks  . . . . . . . . . . . . . . . . .   5
+       4.1.1.  Sending a Binding Request with MEMO attributes  . . .   5
+       4.1.2.  Sending a Binding Response with MEMO attributes . . .   5
+       4.1.3.  Network Node processing of STUN packets with a
+               MEMO attribute  . . . . . . . . . . . . . . . . . . .   5
+     4.2.  ICE Nominations . . . . . . . . . . . . . . . . . . . . .   5
+   5.  Usage with ICE  . . . . . . . . . . . . . . . . . . . . . . .   6
+   6.  Sending Media or Other traffic  . . . . . . . . . . . . . . .   6
+   7.  MEMO Attributes . . . . . . . . . . . . . . . . . . . . . . .   6
+     7.1.  Specific Video Codec Information  . . . . . . . . . . . .   6
+     7.2.  Path Information  . . . . . . . . . . . . . . . . . . . .   6
+   8.  New STUN Attributes . . . . . . . . . . . . . . . . . . . . .   6
+     8.1.  MEMO-SUPPORT  . . . . . . . . . . . . . . . . . . . . . .   7
+     8.2.  MEMO-INFO . . . . . . . . . . . . . . . . . . . . . . . .   7
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
+     9.1.  STUN Inspection . . . . . . . . . . . . . . . . . . . . .   7
+   10. IANA Considerations . . . . . . . . . . . . . . . . . . . . .   7
+   11. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .   7
+     12.2.  Informative References . . . . . . . . . . . . . . . . .   8
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   8
+
+1.  Introduction
+
+
+
+
+
+Martinsen                 Expires June 15, 2014                 [Page 2]
+
+Internet-Draft                    MEMO                     December 2013
+
+
+2.  MEMO overview
+
+   More text to be added here..
+
+3.  MEMO message structure
+
+   STUN messages are encoded in binary using network-oriented format
+   (most significant byte or octet first, also commonly known as big-
+   endian).  The transmission order is described in detail in Appendix B
+   of RFC 791 [RFC0791].  Unless otherwise noted, numeric constants are
+   in decimal (base 10).
+
+   The MEMO header fields are using the same machensisms defined in STUN
+   RFC 5389 [RFC5389] to make it easy to distinguish the shim packet in
+   a stream.  The Magic Cookie is shorter, and is its most important
+   function is to avoid the shim packet to be wrongly reqognized as a
+   STUN packet.
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |0 0|   Type    |    sid    |Prp-len|   Empty   | Message Length|
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |        Type Specific          |         Magic Cookie          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                           Figure 1: MEMO Header
+
+   Description of the fields:
+
+   Type:  Generic (0x0), Audio(0x1), Video(0x1)...
+
+   sid:  Stream ID.  User specific.  Can for example be medialine index
+      in SDP.  MUST be different for each multiplexed mediastreams on
+      the same 5-tuple
+
+   Prp-len:  Pr padded length.  If routers want to add more network
+      information by piggybacking on existing packets it can intruct the
+      clients to add a empty MEMO attribute as padding.  THe router can
+      then use this pre-padded attribute to add the desired information.
+
+   Message Length:  The message length MUST contain the size, in bytes,
+      of the message not including the 8-byte MEMO header.
+
+   Magic Cookie:  The magic cookie field MUST contain the fixed value
+      0xADA0 in network byte order.
+
+
+
+
+Martinsen                 Expires June 15, 2014                 [Page 3]
+
+Internet-Draft                    MEMO                     December 2013
+
+
+3.1.  Generic Type Specific Field
+
+   If the type field in the header is Generic (0x0) the type specific
+   field will contain the infomation defined as follows.  (TODO: What
+   can we do with a generic header?  Discardable?  Discardable, but
+   expect a retransmit?  Other smart stuff we can put in here?)
+
+    0                   1
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                 Figure 2: MEMO Header Type Generic Field
+
+3.2.  Audio Type Specific Field
+
+   If the type field in the header is Audio (0x1) the type specific
+   field will contain the infomation defined as follows.(Todo: Shold
+   this contain information about audio behaviour, static vs elastic?
+   (Opus is elastic?))
+
+    0                   1
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                  Figure 3: MEMO Header Type Audio Field
+
+3.3.  Video Type Specific Field
+
+   If the type field in the header is Video (0x2) the type specific
+   field will contain the infomation defined as follows.  This field
+   have also been fefined in [I-D.avtext-berger-framemarking].
+
+    0                   1
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |D|S| TID |FTYPE|      PAD      |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                  Figure 4: MEMO Header Type Video Field
+
+   Description of the fields:
+
+   D: Discardable - The flag must be true for packets that can be
+      dropped, and still provide a decodable media stream.
+
+
+
+Martinsen                 Expires June 15, 2014                 [Page 4]
+
+Internet-Draft                    MEMO                     December 2013
+
+
+   S: Switching point (1 bit) - The flag must be true for RTP packets in
+      a frame that can be used as a switcing point.  A switching point
+      is the first packet where a new receiver can start decoding a
+      video stream without prior frames, e.g an IDR frame from
+      [RFC6184].
+
+   TID:  Temporal ID (3 bits) - The base temporal quality starts with 0,
+      and increases with 1 for each temporal layer.
+
+   FTYPE:  frame Type (3 bits) - Abstract frame type; P-frame=0, IDR=1,
+      GDR=2.  The abstracted frame types are:
+
+      *  P-frame - a frame depending on a previous frame
+
+      *  IDR - a frame without references to other frames
+
+      *  GDR - a Gradual Decoder Refresh (GDR) packet includes both
+         p-frame and frame information to allow a receiver to build of a
+         IDR frame over a short period.
+
+4.  Detecting Remote agent and Network Path Support
+
+   Before starting to use the shim packet remote agent support MUST be
+   verified.  It is also usefull to probe the network for any nodes that
+   support processing the MEMO shim packet.  Verification that no
+   network elements block traffic containig the MEMO shim packet SHOULD
+   also be done.
+
+   Remote agent and path support is detected by adding a STUN attributes
+   to the STUN connectivity cheks when ICE [RFC5245] probes the possible
+   open network paths.  Validation of a unbloked network path for MEMO
+   packets is done by adding the MEMO shim packet to the STUN packets
+   sent when ICE is nominating a candidate.
+
+4.1.  ICE Connecivity Checks
+
+4.1.1.  Sending a Binding Request with MEMO attributes
+
+4.1.2.  Sending a Binding Response with MEMO attributes
+
+4.1.3.  Network Node processing of STUN packets with a MEMO attribute
+
+4.2.  ICE Nominations
+
+   Add MEMO shim layer before the STUN Binding Request.  All in same UDP
+   packet.
+
+
+
+
+
+Martinsen                 Expires June 15, 2014                 [Page 5]
+
+Internet-Draft                    MEMO                     December 2013
+
+
+5.  Usage with ICE
+
+   All in paralell, just in responses (and then check oposite direction
+   when nominating?).  Or can we expect the path to support this if the
+   STUN packet goes through.  Could define a STUN attribute that we can
+   add after the integrity attribute to learn about the path and support
+   for MEMO.
+
+   Want to use ICE.  As this is nice input to the ICE machinery.
+   Especially if we use the onfo attribute.
+
+6.  Sending Media or Other traffic
+
+   Keep the packet as small as possible.  Use attributes only when it is
+   smart (tm) to do so.
+
+7.  MEMO Attributes
+
+7.1.  Specific Video Codec Information
+
+     0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  ID=2 |  L=2 |D|S|TID  |Type | video codec specific information |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                           Figure 5: Video Codec
+
+7.2.  Path Information
+
+   Network nodes can ask agents to pad the MEMO packets with empty path
+   attributes.  If MEMO packets contains a Path Information attribute it
+   can be used by the network node to covey useful information regarding
+   packet loss and other things to the agent.  (Need to open up the
+   agregated discussion)
+
+     0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  typ  |  len  |  What do we do here?                            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                        Figure 6: Path Information
+
+8.  New STUN Attributes
+
+
+
+
+Martinsen                 Expires June 15, 2014                 [Page 6]
+
+Internet-Draft                    MEMO                     December 2013
+
+
+   This specification definew two new attributes, MEMO-SUPPORT and MEMO-
+   INFO.
+
+8.1.  MEMO-SUPPORT
+
+   The MEMO-SUPPORT attribute indicates that the agent sending this
+   connectivity check or response supports MEMO.  The attribute has no
+   content (the Length field of the attribute is zero); it serves as a
+   flag.  It has an attribute value of 0x00XX.
+
+8.2.  MEMO-INFO
+
+9.  Security Considerations
+
+9.1.  STUN Inspection
+
+   Probably lots of things that can go very wrong....
+
+10.  IANA Considerations
+
+   txt
+
+11.  Acknowledgements
+
+   Authors would like to thank someone..
+
+12.  References
+
+12.1.  Normative References
+
+   [RFC0791]  Postel, J., "Internet Protocol", STD 5, RFC 791, September
+              1981.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC2629]  Rose, M., "Writing I-Ds and RFCs using XML", RFC 2629,
+              June 1999.
+
+   [RFC5245]  Rosenberg, J., "Interactive Connectivity Establishment
+              (ICE): A Protocol for Network Address Translator (NAT)
+              Traversal for Offer/Answer Protocols", RFC 5245, April
+              2010.
+
+   [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,
+              "Session Traversal Utilities for NAT (STUN)", RFC 5389,
+              October 2008.
+
+
+
+
+Martinsen                 Expires June 15, 2014                 [Page 7]
+
+Internet-Draft                    MEMO                     December 2013
+
+
+12.2.  Informative References
+
+   [I-D.avtext-berger-framemarking]
+              Berger, E. and S. Nandakumar, "Frame marking for RTP
+              packets", draft-avtext-berger-framemarking-00 (work in
+              progress), October 2013.
+
+   [I-D.holmberg-mmusic-sdp-bundle-negotiation]
+              Holmberg, C. and H. Alvestrand, "Multiplexing Negotiation
+              Using Session Description Protocol (SDP) Port Numbers",
+              draft-holmberg-mmusic-sdp-bundle-negotiation-00 (work in
+              progress), October 2011.
+
+Author's Address
+
+   Paal-Erik Martinsen (editor)
+   Cisco Systems, Inc.
+   Philip Pedersens vei 20
+   Lysaker, Akershus  1366
+   Norway
+
+   Email: palmarti@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Martinsen                 Expires June 15, 2014                 [Page 8]
