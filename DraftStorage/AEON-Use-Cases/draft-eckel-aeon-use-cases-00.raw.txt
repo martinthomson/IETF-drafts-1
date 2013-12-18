@@ -5,7 +5,7 @@
 Internet Engineering Task Force                                 C. Eckel
 Internet-Draft                                                  T. Reddy
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: June 15, 2014                                 December 12, 2013
+Expires: June 21, 2014                                 December 18, 2013
 
 
              Application Enabled Open Networking Use Cases
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 15, 2014.
+   This Internet-Draft will expire on June 21, 2014.
 
 Copyright Notice
 
@@ -66,7 +66,7 @@ Table of Contents
                characteristics
        2.1.6.  Feedback provided by network
      2.2.  Firewall Traversal: Identification of new applications
-       2.2.1.  Description of Problem
+       2.2.1.  Description of Problem and Solution
        2.2.2.  User Benefit
        2.2.3.  Operator Benefit
        2.2.4.  Flow characteristics provided by application
@@ -95,7 +95,7 @@ Table of Contents
        2.4.6.  Feedback provided by network
      2.5.  Video Adaptation: Use client metadata to help video bit
            rate selection
-       2.5.1.  Description of Problem
+       2.5.1.  Description of Problem and Solution
        2.5.2.  User Benefit
        2.5.3.  Operator Benefit
        2.5.4.  Flow characteristics provided by application
@@ -125,7 +125,7 @@ Table of Contents
 Internet Engineering Task Force                                 C. Eckel
 Internet-Draft                                                  T. Reddy
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: June 15, 2014                                 December 12, 2013
+Expires: June 21, 2014                                 December 18, 2013
 
 
              Application Enabled Open Networking Use Cases
@@ -155,7 +155,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 15, 2014.
+   This Internet-Draft will expire on June 21, 2014.
 
 Copyright Notice
 
@@ -174,21 +174,24 @@ Copyright Notice
 
 1.  Introduction
 
+   TODO: Abstract and Introduction don't explain any problem and have
+   the same text.
+
    This document describes application enabled open networking use
    cases.  Application enabled open networking (AEON) is a framework in
-   which applications explicitly signal their flow characteristics to
-   the network.  This provides network nodes with visibility of the
-   application flow characteristics, which enables them to apply the
-   correct flow treatment and provide feedback to applications.
-   Additional details on this framework are provided in
-   [I-D.eckert-intarea-flow-metadata-framework]
+   which applications explicitly signal the characteristics of their
+   flows to the network.  This provides network nodes with visibility
+   into the application flows, which enables them to apply the correct
+   flow treatment and provide feedback to applications.  Additional
+   details on this framework are provided in
+   [I-D.eckert-intarea-flow-metadata-framework],
 
 2.  Use Cases
 
    The following use cases have been identified.
 
    1.  Home: Consistent experience of video conferencing with competing
-       traffic.
+       traffic.  TODO: Why does that only apply to "home" ?
 
    2.  Firewall Traversal: Identification of new applications.
 
@@ -197,6 +200,9 @@ Copyright Notice
 
    4.  Scavenger class: Creation of a scavenger class.  Use metadata to
        shift high-bandwidth, low priority traffic to off-peak hours.
+       TODO: That drifts from a use-case to a solution ("use metadata to
+       ...").  Also, it appears to mix two things: (a) scavenger class
+       and (b) time-shifting traffic.  This is confusing.
 
    5.  Video Adaptation: Use client metadata to help video bit rate
        selection.
@@ -240,7 +246,7 @@ Copyright Notice
 
 2.2.  Firewall Traversal: Identification of new applications
 
-2.2.1.  Description of Problem
+2.2.1.  Description of Problem and Solution
 
    Modern firewalls use application-layer gateways (ALGs) to perform
    policy enforcement.  For example firewalls implement SIP-aware
@@ -261,20 +267,22 @@ Copyright Notice
        signaling exits a network via one firewall whereas media exits a
        network via a different firewall).
 
-   This problem can be addressed by the host getting authorization from
-   the Application Server trusted by the network in order to install
-   flows and associated actions (e.g., policies).  PCP third party
-   authorization (draft-wing-pcp-third-party-authz-01) solves this
+   Enterprise networks that use firewalls with restrictive policies
+   block new applications like WebRTC and delay deployment of killer
+   applications.
+
+   The above problems can be addressed by the host getting authorization
+   from the Application Server trusted by the network in order to
+   install flows and associated actions (e.g., policies).  PCP third
+   party authorization (draft-wing-pcp-third-party-authz-01) solves this
    problem by associating the media session with the signaling session.
    This is done by sending a cryptographic token in the signaling which
    authorizes the firewall mapping for the media session.
 
 2.2.2.  User Benefit
 
-   New applications can be deployed in the Enterprise Network at a
-   faster rate.  This mechanism can be used by any other Application
-   Function trusted by the network to permit time-bound, encrypted,
-   peer-to-peer traffic.
+   Enterprise networks that use firewalls with restrictive policies can
+   deploy new applications at a faster rate for user benefit.
 
 2.2.3.  Operator Benefit
 
@@ -285,6 +293,8 @@ Copyright Notice
    selected WebRTC server (Dr. Good) it trusts and block others (Dr.
    Evil).  PCP-aware firewalls can enforce such granular security
    policies without performing ALG on the session signaling protocols.
+   This mechanism can be used by any other Application Function trusted
+   by the network to permit time-bound, encrypted, peer-to-peer traffic.
 
 2.2.4.  Flow characteristics provided by application
 
@@ -304,9 +314,9 @@ Copyright Notice
 
    Firewall matches the authorization data with what is requested in the
    request sent by the client.  If the authorization sets match, the
-   firewall honors the request made by the client.  If the token is
+   firewall processes the request made by the client.  If the token is
    invalid or the request exceeds what is authorized by the token then
-   firewall rejects the request with appropriate error response.
+   firewall rejects the request.
 
 2.3.  Load Balancing: Identification of application for better load
       balancing without solely relying on inspection techniques
@@ -350,38 +360,64 @@ Copyright Notice
    after parsing the information in the Manifest File, proceeds with
    sequentially requesting the chunks listed in the Manifest File.
 
-2.5.1.  Description of Problem
+2.5.1.  Description of Problem and Solution
 
    The problems with HAS are:
 
-   o  HAS client has to select the initial bitrate without knowing the
-      current network conditions.
-
-   o  HAS client does not have a mechanism to signal the flow
+   o  HAS client selects the initial bitrate without knowing the current
+      network conditions which could cause start-up delay and frame
+      freezes while a lower bitrate chunk is being retrieved.  HAS
+      client does not have a mechanism to signal the flow
       characteristics and flow priority to the network.
 
-   o  Content Providers may have tie-up with ISPs and need a mechanism
-      to convey the flow characteristics and flow priority to the ISP.
+   o  Server can mark the packets appropriately but setting DSCP has
+      limitations like DSCP value may not be preserved or honored over
+      the Internet and OS may not allow to set DSCP values.
 
-   o  HAS client needs a mechanism to be notified by the network
-      whenever the link characteristics change so that it can switchover
-      to a different bitrate for subsequent chunks.
+   o  Content Providers may have agreements with ISPs and need a
+      mechanism to convey the flow characteristics and flow priority to
+      the ISP.  Limitations with existing mechanisms are:
+
+      1.  ISP can be configured with the IP addresses of content
+          providers to prioritize the traffic originating from those
+          servers.  The limitations with this approach are ISP has to
+          keep track of content providers IP addresses, with CDNI
+          (Content Delivery Network InterConnection) content could be
+          served either from uCDN (upstream CDN) or any of dCDNs
+          (dowstream CDN) and it will not be possible to manually track
+          the IP addresses of all the CDN surrogates.  There is also no
+          way to differentiate content which could be available in
+          different bitrates.
+
+      2.  If HAS client is behind NAT and content provider uses RESTful
+          API (OneAPI) to install differentiated QOS then ISP will have
+          to struggle to find the Pre NAT information.  Content provider
+          also needs to be aware of the ISP to which the client is
+          attached and the IP address of the Policy Decision Point (PDP)
+          in the ISP to which it needs to signal the flow
+          characteristics.
+
+   o  ISP can use DPI to prioritize one-way video streaming content but
+      is expensive and fails if the traffic is encrypted.
+
+   If ISP has agreement with content provider then HAS client can use
+   third party authorization to request network resources.  At a high
+   level, this authorization works by the client first obtaining a
+   cryptographic token from the authorizing network element and includes
+   that token in the request along with relevant flow characteristics.
+   ISP validates the token and grants the request.
 
 2.5.2.  User Benefit
 
    AEON helps increase the average play quality, reduces the start-up
-   delay and frame freezes etc thus improving the quality of experience
-   for end user.
+   delay and frame freezes by avoiding attempt to retrieve a too high-
+   bit rate chunk etc thus improving the quality of experience for end
+   user.
 
 2.5.3.  Operator Benefit
 
-   Network Operators do not have to perform Deep Packet Inspection (DPI)
-   to recognize one-way video streaming content.  If ISP has tie-up with
-   content provider then HAS client can use third party authorization to
-   request network resources.  At a high level, this authorization works
-   by the client first obtaining a cryptographic token from the
-   authorizing network element and includes that token in the request.
-   ISP validates the token and grants the request.
+   Network Operators can recognize and prioritize one-way video
+   streaming content.
 
 2.5.4.  Flow characteristics provided by application
 
@@ -391,15 +427,16 @@ Copyright Notice
 2.5.5.  Action taken by network as result of receiving flow
         characteristics
 
-   The network might examine its static configuration and do bandwidth
-   counting, or it might reconfigure the underlying network so that
-   additional bandwidth is made available for this particular flow, or
-   might perform other actions.
+   Subject to local policies, a network node might perform bandwidth
+   counting, or reconfigure the underlying network so that additional
+   bandwidth is made available for this particular flow, or might
+   perform other actions.
 
 2.5.6.  Feedback provided by network
 
    The network responds that the client request can be fully or
-   partially accommodated.
+   partially accommodated.  It also notifies the client when conditions
+   change.
 
 2.6.  Mobile Host/App Metadata: Use metadata for troubleshooting and
       network planning
@@ -422,13 +459,14 @@ Copyright Notice
 
 2.7.1.  Description of Problem
 
-   A host with multiple interfaces needs to choose the best interface
-   for communication.  Oftentimes, this decision is based on a static
-   configuration and does not consider the link characteristics of that
-   interface, which may affect the user experience.  The network
-   interfaces may have different link characteristics, but that will not
-   be known without the awareness of the upstream and downstream
-   characteristics of the access link.
+   An increasing number of hosts are operating in multiple-interface
+   environments and a host with multiple interfaces needs to choose the
+   best interface for communication.  Oftentimes, this decision is based
+   on a static configuration and does not consider the link
+   characteristics of that interface, which may affect the user
+   experience.  The network interfaces may have different link
+   characteristics, but that will not be known without the awareness of
+   the upstream and downstream characteristics of the access link.
 
 2.7.2.  User Benefit
 
@@ -437,13 +475,13 @@ Copyright Notice
 
 2.7.3.  Operator Benefit
 
-   Network Operator which can provide the requested flow characteristics
-   will be selected by the application thus increasing the subscriber
-   base of the operator.
+   The network that can provide the requested flow characteristics will
+   be selected by the application thus increasing the subscriber base of
+   the operator.
 
 2.7.4.  Flow characteristics provided by application
 
-   Application signals flow characteristics to multiple interfaces and
+   Application signals flow characteristics over multiple interfaces and
    based on the response from its various interfaces sorts the source
    addresses according to the link capacity characteristics.  Source
    addresses from the interface which best fulfills the desired flow
@@ -459,8 +497,8 @@ Copyright Notice
 
 3.  Acknowledgements
 
-   The authors would like those you attended the bar BoF and contributed
-   to the set of use cases.
+   The authors thank the attendees of the Bar BoF for contributing
+   towards this set of use cases.
 
 4.  Informative References
 
