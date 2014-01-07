@@ -5,9 +5,9 @@
 MMUSIC                                                     R. Penno, Ed.
 Internet-Draft                                              P. Martinsen
 Intended status: Standards Track                                 D. Wing
-Expires: June 21, 2014                                         A. Zamfir
+Expires: July 11, 2014                                         A. Zamfir
                                                                    Cisco
-                                                       December 18, 2013
+                                                        January 07, 2014
 
 
                 Meta-data Attribute signaLling with ICE
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 1]
+Penno, et al.             Expires July 11, 2014                 [Page 1]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    Internet-Drafts are working documents of the Internet Engineering
@@ -68,11 +68,11 @@ Internet-Draft                   MALICE                    December 2013
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 21, 2014.
+   This Internet-Draft will expire on July 11, 2014.
 
 Copyright Notice
 
-   Copyright (c) 2013 IETF Trust and the persons identified as the
+   Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 2]
+Penno, et al.             Expires July 11, 2014                 [Page 2]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
      4.2.  MALICE Network Element Procedures . . . . . . . . . . . .  14
@@ -165,9 +165,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 3]
+Penno, et al.             Expires July 11, 2014                 [Page 3]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    different points in the network by using either STUN [RFC5389]
@@ -221,9 +221,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 4]
+Penno, et al.             Expires July 11, 2014                 [Page 4]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
 3.  Overview of MALICE
@@ -277,9 +277,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 5]
+Penno, et al.             Expires July 11, 2014                 [Page 5]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
       *  Query : Endpoints may request information from the network.
@@ -333,9 +333,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 6]
+Penno, et al.             Expires July 11, 2014                 [Page 6]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    Sending metadata can be done early in the connectivity check phase of
@@ -389,9 +389,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 7]
+Penno, et al.             Expires July 11, 2014                 [Page 7]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
 3.1.3.  Network Element Processing
@@ -445,9 +445,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 8]
+Penno, et al.             Expires July 11, 2014                 [Page 8]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    Connectivity checks are extended by this specification to include
@@ -501,9 +501,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                 [Page 9]
+Penno, et al.             Expires July 11, 2014                 [Page 9]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
                       FLOW-METADATA MALICE to MALICE
@@ -557,9 +557,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 10]
+Penno, et al.             Expires July 11, 2014                [Page 10]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    if the controlling MALICE agent expects to consider the metadata
@@ -613,9 +613,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 11]
+Penno, et al.             Expires July 11, 2014                [Page 11]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    {MDrl(i)} is the set of metadata attributes sent from R to L in the
@@ -669,9 +669,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 12]
+Penno, et al.             Expires July 11, 2014                [Page 12]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    sent to the MALICE agent for signaling is outside the scope of this
@@ -725,9 +725,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 13]
+Penno, et al.             Expires July 11, 2014                [Page 13]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
 4.1.2.3.  Success
@@ -781,9 +781,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 14]
+Penno, et al.             Expires July 11, 2014                [Page 14]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    When a new IE is signaled in a STUN message, a network element should
@@ -837,9 +837,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 15]
+Penno, et al.             Expires July 11, 2014                [Page 15]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    o  Endpoint requests a particular service: "Reserve BW=5Mbps", the
@@ -893,9 +893,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 16]
+Penno, et al.             Expires July 11, 2014                [Page 16]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    4.  Bob sends a new STUN connectivity check without any attributes.
@@ -949,9 +949,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 17]
+Penno, et al.             Expires July 11, 2014                [Page 17]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
       <---------...................------------
@@ -1005,9 +1005,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 18]
+Penno, et al.             Expires July 11, 2014                [Page 18]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
      Alice's STUN Request                       (2)
@@ -1061,9 +1061,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 19]
+Penno, et al.             Expires July 11, 2014                [Page 19]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    2.  Bob sends a request for X with value B for the upstream
@@ -1117,9 +1117,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 20]
+Penno, et al.             Expires July 11, 2014                [Page 20]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
                           <- resolution x=B
@@ -1173,9 +1173,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 21]
+Penno, et al.             Expires July 11, 2014                [Page 21]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
       Alice's STUN Request                       (2)
@@ -1229,9 +1229,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 22]
+Penno, et al.             Expires July 11, 2014                [Page 22]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
       *  Bandwidth: UP/DOWN Max Bandwidth, UP/DOWN Min Bandwidth
@@ -1285,9 +1285,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 23]
+Penno, et al.             Expires July 11, 2014                [Page 23]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    When nominating a pair, the controlling agent may consider the MALICE
@@ -1341,9 +1341,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 24]
+Penno, et al.             Expires July 11, 2014                [Page 24]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    One solution to this problem is to include a precursor authorization
@@ -1397,9 +1397,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 25]
+Penno, et al.             Expires July 11, 2014                [Page 25]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    o  FLOWDATA Response sub-TLV is included in the MD-RESP-* STUN
@@ -1453,9 +1453,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 26]
+Penno, et al.             Expires July 11, 2014                [Page 26]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    Section 10.3 describes in detail the network information elements
@@ -1509,9 +1509,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 27]
+Penno, et al.             Expires July 11, 2014                [Page 27]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    |                    Instance Identifier                        |
@@ -1565,9 +1565,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 28]
+Penno, et al.             Expires July 11, 2014                [Page 28]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    dJT:  Downstream Jitter Tolerance, 0 means no information available.
@@ -1621,9 +1621,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 29]
+Penno, et al.             Expires July 11, 2014                [Page 29]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    |                        Min Bandwidth                          |
@@ -1677,9 +1677,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 30]
+Penno, et al.             Expires July 11, 2014                [Page 30]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
 9.2.3.  Usage Example
@@ -1733,9 +1733,9 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 31]
+Penno, et al.             Expires July 11, 2014                [Page 31]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
 11.  References
@@ -1789,9 +1789,9 @@ Authors' Addresses
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 32]
+Penno, et al.             Expires July 11, 2014                [Page 32]
 
-Internet-Draft                   MALICE                    December 2013
+Internet-Draft                   MALICE                     January 2014
 
 
    Paal-Erik Martinsen
@@ -1845,4 +1845,4 @@ Internet-Draft                   MALICE                    December 2013
 
 
 
-Penno, et al.             Expires June 21, 2014                [Page 33]
+Penno, et al.             Expires July 11, 2014                [Page 33]

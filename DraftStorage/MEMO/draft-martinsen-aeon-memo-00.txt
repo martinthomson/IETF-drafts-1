@@ -4,8 +4,8 @@
 
 AEON                                                   P. Martinsen, Ed.
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                       December 18, 2013
-Expires: June 21, 2014
+Intended status: Standards Track                        January 07, 2014
+Expires: July 11, 2014
 
 
           Markings for Enhancing Multiplexed Ordonance (MEMO)
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 21, 2014.
+   This Internet-Draft will expire on July 11, 2014.
 
 Copyright Notice
 
@@ -53,12 +53,12 @@ Copyright Notice
 
 
 
-Martinsen                 Expires June 21, 2014                 [Page 1]
+Martinsen                 Expires July 11, 2014                 [Page 1]
 
-Internet-Draft                    MEMO                     December 2013
+Internet-Draft                    MEMO                      January 2014
 
 
-   Copyright (c) 2013 IETF Trust and the persons identified as the
+   Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Martinsen                 Expires June 21, 2014                 [Page 2]
+Martinsen                 Expires July 11, 2014                 [Page 2]
 
-Internet-Draft                    MEMO                     December 2013
+Internet-Draft                    MEMO                      January 2014
 
 
 2.  MEMO overview
@@ -165,9 +165,9 @@ Internet-Draft                    MEMO                     December 2013
 
 
 
-Martinsen                 Expires June 21, 2014                 [Page 3]
+Martinsen                 Expires July 11, 2014                 [Page 3]
 
-Internet-Draft                    MEMO                     December 2013
+Internet-Draft                    MEMO                      January 2014
 
 
 3.1.  Generic Type Specific Field
@@ -221,9 +221,9 @@ Internet-Draft                    MEMO                     December 2013
 
 
 
-Martinsen                 Expires June 21, 2014                 [Page 4]
+Martinsen                 Expires July 11, 2014                 [Page 4]
 
-Internet-Draft                    MEMO                     December 2013
+Internet-Draft                    MEMO                      January 2014
 
 
    S: Switching point (1 bit) - The flag must be true for RTP packets in
@@ -277,9 +277,9 @@ Internet-Draft                    MEMO                     December 2013
 
 
 
-Martinsen                 Expires June 21, 2014                 [Page 5]
+Martinsen                 Expires July 11, 2014                 [Page 5]
 
-Internet-Draft                    MEMO                     December 2013
+Internet-Draft                    MEMO                      January 2014
 
 
 5.  Usage with ICE
@@ -333,9 +333,9 @@ Internet-Draft                    MEMO                     December 2013
 
 
 
-Martinsen                 Expires June 21, 2014                 [Page 6]
+Martinsen                 Expires July 11, 2014                 [Page 6]
 
-Internet-Draft                    MEMO                     December 2013
+Internet-Draft                    MEMO                      January 2014
 
 
    This specification definew two new attributes, MEMO-SUPPORT and MEMO-
@@ -389,9 +389,9 @@ Internet-Draft                    MEMO                     December 2013
 
 
 
-Martinsen                 Expires June 21, 2014                 [Page 7]
+Martinsen                 Expires July 11, 2014                 [Page 7]
 
-Internet-Draft                    MEMO                     December 2013
+Internet-Draft                    MEMO                      January 2014
 
 
 12.2.  Informative References
@@ -445,4 +445,4 @@ Author's Address
 
 
 
-Martinsen                 Expires June 21, 2014                 [Page 8]
+Martinsen                 Expires July 11, 2014                 [Page 8]

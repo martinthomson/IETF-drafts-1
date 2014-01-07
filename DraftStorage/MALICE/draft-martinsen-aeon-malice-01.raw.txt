@@ -1,0 +1,373 @@
+
+
+
+
+AEON                                                        P. Martinsen
+Internet-Draft                                                     Cisco
+Intended status: Standards Track                        January 07, 2014
+Expires: July 11, 2014
+
+
+                Meta-data Attribute signaLling with ICE
+                     draft-martinsen-aeon-malice-01
+
+Abstract
+
+   It can be useful for applications to provide flow metadata
+   information to on-path devices to influence flow treatment in the
+   network.
+
+   This draft describes how this can be achieved by adding metadata to
+   the STUN packets sent during the ICE connectivity checks or keep-
+   alive messages.  Devices on the media path can use the metadata
+   information to prioritize the flow, perform traffic engineering, or
+   provide network analytics.
+
+   This document describes a mechanism for how such metadata can be
+   transported by STUN when ICE is in use.  The functionality described
+   here is referred to as MALICE.
+
+Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on July 11, 2014.
+
+Copyright Notice
+
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Sending Meta-data
+     2.1.  Adding Meta-data to connectivity cheks
+     2.2.  Adding Meta-data to keepalive messages
+   3.  New STUN attribute
+   4.  META-DATA types
+     4.1.  Generic
+     4.2.  Audio
+     4.3.  Video
+   5.  References
+     5.1.  Normative References
+     5.2.  Informational References
+   Author's Address
+
+
+AEON                                                        P. Martinsen
+Internet-Draft                                                     Cisco
+Intended status: Standards Track                        January 07, 2014
+Expires: July 11, 2014
+
+
+                Meta-data Attribute signaLling with ICE
+                     draft-martinsen-aeon-malice-01
+
+Abstract
+
+   It can be useful for applications to provide flow metadata
+   information to on-path devices to influence flow treatment in the
+   network.
+
+   This draft describes how this can be achieved by adding metadata to
+   the STUN packets sent during the ICE connectivity checks or keep-
+   alive messages.  Devices on the media path can use the metadata
+   information to prioritize the flow, perform traffic engineering, or
+   provide network analytics.
+
+   This document describes a mechanism for how such metadata can be
+   transported by STUN when ICE is in use.  The functionality described
+   here is referred to as MALICE.
+
+Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on July 11, 2014.
+
+Copyright Notice
+
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+1.  Introduction
+
+   In the context of Content, Mobile, Fixed Service, Service Providers,
+   Enterprise and Private networks have a need to prioritize packet
+   flows end-to-end.  These flows are often dynamic, time-bound,
+   encrypted, peer-to-peer, possibly asymmetric, and might have
+   different priorities depending on network conditions, direction, time
+   of the day, dynamic user preferences and other factors.  These
+   factors may be time variant, and thus need to be signalled.
+   Moreover, in many cases of peer-to-peer communication, flow
+   information is known only to the endpoint.  These considerations,
+   coupled with the trend to use encryption for browser-to-browser
+   communication [I-D.ietf-rtcweb-security-arch], imply that access
+   lists, deep packet inspection and other static prioritization methods
+   cannot be employed successfully to prioritize packet flows.  This
+   specification describes how these problems can be solved by using
+   either STUN [RFC5389] packets sent during ICE's [RFC5245]
+   connectivity check phase during establishment of a media session, or
+   keep-alive mechanism after the session is established.  Devices on
+   the media path can use the metadata information to prioritize the
+   flow, perform traffic engineering, or provide network analytics.
+
+   This document describes a mechanism for how such metadata can be sent
+   by STUN when ICE is in use with UDP based media.  The functionality
+   described here is referred to as MALICE.  Due to the security
+   implications described in (Martins draft) where large STUN packet are
+   used amplify the attack, an decision consideration in MALICE is to
+   keep the message size small.
+
+   The META-DATA sent should be treated as informational by the network.
+   No mechanisms for sending feedback from the network to the
+   application are described in this document.
+
+2.  Sending Meta-data
+
+   An application using ICE to negotiate the end to end media-path can
+   add meta when sending the necessary STUN probing or keep-alive
+   messages.  Several Meta-data attributes can be added to a STUN
+   message.  This is especially useful in multiplexing scenarios such as
+   BUNDLE where several media streams are sent on the same 5-tuple.
+
+2.1.  Adding Meta-data to connectivity cheks
+
+   An ICE connectivity check is performed by sending a STUN Binding
+   request.  Prior to sending the agent can add one or more meta-data
+   attributes to the Binding Request.  Values in the Meta-data attribute
+   are usually default values configured by the agent.
+
+   An agent receiving STUN Binding requests with Meta-Data attributes
+   can successfully use that information to set up for example audio or
+   video decoders.
+
+   Meta-data can also be added to the STUN Binding Responses.  This will
+   let the remote side know that the Meta-data was transported end-to-
+   end on the path.  Meta data SHOULD not be added to a response message
+   unless Meta-data attributes was added to the corresponding Binding
+   Request.
+
+2.2.  Adding Meta-data to keepalive messages
+
+   An ICE connectivity check is performed by sending a STUN Binding
+   indication.  Prior to sending the agent can add one or more meta-data
+   attributes to the Binding Indication.  Values in the Meta-data
+   attribute should reflect what is send in the stream at this point in
+   time.
+
+   Problem with concent freshness if not based on STUN.
+
+3.  New STUN attribute
+
+   This STUN extension defines the following new attribute:
+
+      0xXXXX: META-DATA
+
+
+   This attribute have a length that are multiples of 4 (96) so no
+   padding is necessary.
+
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     META-DATA TYPE             |  Bandwith (kbps)             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                              Value (64 bits)                  |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                       Figure 1: META-DATA Attribute
+
+   META-DATA TYPE a a 16 bit value defined in section ?? describing the
+   flow.  The next 16 bits MUST be a number describing the approximate
+   bandwidth usage in kbps.  If this is unknown the value 0x0 is used.
+   The rest of the 64 bits of the attribute is reserved for further
+   description of the specific META-DATA type.  This value field is thus
+   dependant on the type field and entities not understanding the
+   specific META-DATA type should ignore this when parsing.
+
+4.  META-DATA types
+
+     0x0001 Generic
+     0x0002 Audio
+     0x0003 Video
+     0x0004 Application Data
+
+                         Figure 2: META-DATA Types
+
+4.1.  Generic
+
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |            0x0001              |      Bandwidth (kbps)        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | max retransmit|  retransmits   |           0xFF               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                              0xFFFF                           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                     Figure 3: META-DATA Type Generic
+
+   max retransmits:  Maximal number of retransmits a client will do
+      before giving up.  For example a normal STUN transactions have 10
+      retransmits before it is considered as failed.  RTP will typically
+      have 0 retransmits.
+
+   retransmits:  Current number of retransmits for non reliable packets
+      in this stream.  If this number is close to the mac retransmits it
+      might be nice of the network element to concider not to drop the
+      next packets coming.
+
+4.2.  Audio
+
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |            0x0002             |       Bandwidth (kbps)        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Sample Rate (Hz)           |          0xFF                 |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                              0xFFFF                           |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                      Figure 4: META-DATA Type Audio
+
+   Sample Rate:  The current sample rate the audio codec used in this
+      stream is sampled with.
+
+4.3.  Video
+
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |            0x0003              |      Bandwidth (kbps)        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |      Vertical Resolution       |     Horizontal Resolution    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |             FPS                |          Jitter (ms)         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                      Figure 5: META-DATA Type Video
+
+   Bandwidth:  Bandwidth usage with video encoders are elastic.  This
+      value should indicate what max bandwidth value the encoder are set
+      up to use.  Dependant on movement in the picture and other video
+      specific parameters the actual bandwidth usage might be lower than
+      indicated.  Note that this value can change over time as rate
+      adaption algorithms in the encoder might change this value.
+
+   Vertical Resolution:  Current vertical resolution used in the video
+      encoded in the stream.  Note that this value might change over
+      time as the encoder might change this dependant on many different
+      parameters.  (In some instances a encoder can decide that changing
+      from 1080p30 to 720p60 will give the end user a better user
+      experience)
+
+   Horizontal Resolution:  Current horizontal resolution.
+
+   FPS:  How many frames per seconds the video in the stream is encoded
+      with.
+
+5.  References
+
+5.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC4732]  Handley, M., Rescorla, E., IAB, "Internet Denial-of-
+              Service Considerations", RFC 4732, December 2006.
+
+   [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,
+              "Session Traversal Utilities for NAT (STUN)", RFC 5389,
+              October 2008.
+
+   [RFC6398]  Le Faucheur, F., "IP Router Alert Considerations and
+              Usage", BCP 168, RFC 6398, October 2011.
+
+   [RFC5245]  Rosenberg, J., "Interactive Connectivity Establishment
+              (ICE): A Protocol for Network Address Translator (NAT)
+              Traversal for Offer/Answer Protocols", RFC 5245, April
+              2010.
+
+5.2.  Informational References
+
+   [I-D.ietf-rtcweb-security-arch]
+              Rescorla, E., "WebRTC Security Architecture", draft-ietf-
+              rtcweb-security-arch-07 (work in progress), July 2013.
+
+   [I-D.muthu-behave-consent-freshness]
+              Perumal, M., Wing, D., R, R., and T. Reddy, "STUN Usage
+              for Consent Freshness", draft-muthu-behave-consent-
+              freshness-04 (work in progress), July 2013.
+
+Author's Address
+
+   Paal-Erik Martinsen
+   Cisco Systems, Inc.
+   Philip Pedersens vei 20
+   Lysaker, Akershus  1366
+   Norway
+
+   Email: palmarti@cisco.com
+

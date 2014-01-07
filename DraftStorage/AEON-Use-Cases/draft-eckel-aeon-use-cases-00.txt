@@ -5,7 +5,7 @@
 Internet Engineering Task Force                                 C. Eckel
 Internet-Draft                                                  T. Reddy
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: June 21, 2014                                 December 18, 2013
+Expires: July 11, 2014                                  January 07, 2014
 
 
              Application Enabled Open Networking Use Cases
@@ -35,11 +35,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 21, 2014.
+   This Internet-Draft will expire on July 11, 2014.
 
 Copyright Notice
 
-   Copyright (c) 2013 IETF Trust and the persons identified as the
+   Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 1]
+Eckel & Reddy             Expires July 11, 2014                 [Page 1]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 2]
+Eckel & Reddy             Expires July 11, 2014                 [Page 2]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
        2.4.5.  Action taken by network as result of receiving flow
@@ -165,9 +165,9 @@ Internet-Draft               AEON Use Cases                December 2013
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 3]
+Eckel & Reddy             Expires July 11, 2014                 [Page 3]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
    1.  Home: Consistent experience of video conferencing with competing
@@ -221,9 +221,9 @@ Internet-Draft               AEON Use Cases                December 2013
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 4]
+Eckel & Reddy             Expires July 11, 2014                 [Page 4]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
 2.1.2.  User Benefit
@@ -277,9 +277,9 @@ Internet-Draft               AEON Use Cases                December 2013
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 5]
+Eckel & Reddy             Expires July 11, 2014                 [Page 5]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
    Enterprise networks that use firewalls with restrictive policies can
@@ -333,9 +333,9 @@ Internet-Draft               AEON Use Cases                December 2013
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 6]
+Eckel & Reddy             Expires July 11, 2014                 [Page 6]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
 2.3.5.  Action taken by network as result of receiving flow
@@ -389,9 +389,9 @@ Internet-Draft               AEON Use Cases                December 2013
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 7]
+Eckel & Reddy             Expires July 11, 2014                 [Page 7]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
       1.  ISP can be configured with the IP addresses of content
@@ -445,9 +445,9 @@ Internet-Draft               AEON Use Cases                December 2013
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 8]
+Eckel & Reddy             Expires July 11, 2014                 [Page 8]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
    Subject to local policies, a network node might perform bandwidth
@@ -501,9 +501,9 @@ Internet-Draft               AEON Use Cases                December 2013
 
 
 
-Eckel & Reddy             Expires June 21, 2014                 [Page 9]
+Eckel & Reddy             Expires July 11, 2014                 [Page 9]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
    The network that can provide the requested flow characteristics will
@@ -557,9 +557,9 @@ Authors' Addresses
 
 
 
-Eckel & Reddy             Expires June 21, 2014                [Page 10]
+Eckel & Reddy             Expires July 11, 2014                [Page 10]
 
-Internet-Draft               AEON Use Cases                December 2013
+Internet-Draft               AEON Use Cases                 January 2014
 
 
    Tirumaleswar Reddy
@@ -613,4 +613,4 @@ Internet-Draft               AEON Use Cases                December 2013
 
 
 
-Eckel & Reddy             Expires June 21, 2014                [Page 11]
+Eckel & Reddy             Expires July 11, 2014                [Page 11]

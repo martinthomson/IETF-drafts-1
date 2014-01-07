@@ -4,8 +4,8 @@
 
 AEON                                                   P. Martinsen, Ed.
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                       December 18, 2013
-Expires: June 21, 2014
+Intended status: Standards Track                        January 07, 2014
+Expires: July 11, 2014
 
 
           Markings for Enhancing Multiplexed Ordonance (MEMO)
@@ -45,11 +45,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 21, 2014.
+   This Internet-Draft will expire on July 11, 2014.
 
 Copyright Notice
 
-   Copyright (c) 2013 IETF Trust and the persons identified as the
+   Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -97,8 +97,8 @@ Table of Contents
 
 AEON                                                   P. Martinsen, Ed.
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                       December 18, 2013
-Expires: June 21, 2014
+Intended status: Standards Track                        January 07, 2014
+Expires: July 11, 2014
 
 
           Markings for Enhancing Multiplexed Ordonance (MEMO)
@@ -138,11 +138,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 21, 2014.
+   This Internet-Draft will expire on July 11, 2014.
 
 Copyright Notice
 
-   Copyright (c) 2013 IETF Trust and the persons identified as the
+   Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
