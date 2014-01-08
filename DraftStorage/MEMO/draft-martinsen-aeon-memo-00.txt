@@ -4,7 +4,7 @@
 
 AEON                                                   P. Martinsen, Ed.
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 08, 2014
+Intended status: Standards Track                         January 8, 2014
 Expires: July 12, 2014
 
 
@@ -47,7 +47,7 @@ Status of This Memo
 
    This Internet-Draft will expire on July 12, 2014.
 
-Copyright Notice
+
 
 
 
@@ -57,6 +57,8 @@ Martinsen                 Expires July 12, 2014                 [Page 1]
 
 Internet-Draft                    MEMO                      January 2014
 
+
+Copyright Notice
 
    Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
@@ -73,7 +75,7 @@ Internet-Draft                    MEMO                      January 2014
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  MEMO overview . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  MEMO message structure  . . . . . . . . . . . . . . . . . . .   3
      3.1.  Generic Type Specific Field . . . . . . . . . . . . . . .   4
@@ -85,13 +87,13 @@ Table of Contents
        4.1.2.  Sending a Binding Response with MEMO attributes . . .   5
        4.1.3.  Network Node processing of STUN packets with a
                MEMO attribute  . . . . . . . . . . . . . . . . . . .   5
-     4.2.  ICE Nominations . . . . . . . . . . . . . . . . . . . . .   5
+     4.2.  ICE Nominations . . . . . . . . . . . . . . . . . . . . .   6
    5.  Usage with ICE  . . . . . . . . . . . . . . . . . . . . . . .   6
    6.  Sending Media or Other traffic  . . . . . . . . . . . . . . .   6
    7.  MEMO Attributes . . . . . . . . . . . . . . . . . . . . . . .   6
      7.1.  Specific Video Codec Information  . . . . . . . . . . . .   6
      7.2.  Path Information  . . . . . . . . . . . . . . . . . . . .   6
-   8.  New STUN Attributes . . . . . . . . . . . . . . . . . . . . .   6
+   8.  New STUN Attributes . . . . . . . . . . . . . . . . . . . . .   7
      8.1.  MEMO-SUPPORT  . . . . . . . . . . . . . . . . . . . . . .   7
      8.2.  MEMO-INFO . . . . . . . . . . . . . . . . . . . . . . . .   7
    9.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
@@ -103,8 +105,6 @@ Table of Contents
      12.2.  Informative References . . . . . . . . . . . . . . . . .   8
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   8
 
-1.  Introduction
-
 
 
 
@@ -113,6 +113,8 @@ Martinsen                 Expires July 12, 2014                 [Page 2]
 
 Internet-Draft                    MEMO                      January 2014
 
+
+1.  Introduction
 
 2.  MEMO overview
 
@@ -132,13 +134,13 @@ Internet-Draft                    MEMO                      January 2014
    function is to avoid the shim packet to be wrongly reqognized as a
    STUN packet.
 
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |0 0|   Type    |    sid    |Prp-len|   Empty   | Message Length|
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |        Type Specific          |         Magic Cookie          |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |0 0|   Type    |    sid    |Prp-len|   Empty   | Message Length|
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |        Type Specific          |         Magic Cookie          |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                            Figure 1: MEMO Header
@@ -159,8 +161,6 @@ Internet-Draft                    MEMO                      January 2014
    Message Length:  The message length MUST contain the size, in bytes,
       of the message not including the 8-byte MEMO header.
 
-   Magic Cookie:  The magic cookie field MUST contain the fixed value
-      0xADA0 in network byte order.
 
 
 
@@ -170,6 +170,9 @@ Martinsen                 Expires July 12, 2014                 [Page 3]
 Internet-Draft                    MEMO                      January 2014
 
 
+   Magic Cookie:  The magic cookie field MUST contain the fixed value
+      0xADA0 in network byte order.
+
 3.1.  Generic Type Specific Field
 
    If the type field in the header is Generic (0x0) the type specific
@@ -177,11 +180,11 @@ Internet-Draft                    MEMO                      January 2014
    can we do with a generic header?  Discardable?  Discardable, but
    expect a retransmit?  Other smart stuff we can put in here?)
 
-    0                   1
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                        0                   1
+                                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                       |                               |
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                  Figure 2: MEMO Header Type Generic Field
 
@@ -192,11 +195,11 @@ Internet-Draft                    MEMO                      January 2014
    this contain information about audio behaviour, static vs elastic?
    (Opus is elastic?))
 
-    0                   1
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                        0                   1
+                                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                       |                               |
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                   Figure 3: MEMO Header Type Audio Field
 
@@ -206,18 +209,15 @@ Internet-Draft                    MEMO                      January 2014
    field will contain the infomation defined as follows.  This field
    have also been fefined in [I-D.avtext-berger-framemarking].
 
-    0                   1
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |D|S| TID |FTYPE|      PAD      |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                        0                   1
+                                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                       |D|S| TID |FTYPE|      PAD      |
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                   Figure 4: MEMO Header Type Video Field
 
    Description of the fields:
-
-   D: Discardable - The flag must be true for packets that can be
-      dropped, and still provide a decodable media stream.
 
 
 
@@ -225,6 +225,9 @@ Martinsen                 Expires July 12, 2014                 [Page 4]
 
 Internet-Draft                    MEMO                      January 2014
 
+
+   D: Discardable - The flag must be true for packets that can be
+      dropped, and still provide a decodable media stream.
 
    S: Switching point (1 bit) - The flag must be true for RTP packets in
       a frame that can be used as a switcing point.  A switching point
@@ -268,10 +271,7 @@ Internet-Draft                    MEMO                      January 2014
 
 4.1.3.  Network Node processing of STUN packets with a MEMO attribute
 
-4.2.  ICE Nominations
 
-   Add MEMO shim layer before the STUN Binding Request.  All in same UDP
-   packet.
 
 
 
@@ -281,6 +281,11 @@ Martinsen                 Expires July 12, 2014                 [Page 5]
 
 Internet-Draft                    MEMO                      January 2014
 
+
+4.2.  ICE Nominations
+
+   Add MEMO shim layer before the STUN Binding Request.  All in same UDP
+   packet.
 
 5.  Usage with ICE
 
@@ -302,11 +307,11 @@ Internet-Draft                    MEMO                      January 2014
 
 7.1.  Specific Video Codec Information
 
-     0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  ID=2 |  L=2 |D|S|TID  |Type | video codec specific information |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |  ID=2 |  L=2 |D|S|TID  |Type | video codec specific information |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                            Figure 5: Video Codec
@@ -319,16 +324,11 @@ Internet-Draft                    MEMO                      January 2014
    packet loss and other things to the agent.  (Need to open up the
    agregated discussion)
 
-     0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  typ  |  len  |  What do we do here?                            |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                        Figure 6: Path Information
 
-8.  New STUN Attributes
+
+
 
 
 
@@ -337,6 +337,17 @@ Martinsen                 Expires July 12, 2014                 [Page 6]
 
 Internet-Draft                    MEMO                      January 2014
 
+
+       0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |  typ  |  len  |  What do we do here?                            |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                        Figure 6: Path Information
+
+8.  New STUN Attributes
 
    This specification definew two new attributes, MEMO-SUPPORT and MEMO-
    INFO.
@@ -374,6 +385,15 @@ Internet-Draft                    MEMO                      January 2014
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
+
+
+
+
+Martinsen                 Expires July 12, 2014                 [Page 7]
+
+Internet-Draft                    MEMO                      January 2014
+
+
    [RFC2629]  Rose, M., "Writing I-Ds and RFCs using XML", RFC 2629,
               June 1999.
 
@@ -385,14 +405,6 @@ Internet-Draft                    MEMO                      January 2014
    [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,
               "Session Traversal Utilities for NAT (STUN)", RFC 5389,
               October 2008.
-
-
-
-
-Martinsen                 Expires July 12, 2014                 [Page 7]
-
-Internet-Draft                    MEMO                      January 2014
-
 
 12.2.  Informative References
 
@@ -416,18 +428,6 @@ Author's Address
    Norway
 
    Email: palmarti@cisco.com
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

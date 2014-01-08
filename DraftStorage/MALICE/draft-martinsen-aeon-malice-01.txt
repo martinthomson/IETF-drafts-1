@@ -4,7 +4,7 @@
 
 AEON                                                        P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 08, 2014
+Intended status: Standards Track                         January 8, 2014
 Expires: July 12, 2014
 
 
@@ -176,20 +176,19 @@ Internet-Draft                   MALICE                     January 2014
 
    This STUN extension defines the following new attribute:
 
-      0xXXXX: META-DATA
-
+                                0xXXXX: META-DATA
 
    This attribute have a length that are multiples of 4 (96) so no
    padding is necessary.
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |     META-DATA TYPE             |  Bandwith (kbps)             |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                              Value (64 bits)                  |
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |     META-DATA TYPE             |  Bandwith (kbps)             |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                              Value (64 bits)                  |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                        Figure 1: META-DATA Attribute
 
@@ -203,21 +202,22 @@ Internet-Draft                   MALICE                     January 2014
 
 4.  META-DATA types
 
-     0x0001 Generic
-     0x0002 Audio
-     0x0003 Video
-     0x0004 Application Data
+                                                 0x0001 Generic
+                                                 0x0002 Audio
+                                                 0x0003 Video
+                                                 0x0004 Application Data
 
                          Figure 2: META-DATA Types
 
 4.1.  Generic
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |            0x0001              |      Bandwidth (kbps)        |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | max retransmit|  retransmits   |           0xFF               |
+
+
+
+
+
+
+
 
 
 
@@ -226,9 +226,15 @@ Martinsen                 Expires July 12, 2014                 [Page 4]
 Internet-Draft                   MALICE                     January 2014
 
 
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                              0xFFFF                           |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |            0x0001              |      Bandwidth (kbps)        |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | max retransmit|  retransmits   |           0xFF               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                              0xFFFF                           |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                      Figure 3: META-DATA Type Generic
@@ -245,15 +251,15 @@ Internet-Draft                   MALICE                     January 2014
 
 4.2.  Audio
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |            0x0002             |       Bandwidth (kbps)        |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |    Sample Rate (Hz)           |          0xFF                 |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                              0xFFFF                           |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |            0x0002             |       Bandwidth (kbps)        |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |    Sample Rate (Hz)           |          0xFF                 |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                              0xFFFF                           |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                       Figure 4: META-DATA Type Audio
@@ -271,26 +277,20 @@ Internet-Draft                   MALICE                     January 2014
 
 
 
-
-
-
-
-
-
 Martinsen                 Expires July 12, 2014                 [Page 5]
 
 Internet-Draft                   MALICE                     January 2014
 
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |            0x0003              |      Bandwidth (kbps)        |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |      Vertical Resolution       |     Horizontal Resolution    |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |             FPS                |          Jitter (ms)         |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |            0x0003              |      Bandwidth (kbps)        |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |      Vertical Resolution       |     Horizontal Resolution    |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |             FPS                |          Jitter (ms)         |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                       Figure 5: META-DATA Type Video
@@ -321,7 +321,7 @@ Internet-Draft                   MALICE                     January 2014
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
-   [RFC4732]  Handley, M., Rescorla, E., IAB, "Internet Denial-of-
+   [RFC4732]  Handley, M., Rescorla, E., and IAB, "Internet Denial-of-
               Service Considerations", RFC 4732, December 2006.
 
    [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,

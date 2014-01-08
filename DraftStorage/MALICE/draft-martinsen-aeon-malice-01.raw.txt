@@ -4,7 +4,7 @@
 
 AEON                                                        P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 08, 2014
+Intended status: Standards Track                         January 8, 2014
 Expires: July 12, 2014
 
 
@@ -81,70 +81,6 @@ Table of Contents
      5.2.  Informational References
    Author's Address
 
-
-AEON                                                        P. Martinsen
-Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 08, 2014
-Expires: July 12, 2014
-
-
-                Meta-data Attribute signaLling with ICE
-                     draft-martinsen-aeon-malice-01
-
-Abstract
-
-   It can be useful for applications to provide flow metadata
-   information to on-path devices to influence flow treatment in the
-   network.
-
-   This draft describes how this can be achieved by adding metadata to
-   the STUN packets sent during the ICE connectivity checks or keep-
-   alive messages.  Devices on the media path can use the metadata
-   information to prioritize the flow, perform traffic engineering, or
-   provide network analytics.
-
-   This document describes a mechanism for how such metadata can be
-   transported by STUN when ICE is in use.  The functionality described
-   here is referred to as MALICE.
-
-Requirements Language
-
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in RFC 2119 [RFC2119].
-
-Status of This Memo
-
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
-
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
-
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
-
-   This Internet-Draft will expire on July 12, 2014.
-
-Copyright Notice
-
-   Copyright (c) 2014 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
-
 1.  Introduction
 
    In the context of Content, Mobile, Fixed Service, Service Providers,
@@ -217,20 +153,19 @@ Copyright Notice
 
    This STUN extension defines the following new attribute:
 
-      0xXXXX: META-DATA
-
+                                0xXXXX: META-DATA
 
    This attribute have a length that are multiples of 4 (96) so no
    padding is necessary.
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |     META-DATA TYPE             |  Bandwith (kbps)             |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                              Value (64 bits)                  |
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |     META-DATA TYPE             |  Bandwith (kbps)             |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                              Value (64 bits)                  |
+       |                                                               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                        Figure 1: META-DATA Attribute
 
@@ -244,24 +179,24 @@ Copyright Notice
 
 4.  META-DATA types
 
-     0x0001 Generic
-     0x0002 Audio
-     0x0003 Video
-     0x0004 Application Data
+                                                 0x0001 Generic
+                                                 0x0002 Audio
+                                                 0x0003 Video
+                                                 0x0004 Application Data
 
                          Figure 2: META-DATA Types
 
 4.1.  Generic
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |            0x0001              |      Bandwidth (kbps)        |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | max retransmit|  retransmits   |           0xFF               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                              0xFFFF                           |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |            0x0001              |      Bandwidth (kbps)        |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | max retransmit|  retransmits   |           0xFF               |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                              0xFFFF                           |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                      Figure 3: META-DATA Type Generic
@@ -278,15 +213,15 @@ Copyright Notice
 
 4.2.  Audio
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |            0x0002             |       Bandwidth (kbps)        |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |    Sample Rate (Hz)           |          0xFF                 |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                              0xFFFF                           |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |            0x0002             |       Bandwidth (kbps)        |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |    Sample Rate (Hz)           |          0xFF                 |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                              0xFFFF                           |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                       Figure 4: META-DATA Type Audio
@@ -296,15 +231,15 @@ Copyright Notice
 
 4.3.  Video
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |            0x0003              |      Bandwidth (kbps)        |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |      Vertical Resolution       |     Horizontal Resolution    |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |             FPS                |          Jitter (ms)         |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |            0x0003              |      Bandwidth (kbps)        |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |      Vertical Resolution       |     Horizontal Resolution    |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |             FPS                |          Jitter (ms)         |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                       Figure 5: META-DATA Type Video
@@ -335,7 +270,7 @@ Copyright Notice
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
-   [RFC4732]  Handley, M., Rescorla, E., IAB, "Internet Denial-of-
+   [RFC4732]  Handley, M., Rescorla, E., and IAB, "Internet Denial-of-
               Service Considerations", RFC 4732, December 2006.
 
    [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,

@@ -4,7 +4,7 @@
 
 AEON                                                   P. Martinsen, Ed.
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 08, 2014
+Intended status: Standards Track                         January 8, 2014
 Expires: July 12, 2014
 
 
@@ -94,67 +94,6 @@ Table of Contents
      12.2.  Informative References
    Author's Address
 
-
-AEON                                                   P. Martinsen, Ed.
-Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 08, 2014
-Expires: July 12, 2014
-
-
-          Markings for Enhancing Multiplexed Ordonance (MEMO)
-                      draft-martinsen-aeon-memo-00
-
-Abstract
-
-   To make sure an clients mediastream is treated the best way possible
-   by the network it is necsesary for the agent to provide hints.  Such
-   hints can be on individual packet level in for example a video stream
-   describing how important a packet id for decoding the stream.  Also
-   with multiplexing technologies like BUNDLE
-   [I-D.holmberg-mmusic-sdp-bundle-negotiation] individual frame marking
-   might help the network to provide a better service to the client.
-   This specification decribes how a small shim packet can be used for
-   such fram markings in attition to how to make sure the remote client
-   and the network path also support the markings.
-
-Requirements Language
-
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in RFC 2119 [RFC2119].
-
-Status of This Memo
-
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
-
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
-
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
-
-   This Internet-Draft will expire on July 12, 2014.
-
-Copyright Notice
-
-   Copyright (c) 2014 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
-
 1.  Introduction
 
 2.  MEMO overview
@@ -175,13 +114,13 @@ Copyright Notice
    function is to avoid the shim packet to be wrongly reqognized as a
    STUN packet.
 
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |0 0|   Type    |    sid    |Prp-len|   Empty   | Message Length|
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |        Type Specific          |         Magic Cookie          |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+        0                   1                   2                   3
+        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |0 0|   Type    |    sid    |Prp-len|   Empty   | Message Length|
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |        Type Specific          |         Magic Cookie          |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                            Figure 1: MEMO Header
@@ -212,11 +151,11 @@ Copyright Notice
    can we do with a generic header?  Discardable?  Discardable, but
    expect a retransmit?  Other smart stuff we can put in here?)
 
-    0                   1
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                        0                   1
+                                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                       |                               |
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                  Figure 2: MEMO Header Type Generic Field
 
@@ -227,11 +166,11 @@ Copyright Notice
    this contain information about audio behaviour, static vs elastic?
    (Opus is elastic?))
 
-    0                   1
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                        0                   1
+                                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                       |                               |
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                   Figure 3: MEMO Header Type Audio Field
 
@@ -241,11 +180,11 @@ Copyright Notice
    field will contain the infomation defined as follows.  This field
    have also been fefined in [I-D.avtext-berger-framemarking].
 
-    0                   1
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |D|S| TID |FTYPE|      PAD      |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                        0                   1
+                                        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+                                       |D|S| TID |FTYPE|      PAD      |
+                                       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                   Figure 4: MEMO Header Type Video Field
 
@@ -321,11 +260,11 @@ Copyright Notice
 
 7.1.  Specific Video Codec Information
 
-     0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  ID=2 |  L=2 |D|S|TID  |Type | video codec specific information |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |  ID=2 |  L=2 |D|S|TID  |Type | video codec specific information |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                            Figure 5: Video Codec
@@ -338,11 +277,11 @@ Copyright Notice
    packet loss and other things to the agent.  (Need to open up the
    agregated discussion)
 
-     0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  typ  |  len  |  What do we do here?                            |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |  typ  |  len  |  What do we do here?                            |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                         Figure 6: Path Information

@@ -7,7 +7,7 @@ Internet-Draft                                              P. Martinsen
 Intended status: Standards Track                                 D. Wing
 Expires: July 12, 2014                                         A. Zamfir
                                                                    Cisco
-                                                        January 08, 2014
+                                                         January 8, 2014
 
 
                 Meta-data Attribute signaLling with ICE
@@ -124,79 +124,6 @@ Table of Contents
      11.1.  Normative References
      11.2.  Informational References
    Authors' Addresses
-
-
-MMUSIC                                                     R. Penno, Ed.
-Internet-Draft                                              P. Martinsen
-Intended status: Standards Track                                 D. Wing
-Expires: July 12, 2014                                         A. Zamfir
-                                                                   Cisco
-                                                        January 08, 2014
-
-
-                Meta-data Attribute signaLling with ICE
-                    draft-martinsen-mmusic-malice-00
-
-Abstract
-
-   It can be useful for applications to provide flow metadata
-   information to on-path devices to influence flow treatment in the
-   network.  Provided that the network is able to provide useful
-   feedback, this can also influence path selection if an application
-   have multiple flow paths to choose from.
-
-   This draft describes how this can be achieved by adding metadata to
-   the STUN packets sent during the ICE connectivity checks or a
-   slightly modified version of the keep-alive mechanism.  Devices on
-   the media path can use the metadata information to prioritize the
-   flow, perform traffic engineering, or provide network analytics and
-   notifications as requested by the endpoints.  On-path devices can
-   append or modify the existing metadata information in the STUN/ICE
-   messages to enable feedback to other on-path devices or the
-   applications in both ends of the media session.
-
-   This document describes a framework mechanism for how such metadata
-   can be transported by STUN when ICE is in use and it covers the
-   endpoint and on path device processing.  The functionality described
-   here is referred to as MALICE.
-
-Requirements Language
-
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in RFC 2119 [RFC2119].
-
-Status of This Memo
-
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
-
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
-
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
-
-   This Internet-Draft will expire on July 12, 2014.
-
-Copyright Notice
-
-   Copyright (c) 2014 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
 
 1.  Problem Statement
 
@@ -590,7 +517,6 @@ Copyright Notice
         STUN request + {MDlr(i)} + flag ---->   \  L's
                  <----- STUN response           /  check
                         + {MDlr(i)}
-
 
    Notations:
 
@@ -1279,11 +1205,10 @@ Copyright Notice
    [RFC5389].
 
 
-        0x0C02: MD-AGENT
-        0x0C03: MD-RESP-UP
-        0x0C04: MD-RESP-DN
-        0x0C05: MD-PEER-CHECK
-
+                             0x0C02: MD-AGENT
+                             0x0C03: MD-RESP-UP
+                             0x0C04: MD-RESP-DN
+                             0x0C05: MD-PEER-CHECK
 
 9.1.1.  MD-AGENT Attribute
 
@@ -1294,13 +1219,13 @@ Copyright Notice
    the MD-AGENT STUN attribute Length should be used to identify the
    location of next STUN attribute.
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |          MD-AGENT              |            Length            |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                 <Attribute Block sub-TLV format>              |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |          MD-AGENT              |            Length            |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                 <Attribute Block sub-TLV format>              |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                        Figure 1: MD-AGENT Attribute
@@ -1314,13 +1239,13 @@ Copyright Notice
    the MD-RESP-XX STUN attribute Length should be used to identify the
    location of next STUN attribute.
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |            MD-RESP-*          |            Length             |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                 <Attribute Block sub-TLV format>              |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |            MD-RESP-*          |            Length             |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                 <Attribute Block sub-TLV format>              |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                        Figure 2: MD-RESP- Attribute
@@ -1329,13 +1254,13 @@ Copyright Notice
 
 9.1.3.  MD-PEER-CHECK Attribute
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |     MD-PEER-CHECK-RES         |            Length             |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |         Reserved              |   Peer Malice Check Result    |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |     MD-PEER-CHECK-RES         |            Length             |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |         Reserved              |   Peer Malice Check Result    |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                      Figure 3: MD-PEER-CHECK Attribute
@@ -1351,25 +1276,25 @@ Copyright Notice
 
    The FLOWDATA IE has the following format.
 
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |    Type=TBD   |   Reserved    |             Length            |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                                                               |
-   |                    Instance Identifier                        |
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | uDT | uLT | uJT |   RSVD1     | dDT | dLT | dJT |    RSVD2    |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                   Upstream Min Bandwidth                      |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                   Downstream Min Bandwidth                    |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                   Upstream Max Bandwidth                      |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                   Downstream Max Bandwidth                    |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |    Type=TBD   |   Reserved    |             Length            |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                                                               |
+     |                    Instance Identifier                        |
+     |                                                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     | uDT | uLT | uJT |   RSVD1     | dDT | dLT | dJT |    RSVD2    |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                   Upstream Min Bandwidth                      |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                   Downstream Min Bandwidth                    |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                   Upstream Max Bandwidth                      |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                   Downstream Max Bandwidth                    |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                         Figure 4: FLOWDATA Request
 
@@ -1443,21 +1368,21 @@ Copyright Notice
    included in MD-RESP-UP or MD-RESP-DN, therefore indicating the
    direction for which the response applies.
 
-    0                   1                   2                   3
-    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |    Type=TBD   |  Reserved     |            Length             |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                                                               |
-   |                        Reserved                               |
-   |                                                               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  DT |  LT |  JT |                 Reserved                    |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                        Min Bandwidth                          |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                        Min Bandwidth                          |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      0                   1                   2                   3
+      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |    Type=TBD   |  Reserved     |            Length             |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                                                               |
+     |                        Reserved                               |
+     |                                                               |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |  DT |  LT |  JT |                 Reserved                    |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                        Min Bandwidth                          |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                        Min Bandwidth                          |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                         Figure 5: FLOWDATA Response
 
@@ -1547,7 +1472,7 @@ Copyright Notice
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
-   [RFC4732]  Handley, M., Rescorla, E., IAB, "Internet Denial-of-
+   [RFC4732]  Handley, M., Rescorla, E., and IAB, "Internet Denial-of-
               Service Considerations", RFC 4732, December 2006.
 
    [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,

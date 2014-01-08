@@ -6,7 +6,7 @@ MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
 Expires: July 12, 2014                                             Cisco
-                                                        January 08, 2014
+                                                         January 8, 2014
 
 
                     Happy Eyeballs Extension for ICE
@@ -67,7 +67,7 @@ Table of Contents
    4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   3
-   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
+   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   3
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
 
 1.  Introduction
@@ -157,10 +157,10 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
    Authors would like to thank Dan Wing, Ari Keranen, Bernard Aboba,
    Martin Thomson and Jonathan Lennox for their comments and review.
 
+7.  Normative References
 
-
-
-
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
 
 
 
@@ -169,11 +169,6 @@ Reddy, et al.             Expires July 12, 2014                 [Page 3]
 
 Internet-Draft           Happy Eyeballs for ICE             January 2014
 
-
-7.  Normative References
-
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
 
    [RFC3484]  Draves, R., "Default Address Selection for Internet
               Protocol version 6 (IPv6)", RFC 3484, February 2003.
@@ -216,6 +211,11 @@ Authors' Addresses
    Norway
 
    Email: palmarti@cisco.com
+
+
+
+
+
 
 
 

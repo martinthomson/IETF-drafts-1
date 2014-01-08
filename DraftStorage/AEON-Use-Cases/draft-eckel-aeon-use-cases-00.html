@@ -12,6 +12,28 @@
 	  a {
 	  text-decoration: none;
 	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
 	  a.smpl {
 	  color: black;
 	  }
@@ -324,7 +346,7 @@
 		   content: "December 2010"; 
 	  } 
 	  @top-center {
-		   content: "Abbreviated Title";3
+		   content: "Abbreviated Title";
 	  } 
 	  @bottom-left {
 		   content: "Doe"; 
@@ -412,12 +434,12 @@
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.4.5 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Eckel, C. and T. Reddy" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-eckel-aeon-use-cases-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-1-08" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-1-8" />
   <meta name="dct.abstract" content="This document describes application enabled open networking use cases. Application enabled open networking (AEON) is a framework in which applications explicitly signal their flow characteristics to the network. This provides network nodes with visibility of the application flow characteristics, which enables them to apply the correct flow treatment and provide feedback to applications." />
   <meta name="description" content="This document describes application enabled open networking use cases. Application enabled open networking (AEON) is a framework in which applications explicitly signal their flow characteristics to the network. This provides network nodes with visibility of the application flow characteristics, which enables them to apply the correct flow treatment and provide feedback to applications." />
 
@@ -442,7 +464,7 @@
 </tr>
 <tr>
   <td class="left">Expires: July 12, 2014</td>
-  <td class="right">January 08, 2014</td>
+  <td class="right">January 8, 2014</td>
 </tr>
 
     	
@@ -677,7 +699,7 @@
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>170 West Tasman Drive</span>
+	  <span class="vcardline">170 West Tasman Drive</span>
 
 	  <span class="vcardline">
 		<span class="locality">San Jose</span>,  
@@ -699,8 +721,8 @@
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>Cessna Business Park, Varthur Hobli</span>
-<span>Sarjapur Marathalli Outer Ring Road</span>
+	  <span class="vcardline">Cessna Business Park, Varthur Hobli</span>
+<span class="vcardline">Sarjapur Marathalli Outer Ring Road</span>
 
 	  <span class="vcardline">
 		<span class="locality">Bangalore</span>,  
