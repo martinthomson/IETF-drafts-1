@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #git checkout master -- Drafts
-
+git pull
 cp -r Drafts/* DraftStorage
 
 cat start.html > index.html
