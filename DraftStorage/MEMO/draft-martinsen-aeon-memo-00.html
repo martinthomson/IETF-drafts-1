@@ -387,7 +387,7 @@
 
   <meta name="dct.creator" content="Martinsen, P., Ed." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-martinsen-aeon-memo-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-1-08" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-1-09" />
   <meta name="dct.abstract" content="To make sure an clients mediastream is treated the best way possible by the network it is necsesary for the agent to provide hints. Such hints can be on individual packet level in for example a video stream describing how important a packet id for decoding the stream. Also with multiplexing technologies like BUNDLE " />
   <meta name="description" content="To make sure an clients mediastream is treated the best way possible by the network it is necsesary for the agent to provide hints. Such hints can be on individual packet level in for example a video stream describing how important a packet id for decoding the stream. Also with multiplexing technologies like BUNDLE " />
 
@@ -408,10 +408,10 @@
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
-  <td class="right">January 08, 2014</td>
+  <td class="right">January 09, 2014</td>
 </tr>
 <tr>
-  <td class="left">Expires: July 12, 2014</td>
+  <td class="left">Expires: July 13, 2014</td>
   <td class="right"></td>
 </tr>
 
@@ -436,7 +436,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on July 12, 2014.</p>
+<p>This Internet-Draft will expire on July 13, 2014.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -493,9 +493,11 @@
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|0 0|   Type    |    sid    |Prp-len|   Empty   | Message Length|
+|0 0|   Type    |    sid    |TBD|         Message Length        |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|        Type Specific          |         Magic Cookie          |    
+|                           Magic Cookie                        |    
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|   Type Specific               |  Network feedback (TBD)       | 
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
             </pre>
@@ -508,8 +510,6 @@
   <dd style="margin-left: 8">Generic (0x0), Audio(0x1), Video(0x1)... </dd>
   <dt>sid:</dt>
   <dd style="margin-left: 8">Stream ID. User specific. Can for example be medialine index in SDP. MUST be different for each multiplexed mediastreams on the same 5-tuple</dd>
-  <dt>Prp-len:</dt>
-  <dd style="margin-left: 8">Pr padded length. If routers want to add more network information by piggybacking on existing packets it can intruct the clients to add a empty MEMO attribute as padding. THe router can then use this pre-padded attribute to add the desired information. </dd>
   <dt>Message Length:</dt>
   <dd style="margin-left: 8">The message length MUST contain the size, in bytes, of the message not including the 8-byte MEMO header. </dd>
   <dt>Magic Cookie:</dt>

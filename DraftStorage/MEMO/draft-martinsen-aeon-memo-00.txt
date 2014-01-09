@@ -4,8 +4,8 @@
 
 AEON                                                   P. Martinsen, Ed.
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 08, 2014
-Expires: July 12, 2014
+Intended status: Standards Track                        January 09, 2014
+Expires: July 13, 2014
 
 
           Markings for Enhancing Multiplexed Ordonance (MEMO)
@@ -45,7 +45,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 12, 2014.
+   This Internet-Draft will expire on July 13, 2014.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Martinsen                 Expires July 12, 2014                 [Page 1]
+Martinsen                 Expires July 13, 2014                 [Page 1]
 
 Internet-Draft                    MEMO                      January 2014
 
@@ -76,7 +76,7 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  MEMO overview . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  MEMO message structure  . . . . . . . . . . . . . . . . . . .   3
-     3.1.  Generic Type Specific Field . . . . . . . . . . . . . . .   4
+     3.1.  Generic Type Specific Field . . . . . . . . . . . . . . .   3
      3.2.  Audio Type Specific Field . . . . . . . . . . . . . . . .   4
      3.3.  Video Type Specific Field . . . . . . . . . . . . . . . .   4
    4.  Detecting Remote agent and Network Path Support . . . . . . .   5
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Martinsen                 Expires July 12, 2014                 [Page 2]
+Martinsen                 Expires July 13, 2014                 [Page 2]
 
 Internet-Draft                    MEMO                      January 2014
 
@@ -135,9 +135,11 @@ Internet-Draft                    MEMO                      January 2014
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |0 0|   Type    |    sid    |Prp-len|   Empty   | Message Length|
+   |0 0|   Type    |    sid    |TBD|         Message Length        |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |        Type Specific          |         Magic Cookie          |
+   |                           Magic Cookie                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |   Type Specific               |  Network feedback (TBD)       |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
@@ -151,26 +153,22 @@ Internet-Draft                    MEMO                      January 2014
       in SDP.  MUST be different for each multiplexed mediastreams on
       the same 5-tuple
 
-   Prp-len:  Pr padded length.  If routers want to add more network
-      information by piggybacking on existing packets it can intruct the
-      clients to add a empty MEMO attribute as padding.  THe router can
-      then use this pre-padded attribute to add the desired information.
-
    Message Length:  The message length MUST contain the size, in bytes,
       of the message not including the 8-byte MEMO header.
 
    Magic Cookie:  The magic cookie field MUST contain the fixed value
       0xADA0 in network byte order.
 
+3.1.  Generic Type Specific Field
 
 
 
-Martinsen                 Expires July 12, 2014                 [Page 3]
+
+
+Martinsen                 Expires July 13, 2014                 [Page 3]
 
 Internet-Draft                    MEMO                      January 2014
 
-
-3.1.  Generic Type Specific Field
 
    If the type field in the header is Generic (0x0) the type specific
    field will contain the infomation defined as follows.  (TODO: What
@@ -221,7 +219,9 @@ Internet-Draft                    MEMO                      January 2014
 
 
 
-Martinsen                 Expires July 12, 2014                 [Page 4]
+
+
+Martinsen                 Expires July 13, 2014                 [Page 4]
 
 Internet-Draft                    MEMO                      January 2014
 
@@ -277,7 +277,7 @@ Internet-Draft                    MEMO                      January 2014
 
 
 
-Martinsen                 Expires July 12, 2014                 [Page 5]
+Martinsen                 Expires July 13, 2014                 [Page 5]
 
 Internet-Draft                    MEMO                      January 2014
 
@@ -333,7 +333,7 @@ Internet-Draft                    MEMO                      January 2014
 
 
 
-Martinsen                 Expires July 12, 2014                 [Page 6]
+Martinsen                 Expires July 13, 2014                 [Page 6]
 
 Internet-Draft                    MEMO                      January 2014
 
@@ -389,7 +389,7 @@ Internet-Draft                    MEMO                      January 2014
 
 
 
-Martinsen                 Expires July 12, 2014                 [Page 7]
+Martinsen                 Expires July 13, 2014                 [Page 7]
 
 Internet-Draft                    MEMO                      January 2014
 
@@ -445,4 +445,4 @@ Author's Address
 
 
 
-Martinsen                 Expires July 12, 2014                 [Page 8]
+Martinsen                 Expires July 13, 2014                 [Page 8]

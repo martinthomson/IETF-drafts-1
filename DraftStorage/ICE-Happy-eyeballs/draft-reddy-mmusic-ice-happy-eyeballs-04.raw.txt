@@ -5,8 +5,8 @@
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: July 12, 2014                                             Cisco
-                                                        January 08, 2014
+Expires: July 13, 2014                                             Cisco
+                                                        January 09, 2014
 
 
                     Happy Eyeballs Extension for ICE
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 12, 2014.
+   This Internet-Draft will expire on July 13, 2014.
 
 Copyright Notice
 
@@ -66,8 +66,8 @@ Table of Contents
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: July 12, 2014                                             Cisco
-                                                        January 08, 2014
+Expires: July 13, 2014                                             Cisco
+                                                        January 09, 2014
 
 
                     Happy Eyeballs Extension for ICE
@@ -94,7 +94,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 12, 2014.
+   This Internet-Draft will expire on July 13, 2014.
 
 Copyright Notice
 

@@ -1,0 +1,842 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>A Framework for Signaling Flow Characteristics between Applications and the Network</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";3
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Background"/>
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Deep packet inspection"/>
+<link href="#rfc.section.2.1.1" rel="Chapter" title="2.1.1 Benefits"/>
+<link href="#rfc.section.2.1.2" rel="Chapter" title="2.1.2 Limitation"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Explicit signaling methods"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Proposed framework"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Overview"/>
+<link href="#rfc.section.3.1.1" rel="Chapter" title="3.1.1 Common, application independent, IPFIX registered, information elements"/>
+<link href="#rfc.section.3.1.2" rel="Chapter" title="3.1.2 Cross-protocol information element encoding rules"/>
+<link href="#rfc.section.3.1.3" rel="Chapter" title="3.1.3 Anticipated Usage Models"/>
+<link href="#rfc.section.3.1.3.1" rel="Chapter" title="3.1.3.1 Informational"/>
+<link href="#rfc.section.3.1.3.2" rel="Chapter" title="3.1.3.2 Advisory"/>
+<link href="#rfc.section.3.1.3.3" rel="Chapter" title="3.1.3.3 Service Request"/>
+<link href="#rfc.section.3.1.4" rel="Chapter" title="3.1.4 Considerations for signaling of common information elements"/>
+<link href="#rfc.section.3.1.4.1" rel="Chapter" title="3.1.4.1 Proxy originated information"/>
+<link href="#rfc.section.3.1.4.2" rel="Chapter" title="3.1.4.2 Authentication"/>
+<link href="#rfc.section.3.1.4.3" rel="Chapter" title="3.1.4.3 Common encoding"/>
+<link href="#rfc.section.3.1.4.4" rel="Chapter" title="3.1.4.4 Usage Model to Protocol integration"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Proposed common information elements"/>
+<link href="#rfc.section.3.2.1" rel="Chapter" title="3.2.1 Bandwidth Attributes"/>
+<link href="#rfc.section.3.2.1.1" rel="Chapter" title="3.2.1.1 Maximum Bandwidth"/>
+<link href="#rfc.section.3.2.1.2" rel="Chapter" title="3.2.1.2 Minimum Bandwidth"/>
+<link href="#rfc.section.3.2.1.3" rel="Chapter" title="3.2.1.3 Bandwidth Pool"/>
+<link href="#rfc.section.3.2.2" rel="Chapter" title="3.2.2 Traffic Class Attributes"/>
+<link href="#rfc.section.3.2.2.1" rel="Chapter" title="3.2.2.1 RFC4594-DSCP"/>
+<link href="#rfc.section.3.2.2.2" rel="Chapter" title="3.2.2.2 Traffic Class Label (TCL)"/>
+<link href="#rfc.section.3.2.3" rel="Chapter" title="3.2.3 Acceptable Path Attributes"/>
+<link href="#rfc.section.3.2.3.1" rel="Chapter" title="3.2.3.1 Delay Tolerance"/>
+<link href="#rfc.section.3.2.3.2" rel="Chapter" title="3.2.3.2 Loss Tolerance"/>
+<link href="#rfc.section.3.2.3.3" rel="Chapter" title="3.2.3.3 Jitter Tolerance"/>
+<link href="#rfc.section.3.2.4" rel="Chapter" title="3.2.4 Application Identification"/>
+<link href="#rfc.section.3.2.4.1" rel="Chapter" title="3.2.4.1 RFC 6759 style application identification"/>
+<link href="#rfc.section.3.2.4.2" rel="Chapter" title="3.2.4.2 URL style application identification"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="5 Informative References"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Eckert, T., Ed., Penno, R., Choukir, A., and C. Eckel" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-eckert-intarea-flow-metadata-framework-02" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-1-09" />
+  <meta name="dct.abstract" content="This document provides a framework for communicating information elements (a.k.a. metadata) in a consistent manner between applications and the network to provide better visibility of application flows, thereby enabling differentiated treatment of those flows. These information elements can be conveyed using various signaling protocols, including PCP, RSVP, and STUN." />
+  <meta name="description" content="This document provides a framework for communicating information elements (a.k.a. metadata) in a consistent manner between applications and the network to provide better visibility of application flows, thereby enabling differentiated treatment of those flows. These information elements can be conveyed using various signaling protocols, including PCP, RSVP, and STUN." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">Internet Engineering Task Force</td>
+  <td class="right">T. Eckert, Ed.</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">R. Penno</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Informational</td>
+  <td class="right">A. Choukir</td>
+</tr>
+<tr>
+  <td class="left">Expires: July 13, 2014</td>
+  <td class="right">C. Eckel</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">Cisco Systems, Inc.</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">January 09, 2014</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">A Framework for Signaling Flow Characteristics between Applications and the Network<br />
+  <span class="filename">draft-eckert-intarea-flow-metadata-framework-02</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This document provides a framework for communicating information elements (a.k.a. metadata) in a consistent manner between applications and the network to provide better visibility of application flows, thereby enabling differentiated treatment of those flows. These information elements can be conveyed using various signaling protocols, including PCP, RSVP, and STUN.</p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on July 13, 2014.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2014 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<li>2.   <a href="#rfc.section.2">Background</a></li>
+<li>2.1.   <a href="#rfc.section.2.1">Deep packet inspection</a></li>
+<li>2.1.1.   <a href="#rfc.section.2.1.1">Benefits</a></li>
+<li>2.1.2.   <a href="#rfc.section.2.1.2">Limitation</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">Explicit signaling methods</a></li>
+<li>3.   <a href="#rfc.section.3">Proposed framework</a></li>
+<li>3.1.   <a href="#rfc.section.3.1">Overview</a></li>
+<li>3.1.1.   <a href="#rfc.section.3.1.1">Common, application independent, IPFIX registered, information elements</a></li>
+<li>3.1.2.   <a href="#rfc.section.3.1.2">Cross-protocol information element encoding rules</a></li>
+<li>3.1.3.   <a href="#rfc.section.3.1.3">Anticipated Usage Models</a></li>
+<li>3.1.3.1.   <a href="#rfc.section.3.1.3.1">Informational</a></li>
+<li>3.1.3.2.   <a href="#rfc.section.3.1.3.2">Advisory</a></li>
+<li>3.1.3.3.   <a href="#rfc.section.3.1.3.3">Service Request</a></li>
+<li>3.1.4.   <a href="#rfc.section.3.1.4">Considerations for signaling of common information elements</a></li>
+<li>3.1.4.1.   <a href="#rfc.section.3.1.4.1">Proxy originated information</a></li>
+<li>3.1.4.2.   <a href="#rfc.section.3.1.4.2">Authentication</a></li>
+<li>3.1.4.3.   <a href="#rfc.section.3.1.4.3">Common encoding</a></li>
+<li>3.1.4.4.   <a href="#rfc.section.3.1.4.4">Usage Model to Protocol integration</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Proposed common information elements</a></li>
+<li>3.2.1.   <a href="#rfc.section.3.2.1">Bandwidth Attributes</a></li>
+<li>3.2.1.1.   <a href="#rfc.section.3.2.1.1">Maximum Bandwidth</a></li>
+<li>3.2.1.2.   <a href="#rfc.section.3.2.1.2">Minimum Bandwidth</a></li>
+<li>3.2.1.3.   <a href="#rfc.section.3.2.1.3">Bandwidth Pool</a></li>
+<li>3.2.2.   <a href="#rfc.section.3.2.2">Traffic Class Attributes</a></li>
+<li>3.2.2.1.   <a href="#rfc.section.3.2.2.1">RFC4594-DSCP</a></li>
+<li>3.2.2.2.   <a href="#rfc.section.3.2.2.2">Traffic Class Label (TCL)</a></li>
+<li>3.2.3.   <a href="#rfc.section.3.2.3">Acceptable Path Attributes</a></li>
+<li>3.2.3.1.   <a href="#rfc.section.3.2.3.1">Delay Tolerance</a></li>
+<li>3.2.3.2.   <a href="#rfc.section.3.2.3.2">Loss Tolerance</a></li>
+<li>3.2.3.3.   <a href="#rfc.section.3.2.3.3">Jitter Tolerance</a></li>
+<li>3.2.4.   <a href="#rfc.section.3.2.4">Application Identification</a></li>
+<li>3.2.4.1.   <a href="#rfc.section.3.2.4.1">RFC 6759 style application identification</a></li>
+<li>3.2.4.2.   <a href="#rfc.section.3.2.4.2">URL style application identification</a></li>
+<li>4.   <a href="#rfc.section.4">Acknowledgements</a></li>
+<li>5.   <a href="#rfc.references">Informative References</a></li>
+<li><a href="#rfc.authors">Authors' Addresses</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> Introduction</h1>
+<p id="rfc.section.1.p.1">This document provides a framework for communicating information elements (a.k.a. metadata) in a consistent manner between applications and the network to provide better visibility of application flows, thereby enabling differentiated treatment of those flows. These information elements can be conveyed using various signaling protocols, including PCP, RSVP, and STUN.</p>
+<p id="rfc.section.1.p.2">The framework is built around the definition of four key components:</p>
+
+<ol>
+  <li>A set of application independent information elements (IEs)</li>
+  <li>An encoding of these IEs that is independent of the signaling protocol used as transport</li>
+  <li>Usages of these IEs to support various transactional semantics</li>
+  <li>A mapping of one of more to these usages to an initial set of signaling protocols, including PCP, RSVP, and STUN</li>
+</ol>
+<p id="rfc.section.1.p.3">This document defines an initial set of IEs, a set of encoding rules, and initial usage model. The actual encoding is defined in <a href="#I-D.choukir-tsvwg-flow-metadata-encoding">[I-D.choukir-tsvwg-flow-metadata-encoding]</a>. Additional documents define the mapping to specific signaling protocols (e.g. RSVP <a href="#I-D.zamfir-tsvwg-flow-metadata-rsvp">[I-D.zamfir-tsvwg-flow-metadata-rsvp]</a>, STUN <a href="#I-D.martinsen-mmusic-malice">[I-D.martinsen-mmusic-malice]</a>, and PCP <a href="#I-D.wing-pcp-flowdata">[I-D.wing-pcp-flowdata]</a>)</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> Background</h1>
+<p id="rfc.section.2.p.1">This section provides background on the motivation for the framework.</p>
+<p id="rfc.section.2.p.2">Identification and treatment of application flows are critical for the successful deployment and operation of applications based on a wide range of signaling protocols. Historically, this functionality has been accomplished to the extent possible using heuristics, which inspect and infer flow characteristics.</p>
+<p id="rfc.section.2.p.3">Heuristics may be based on port ranges, IP subnetting, or deep packet inspection (DPI), e.g. application level gateway (ALG). Port based solutions suffer from port overloading and inconsistent port usage. IP subnetting solutions are error prone and result in network management hassle. DPI is computationally expensive and becomes a challenge with the wider adoption of encrypted signaling and secured traffic. An additional drawback of DPI is that the resulting insights are not available, or need to be recomputed, at network nodes further down the application flow path.</p>
+<p id="rfc.section.2.p.4">The proposed solution allows applications to explicitly signal their flow characteristics to the network. It also provides network nodes with visibility of the application flow characteristics and enables them to contribute to the flow description. The resulting flow description may be communicated as feedback from the network to applications.</p>
+<p id="rfc.section.2.p.5">The proposed solution does not enhance existing heuristic based mechanisms, nor does it preclude the use of such mechansims. Rather, it proposes a new mechanism that does not suffer the drawbacks of heuristic based mechanisms.</p>
+<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> Deep packet inspection</h1>
+<h1 id="rfc.section.2.1.1"><a href="#rfc.section.2.1.1">2.1.1.</a> Benefits</h1>
+<p id="rfc.section.2.1.1.p.1">Deep Packet Inspection (DPI) and other traffic observation methods (such as performance monitoring) are successfully being used for two type of workflows: </p>
+
+<ol>
+  <li>Provide network operators with visibility into traffic for troubleshooting, capacity planning, accounting and billing and other off network workflows. This is done by exporting observed traffic analysis via protocol such as IPFIX and SNMP.</li>
+  <li>Provide differentiated network services for the traffic according to network operator defined rule sets, including policing and shaping of traffic, providing admission control, impacting routing, permitting passage of traffic (e.g. firewall functions), etc.</li>
+</ol>
+
+<p>Note: For the context of this document, we consider that DPI starts as early into packets as using ACLs with UDP/TCP port numbers to classify traffic.</p>
+<h1 id="rfc.section.2.1.2"><a href="#rfc.section.2.1.2">2.1.2.</a> Limitation</h1>
+<p id="rfc.section.2.1.2.p.1">These two workflows, visibility and differentiated network services, are critical in many networks. However, their reliance on inspection and observation limits the ability to enable these workflows more widely.</p>
+
+<ul>
+  <li>Simple observation based classification, especially ones relying on TCP/UDP, ports often result in incorrect results due to port overloading (i.e. ports used by applications other than those claiming the port with IANA).</li>
+  <li>More and more traffic is encrypted, rendering deep packet inspection impossible or much more complex (e.g. needing to share encryption keys with network equipment).</li>
+  <li>Observation generally requires inspecting the control and signaling traffic of applications. This traffic may flow through a different network path than the actual application data traffic. Impacting the traffic behavior is ineffective in those scenarios.</li>
+  <li>Observation of control, signaling and data traffic with DPI will in general result in less insight into the applications intent than if the application was explicitly signaling its intent to the network.</li>
+  <li>Without explicit desire by the application to signal its intent to the network, it will also not consider to explicitly provide authentication to the network. DPI mechanism have a more difficult job in analyzing application traffic when authentication mechanisms are in use (if they even can)</li>
+  <li>Without explicit involvement of the application, network services leveraging DPI traffic classification impact the application behavior by impacting its traffic, but cannot provide explicit feedback to the application in the form of signaling.</li>
+</ul>
+<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> Explicit signaling methods</h1>
+<p id="rfc.section.2.2.p.1">There are a variety of existing and evolving signaling options that can provide explicit application to network signaling and serve the visibility and differentiated network services workflows where DPI is currently being used. It seems clear that there will be no single one-protocol-fits-all solution. Every protocol is currently defined in its own silo, creating duplicate or inconsistent information models.  This results in duplicate work, more operational complexity and an inability to easily convert information between protocols to easily leverage the best protocol option for each specific use case. Examples of existing signaling options include the following:</p>
+
+<ul>
+  <li>RSVP is the original on path signaling protocol standardized by the IETF. It operates on path out-of-band and could support any transport protocol traffic (it currently supports TCP and UDP).  Its original goal was to provide admission control. Arguably, its success was impacted by its reliance on router-alert because this often leads to RSVP packets being filtered by intervening networks. To date, more lightweight signaling workflows utilizing RSVP have not been standardized within the IETF.</li>
+  <li>NSIS (next Steps in Signaling) is the next iteration of RSVP-like signaling defined by the IETF. Because it focused on the same fundamental workflow as RSVP admission control as its main driver, and because it did not provide significant enough use-case benefits over RSVP, it has seen even less adoption than RSVP.</li>
+  <li>STUN is an on path, in-band signaling protocol that could easily be extended to provide signaling to on path network devices because it provides an easily inspected packet signature, at least for transport protocols such as UDP and SCTP. Through its extensions TURN and ICE, it is becoming quite popular in application signaling driven by the initial use-case of automatically opening up firewall pinholes and determining the best local and remote addresses for peer-to-peer connectivity (ICE).</li>
+  <li>PCP is a protocol designed to support use cases similar to UPnP firewall traversal. It also can easily be extended to provide more generic application to network signaling for traffic flows. Unlike the prior protocols, it is not meant to be used on path end-to-end but rather independently on one "edge" of a traffic flow. It is therefore an attractive alternative (albeit with challenges under path redundancy) because it allows the introduction of application to network signaling without relying on the remote peer. This is especially useful in multi-domain communications.</li>
+  <li>In addition to these, depending on the devices where it is performed, different degrees of DPI may be used to achieve explicit signaling. For example, inspection of HTTP connections is often viable in high-touch network devices. Such inspection may provide explicit signaling if the application purposely keeps or inserts information elements that are meant to be signaled to the network in the clear, or knowingly uses an encryption scheme shared with the network.</li>
+</ul>
+<p id="rfc.section.2.2.p.2">Rather than encourage independent, protocol specific solutions to this problem, this document provides a protocol and application independent framework that can be applied in a consistent fashion across the various protocols.</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Proposed framework</h1>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> Overview</h1>
+<p id="rfc.section.3.1.p.1">The proposed framework includes the following elements:</p>
+<h1 id="rfc.section.3.1.1"><a href="#rfc.section.3.1.1">3.1.1.</a> Common, application independent, IPFIX registered, information elements</h1>
+<p id="rfc.section.3.1.1.p.1">An application media flow may be expressed as a set of information elements that are defined and registered like observation-based IPFIX attributes. We propose leveraging IPFIX as the information model (not necessarily as the transport signaling) for the following reasons:</p>
+
+<ul>
+  <li>As outlined above, export of traffic information is one of the two big workflows. IPFIX is arguably the most flexible, extensible and best defined option for this. Leveraging the same information model for flow characteristics facilitates export of this information via IPFIX.</li>
+  <li>IPFIX allows for IETF/IANA standardized information elements, but also for unambiguous vendor-defined attributes by including the so-called PEN (Private Enterprise Number) into the information element type. Note that IPFIX has ongoing work to better disseminate vendor specific registration of attributes.  The framework defined here expects to be able to leverage the output of that work.</li>
+</ul>
+<h1 id="rfc.section.3.1.2"><a href="#rfc.section.3.1.2">3.1.2.</a> Cross-protocol information element encoding rules</h1>
+<p id="rfc.section.3.1.2.p.1">The majority of the protocols listed previously (RSVP, NSIS, STUN/ICE, PCP) require (or favor) compact binary encoding of information elements. This is natively supported by the information element registration of IPFIX.</p>
+<p id="rfc.section.3.1.2.p.2">The IPFIX registry defines each information element's data-type, and there is a native binary network encoding for each of these types. At a minimum, every protocol leveraging common information elements would need to use an encoding that identifies the information element's PEN and IE-ID, and that leverages network standard binary encoding of the value including the length of the value. Including the length of the value into the encoding is required for extensibility because otherwise new information elements could not be introduced without first having all network devices know the data-type, and therefore the length, of the information element. Leveraging network standard binary encoding is equally important to permit network elements to propagate information elements from one protocol to another protocol without understanding the information elements data-type.</p>
+<p id="rfc.section.3.1.2.p.3">In protocols that are not constrained to binary encoding, it is nevertheless highly desirable to include the equivalent information and therefore permit propagation between binary and non-binary transport of information elements without having to understand all information elements.</p>
+<h1 id="rfc.section.3.1.3"><a href="#rfc.section.3.1.3">3.1.3.</a> Anticipated Usage Models</h1>
+<p id="rfc.section.3.1.3.p.1">The signaling of information elements may be from application to the network or from network to application. When signaled within a given protocol, the information elements may be interpreted independently of that protocol, or it may be used in combination with the given protocol.</p>
+<h1 id="rfc.section.3.1.3.1"><a href="#rfc.section.3.1.3.1">3.1.3.1.</a> Informational</h1>
+<p id="rfc.section.3.1.3.1.p.1">The most simplistic usage model is one in which applications signal information elements describing their anticipated or existing flows into the network along the path of those flows without expecting or requiring anything back from the network.  Network elements along the flow path may or may not do something with this information.</p>
+<p id="rfc.section.3.1.3.1.p.2">This "informational" usage model enables network elements along the path to support the workflows traditionally performed via DPI mechanisms, as described previously.</p>
+<h1 id="rfc.section.3.1.3.2"><a href="#rfc.section.3.1.3.2">3.1.3.2.</a> Advisory</h1>
+<p id="rfc.section.3.1.3.2.p.1">This usage model extends the "informational" usage in that the application expects or requests some information back from the network. With this usage, the same information elements apply and may be communicated by the application into the network, but the application indicates its interest in receiving some feedback.</p>
+<p id="rfc.section.3.1.3.2.p.2">Default values are defined for each information element to unambiguously support cases in which an application does not have a valid value to communicate with the network; rather, it wants the network to provide a value back to it in response. In essence, this allows an application to ask a question and receive an answer from the network. Of course, a network element may provide similar feedback for cases in which an application communicated a non-default value as well. Network elements may also provide unsolicited advisory feedback.</p>
+<p id="rfc.section.3.1.3.2.p.3">In all cases, applications are not guaranteed to receive an answer or any specific service from the network. In the event an answer is provided, that answer is similarly not a guarantee of any specific service or treatment by the network. It is to be interpreted as advisory only.</p>
+<p id="rfc.section.3.1.3.2.p.4">As mentioned previously, the same information elements are used in the signaling from the application to the network as well as from the network to the application. The underlying transport protocol used to carry the information elements is expected to provide the necessary request/response semantics or some other mechanism by which the communication in both directions can be tied together.</p>
+<h1 id="rfc.section.3.1.3.3"><a href="#rfc.section.3.1.3.3">3.1.3.3.</a> Service Request</h1>
+<p id="rfc.section.3.1.3.3.p.1">This usage model extends the "advisory" usage to operate as an explicit service request. Unlike the advisory usage, information elements signalled by the application are interpreted by network elements within the context of a service request, and information elements signalled by the network back to the application are interpreted within the context of a response to that request.</p>
+<p id="rfc.section.3.1.3.3.p.2">As with the advisory usage, the same information elements are used in the signaling from the application to the network as well as from the network to the application. The underlying transport protocol used to carry the information elements is expected to provide the necessary service request/response semantics.</p>
+<h1 id="rfc.section.3.1.4"><a href="#rfc.section.3.1.4">3.1.4.</a> Considerations for signaling of common information elements</h1>
+<h1 id="rfc.section.3.1.4.1"><a href="#rfc.section.3.1.4.1">3.1.4.1.</a> Proxy originated information</h1>
+<p id="rfc.section.3.1.4.1.p.1">The goal of this framework is to enable applications to explicitly signal common information elements about their traffic flows and optionally receive common information elements from the network as feedback. Nevertheless, it is clear that broad adoption of such technology is improved by enabling the use of proxies. The proxies can provide or amend the flow description information in the absence of Flow Metadata support by the application itself.</p>
+<h1 id="rfc.section.3.1.4.2"><a href="#rfc.section.3.1.4.2">3.1.4.2.</a> Authentication</h1>
+<p id="rfc.section.3.1.4.2.p.1">Common information elements should provide for cryptographic authentication by the sender. In general the authentication provides some form of identification of the sender and proves that the common information elements covered by the authentication were originated from, or approved by, that identity.</p>
+<h1 id="rfc.section.3.1.4.3"><a href="#rfc.section.3.1.4.3">3.1.4.3.</a> Common encoding</h1>
+<p id="rfc.section.3.1.4.3.p.1">A companion document <a href="#I-D.choukir-tsvwg-flow-metadata-encoding">[I-D.choukir-tsvwg-flow-metadata-encoding]</a> covers recommended encoding rules that take the following aspects into account:</p>
+
+<ul>
+  <li>Compact binary encoding rules</li>
+  <li>Signaling for both sent and received traffic flows</li>
+  <li>Signaling of standard and vendor specific information elements</li>
+  <li>Minimizes protocol specific definition required to add informational or advisory common information elements into existing transactions</li>
+  <li>Signaling of feedback from the network</li>
+  <li>Identification of originator to support proxies and facilitate mitigation between common information elements from different originators</li>
+  <li>Signaling of authenticators</li>
+</ul>
+<h1 id="rfc.section.3.1.4.4"><a href="#rfc.section.3.1.4.4">3.1.4.4.</a> Usage Model to Protocol integration</h1>
+<p id="rfc.section.3.1.4.4.p.1">There is a range of options for how this framework is integrated with a particular transport protocol. We describe two examples we consider useful:</p>
+<h1 id="rfc.section.3.1.4.4.1"><a href="#rfc.section.3.1.4.4.1">3.1.4.4.1.</a> Common transport informative integration</h1>
+<p/>
+
+<ol>
+  <li>A transport protocol signaling method is defined to carry the common encoded information elements at least in signaling from application to network.</li>
+  <li>If the transport by itself does not already have a mechanism to indicate a purely informative protocol transaction, then a protocol specific indication for this is added.</li>
+</ol>
+<p id="rfc.section.3.1.4.4.1.p.2">In result, this integration achieves two option: </p>
+
+<ol>
+  <li>Informative common information elements can be sent from application to network by using the protocol's method to indicate the purely informational protocol transaction. This option effectively leverages the protocol as transport for additional informative attribute based services without impacting the services and transactions of the protocol otherwise.</li>
+  <li>Informative common information elements can be sent alongside an existing protocol transaction. In this case they may either be ships in the night (triggering informative attribute based services), or they may additionally be used by the policy rules of the protocol transaction itself which could be advisory or service request. All feedback of the transaction would still rely on protocol specific information element (common information elements only used from host to network).</li>
+</ol>
+<p id="rfc.section.3.1.4.4.1.p.3">This integration is for example defined in <a href="#I-D.wing-pcp-flowdata">[I-D.wing-pcp-flowdata]</a>, <a href="#I-D.zamfir-tsvwg-flow-metadata-rsvp">[I-D.zamfir-tsvwg-flow-metadata-rsvp]</a>, and <a href="#I-D.martinsen-mmusic-malice">[I-D.martinsen-mmusic-malice]</a>.</p>
+<h1 id="rfc.section.3.1.4.4.2"><a href="#rfc.section.3.1.4.4.2">3.1.4.4.2.</a> Common transport advisory integration</h1>
+<p id="rfc.section.3.1.4.4.2.p.1">In addition to the common transport informative integration, the transport encoding is extended to carry the common transport information element in feedback messages from the network to the host/application. The method to indicate informative only transaction, when sending to the network is used to indicate advisory only transaction when signaling from the network.</p>
+<p id="rfc.section.3.1.4.4.2.p.2">This option primarily enables informative and advisory usage models, but it can equally interact with pre-existing service-request options of the transport protocol and impact advisory feedback or the service request itself based on that interaction.</p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> Proposed common information elements</h1>
+<p id="rfc.section.3.2.p.1">The section defines an initial set of common information elements.  These information elements are intended to be added to the set of IANA standardized information elements either by this or associated documents. Additional documents are expected to define additional attributes that can use either IANA or other vendor-PEN.</p>
+<p id="rfc.section.3.2.p.2">All information element definition must include the following:</p>
+
+<ol>
+  <li>Default value to be provided by an application when it does not have an informative value to provide to the network, but is interested in receiving an advisory value of the attribute from the network. If no advisory feedback is requested, and no informative value is known, the attribute may simply not be sent.</li>
+  <li>Conflict resolution in the presence of different values for the same information element (e.g. two peers signaling information elements for both the upstream and downstream direction of a flow include different values for the information element)</li>
+</ol>
+<h1 id="rfc.section.3.2.1"><a href="#rfc.section.3.2.1">3.2.1.</a> Bandwidth Attributes</h1>
+<h1 id="rfc.section.3.2.1.1"><a href="#rfc.section.3.2.1.1">3.2.1.1.</a> Maximum Bandwidth</h1>
+<p id="rfc.section.3.2.1.1.p.1">This attribute is used to convey the maximum sustained bandwidth for the flow. It is an unsigned 64 bit value and is specified in bits per second.</p>
+<p id="rfc.section.3.2.1.1.p.2">Default Value: 0</p>
+<p id="rfc.section.3.2.1.1.p.3">Conflict Resolution: Minimum for the set of non-default values</p>
+<h1 id="rfc.section.3.2.1.2"><a href="#rfc.section.3.2.1.2">3.2.1.2.</a> Minimum Bandwidth</h1>
+<p id="rfc.section.3.2.1.2.p.1">This attribute is used to convey the minimum sustained bandwidth for the flow. It is an unsigned 64 bit value and is specified in bits per second. Not sending the Minimum Bandwidth is equivalent to sending the same value as for Maximum Bandwidth.</p>
+<p id="rfc.section.3.2.1.2.p.2">Default Value: 0</p>
+<p id="rfc.section.3.2.1.2.p.3">Conflict Resolution: Minimum of the set of non-default values</p>
+<h1 id="rfc.section.3.2.1.3"><a href="#rfc.section.3.2.1.3">3.2.1.3.</a> Bandwidth Pool</h1>
+<p id="rfc.section.3.2.1.3.p.1">This attribute is used to convey that the traffic dynamically shares bandwidth with other traffic using the same Bandwidth Pool.  Variable length GUID (Global Unique ID) of at least 48 bits. The Maximum Bandwidth used by the pool is the largest Maximum Bandwidth indicated by any member, the Minimum Bandwidth of the Pool is the largest Minimum Bandwidth indicated by any member.</p>
+<h1 id="rfc.section.3.2.2"><a href="#rfc.section.3.2.2">3.2.2.</a> Traffic Class Attributes</h1>
+<h1 id="rfc.section.3.2.2.1"><a href="#rfc.section.3.2.2.1">3.2.2.1.</a> RFC4594-DSCP</h1>
+<p id="rfc.section.3.2.2.1.p.1">This attribute is used to convey the DSCP value appropriate for the flow. It is an unsigned 8 bit value. Values signaled are assumed to be in compliance with <a href="#RFC4594">[RFC4594]</a> or backward compatible extensions thereof. Other values are undefined.</p>
+<p id="rfc.section.3.2.2.1.p.2">Default Value: 0xff</p>
+<p id="rfc.section.3.2.2.1.p.3">Conflict Resolution: tbd</p>
+<h1 id="rfc.section.3.2.2.2"><a href="#rfc.section.3.2.2.2">3.2.2.2.</a> Traffic Class Label (TCL)</h1>
+<p id="rfc.section.3.2.2.2.p.1">The data type of this information element is a string. It carries the Traffic Class Label defined in <a href="#I-D.ietf-mmusic-traffic-class-for-sdp">[I-D.ietf-mmusic-traffic-class-for-sdp]</a>. Depending on the outcome of that drafts standardization, the version carried as an information element may be slightly expanded over the its definition for SDP. The TCL is a structured string of the form:</p>
+<p id="rfc.section.3.2.2.2.p.2">&lt;category&gt;.&lt;application&gt;(.adjective)(.adjective)</p>
+<p id="rfc.section.3.2.2.2.p.3">category and application provide a base categorization of the traffic class that attempts to provide a simplified and extensible, framework for the traffic class definitions in <a href="#RFC4594">[RFC4594]</a>. These base classifications can be refined with zero or more adjectives. Examples of a TCL is "conversational.video.avconf".</p>
+<p id="rfc.section.3.2.2.2.p.4">Default Value: Empty string</p>
+<p id="rfc.section.3.2.2.2.p.5">Conflict Resolution: tbd</p>
+<h1 id="rfc.section.3.2.3"><a href="#rfc.section.3.2.3">3.2.3.</a> Acceptable Path Attributes</h1>
+<p id="rfc.section.3.2.3.p.1">The following set of attributes deal with tolerance to various path impairments. A discrete and ordered set of values is defined for each. This way the values are applicable on a per hop basis as well as end to end. The values may be mapped to relevant metrics within a given network, such as the mapping of delay tolerance and loss tolerance to QCI values as defined in <a href="#I-D.penno-pcp-mobile-qos">[I-D.penno-pcp-mobile-qos]</a></p>
+<h1 id="rfc.section.3.2.3.1"><a href="#rfc.section.3.2.3.1">3.2.3.1.</a> Delay Tolerance</h1>
+<p id="rfc.section.3.2.3.1.p.1">This attribute is used to convey the delay tolerance of an application with respect to the associated flow. When provided by a network element, it indicates the delay tolerance expected of the application with respect to the associated flow. It is a 3 bit field for which values are assigned as follows:</p>
+<p id="rfc.section.3.2.3.1.p.2">0 = no information available</p>
+<p id="rfc.section.3.2.3.1.p.3">1 = very low</p>
+<p id="rfc.section.3.2.3.1.p.4">2 = low</p>
+<p id="rfc.section.3.2.3.1.p.5">3 = medium</p>
+<p id="rfc.section.3.2.3.1.p.6">4 = high</p>
+<p id="rfc.section.3.2.3.1.p.7">5-7: reserved</p>
+<p id="rfc.section.3.2.3.1.p.8">Default Value: 0</p>
+<p id="rfc.section.3.2.3.1.p.9">Conflict Resolution: For application to network, the most strict of non-default values. For network to application, the least strict of the set of non-default values.</p>
+<h1 id="rfc.section.3.2.3.2"><a href="#rfc.section.3.2.3.2">3.2.3.2.</a> Loss Tolerance</h1>
+<p id="rfc.section.3.2.3.2.p.1">This attribute is used to convey the loss tolerance of an application with respect to the associated flow. When provided by a network element, it indicates the loss tolerance expected of the application with respect to the associated flow. It is a 3 bit field for which values are assigned as follows:</p>
+<p id="rfc.section.3.2.3.2.p.2">0 = no information available</p>
+<p id="rfc.section.3.2.3.2.p.3">1 = very low</p>
+<p id="rfc.section.3.2.3.2.p.4">2 = low</p>
+<p id="rfc.section.3.2.3.2.p.5">3 = medium</p>
+<p id="rfc.section.3.2.3.2.p.6">4 = high</p>
+<p id="rfc.section.3.2.3.2.p.7">5-7: reserved</p>
+<p id="rfc.section.3.2.3.2.p.8">Default Value: 0</p>
+<p id="rfc.section.3.2.3.2.p.9">Conflict Resolution: For application to network, the most strict of non-default values. For network to application, the least strict of the set of non-default values.</p>
+<h1 id="rfc.section.3.2.3.3"><a href="#rfc.section.3.2.3.3">3.2.3.3.</a> Jitter Tolerance</h1>
+<p id="rfc.section.3.2.3.3.p.1">This attribute is used to convey the jitter tolerance of an application with respect to the associated flow. When provided by a network element, it indicates the jitter tolerance expected of the application with respect to the associated flow. It is a 3 bit field for which values are assigned as follows:</p>
+<p id="rfc.section.3.2.3.3.p.2">0 = no information available</p>
+<p id="rfc.section.3.2.3.3.p.3">1 = very low</p>
+<p id="rfc.section.3.2.3.3.p.4">2 = low</p>
+<p id="rfc.section.3.2.3.3.p.5">3 = medium</p>
+<p id="rfc.section.3.2.3.3.p.6">4 = high</p>
+<p id="rfc.section.3.2.3.3.p.7">5-7: reserved</p>
+<p id="rfc.section.3.2.3.3.p.8">Default Value: 0</p>
+<p id="rfc.section.3.2.3.3.p.9">Conflict Resolution: For application to network, the most strict of non-default values. For network to application, the least strict of the set of non-default values.</p>
+<h1 id="rfc.section.3.2.4"><a href="#rfc.section.3.2.4">3.2.4.</a> Application Identification</h1>
+<p id="rfc.section.3.2.4.p.1">Application identification is clearly one of the more difficult classification goals. The proposals included here are as of yet not widely vetted:</p>
+<h1 id="rfc.section.3.2.4.1"><a href="#rfc.section.3.2.4.1">3.2.4.1.</a> RFC 6759 style application identification</h1>
+<p><a href="#RFC6759">[RFC6759]</a> defines the IPFIX IE-IDs that permit both IANA and vendor specific application identification. Though defined for observation (a.k.a.: DPI), it could also be used with explicit signaling from applications.</p>
+<p id="rfc.section.3.2.4.1.p.2">Applications that use one of the protocols for which there is an IANA port allocation could explicitly indicate this port via the IANA-L4 engine-id in their application to network signaling.  This would identify the application even if the application is not using the IANA assigned port for it. This covers cases in which applications use ports other than registered, such as HTTP servers running on other than 80, or when ports get mapped due to PAT.</p>
+<p id="rfc.section.3.2.4.1.p.3">To avoid collision with DPI exported IANA-L4 classification, it is necessary to assign a new engine-id for application-self assigned IANA-L4 classification (e.g. new engine-id for IANA-L4-SELF-ASSIGNED). If an application vendor has a PEN, the application can use a PANA-L7-PEN classification with the PEN of the originating application vendor. Likewise, if applications are in general made available via "market" type reseller mechanism (common in mobile device applications), then the application vendor could request an application identification from the market owner and leverage the market owners PEN.</p>
+<h1 id="rfc.section.3.2.4.2"><a href="#rfc.section.3.2.4.2">3.2.4.2.</a> URL style application identification</h1>
+<p id="rfc.section.3.2.4.2.p.1">One problem with <a href="#RFC6759">[RFC6759]</a> style application identification especially non-IANA registered ones is the complexity in making all network elements learn the semantic of the numeric encoding of e.g. the PANA-L7-PEN information element in signaling protocols that only use the numeric encoding of information elements. The second problem may be to determine what PEN to use, because not every developer of an application may be a company that has a PEN or otherwise would intend to apply for one.  Application identification via a URL encoded string information element is a way to overcome both issues. Today, almost all applications have some DNS domain associated with them through which they are being marketed or that belongs to the company developing the application. Therefore, one simple form of self assigned application identification is a new IPFIX information element: UrlAppId. The value of this information element is an abbreviated URL of the following form:</p>
+<p id="rfc.section.3.2.4.2.p.2">&lt;fqdn&gt; / &lt;app-name&gt; /[ &lt;version&gt; | &lt;other-details&gt; ]</p>
+<p id="rfc.section.3.2.4.2.p.3">The idea is that the owner of &lt;fqdn&gt; (fully qualified domain name) is assigning an &lt;app-name&gt;, and by signaling both &lt;domain-name&gt; and &lt;app-name&gt;, this information element provides a self-identifying, unambiguous application identification.</p>
+<p id="rfc.section.3.2.4.2.p.4">Example:</p>
+<p id="rfc.section.3.2.4.2.p.5">example.com/network-lemmings/sdn-edition</p>
+<p id="rfc.section.3.2.4.2.p.6">A game publishing house or application market operator with the domain name example.com is initially allocating the UrlAppId example.com/network-lemmings to that application. After 35 years, a new variant of the game is released, the SDN edition, and the app-developer decides that it would best like to distinguish this application variant by the above UrlAppId example.com/network-lemmings/sdn-edition.</p>
+<p id="rfc.section.3.2.4.2.p.7">In general, different traffic flows within a single application should best not be distinguished via the UrlAppId, but instead rely on attributes more specifically targeted for that purpose (such as the TrafficClassLabel). If there is no adequate better attribute defined, application developers may choose to use the other-details section of the UrlAppId to distinguish flows within the same application.</p>
+<p id="rfc.section.3.2.4.2.p.8">Formally, the only requirement against the UrlAppId is that the fqdn part is a DNS domain owned by the assigner, and that the rest of the string after the first / is as self explanatory as possible.</p>
+<p id="rfc.section.3.2.4.2.p.9">It should be noted that in the context of DPI, classification of web-based application traffic is very often performed by URL inspection of HTTP traffic. This proposed intent based information element leverages that model and makes it usable where it can not be currently used with just DPI: encrypted HTTP, non-HTTP applications, HTTP applications with non-descriptive URLs, etc.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#Acknowledgements" id="Acknowledgements">Acknowledgements</a></h1>
+<p id="rfc.section.4.p.1">The authors would like to thank Dan Wing, Anca Zamfir, Paul Jones, and Tirumaleswar Reddy for their valuable contributions to this document.</p>
+<h1 id="rfc.references"><a href="#rfc.references">5.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.choukir-tsvwg-flow-metadata-encoding">[I-D.choukir-tsvwg-flow-metadata-encoding]</b>
+      </td>
+      <td class="top"><a>Eckert, T.</a>, <a>Zamfir, A.</a>, <a>Choukir, A.</a> and <a>C. Eckel</a>, "<a href="http://tools.ietf.org/html/draft-choukir-tsvwg-flow-metadata-encoding-01">Protocol Independent Encoding for Signaling Flow Characteristics</a>", Internet-Draft draft-choukir-tsvwg-flow-metadata-encoding-01, July 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-mmusic-traffic-class-for-sdp">[I-D.ietf-mmusic-traffic-class-for-sdp]</b>
+      </td>
+      <td class="top"><a>Polk, J.</a>, <a>Dhesikan, S.</a> and <a>P. Jones</a>, "<a href="http://tools.ietf.org/html/draft-ietf-mmusic-traffic-class-for-sdp-04">The Session Description Protocol (SDP) 'trafficclass' Attribute</a>", Internet-Draft draft-ietf-mmusic-traffic-class-for-sdp-04, July 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.martinsen-mmusic-malice">[I-D.martinsen-mmusic-malice]</b>
+      </td>
+      <td class="top"><a>Penno, R.</a>, <a>Martinsen, P.</a>, <a>Wing, D.</a> and <a>A. Zamfir</a>, "<a href="http://tools.ietf.org/html/draft-martinsen-mmusic-malice-00">Meta-data Attribute signaLling with ICE</a>", Internet-Draft draft-martinsen-mmusic-malice-00, July 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.penno-pcp-mobile-qos">[I-D.penno-pcp-mobile-qos]</b>
+      </td>
+      <td class="top"><a>Penno, R.</a>, <a>Reddy, T.</a>, <a>Wing, D.</a>, <a>Steeg, B.</a> and <a>M. Boucadair</a>, "<a href="http://tools.ietf.org/html/draft-penno-pcp-mobile-qos-00">PCP Usage for Quality of Service (QoS) in Mobile Networks</a>", Internet-Draft draft-penno-pcp-mobile-qos-00, July 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.wing-pcp-flowdata">[I-D.wing-pcp-flowdata]</b>
+      </td>
+      <td class="top"><a>Wing, D.</a>, <a>Penno, R.</a> and <a>T. Reddy</a>, "<a href="http://tools.ietf.org/html/draft-wing-pcp-flowdata-00">PCP Flowdata Option</a>", Internet-Draft draft-wing-pcp-flowdata-00, July 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.zamfir-tsvwg-flow-metadata-rsvp">[I-D.zamfir-tsvwg-flow-metadata-rsvp]</b>
+      </td>
+      <td class="top"><a>Eckert, T.</a>, <a>Zamfir, A.</a> and <a>A. Choukir</a>, "<a href="http://tools.ietf.org/html/draft-zamfir-tsvwg-flow-metadata-rsvp-00">Flow Metadata Signaling with RSVP</a>", Internet-Draft draft-zamfir-tsvwg-flow-metadata-rsvp-00, July 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4594">[RFC4594]</b>
+      </td>
+      <td class="top"><a>Babiarz, J.</a>, <a>Chan, K.</a> and <a>F. Baker</a>, "<a href="http://tools.ietf.org/html/rfc4594">Configuration Guidelines for DiffServ Service Classes</a>", RFC 4594, August 2006.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6759">[RFC6759]</b>
+      </td>
+      <td class="top"><a>Claise, B.</a>, <a>Aitken, P.</a> and <a>N. Ben-Dvora</a>, "<a href="http://tools.ietf.org/html/rfc6759">Cisco Systems Export of Application Information in IP Flow Information Export (IPFIX)</a>", RFC 6759, November 2012.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Toerless Eckert</span> (editor)
+	  <span class="n hidden">
+		<span class="family-name">Eckert</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality">San Jose</span>,  
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline">US</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:eckert@cisco.com">eckert@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Reinaldo Penno</span> 
+	  <span class="n hidden">
+		<span class="family-name">Penno</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span>170 West Tasman Drive</span>
+
+	  <span class="vcardline">
+		<span class="locality">San Jose</span>,  
+		<span class="region"></span>
+		<span class="code">95134</span>
+	  </span>
+	  <span class="country-name vcardline">USA</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:repenno@cisco.com">repenno@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Amine Choukir</span> 
+	  <span class="n hidden">
+		<span class="family-name">Choukir</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality">Lausanne</span>,  
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline">CH</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:amchouki@cisco.com">amchouki@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Charles Eckel</span> 
+	  <span class="n hidden">
+		<span class="family-name">Eckel</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span>170 West Tasman Drive</span>
+
+	  <span class="vcardline">
+		<span class="locality">San Jose</span>,  
+		<span class="region">CA</span> 
+		<span class="code">95134</span>
+	  </span>
+	  <span class="country-name vcardline">US</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:eckelcu@cisco.com">eckelcu@cisco.com</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
