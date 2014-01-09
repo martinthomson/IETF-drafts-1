@@ -13,18 +13,25 @@ do
     if test -d $FILE
     then
       #echo "Entering Directory: $FILE"
-      echo "<h3> $FILE </h3>" >> ../content.html
-      cd $FILE
-      for HTMLFILE in `ls *.html 2>/dev/null`
-      do
+        if [ "$FILE" = "Drafts" ]; then
+            continue
+        fi
+        if [ "$FILE" = "DraftStorage" ]; then
+            continue
+        fi
+        
+        echo "<h3> $FILE </h3>" >> ../content.html
+        cd $FILE
+        for HTMLFILE in `ls *.html 2>/dev/null`
+        do
           #echo "Procsessing file: $HTMLFILE"
-          echo "<p>" >> ../../content.html
-          echo "${HTMLFILE%%.*} <a href=DraftStorage/$FILE/$HTMLFILE> [html] </a>" >> ../../content.html
-          echo "<a href=DraftStorage/$FILE/${HTMLFILE%%.*}.txt> [txt] </a>" >> ../../content.html
-          echo "<a href=DraftStorage/$FILE/${HTMLFILE%%.*}.raw.txt> [raw.txt] </a>" >> ../../content.html
-          echo "</p>" >> ../../content.html
-      done
-      cd ..
+            echo "<p>" >> ../../content.html
+            echo "${HTMLFILE%%.*} <a href=DraftStorage/$FILE/$HTMLFILE> [html] </a>" >> ../../content.html
+            echo "<a href=DraftStorage/$FILE/${HTMLFILE%%.*}.txt> [txt] </a>" >> ../../content.html
+            echo "<a href=DraftStorage/$FILE/${HTMLFILE%%.*}.raw.txt> [raw.txt] </a>" >> ../../content.html
+            echo "</p>" >> ../../content.html
+        done
+        cd ..
     fi
 done
 cd ..
