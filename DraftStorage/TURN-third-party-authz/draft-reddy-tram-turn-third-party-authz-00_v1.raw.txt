@@ -5,10 +5,10 @@
 TRAM                                                            T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                         R. Ravindranath
-Expires: July 13, 2014                                             Cisco
+Expires: July 24, 2014                                             Cisco
                                                                J. Uberti
                                                                   Google
-                                                        January 09, 2014
+                                                        January 20, 2014
 
 
               TURN Extension for Third Party Authorization
@@ -39,7 +39,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 13, 2014.
+   This Internet-Draft will expire on July 24, 2014.
 
 Copyright Notice
 
@@ -82,10 +82,10 @@ Table of Contents
 TRAM                                                            T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                         R. Ravindranath
-Expires: July 13, 2014                                             Cisco
+Expires: July 24, 2014                                             Cisco
                                                                J. Uberti
                                                                   Google
-                                                        January 09, 2014
+                                                        January 20, 2014
 
 
               TURN Extension for Third Party Authorization
@@ -116,7 +116,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 13, 2014.
+   This Internet-Draft will expire on July 24, 2014.
 
 Copyright Notice
 

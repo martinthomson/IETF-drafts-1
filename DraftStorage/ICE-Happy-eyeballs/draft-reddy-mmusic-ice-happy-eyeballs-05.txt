@@ -50,85 +50,44 @@ Copyright Notice
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
 
+
+
+
+Reddy, et al.             Expires July 24, 2014                 [Page 1]
+
+Internet-Draft           Happy Eyeballs for ICE             January 2014
+
+
 Table of Contents
 
-   1.  Introduction
-     1.1.  Notational Conventions
-   2.  Improving ICE Dual-stack Fairness
-   3.  Compatibility
-   4.  IANA Considerations
-   5.  Security Considerations
-   6.  Acknowledgements
-   7.  Normative References
-   Authors' Addresses
-
-
-MMUSIC                                                          T. Reddy
-Internet-Draft                                                  P. Patil
-Intended status: Standards Track                            P. Martinsen
-Expires: July 24, 2014                                             Cisco
-                                                        January 20, 2014
-
-
-                    Happy Eyeballs Extension for ICE
-                draft-reddy-mmusic-ice-happy-eyeballs-04
-
-Abstract
-
-   This document provides guidelines on how to make ICE [RFC5245]
-   conclude faster in IPv4/IPv6 dual-stack scenarios where broken paths
-   exists.
-
-Status of This Memo
-
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
-
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
-
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
-
-   This Internet-Draft will expire on July 24, 2014.
-
-Copyright Notice
-
-   Copyright (c) 2014 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Notational Conventions  . . . . . . . . . . . . . . . . .   2
+   2.  Improving ICE Dual-stack Fairness . . . . . . . . . . . . . .   2
+   3.  Compatibility . . . . . . . . . . . . . . . . . . . . . . . .   3
+   4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   4
+   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
 
 1.  Introduction
 
-   There is a need to introduce more fairness in the handling of
-   connectivity checks in dual-stack IPv4/IPv6 ICE scenarios.
-   Section 4.1.2.1 of ICE [RFC5245] points to [RFC3484] for prioritizing
-   among the different IP families.  [RFC3484] is obsoleted by [RFC6724]
-   but following the recommendations from the updated RFC will still
-   lead to prioritization of IPv6 over IPv4 with the same candidate
-   type.  There can be a lot of ICE candidates belonging to one address
-   family which results in user-noticable setup delays if the path for
-   that address family is broken.
+   There is a need to introduce fairness in the handling of connectivity
+   checks sent on different IP address families in dual-stack IPv4/IPv6
+   ICE scenarios.  Section 4.1.2.1 of ICE [RFC5245] points to [RFC3484]
+   for prioritizing among the different IP families.  [RFC3484] is
+   obsoleted by [RFC6724] but following the recommendations from the
+   updated RFC will still lead to prioritization of IPv6 over IPv4 with
+   the same candidate type.  There can be a lot of ICE candidates
+   belonging to one address family which results in user-noticeable
+   setup delays if the path for that address family is broken.
 
-   To avoid such user-noticable delays when the IPv6 path or IPv4 path
+   To avoid such user-noticeable delays when the IPv6 path or IPv4 path
    is broken, this specification encourages earlier checking of the
-   other address family.  Greater IP address family fairness into ICE
-   connectivity checks will lead to more sustained IPv6 deployment (so
-   users will no longer have an incentive to disable IPv6), which incurs
-   only a small penalty for the IPv4 connectivity checks.
+   other address family.  Introducing IP address family fairness into
+   ICE connectivity checks will lead to more sustained IPv6 deployment
+   (so users will no longer have an incentive to disable IPv6), which
+   incurs only a small penalty for the IPv4 connectivity checks.
 
 1.1.  Notational Conventions
 
@@ -147,32 +106,76 @@ Copyright Notice
    address candidate is always present after a small sequence of IPv6
    addresses.  This makes ICE connectivity checks more responsive to
    failures of an address family by reordering the candidates such that
+
+
+
+Reddy, et al.             Expires July 24, 2014                 [Page 2]
+
+Internet-Draft           Happy Eyeballs for ICE             January 2014
+
+
    IPv6 and IPv4 candidates get a fair chance during connectivity
    checks.
 
    An ICE agent can choose an algorithm or a technique of its choice to
-   promote IPv4 candidates.
+   ensure the resulting checklists have a fair interleaved mix of IPv4
+   and IPv6 address families.  Modifying the checklist directly can lead
+   to uncoordinated local and remote checklists that result in ICE
+   taking longer to complete.  The best approach is to modify the
+   formula for calculating the candidate priority value.
+   Section Section 3 discusses this in greater detail.
 
 3.  Compatibility
 
    ICE [RFC5245] section 4.1.2 states that the formula in section
-   4.1.2.1 SHOULD be used.  Failing to do so may lead to ICE taking
-   longer to converge as the checklist no longer will be coordinated.
-   Therefore responsiveness of ICE candidate checks are improved when
-   both sides support Happy-Eyeballs, both sides have the same number of
-   candidate pairs, and both sides use the same Happy Eyeballs promotion
-   algorithm.
+   4.1.2.1 SHOULD be used.  The fomula is as follows:
 
-   If each ICE agent uses a different algorithm to promote IPv4
-   candidates, ICE connectivity checks will be as responsive as the
-   least aggressive algorithm.  This is because the MAX/MIN candiate-
-   pair logic ensures that for a particular agent, a lower-priority
-   candidate is never used (for media) until all higher-priority
-   candidates have been tried.
+     priority = (2^24)*(type preference) +
+                (2^8)*(local preference) +
+                (2^0)*(256 - component ID)
 
-   If only one ICE agent supports Happy-Eyeballs, there is potentially
-   no change in pacing of ICE connectivity checks and the situation is
-   no worse than what exists today
+
+   ICE [RFC5245] section 4.1.2.2 have guidelines for how the type
+   preference value should be chosen.  Instead of having one static
+   value for IPv4 and one static value for IPv6 type of addresses, it is
+   possible to choose this value dynamically in such a way that IPv4 and
+   IPv6 addresses would have ended up interleaved in a list where the
+   candidates where sorted by priority.
+
+   The local and remote agent can have different algorithms for choosing
+   the type preference value without any impact on coordination between
+   the local and remote checklist.
+
+   The checklist is made up by candidate pairs.  A candidate pair is two
+   candidates paired up and given a candidate pair priority as described
+   in [RFC5245] section 5.7.2.  Using the pair priority formula:
+
+     pair priority = 2^32*MIN(G,D) + 2*MAX(G,D) + (G>D?1:0)
+
+
+   Where G is the candidate provided by the controlling agent and D the
+   priority provided by the controlled agent.  Ensures that the local
+   and remote checklists are coordinated.
+
+
+
+
+
+
+
+
+
+Reddy, et al.             Expires July 24, 2014                 [Page 3]
+
+Internet-Draft           Happy Eyeballs for ICE             January 2014
+
+
+   Interoperability with agents that does not support ICE Happy Eyeballs
+   are supported in the same way as two agents with different ICE Happy
+   Eyeballs candidate priority algorithms.  It is the controlling agent
+   that have most impact on how the checklist is sorted due to the
+   formula above.  If the controlling agent does not support any form of
+   ICE Happy Eyeball algorithm, the effect is standard ICE behaviour
 
 4.  IANA Considerations
 
@@ -209,6 +212,20 @@ Copyright Notice
 
 Authors' Addresses
 
+
+
+
+
+
+
+
+
+
+Reddy, et al.             Expires July 24, 2014                 [Page 4]
+
+Internet-Draft           Happy Eyeballs for ICE             January 2014
+
+
    Tirumaleswar Reddy
    Cisco Systems, Inc.
    Cessna Business Park, Varthur Hobli
@@ -237,3 +254,27 @@ Authors' Addresses
 
    Email: palmarti@cisco.com
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Reddy, et al.             Expires July 24, 2014                 [Page 5]

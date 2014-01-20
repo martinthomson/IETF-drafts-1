@@ -5,7 +5,7 @@
 Internet Engineering Task Force                                 C. Eckel
 Internet-Draft                                                  T. Reddy
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: July 13, 2014                                  January 09, 2014
+Expires: July 24, 2014                                  January 20, 2014
 
 
              Application Enabled Open Networking Use Cases
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 13, 2014.
+   This Internet-Draft will expire on July 24, 2014.
 
 Copyright Notice
 
@@ -131,7 +131,7 @@ Table of Contents
 Internet Engineering Task Force                                 C. Eckel
 Internet-Draft                                                  T. Reddy
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: July 13, 2014                                  January 09, 2014
+Expires: July 24, 2014                                  January 20, 2014
 
 
              Application Enabled Open Networking Use Cases
@@ -161,7 +161,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 13, 2014.
+   This Internet-Draft will expire on July 24, 2014.
 
 Copyright Notice
 
