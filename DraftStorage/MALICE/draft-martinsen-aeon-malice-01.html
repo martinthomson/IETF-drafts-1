@@ -359,16 +359,16 @@
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 TURN messages"/>
 <link href="#rfc.section.2.4" rel="Chapter" title="2.4 Multiplexed streams"/>
 <link href="#rfc.section.2.5" rel="Chapter" title="2.5 Network Processing"/>
-<link href="#rfc.section.3" rel="Chapter" title="3 Network Feedback"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Network Meta-Data"/>
 <link href="#rfc.section.3.1" rel="Chapter" title="3.1 Application Usage"/>
 <link href="#rfc.section.3.2" rel="Chapter" title="3.2 Network Processing"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 New STUN attributes"/>
-<link href="#rfc.section.4.1" rel="Chapter" title="4.1 META-DATA"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 APPLICATION META-DATA"/>
 <link href="#rfc.section.4.1.1" rel="Chapter" title="4.1.1 META-DATA types"/>
 <link href="#rfc.section.4.1.2" rel="Chapter" title="4.1.2 Generic"/>
 <link href="#rfc.section.4.1.3" rel="Chapter" title="4.1.3 Audio"/>
 <link href="#rfc.section.4.1.4" rel="Chapter" title="4.1.4 Video"/>
-<link href="#rfc.section.4.2" rel="Chapter" title="4.2 NETWORK-FEEDBACK"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 NETWORK META-DATA"/>
 <link href="#rfc.references" rel="Chapter" title="5 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="5.1 Normative References"/>
 <link href="#rfc.references.2" rel="Chapter" title="5.2 Informational References"/>
@@ -450,16 +450,16 @@
 <li>2.3.   <a href="#rfc.section.2.3">TURN messages</a></li>
 <li>2.4.   <a href="#rfc.section.2.4">Multiplexed streams</a></li>
 <li>2.5.   <a href="#rfc.section.2.5">Network Processing</a></li>
-<li>3.   <a href="#rfc.section.3">Network Feedback</a></li>
+<li>3.   <a href="#rfc.section.3">Network Meta-Data</a></li>
 <li>3.1.   <a href="#rfc.section.3.1">Application Usage</a></li>
 <li>3.2.   <a href="#rfc.section.3.2">Network Processing</a></li>
 <li>4.   <a href="#rfc.section.4">New STUN attributes</a></li>
-<li>4.1.   <a href="#rfc.section.4.1">META-DATA</a></li>
+<li>4.1.   <a href="#rfc.section.4.1">APPLICATION META-DATA</a></li>
 <li>4.1.1.   <a href="#rfc.section.4.1.1">META-DATA types</a></li>
 <li>4.1.2.   <a href="#rfc.section.4.1.2">Generic</a></li>
 <li>4.1.3.   <a href="#rfc.section.4.1.3">Audio</a></li>
 <li>4.1.4.   <a href="#rfc.section.4.1.4">Video</a></li>
-<li>4.2.   <a href="#rfc.section.4.2">NETWORK-FEEDBACK</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">NETWORK META-DATA</a></li>
 <li>5.   <a href="#rfc.references">References</a></li>
 <li>5.1.   <a href="#rfc.references.1">Normative References</a></li>
 <li>5.2.   <a href="#rfc.references.2">Informational References</a></li>
@@ -469,9 +469,9 @@
   </ul>
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> Introduction</h1>
-<p id="rfc.section.1.p.1">In the context of Content, Mobile, Fixed Service, Service Providers, Enterprise and Private networks have a need to prioritize packet flows end-to-end. These flows are often dynamic, time-bound, encrypted, peer-to-peer, possibly asymmetric, and might have different priorities depending on network conditions, direction, time of the day, dynamic user preferences and other factors. These factors may be time variant, and thus need to be signalled. Moreover, in many cases of peer-to-peer communication, flow information is known only to the endpoint. These considerations, coupled with the trend to use encryption for browser-to-browser communication <a href="#I-D.ietf-rtcweb-security-arch">[I-D.ietf-rtcweb-security-arch]</a>, imply that access lists, deep packet inspection and other static prioritization methods cannot be employed successfully to prioritize packet flows. This specification describes how these problems can be solved by using either STUN <a href="#RFC5389">[RFC5389]</a> packets sent during ICE's <a href="#RFC5245">[RFC5245]</a> connectivity check phase during establishment of a media session, or keep-alive mechanism after the session is established. Devices on the media path can use the metadata information to prioritize the flow, perform traffic engineering, or provide network analytics.  </p>
-<p id="rfc.section.1.p.2">This document describes a mechanism for how such metadata can be sent by STUN when ICE is in use with UDP based media. The functionality described here is referred to as MALICE. Due to the security implications described in (Martins draft) where large STUN packet are used amplify the attack, an decision consideration in MALICE is to keep the message size small.  </p>
-<p id="rfc.section.1.p.3">The META-DATA sent should be treated as informational by the network. No mechanisms for sending feedback from the network to the application are described in this document.  </p>
+<p id="rfc.section.1.p.1">In the context of Content, Mobile, Fixed Service, Service Providers, Enterprise and Private networks have a need to prioritize packet flows end-to-end. These flows are often dynamic, time-bound, encrypted, peer-to-peer, possibly asymmetric, and might have different priorities depending on network conditions, direction, time of the day, dynamic user preferences and other factors. These factors may be time variant, and thus need to be signalled. Moreover, in many cases of peer-to-peer communication, flow information is known only to the endpoint. These considerations, coupled with the trend to use encryption for browser-to-browser communication <a href="#I-D.ietf-rtcweb-security-arch">[I-D.ietf-rtcweb-security-arch]</a>, imply that access lists, deep packet inspection and other static prioritization methods cannot be employed successfully to prioritize packet flows. This specification describes how these problems can be solved by using either STUN <a href="#RFC5389">[RFC5389]</a> packets sent during ICE's <a href="#RFC5245">[RFC5245]</a> connectivity check phase during establishment of a media session, or keep-alive mechanism after the session is established. Devices on the media path can use the metadata information to prioritize the flow, perform traffic engineering, or provide network analytics. Applications can use the network meta-data to influence rate stating points or rate adaption mechanisms.  </p>
+<p id="rfc.section.1.p.2">This document describes a mechanism for how such application and network metadata can be sent by STUN when ICE is in use with UDP based media. The functionality described here is referred to as MALICE. Due to the security implications described in (TODO: Ref Martins draft) where large STUN packet are used amplify the attack, an decision consideration in MALICE is to keep the message size small.  </p>
+<p id="rfc.section.1.p.3">The Application and Network META-DATA sent should be treated as informational by the network. But care should be taken to generate as precise as possible values. The values might impact how the network treat your stream, or how the application behaves.  </p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> Sending Meta-data</h1>
 <p id="rfc.section.2.p.1">An application using ICE to negotiate the end to end media-path can add meta when sending the necessary STUN probing or keep-alive messages. Several Meta-data attributes can be added to a STUN message. This is especially useful in multiplexing scenarios such as BUNDLE where several media streams are sent on the same 5-tuple.  </p>
 <h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> Connectivity checks</h1>
@@ -487,7 +487,7 @@
 <p id="rfc.section.2.4.p.1">TODO: Write. Explain in detail what options you have with multiplexed streams.  </p>
 <h1 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> Network Processing</h1>
 <p id="rfc.section.2.5.p.1">TODO: Write.. Describe briefly how metadata can be interpreted by the network. Connectivity check have the username attribute that can be used for sanity checks during ICE negotiation.  </p>
-<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Network Feedback</h1>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Network Meta-Data</h1>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> Application Usage</h1>
 <p id="rfc.section.3.1.p.1">TODO: Write properly.. Add after INTEGRITY attribute. Should add empty attribute to indicate that the application supports feedback (Even if it Will only be used as a transport in the other direction..). The empty attribute makes it easier for routers to add information. No need to grow packet buffers and such.. If used in connectivity check the data can be used to influence the network path chosen. But beyond the scope of this document.  </p>
 <h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> Network Processing</h1>
@@ -495,11 +495,11 @@
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> New STUN attributes</h1>
 <p id="rfc.section.4.p.1">This STUN extension defines the following new attributes: </p>
 <pre>
-      0xXXXX: META-DATA  
-      0xYYYY: NETWORK-FEEDBACK
+      0xXXXX: APPLICATION META-DATA  
+      0xYYYY: NETWORK META-DATA
            </pre>
 <p class="figure"></p>
-<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> META-DATA</h1>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> APPLICATION META-DATA</h1>
 <p id="rfc.section.4.1.p.1">This attribute have a length that are multiples of 4 (96) so no padding is necessary.  </p>
 <div id="rfc.figure.1"/>
 <div id="META-data_attr"/>
@@ -513,7 +513,7 @@
 |                                                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       </pre>
-<p class="figure">Figure 1: META-DATA Attribute</p>
+<p class="figure">Figure 1: APPLICATION META-DATA Attribute</p>
 <p id="rfc.section.4.1.p.2">META-DATA TYPE a a 16 bit value defined in section ?? describing the flow. The next 16 bits MUST be a number describing the approximate bandwidth usage in kbps. If this is unknown the value 0x0 is used. The rest of the 64 bits of the attribute is reserved for further description of the specific META-DATA type. This value field is thus dependant on the type field and entities not understanding the specific META-DATA type should ignore this when parsing.  </p>
 <h1 id="rfc.section.4.1.1"><a href="#rfc.section.4.1.1">4.1.1.</a> META-DATA types</h1>
 <div id="rfc.figure.2"/>
@@ -608,7 +608,7 @@
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> NETWORK-FEEDBACK</h1>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> NETWORK META-DATA</h1>
 <p id="rfc.section.4.2.p.1">This attribute have a length that are multiples of 4 (64) so no padding is necessary.  </p>
 <p id="rfc.section.4.2.p.2">This attribute MUST be added after any INTEGRITY attribute in the STUN message. Values in this attribute can be updated along the network path by nodes that are not able to regenerate a correct INTEGRITY attribute.  </p>
 <div id="rfc.figure.6"/>

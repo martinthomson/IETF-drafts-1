@@ -82,16 +82,16 @@ Table of Contents
      2.3.  TURN messages . . . . . . . . . . . . . . . . . . . . . .   4
      2.4.  Multiplexed streams . . . . . . . . . . . . . . . . . . .   4
      2.5.  Network Processing  . . . . . . . . . . . . . . . . . . .   4
-   3.  Network Feedback  . . . . . . . . . . . . . . . . . . . . . .   4
+   3.  Network Meta-Data . . . . . . . . . . . . . . . . . . . . . .   4
      3.1.  Application Usage . . . . . . . . . . . . . . . . . . . .   4
      3.2.  Network Processing  . . . . . . . . . . . . . . . . . . .   4
    4.  New STUN attributes . . . . . . . . . . . . . . . . . . . . .   5
-     4.1.  META-DATA . . . . . . . . . . . . . . . . . . . . . . . .   5
+     4.1.  APPLICATION META-DATA . . . . . . . . . . . . . . . . . .   5
        4.1.1.  META-DATA types . . . . . . . . . . . . . . . . . . .   5
        4.1.2.  Generic . . . . . . . . . . . . . . . . . . . . . . .   6
        4.1.3.  Audio . . . . . . . . . . . . . . . . . . . . . . . .   7
        4.1.4.  Video . . . . . . . . . . . . . . . . . . . . . . . .   7
-     4.2.  NETWORK-FEEDBACK  . . . . . . . . . . . . . . . . . . . .   8
+     4.2.  NETWORK META-DATA . . . . . . . . . . . . . . . . . . . .   8
    5.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
      5.1.  Normative References  . . . . . . . . . . . . . . . . . .   9
      5.2.  Informational References  . . . . . . . . . . . . . . . .   9
@@ -126,17 +126,21 @@ Internet-Draft                   MALICE                     January 2014
    keep-alive mechanism after the session is established.  Devices on
    the media path can use the metadata information to prioritize the
    flow, perform traffic engineering, or provide network analytics.
+   Applications can use the network meta-data to influence rate stating
+   points or rate adaption mechanisms.
 
-   This document describes a mechanism for how such metadata can be sent
-   by STUN when ICE is in use with UDP based media.  The functionality
-   described here is referred to as MALICE.  Due to the security
-   implications described in (Martins draft) where large STUN packet are
-   used amplify the attack, an decision consideration in MALICE is to
-   keep the message size small.
+   This document describes a mechanism for how such application and
+   network metadata can be sent by STUN when ICE is in use with UDP
+   based media.  The functionality described here is referred to as
+   MALICE.  Due to the security implications described in (TODO: Ref
+   Martins draft) where large STUN packet are used amplify the attack,
+   an decision consideration in MALICE is to keep the message size
+   small.
 
-   The META-DATA sent should be treated as informational by the network.
-   No mechanisms for sending feedback from the network to the
-   application are described in this document.
+   The Application and Network META-DATA sent should be treated as
+   informational by the network.  But care should be taken to generate
+   as precise as possible values.  The values might impact how the
+   network treat your stream, or how the application behaves.
 
 2.  Sending Meta-data
 
@@ -157,11 +161,7 @@ Internet-Draft                   MALICE                     January 2014
    can successfully use that information to set up for example audio or
    video decoders.
 
-   Meta-data can also be added to the STUN Binding Responses.  This will
-   let the remote side know that the Meta-data was transported end-to-
-   end on the path.  Meta data SHOULD not be added to a response message
-   unless Meta-data attributes was added to the corresponding Binding
-   Request.
+
 
 
 
@@ -169,6 +169,12 @@ Martinsen                 Expires July 26, 2014                 [Page 3]
 
 Internet-Draft                   MALICE                     January 2014
 
+
+   Meta-data can also be added to the STUN Binding Responses.  This will
+   let the remote side know that the Meta-data was transported end-to-
+   end on the path.  Meta data SHOULD not be added to a response message
+   unless Meta-data attributes was added to the corresponding Binding
+   Request.
 
 2.2.  Keepalive messages
 
@@ -196,7 +202,7 @@ Internet-Draft                   MALICE                     January 2014
    network.  Connectivity check have the username attribute that can be
    used for sanity checks during ICE negotiation.
 
-3.  Network Feedback
+3.  Network Meta-Data
 
 3.1.  Application Usage
 
@@ -212,12 +218,6 @@ Internet-Draft                   MALICE                     January 2014
 
    TODO: Write properly.  Update the node cont field.  Only update other
    fields if they are worse than what is already there (Aggregated
-   result).  Values are only hints, no promises.  Will not describe
-   algorithm to calculate congestion value.  But values close to MAX may
-   lead to applications rate adoption mechanisms to kick in.  (Fairness
-   problem)
-
-
 
 
 
@@ -226,15 +226,20 @@ Martinsen                 Expires July 26, 2014                 [Page 4]
 Internet-Draft                   MALICE                     January 2014
 
 
+   result).  Values are only hints, no promises.  Will not describe
+   algorithm to calculate congestion value.  But values close to MAX may
+   lead to applications rate adoption mechanisms to kick in.  (Fairness
+   problem)
+
 4.  New STUN attributes
 
    This STUN extension defines the following new attributes:
 
-      0xXXXX: META-DATA
-      0xYYYY: NETWORK-FEEDBACK
+      0xXXXX: APPLICATION META-DATA
+      0xYYYY: NETWORK META-DATA
 
 
-4.1.  META-DATA
+4.1.  APPLICATION META-DATA
 
    This attribute have a length that are multiples of 4 (96) so no
    padding is necessary.
@@ -248,7 +253,7 @@ Internet-Draft                   MALICE                     January 2014
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                       Figure 1: META-DATA Attribute
+                 Figure 1: APPLICATION META-DATA Attribute
 
    META-DATA TYPE a a 16 bit value defined in section ?? describing the
    flow.  The next 16 bits MUST be a number describing the approximate
@@ -269,11 +274,6 @@ Internet-Draft                   MALICE                     January 2014
 
                          Figure 2: META-DATA Types
 
-   The intention is to keep the number of types limited and fairly
-   general.  There are 64 bits set aside for each meta-data for further
-   description.
-
-
 
 
 
@@ -281,6 +281,10 @@ Martinsen                 Expires July 26, 2014                 [Page 5]
 
 Internet-Draft                   MALICE                     January 2014
 
+
+   The intention is to keep the number of types limited and fairly
+   general.  There are 64 bits set aside for each meta-data for further
+   description.
 
    It is possible to combine the meta-data types if a steam contains
    more than one type.  The 64 bit value filed MUST then be treated as
@@ -324,10 +328,6 @@ Internet-Draft                   MALICE                     January 2014
       in this stream.  If this number is close to the mac retransmits it
       might be nice of the network element to consider not to drop the
       next packets coming.
-
-
-
-
 
 
 
@@ -397,7 +397,7 @@ Internet-Draft                   MALICE                     January 2014
    FPS:  How many frames per seconds the video in the stream is encoded
       with.
 
-4.2.  NETWORK-FEEDBACK
+4.2.  NETWORK META-DATA
 
    This attribute have a length that are multiples of 4 (64) so no
    padding is necessary.

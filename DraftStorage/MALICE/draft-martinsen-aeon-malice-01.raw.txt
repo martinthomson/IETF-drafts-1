@@ -74,16 +74,16 @@ Table of Contents
      2.3.  TURN messages
      2.4.  Multiplexed streams
      2.5.  Network Processing
-   3.  Network Feedback
+   3.  Network Meta-Data
      3.1.  Application Usage
      3.2.  Network Processing
    4.  New STUN attributes
-     4.1.  META-DATA
+     4.1.  APPLICATION META-DATA
        4.1.1.  META-DATA types
        4.1.2.  Generic
        4.1.3.  Audio
        4.1.4.  Video
-     4.2.  NETWORK-FEEDBACK
+     4.2.  NETWORK META-DATA
    5.  References
      5.1.  Normative References
      5.2.  Informational References
@@ -174,17 +174,21 @@ Copyright Notice
    keep-alive mechanism after the session is established.  Devices on
    the media path can use the metadata information to prioritize the
    flow, perform traffic engineering, or provide network analytics.
+   Applications can use the network meta-data to influence rate stating
+   points or rate adaption mechanisms.
 
-   This document describes a mechanism for how such metadata can be sent
-   by STUN when ICE is in use with UDP based media.  The functionality
-   described here is referred to as MALICE.  Due to the security
-   implications described in (Martins draft) where large STUN packet are
-   used amplify the attack, an decision consideration in MALICE is to
-   keep the message size small.
+   This document describes a mechanism for how such application and
+   network metadata can be sent by STUN when ICE is in use with UDP
+   based media.  The functionality described here is referred to as
+   MALICE.  Due to the security implications described in (TODO: Ref
+   Martins draft) where large STUN packet are used amplify the attack,
+   an decision consideration in MALICE is to keep the message size
+   small.
 
-   The META-DATA sent should be treated as informational by the network.
-   No mechanisms for sending feedback from the network to the
-   application are described in this document.
+   The Application and Network META-DATA sent should be treated as
+   informational by the network.  But care should be taken to generate
+   as precise as possible values.  The values might impact how the
+   network treat your stream, or how the application behaves.
 
 2.  Sending Meta-data
 
@@ -237,7 +241,7 @@ Copyright Notice
    network.  Connectivity check have the username attribute that can be
    used for sanity checks during ICE negotiation.
 
-3.  Network Feedback
+3.  Network Meta-Data
 
 3.1.  Application Usage
 
@@ -262,11 +266,11 @@ Copyright Notice
 
    This STUN extension defines the following new attributes:
 
-      0xXXXX: META-DATA
-      0xYYYY: NETWORK-FEEDBACK
+      0xXXXX: APPLICATION META-DATA
+      0xYYYY: NETWORK META-DATA
 
 
-4.1.  META-DATA
+4.1.  APPLICATION META-DATA
 
    This attribute have a length that are multiples of 4 (96) so no
    padding is necessary.
@@ -280,7 +284,7 @@ Copyright Notice
    |                                                               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                       Figure 1: META-DATA Attribute
+                 Figure 1: APPLICATION META-DATA Attribute
 
    META-DATA TYPE a a 16 bit value defined in section ?? describing the
    flow.  The next 16 bits MUST be a number describing the approximate
@@ -400,7 +404,7 @@ Copyright Notice
    FPS:  How many frames per seconds the video in the stream is encoded
       with.
 
-4.2.  NETWORK-FEEDBACK
+4.2.  NETWORK META-DATA
 
    This attribute have a length that are multiples of 4 (64) so no
    padding is necessary.
