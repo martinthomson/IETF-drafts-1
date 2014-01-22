@@ -4,8 +4,8 @@
 
 AEON                                                        P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 20, 2014
-Expires: July 24, 2014
+Intended status: Standards Track                        January 22, 2014
+Expires: July 26, 2014
 
 
                 Meta-data Attribute signaLling with ICE
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 24, 2014.
+   This Internet-Draft will expire on July 26, 2014.
 
 Copyright Notice
 
@@ -69,13 +69,21 @@ Table of Contents
 
    1.  Introduction
    2.  Sending Meta-data
-     2.1.  Adding Meta-data to connectivity cheks
-     2.2.  Adding Meta-data to keepalive messages
-   3.  New STUN attribute
-   4.  META-DATA types
-     4.1.  Generic
-     4.2.  Audio
-     4.3.  Video
+     2.1.  Connectivity checks
+     2.2.  Keepalive messages
+     2.3.  TURN messages
+     2.4.  Multiplexed streams
+     2.5.  Network Processing
+   3.  Network Feedback
+     3.1.  Application Usage
+     3.2.  Network Processing
+   4.  New STUN attributes
+     4.1.  META-DATA
+       4.1.1.  META-DATA types
+       4.1.2.  Generic
+       4.1.3.  Audio
+       4.1.4.  Video
+     4.2.  NETWORK-FEEDBACK
    5.  References
      5.1.  Normative References
      5.2.  Informational References
@@ -84,8 +92,8 @@ Table of Contents
 
 AEON                                                        P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 20, 2014
-Expires: July 24, 2014
+Intended status: Standards Track                        January 22, 2014
+Expires: July 26, 2014
 
 
                 Meta-data Attribute signaLling with ICE
@@ -128,7 +136,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 24, 2014.
+   This Internet-Draft will expire on July 26, 2014.
 
 Copyright Notice
 
@@ -186,7 +194,7 @@ Copyright Notice
    message.  This is especially useful in multiplexing scenarios such as
    BUNDLE where several media streams are sent on the same 5-tuple.
 
-2.1.  Adding Meta-data to connectivity cheks
+2.1.  Connectivity checks
 
    An ICE connectivity check is performed by sending a STUN Binding
    request.  Prior to sending the agent can add one or more meta-data
@@ -203,7 +211,7 @@ Copyright Notice
    unless Meta-data attributes was added to the corresponding Binding
    Request.
 
-2.2.  Adding Meta-data to keepalive messages
+2.2.  Keepalive messages
 
    An ICE connectivity check is performed by sending a STUN Binding
    indication.  Prior to sending the agent can add one or more meta-data
@@ -211,14 +219,54 @@ Copyright Notice
    attribute should reflect what is send in the stream at this point in
    time.
 
-   Problem with concent freshness if not based on STUN.
+   Problem with consent freshness if not based on STUN.
 
-3.  New STUN attribute
+2.3.  TURN messages
 
-   This STUN extension defines the following new attribute:
+   TODO: Write.  Mechanism can also be used in TURN allocation messages.
+   And what to do with STUN messages inside TURN messages?
+
+2.4.  Multiplexed streams
+
+   TODO: Write.  Explain in detail what options you have with
+   multiplexed streams.
+
+2.5.  Network Processing
+
+   TODO: Write.. Describe briefly how metadata can be interpreted by the
+   network.  Connectivity check have the username attribute that can be
+   used for sanity checks during ICE negotiation.
+
+3.  Network Feedback
+
+3.1.  Application Usage
+
+   TODO: Write properly.. Add after INTEGRITY attribute.  Should add
+   empty attribute to indicate that the application supports feedback
+   (Even if it Will only be used as a transport in the other
+   direction..).  The empty attribute makes it easier for routers to add
+   information.  No need to grow packet buffers and such.. If used in
+   connectivity check the data can be used to influence the network path
+   chosen.  But beyond the scope of this document.
+
+3.2.  Network Processing
+
+   TODO: Write properly.  Update the node cont field.  Only update other
+   fields if they are worse than what is already there (Aggregated
+   result).  Values are only hints, no promises.  Will not describe
+   algorithm to calculate congestion value.  But values close to MAX may
+   lead to applications rate adoption mechanisms to kick in.  (Fairness
+   problem)
+
+4.  New STUN attributes
+
+   This STUN extension defines the following new attributes:
 
       0xXXXX: META-DATA
+      0xYYYY: NETWORK-FEEDBACK
 
+
+4.1.  META-DATA
 
    This attribute have a length that are multiples of 4 (96) so no
    padding is necessary.
@@ -226,7 +274,7 @@ Copyright Notice
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |     META-DATA TYPE             |  Bandwith (kbps)             |
+   |     META-DATA TYPE             |  Bandwidth (kbps)            |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    |                              Value (64 bits)                  |
    |                                                               |
@@ -242,16 +290,40 @@ Copyright Notice
    dependant on the type field and entities not understanding the
    specific META-DATA type should ignore this when parsing.
 
-4.  META-DATA types
+4.1.1.  META-DATA types
+
+   There are four meta-data types defined:
 
      0x0001 Generic
      0x0002 Audio
-     0x0003 Video
-     0x0004 Application Data
+     0x0004 Video
+     0x0008 Application Data
 
                          Figure 2: META-DATA Types
 
-4.1.  Generic
+   The intention is to keep the number of types limited and fairly
+   general.  There are 64 bits set aside for each meta-data for further
+   description.
+
+   It is possible to combine the meta-data types if a steam contains
+   more than one type.  The 64 bit value filed MUST then be treated as
+   if the type was Generic (0x0001).  (TODO: Define generic field to
+   better suit this scenario)
+
+   If a 5-tuple is used to send both a audio and video stream, the meta-
+   data type can be set to 0x0006.  The value field will then have the
+   same properties as if the type was generic.  This can be useful if
+   the application wants to hint that the 5-tuple contains several
+   streams, but have no other useful information to share.  This is
+   useful if the attribute is added to STUN binding requests during ICE
+   connectivity checks.  If more information regarding multiplexed
+   streams is needed it is possible to add more than one attribute to a
+   STUN message (See section ??).  This can be done to STUN messages
+   that are being sent after the connectivity check phase is finished
+   (Keepalive, consent freshness).  During this phase the added size of
+   the STUN messages pose no security threat.
+
+4.1.2.  Generic
 
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -273,10 +345,10 @@ Copyright Notice
 
    retransmits:  Current number of retransmits for non reliable packets
       in this stream.  If this number is close to the mac retransmits it
-      might be nice of the network element to concider not to drop the
+      might be nice of the network element to consider not to drop the
       next packets coming.
 
-4.2.  Audio
+4.1.3.  Audio
 
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -294,7 +366,7 @@ Copyright Notice
    Sample Rate:  The current sample rate the audio codec used in this
       stream is sampled with.
 
-4.3.  Video
+4.1.4.  Video
 
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -327,6 +399,50 @@ Copyright Notice
 
    FPS:  How many frames per seconds the video in the stream is encoded
       with.
+
+4.2.  NETWORK-FEEDBACK
+
+   This attribute have a length that are multiples of 4 (64) so no
+   padding is necessary.
+
+   This attribute MUST be added after any INTEGRITY attribute in the
+   STUN message.  Values in this attribute can be updated along the
+   network path by nodes that are not able to regenerate a correct
+   INTEGRITY attribute.
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Link TYPE     |Conguestion Lvl| Node Cnt      |    0xFF       |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | Up Bandwidth (kbps)           |   Down Bandwidth (kbps)       |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                   Figure 6: NETWORK-FEEDBACK Attribute
+
+   Link TYPE:  Value describing what kind of link types the other fields
+      in the attribute describes.  For home and small routers where the
+      information is limited the value can for example be set to TOTAL
+      (0x01).  For routers with more control the value can be set to
+      either HOST, APPLICATION, SESSION or STREAM.
+
+   Conguestion Lvl:  Value in the range 0x00 and Ox0F describing the
+      level of congestion the network element is experiencing at this
+      point. 0x00 means no congestion, 0x0F Fully congested.  The router
+      can choose any value between those value as it sees fit.  The
+      application that sees those values might act on by doing some rate
+      adaption or similar.  The values 0x10-0xFF are reserved for future
+      use.
+
+   Node Cnt:  Numbers of nodes that supports MALICE in the notwork path.
+      Any router on the path that understands MALICE should increase
+      this number.  Other fields should only be updated if the value is
+      worse than what is already in the attribute.
+
+   Up Bandwidth:  Bandwidth in kbps available in the upstream direction.
+
+   Down Bandwidth:  Bandwidth in kbps available in the downstream
+      direction.
 
 5.  References
 

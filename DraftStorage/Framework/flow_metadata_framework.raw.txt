@@ -5,9 +5,9 @@
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                  R. Penno
 Intended status: Informational                                A. Choukir
-Expires: July 24, 2014                                          C. Eckel
+Expires: July 26, 2014                                          C. Eckel
                                                      Cisco Systems, Inc.
-                                                        January 20, 2014
+                                                        January 22, 2014
 
 
 A Framework for Signaling Flow Characteristics between Applications and
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 24, 2014.
+   This Internet-Draft will expire on July 26, 2014.
 
 Copyright Notice
 
@@ -101,9 +101,9 @@ Table of Contents
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                  R. Penno
 Intended status: Informational                                A. Choukir
-Expires: July 24, 2014                                          C. Eckel
+Expires: July 26, 2014                                          C. Eckel
                                                      Cisco Systems, Inc.
-                                                        January 20, 2014
+                                                        January 22, 2014
 
 
 A Framework for Signaling Flow Characteristics between Applications and
@@ -134,7 +134,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 24, 2014.
+   This Internet-Draft will expire on July 26, 2014.
 
 Copyright Notice
 

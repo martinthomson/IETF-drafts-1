@@ -354,13 +354,21 @@
   <link href="#rfc.toc" rel="Contents"/>
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 Sending Meta-data"/>
-<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Adding Meta-data to connectivity cheks"/>
-<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Adding Meta-data to keepalive messages"/>
-<link href="#rfc.section.3" rel="Chapter" title="3 New STUN attribute"/>
-<link href="#rfc.section.4" rel="Chapter" title="4 META-DATA types"/>
-<link href="#rfc.section.4.1" rel="Chapter" title="4.1 Generic"/>
-<link href="#rfc.section.4.2" rel="Chapter" title="4.2 Audio"/>
-<link href="#rfc.section.4.3" rel="Chapter" title="4.3 Video"/>
+<link href="#rfc.section.2.1" rel="Chapter" title="2.1 Connectivity checks"/>
+<link href="#rfc.section.2.2" rel="Chapter" title="2.2 Keepalive messages"/>
+<link href="#rfc.section.2.3" rel="Chapter" title="2.3 TURN messages"/>
+<link href="#rfc.section.2.4" rel="Chapter" title="2.4 Multiplexed streams"/>
+<link href="#rfc.section.2.5" rel="Chapter" title="2.5 Network Processing"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Network Feedback"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Application Usage"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Network Processing"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 New STUN attributes"/>
+<link href="#rfc.section.4.1" rel="Chapter" title="4.1 META-DATA"/>
+<link href="#rfc.section.4.1.1" rel="Chapter" title="4.1.1 META-DATA types"/>
+<link href="#rfc.section.4.1.2" rel="Chapter" title="4.1.2 Generic"/>
+<link href="#rfc.section.4.1.3" rel="Chapter" title="4.1.3 Audio"/>
+<link href="#rfc.section.4.1.4" rel="Chapter" title="4.1.4 Video"/>
+<link href="#rfc.section.4.2" rel="Chapter" title="4.2 NETWORK-FEEDBACK"/>
 <link href="#rfc.references" rel="Chapter" title="5 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="5.1 Normative References"/>
 <link href="#rfc.references.2" rel="Chapter" title="5.2 Informational References"/>
@@ -372,7 +380,7 @@
 
   <meta name="dct.creator" content="Martinsen, P." />
   <meta name="dct.identifier" content="urn:ietf:id:draft-martinsen-aeon-malice-01" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-1-20" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-1-22" />
   <meta name="dct.abstract" content="It can be useful for applications to provide flow metadata information to on-path devices to influence flow treatment in the network.  " />
   <meta name="description" content="It can be useful for applications to provide flow metadata information to on-path devices to influence flow treatment in the network.  " />
 
@@ -393,10 +401,10 @@
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
-  <td class="right">January 20, 2014</td>
+  <td class="right">January 22, 2014</td>
 </tr>
 <tr>
-  <td class="left">Expires: July 24, 2014</td>
+  <td class="left">Expires: July 26, 2014</td>
   <td class="right"></td>
 </tr>
 
@@ -423,7 +431,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on July 24, 2014.</p>
+<p>This Internet-Draft will expire on July 26, 2014.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -437,13 +445,21 @@
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
 <li>2.   <a href="#rfc.section.2">Sending Meta-data</a></li>
-<li>2.1.   <a href="#rfc.section.2.1">Adding Meta-data to connectivity cheks</a></li>
-<li>2.2.   <a href="#rfc.section.2.2">Adding Meta-data to keepalive messages</a></li>
-<li>3.   <a href="#rfc.section.3">New STUN attribute</a></li>
-<li>4.   <a href="#rfc.section.4">META-DATA types</a></li>
-<li>4.1.   <a href="#rfc.section.4.1">Generic</a></li>
-<li>4.2.   <a href="#rfc.section.4.2">Audio</a></li>
-<li>4.3.   <a href="#rfc.section.4.3">Video</a></li>
+<li>2.1.   <a href="#rfc.section.2.1">Connectivity checks</a></li>
+<li>2.2.   <a href="#rfc.section.2.2">Keepalive messages</a></li>
+<li>2.3.   <a href="#rfc.section.2.3">TURN messages</a></li>
+<li>2.4.   <a href="#rfc.section.2.4">Multiplexed streams</a></li>
+<li>2.5.   <a href="#rfc.section.2.5">Network Processing</a></li>
+<li>3.   <a href="#rfc.section.3">Network Feedback</a></li>
+<li>3.1.   <a href="#rfc.section.3.1">Application Usage</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Network Processing</a></li>
+<li>4.   <a href="#rfc.section.4">New STUN attributes</a></li>
+<li>4.1.   <a href="#rfc.section.4.1">META-DATA</a></li>
+<li>4.1.1.   <a href="#rfc.section.4.1.1">META-DATA types</a></li>
+<li>4.1.2.   <a href="#rfc.section.4.1.2">Generic</a></li>
+<li>4.1.3.   <a href="#rfc.section.4.1.3">Audio</a></li>
+<li>4.1.4.   <a href="#rfc.section.4.1.4">Video</a></li>
+<li>4.2.   <a href="#rfc.section.4.2">NETWORK-FEEDBACK</a></li>
 <li>5.   <a href="#rfc.references">References</a></li>
 <li>5.1.   <a href="#rfc.references.1">Normative References</a></li>
 <li>5.2.   <a href="#rfc.references.2">Informational References</a></li>
@@ -458,45 +474,61 @@
 <p id="rfc.section.1.p.3">The META-DATA sent should be treated as informational by the network. No mechanisms for sending feedback from the network to the application are described in this document.  </p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> Sending Meta-data</h1>
 <p id="rfc.section.2.p.1">An application using ICE to negotiate the end to end media-path can add meta when sending the necessary STUN probing or keep-alive messages. Several Meta-data attributes can be added to a STUN message. This is especially useful in multiplexing scenarios such as BUNDLE where several media streams are sent on the same 5-tuple.  </p>
-<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> Adding Meta-data to connectivity cheks</h1>
+<h1 id="rfc.section.2.1"><a href="#rfc.section.2.1">2.1.</a> Connectivity checks</h1>
 <p id="rfc.section.2.1.p.1">An ICE connectivity check is performed by sending a STUN Binding request. Prior to sending the agent can add one or more meta-data attributes to the Binding Request. Values in the Meta-data attribute are usually default values configured by the agent.  </p>
 <p id="rfc.section.2.1.p.2">An agent receiving STUN Binding requests with Meta-Data attributes can successfully use that information to set up for example audio or video decoders.  </p>
 <p id="rfc.section.2.1.p.3">Meta-data can also be added to the STUN Binding Responses. This will let the remote side know that the Meta-data was transported end-to-end on the path. Meta data SHOULD not be added to a response message unless Meta-data attributes was added to the corresponding Binding Request.  </p>
-<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> Adding Meta-data to keepalive messages</h1>
+<h1 id="rfc.section.2.2"><a href="#rfc.section.2.2">2.2.</a> Keepalive messages</h1>
 <p id="rfc.section.2.2.p.1">An ICE connectivity check is performed by sending a STUN Binding indication. Prior to sending the agent can add one or more meta-data attributes to the Binding Indication. Values in the Meta-data attribute should reflect what is send in the stream at this point in time.  </p>
-<p id="rfc.section.2.2.p.2">Problem with concent freshness if not based on STUN.  </p>
-<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> New STUN attribute</h1>
-<p id="rfc.section.3.p.1">This STUN extension defines the following new attribute: </p>
+<p id="rfc.section.2.2.p.2">Problem with consent freshness if not based on STUN.  </p>
+<h1 id="rfc.section.2.3"><a href="#rfc.section.2.3">2.3.</a> TURN messages</h1>
+<p id="rfc.section.2.3.p.1">TODO: Write. Mechanism can also be used in TURN allocation messages. And what to do with STUN messages inside TURN messages? </p>
+<h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> Multiplexed streams</h1>
+<p id="rfc.section.2.4.p.1">TODO: Write. Explain in detail what options you have with multiplexed streams.  </p>
+<h1 id="rfc.section.2.5"><a href="#rfc.section.2.5">2.5.</a> Network Processing</h1>
+<p id="rfc.section.2.5.p.1">TODO: Write.. Describe briefly how metadata can be interpreted by the network. Connectivity check have the username attribute that can be used for sanity checks during ICE negotiation.  </p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Network Feedback</h1>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> Application Usage</h1>
+<p id="rfc.section.3.1.p.1">TODO: Write properly.. Add after INTEGRITY attribute. Should add empty attribute to indicate that the application supports feedback (Even if it Will only be used as a transport in the other direction..). The empty attribute makes it easier for routers to add information. No need to grow packet buffers and such.. If used in connectivity check the data can be used to influence the network path chosen. But beyond the scope of this document.  </p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> Network Processing</h1>
+<p id="rfc.section.3.2.p.1">TODO: Write properly. Update the node cont field. Only update other fields if they are worse than what is already there (Aggregated result). Values are only hints, no promises. Will not describe algorithm to calculate congestion value. But values close to MAX may lead to applications rate adoption mechanisms to kick in. (Fairness problem) </p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> New STUN attributes</h1>
+<p id="rfc.section.4.p.1">This STUN extension defines the following new attributes: </p>
 <pre>
       0xXXXX: META-DATA  
+      0xYYYY: NETWORK-FEEDBACK
            </pre>
 <p class="figure"></p>
-<p id="rfc.section.3.p.2">This attribute have a length that are multiples of 4 (96) so no padding is necessary.  </p>
+<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> META-DATA</h1>
+<p id="rfc.section.4.1.p.1">This attribute have a length that are multiples of 4 (96) so no padding is necessary.  </p>
 <div id="rfc.figure.1"/>
 <div id="META-data_attr"/>
 <pre>
 0                   1                   2                   3
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|     META-DATA TYPE             |  Bandwith (kbps)             |
+|     META-DATA TYPE             |  Bandwidth (kbps)            |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 |                              Value (64 bits)                  |    
 |                                                               |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
       </pre>
 <p class="figure">Figure 1: META-DATA Attribute</p>
-<p id="rfc.section.3.p.3">META-DATA TYPE a a 16 bit value defined in section ?? describing the flow. The next 16 bits MUST be a number describing the approximate bandwidth usage in kbps. If this is unknown the value 0x0 is used. The rest of the 64 bits of the attribute is reserved for further description of the specific META-DATA type. This value field is thus dependant on the type field and entities not understanding the specific META-DATA type should ignore this when parsing.  </p>
-<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> META-DATA types</h1>
+<p id="rfc.section.4.1.p.2">META-DATA TYPE a a 16 bit value defined in section ?? describing the flow. The next 16 bits MUST be a number describing the approximate bandwidth usage in kbps. If this is unknown the value 0x0 is used. The rest of the 64 bits of the attribute is reserved for further description of the specific META-DATA type. This value field is thus dependant on the type field and entities not understanding the specific META-DATA type should ignore this when parsing.  </p>
+<h1 id="rfc.section.4.1.1"><a href="#rfc.section.4.1.1">4.1.1.</a> META-DATA types</h1>
 <div id="rfc.figure.2"/>
 <div id="META-data_types"/>
 <pre>
      0x0001 Generic 
      0x0002 Audio
-     0x0003 Video
-     0x0004 Application Data
+     0x0004 Video
+     0x0008 Application Data
       </pre>
 <p class="figure">Figure 2: META-DATA Types</p>
-<h1 id="rfc.section.4.1"><a href="#rfc.section.4.1">4.1.</a> Generic</h1>
+<p id="rfc.section.4.1.1.p.1">There are four meta-data types defined: </p>
+<p id="rfc.section.4.1.1.p.2">It is possible to combine the meta-data types if a steam contains more than one type. The 64 bit value filed MUST then be treated as if the type was Generic (0x0001). (TODO: Define generic field to better suit this scenario) </p>
+<p id="rfc.section.4.1.1.p.3">If a 5-tuple is used to send both a audio and video stream, the meta-data type can be set to 0x0006. The value field will then have the same properties as if the type was generic. This can be useful if the application wants to hint that the 5-tuple contains several streams, but have no other useful information to share. This is useful if the attribute is added to STUN binding requests during ICE connectivity checks. If more information regarding multiplexed streams is needed it is possible to add more than one attribute to a STUN message (See section ??). This can be done to STUN messages that are being sent after the connectivity check phase is finished (Keepalive, consent freshness). During this phase the added size of the STUN messages pose no security threat.  </p>
+<h1 id="rfc.section.4.1.2"><a href="#rfc.section.4.1.2">4.1.2.</a> Generic</h1>
 <div id="rfc.figure.3"/>
 <div id="META-data_genericr"/>
 <pre>
@@ -511,18 +543,18 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
       </pre>
-<p class="figure">Figure 3: META-DATA                                                    Type Generic</p>
+<p class="figure">Figure 3: META-DATA                                                      Type Generic</p>
 <p/>
 
 <dl>
   <dt>max retransmits:</dt>
   <dd style="margin-left: 8">Maximal number of retransmits a client will do before giving up. For example a normal STUN transactions have 10 retransmits before it is considered as failed. RTP will typically have 0 retransmits.  </dd>
   <dt>retransmits:</dt>
-  <dd style="margin-left: 8">Current number of retransmits for non reliable packets in this stream. If this number is close to the mac retransmits it might be nice of the network element to concider not to drop the next packets coming.  </dd>
+  <dd style="margin-left: 8">Current number of retransmits for non reliable packets in this stream. If this number is close to the mac retransmits it might be nice of the network element to consider not to drop the next packets coming.  </dd>
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> Audio</h1>
+<h1 id="rfc.section.4.1.3"><a href="#rfc.section.4.1.3">4.1.3.</a> Audio</h1>
 <div id="rfc.figure.4"/>
 <div id="META-data_audio"/>
 <pre>
@@ -537,7 +569,7 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
       </pre>
-<p class="figure">Figure 4: META-DATA                                               Type Audio</p>
+<p class="figure">Figure 4: META-DATA                                                   Type Audio</p>
 <p/>
 
 <dl>
@@ -546,7 +578,7 @@
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.4.3"><a href="#rfc.section.4.3">4.3.</a> Video</h1>
+<h1 id="rfc.section.4.1.4"><a href="#rfc.section.4.1.4">4.1.4.</a> Video</h1>
 <div id="rfc.figure.5"/>
 <div id="META-data_video"/>
 <pre>
@@ -561,7 +593,7 @@
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
       </pre>
-<p class="figure">Figure 5: META-DATA                                                 Type Video</p>
+<p class="figure">Figure 5: META-DATA                                                   Type Video</p>
 <p/>
 
 <dl>
@@ -573,6 +605,37 @@
   <dd style="margin-left: 8">Current horizontal resolution.  </dd>
   <dt>FPS:</dt>
   <dd style="margin-left: 8">How many frames per seconds the video in the stream is encoded with.  </dd>
+</dl>
+
+<p> </p>
+<h1 id="rfc.section.4.2"><a href="#rfc.section.4.2">4.2.</a> NETWORK-FEEDBACK</h1>
+<p id="rfc.section.4.2.p.1">This attribute have a length that are multiples of 4 (64) so no padding is necessary.  </p>
+<p id="rfc.section.4.2.p.2">This attribute MUST be added after any INTEGRITY attribute in the STUN message. Values in this attribute can be updated along the network path by nodes that are not able to regenerate a correct INTEGRITY attribute.  </p>
+<div id="rfc.figure.6"/>
+<div id="NETWORK_FEEDBACK_attr"/>
+<pre>
+ 0                   1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Link TYPE     |Conguestion Lvl| Node Cnt      |    0xFF       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Up Bandwidth (kbps)           |   Down Bandwidth (kbps)       |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      </pre>
+<p class="figure">Figure 6: NETWORK-FEEDBACK Attribute</p>
+<p/>
+
+<dl>
+  <dt>Link TYPE:</dt>
+  <dd style="margin-left: 8">Value describing what kind of link types the other fields in the attribute describes. For home and small routers where the information is limited the value can for example be set to TOTAL (0x01). For routers with more control the value can be set to either HOST, APPLICATION, SESSION or STREAM.  </dd>
+  <dt>Conguestion Lvl:</dt>
+  <dd style="margin-left: 8">Value in the range 0x00 and Ox0F describing the level of congestion the network element is experiencing at this point. 0x00 means no congestion, 0x0F Fully congested. The router can choose any value between those value as it sees fit. The application that sees those values might act on by doing some rate adaption or similar. The values 0x10-0xFF are reserved for future use.  </dd>
+  <dt>Node Cnt:</dt>
+  <dd style="margin-left: 8">Numbers of nodes that supports MALICE in the notwork path. Any router on the path that understands MALICE should increase this number. Other fields should only be updated if the value is worse than what is already in the attribute.  </dd>
+  <dt>Up Bandwidth:</dt>
+  <dd style="margin-left: 8">Bandwidth in kbps available in the upstream direction.  </dd>
+  <dt>Down Bandwidth:</dt>
+  <dd style="margin-left: 8">Bandwidth in kbps available in the downstream direction.  </dd>
 </dl>
 
 <p> </p>
