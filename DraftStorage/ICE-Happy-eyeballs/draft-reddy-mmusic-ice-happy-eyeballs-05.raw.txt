@@ -5,18 +5,19 @@
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: July 26, 2014                                             Cisco
-                                                        January 22, 2014
+Expires: July 27, 2014                                             Cisco
+                                                        January 23, 2014
 
 
                     Happy Eyeballs Extension for ICE
-                draft-reddy-mmusic-ice-happy-eyeballs-04
+                draft-reddy-mmusic-ice-happy-eyeballs-05
 
 Abstract
 
    This document provides guidelines on how to make ICE [RFC5245]
    conclude faster in IPv4/IPv6 dual-stack scenarios where broken paths
-   exists.
+   exists.  This will lead to more sustained IPv6 deployment as users
+   will longer have an incentive to disable IPv6.
 
 Status of This Memo
 
@@ -33,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 26, 2014.
+   This Internet-Draft will expire on July 27, 2014.
 
 Copyright Notice
 
@@ -66,18 +67,19 @@ Table of Contents
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: July 26, 2014                                             Cisco
-                                                        January 22, 2014
+Expires: July 27, 2014                                             Cisco
+                                                        January 23, 2014
 
 
                     Happy Eyeballs Extension for ICE
-                draft-reddy-mmusic-ice-happy-eyeballs-04
+                draft-reddy-mmusic-ice-happy-eyeballs-05
 
 Abstract
 
    This document provides guidelines on how to make ICE [RFC5245]
    conclude faster in IPv4/IPv6 dual-stack scenarios where broken paths
-   exists.
+   exists.  This will lead to more sustained IPv6 deployment as users
+   will longer have an incentive to disable IPv6.
 
 Status of This Memo
 
@@ -94,7 +96,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 26, 2014.
+   This Internet-Draft will expire on July 27, 2014.
 
 Copyright Notice
 
@@ -119,9 +121,12 @@ Copyright Notice
    for prioritizing among the different IP families.  [RFC3484] is
    obsoleted by [RFC6724] but following the recommendations from the
    updated RFC will still lead to prioritization of IPv6 over IPv4 with
-   the same candidate type.  There can be a lot of ICE candidates
-   belonging to one address family which results in user-noticeable
-   setup delays if the path for that address family is broken.
+   the same candidate type.  Due to prioritization recommendations
+   mentioned above, the connectivity checks for candidates of the same
+   type (HOST, RFLX, RELAY) would be sent in such a order that one IP
+   addresses family is depleted before any checks on a different address
+   family is started.  This will results in user-noticeable setup delays
+   if the path for the first address family is broken.
 
    To avoid such user-noticeable delays when the IPv6 path or IPv4 path
    is broken, this specification encourages earlier checking of the
@@ -143,25 +148,25 @@ Copyright Notice
    Candidates SHOULD be prioritized such that a long sequence of
    candidates belonging to the same address family be interleaved with
    candidates from the alternate IP family.  For example, promoting IPv4
-   candidates in the presence of many IPv6 addresses such that an IPv4
+   candidates in the presence of many IPv6 candidates such that an IPv4
    address candidate is always present after a small sequence of IPv6
-   addresses.  This makes ICE connectivity checks more responsive to
+   candidates.  This makes ICE connectivity checks more responsive to
    failures of an address family by reordering the candidates such that
-   IPv6 and IPv4 candidates get a fair chance during connectivity
-   checks.
+   IPv6 and IPv4 candidates get a fair chance during the connectivity
+   check phase.
 
    An ICE agent can choose an algorithm or a technique of its choice to
    ensure the resulting checklists have a fair interleaved mix of IPv4
    and IPv6 address families.  Modifying the checklist directly can lead
    to uncoordinated local and remote checklists that result in ICE
    taking longer to complete.  The best approach is to modify the
-   formula for calculating the candidate priority value.
-   Section Section 3 discusses this in greater detail.
+   formula for calculating the candidate priority value described in ICE
+   [RFC5245] section 4.1.2.1.
 
 3.  Compatibility
 
    ICE [RFC5245] section 4.1.2 states that the formula in section
-   4.1.2.1 SHOULD be used.  The fomula is as follows:
+   4.1.2.1 SHOULD be used.  The formula is as follows:
 
      priority = (2^24)*(type preference) +
                 (2^8)*(local preference) +
@@ -169,11 +174,11 @@ Copyright Notice
 
 
    ICE [RFC5245] section 4.1.2.2 have guidelines for how the type
-   preference value should be chosen.  Instead of having one static
-   value for IPv4 and one static value for IPv6 type of addresses, it is
+   preference value should be chosen.  Instead of having a static value
+   for IPv4 and a static value for IPv6 type of addresses, it is
    possible to choose this value dynamically in such a way that IPv4 and
-   IPv6 addresses would have ended up interleaved in a list where the
-   candidates where sorted by priority.
+   IPv6 addresses ends up interleaved in a list where the candidates
+   where sorted by priority.
 
    The local and remote agent can have different algorithms for choosing
    the type preference value without any impact on coordination between
@@ -187,8 +192,8 @@ Copyright Notice
 
 
    Where G is the candidate provided by the controlling agent and D the
-   priority provided by the controlled agent.  Ensures that the local
-   and remote checklists are coordinated.
+   priority provided by the controlled agent.  This ensures that the
+   local and remote checklists are coordinated.
 
    Interoperability with agents that does not support ICE Happy Eyeballs
    are supported in the same way as two agents with different ICE Happy

@@ -5,9 +5,9 @@
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                              A. Choukir
-Expires: July 26, 2014                                          C. Eckel
+Expires: July 27, 2014                                          C. Eckel
                                                      Cisco Systems, Inc.
-                                                        January 22, 2014
+                                                        January 23, 2014
 
 
     Protocol Independent Encoding for Signaling Flow Characteristics
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 26, 2014.
+   This Internet-Draft will expire on July 27, 2014.
 
 Copyright Notice
 
@@ -104,9 +104,9 @@ Table of Contents
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                              A. Choukir
-Expires: July 26, 2014                                          C. Eckel
+Expires: July 27, 2014                                          C. Eckel
                                                      Cisco Systems, Inc.
-                                                        January 22, 2014
+                                                        January 23, 2014
 
 
     Protocol Independent Encoding for Signaling Flow Characteristics
@@ -148,7 +148,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 26, 2014.
+   This Internet-Draft will expire on July 27, 2014.
 
 Copyright Notice
 
