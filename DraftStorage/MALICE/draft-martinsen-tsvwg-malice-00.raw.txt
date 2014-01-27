@@ -4,8 +4,8 @@
 
 TSVWG                                                       P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 23, 2014
-Expires: July 27, 2014
+Intended status: Standards Track                        January 27, 2014
+Expires: July 31, 2014
 
 
                 Meta-data Attribute signaLling with ICE
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 27, 2014.
+   This Internet-Draft will expire on July 31, 2014.
 
 Copyright Notice
 
@@ -92,8 +92,8 @@ Table of Contents
 
 TSVWG                                                       P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        January 23, 2014
-Expires: July 27, 2014
+Intended status: Standards Track                        January 27, 2014
+Expires: July 31, 2014
 
 
                 Meta-data Attribute signaLling with ICE
@@ -136,7 +136,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 27, 2014.
+   This Internet-Draft will expire on July 31, 2014.
 
 Copyright Notice
 
