@@ -5,8 +5,8 @@
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: July 31, 2014                                             Cisco
-                                                        January 27, 2014
+Expires: August 1, 2014                                            Cisco
+                                                        January 28, 2014
 
 
                     Happy Eyeballs Extension for ICE
@@ -34,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 31, 2014.
+   This Internet-Draft will expire on August 1, 2014.
 
 Copyright Notice
 
@@ -63,56 +63,6 @@ Table of Contents
    8.  Normative References
    Authors' Addresses
 
-
-MMUSIC                                                          T. Reddy
-Internet-Draft                                                  P. Patil
-Intended status: Standards Track                            P. Martinsen
-Expires: July 31, 2014                                             Cisco
-                                                        January 27, 2014
-
-
-                    Happy Eyeballs Extension for ICE
-                draft-reddy-mmusic-ice-happy-eyeballs-05
-
-Abstract
-
-   This document provides guidelines on how to make ICE [RFC5245]
-   conclude faster in IPv4/IPv6 dual-stack scenarios where broken paths
-   exist.  This will lead to more sustained IPv6 deployment as users
-   will no longer have an incentive to disable IPv6.
-
-Status of This Memo
-
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
-
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
-
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
-
-   This Internet-Draft will expire on July 31, 2014.
-
-Copyright Notice
-
-   Copyright (c) 2014 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
-
 1.  Introduction
 
    There is a need to introduce more fairness in the handling of
@@ -125,15 +75,16 @@ Copyright Notice
    candidates of the same type (HOST, RFLX, RELAY) are sent such that an
    IP address family is completely depleted before checks on the other
    address family are started.  This results in user noticeable setup
-   delays if the path for the first address family is broken.
+   delays if the path for the prioritized address family is broken.
 
-   To avoid such user noticeable delays when either IPv6 path or IPv4
-   path is broken, this specification encourages intermingling the
-   different address families when connectivity checks are conducted.
-   Introducing IP address family fairness into ICE connectivity checks
-   will lead to more sustained IPv6 deployment (so users will no longer
-   have an incentive to disable IPv6), with only a small penalty for
-   IPv4 connectivity checks.
+   To avoid such user noticeable delays when either IPv6 or IPv4 path is
+   broken, this specification encourages intermingling the different
+   address families when connectivity checks are conducted.  Introducing
+   IP address family fairness into ICE connectivity checks will lead to
+   more sustained dual-stack IPv4/IPv6 deployment as users will no
+   longer have an incentive to disable IPv6.  The cost is a small
+   penalty to the address type that otherwise would have been
+   prioritized.
 
 2.  Notational Conventions
 
@@ -166,12 +117,12 @@ Copyright Notice
 4.  Compatibility
 
    ICE [RFC5245] section 4.1.2 states that the formula in section
-   4.1.2.1 SHOULD be used.  The formula is as follows:
+   4.1.2.1 SHOULD be used to calculate the candidate priority.  The
+   formula is as follows:
 
-     priority = (2^24)*(type preference) +
-                (2^8)*(local preference) +
-                (2^0)*(256 - component ID)
-
+        priority = (2^24)*(type preference) +
+                   (2^8)*(local preference) +
+                   (2^0)*(256 - component ID)
 
    ICE [RFC5245] section 4.1.2.2 has guidelines for how the type
    preference value should be chosen.  Instead of having a static value
@@ -188,8 +139,7 @@ Copyright Notice
    described in [RFC5245] section 5.7.2.  Using the pair priority
    formula:
 
-     pair priority = 2^32*MIN(G,D) + 2*MAX(G,D) + (G>D?1:0)
-
+        pair priority = 2^32*MIN(G,D) + 2*MAX(G,D) + (G>D?1:0)
 
    Where G is the candidate provided by the controlling agent and D the
    priority provided by the controlled agent.  This ensures that the
@@ -202,10 +152,13 @@ Copyright Notice
 
    The agent that has promoted IPv4 cautiously i.e. lower IPv4 candidate
    priority values compared to the other agent, will influence the check
-   list the most due to (2^32*MIN(G,D)) in the formula, i.e., if an
-   agent does not support any intermingling of the candidate address
-   types it will be the most cautious of the agents and will dictate the
-   resulting check list on both agents.
+   list the most due to (2^32*MIN(G,D)) in the formula.
+
+   These recommendations are backward compatible with a standard ICE
+   implementation.  If the other agent have IPv4 candidates with higher
+   priorities due to intermingling, the effect is canceled when the
+   checklist is formed and the pair priority formula is used to
+   calculate the pair priority.
 
 5.  IANA Considerations
 
@@ -262,7 +215,7 @@ Authors' Addresses
 
    Paal-Erik Martinsen
    Cisco Systems, Inc.
-   Philip Pedersens vei 22
+   Philip Pedersens Vei 22
    Lysaker, Akershus  1325
    Norway
 

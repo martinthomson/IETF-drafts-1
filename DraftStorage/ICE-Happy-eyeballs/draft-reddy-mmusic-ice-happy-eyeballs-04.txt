@@ -5,8 +5,8 @@
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: July 31, 2014                                             Cisco
-                                                        January 27, 2014
+Expires: May 29, 2014                                              Cisco
+                                                       November 25, 2013
 
 
                     Happy Eyeballs Extension for ICE
@@ -33,11 +33,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 31, 2014.
+   This Internet-Draft will expire on May 29, 2014.
 
 Copyright Notice
 
-   Copyright (c) 2014 IETF Trust and the persons identified as the
+   Copyright (c) 2013 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Reddy, et al.             Expires July 31, 2014                 [Page 1]
+Reddy, et al.             Expires May 29, 2014                  [Page 1]
 
-Internet-Draft           Happy Eyeballs for ICE             January 2014
+Internet-Draft           Happy Eyeballs for ICE            November 2013
 
 
 Table of Contents
@@ -67,7 +67,7 @@ Table of Contents
    4.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   3
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   3
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   3
-   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
+   7.  Normative References  . . . . . . . . . . . . . . . . . . . .   3
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   4
 
 1.  Introduction
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Reddy, et al.             Expires July 31, 2014                 [Page 2]
+Reddy, et al.             Expires May 29, 2014                  [Page 2]
 
-Internet-Draft           Happy Eyeballs for ICE             January 2014
+Internet-Draft           Happy Eyeballs for ICE            November 2013
 
 
    IPv6 and IPv4 candidates get a fair chance during connectivity
@@ -157,23 +157,18 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
    Authors would like to thank Dan Wing, Ari Keranen, Bernard Aboba,
    Martin Thomson and Jonathan Lennox for their comments and review.
 
-
-
-
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                 [Page 3]
-
-Internet-Draft           Happy Eyeballs for ICE             January 2014
-
-
 7.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+
+
+
+Reddy, et al.             Expires May 29, 2014                  [Page 3]
+
+Internet-Draft           Happy Eyeballs for ICE            November 2013
+
 
    [RFC3484]  Draves, R., "Default Address Selection for Internet
               Protocol version 6 (IPv6)", RFC 3484, February 2003.
@@ -221,4 +216,9 @@ Authors' Addresses
 
 
 
-Reddy, et al.             Expires July 31, 2014                 [Page 4]
+
+
+
+
+
+Reddy, et al.             Expires May 29, 2014                  [Page 4]

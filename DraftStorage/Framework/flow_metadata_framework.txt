@@ -5,9 +5,9 @@
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                  R. Penno
 Intended status: Informational                                A. Choukir
-Expires: July 31, 2014                                          C. Eckel
+Expires: July 12, 2014                                          C. Eckel
                                                      Cisco Systems, Inc.
-                                                        January 27, 2014
+                                                         January 8, 2014
 
 
 A Framework for Signaling Flow Characteristics between Applications and
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 31, 2014.
+   This Internet-Draft will expire on July 12, 2014.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 1]
+Eckert, et al.            Expires July 12, 2014                 [Page 1]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
@@ -72,7 +72,7 @@ Table of Contents
        2.1.2.  Limitation  . . . . . . . . . . . . . . . . . . . . .   4
      2.2.  Explicit signaling methods  . . . . . . . . . . . . . . .   5
    3.  Proposed framework  . . . . . . . . . . . . . . . . . . . . .   6
-     3.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .   7
+     3.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .   6
        3.1.1.  Common, application independent, IPFIX registered,
                information elements  . . . . . . . . . . . . . . . .   7
        3.1.2.  Cross-protocol information element encoding rules . .   7
@@ -84,10 +84,10 @@ Table of Contents
                elements  . . . . . . . . . . . . . . . . . . . . . .   9
          3.1.4.1.  Proxy originated information  . . . . . . . . . .   9
          3.1.4.2.  Authentication  . . . . . . . . . . . . . . . . .   9
-         3.1.4.3.  Common encoding . . . . . . . . . . . . . . . . .  10
+         3.1.4.3.  Common encoding . . . . . . . . . . . . . . . . .   9
          3.1.4.4.  Usage Model to Protocol integration . . . . . . .  10
      3.2.  Proposed common information elements  . . . . . . . . . .  11
-       3.2.1.  Bandwidth Attributes  . . . . . . . . . . . . . . . .  12
+       3.2.1.  Bandwidth Attributes  . . . . . . . . . . . . . . . .  11
          3.2.1.1.  Maximum Bandwidth . . . . . . . . . . . . . . . .  12
          3.2.1.2.  Minimum Bandwidth . . . . . . . . . . . . . . . .  12
          3.2.1.3.  Bandwidth Pool  . . . . . . . . . . . . . . . . .  12
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 2]
+Eckert, et al.            Expires July 12, 2014                 [Page 2]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
@@ -165,7 +165,7 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 3]
+Eckert, et al.            Expires July 12, 2014                 [Page 3]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
@@ -221,7 +221,7 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 4]
+Eckert, et al.            Expires July 12, 2014                 [Page 4]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
@@ -277,7 +277,7 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 5]
+Eckert, et al.            Expires July 12, 2014                 [Page 5]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
@@ -325,22 +325,18 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
 3.  Proposed framework
 
-
-
-
-
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                 [Page 6]
-
-Internet-DraftFramework for Signaling Flow Characteristics  January 2014
-
-
 3.1.  Overview
 
    The proposed framework includes the following elements:
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 6]
+
+Internet-DraftFramework for Signaling Flow Characteristics  January 2014
+
 
 3.1.1.  Common, application independent, IPFIX registered, information
         elements
@@ -387,16 +383,17 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
    protocol to another protocol without understanding the information
    elements data-type.
 
+   In protocols that are not constrained to binary encoding, it is
+   nevertheless highly desirable to include the equivalent information
+   and therefore permit propagation between binary and non-binary
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 7]
+
+Eckert, et al.            Expires July 12, 2014                 [Page 7]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
 
-   In protocols that are not constrained to binary encoding, it is
-   nevertheless highly desirable to include the equivalent information
-   and therefore permit propagation between binary and non-binary
    transport of information elements without having to understand all
    information elements.
 
@@ -438,23 +435,20 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
    value as well.  Network elements may also provide unsolicited
    advisory feedback.
 
-
-
-
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                 [Page 8]
-
-Internet-DraftFramework for Signaling Flow Characteristics  January 2014
-
-
    In all cases, applications are not guaranteed to receive an answer or
    any specific service from the network.  In the event an answer is
    provided, that answer is similarly not a guarantee of any specific
    service or treatment by the network.  It is to be interpreted as
    advisory only.
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 8]
+
+Internet-DraftFramework for Signaling Flow Characteristics  January 2014
+
 
    As mentioned previously, the same information elements are used in
    the signaling from the application to the network as well as from the
@@ -498,19 +492,19 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
    information elements covered by the authentication were originated
    from, or approved by, that identity.
 
-
-
-
-Eckert, et al.            Expires July 31, 2014                 [Page 9]
-
-Internet-DraftFramework for Signaling Flow Characteristics  January 2014
-
-
 3.1.4.3.  Common encoding
 
    A companion document [I-D.choukir-tsvwg-flow-metadata-encoding]
    covers recommended encoding rules that take the following aspects
    into account:
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 9]
+
+Internet-DraftFramework for Signaling Flow Characteristics  January 2014
+
 
    o  Compact binary encoding rules
 
@@ -555,18 +549,19 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
        informative attribute based services without impacting the
        services and transactions of the protocol otherwise.
 
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 10]
-
-Internet-DraftFramework for Signaling Flow Characteristics  January 2014
-
-
    2.  Informative common information elements can be sent alongside an
        existing protocol transaction.  In this case they may either be
        ships in the night (triggering informative attribute based
        services), or they may additionally be used by the policy rules
        of the protocol transaction itself which could be advisory or
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 10]
+
+Internet-DraftFramework for Signaling Flow Characteristics  January 2014
+
+
        service request.  All feedback of the transaction would still
        rely on protocol specific information element (common information
        elements only used from host to network).
@@ -610,15 +605,18 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
        elements for both the upstream and downstream direction of a flow
        include different values for the information element)
 
+3.2.1.  Bandwidth Attributes
 
 
 
-Eckert, et al.            Expires July 31, 2014                [Page 11]
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 11]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
-
-3.2.1.  Bandwidth Attributes
 
 3.2.1.1.  Maximum Bandwidth
 
@@ -665,18 +663,17 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
 3.2.2.2.  Traffic Class Label (TCL)
 
+   The data type of this information element is a string.  It carries
+   the Traffic Class Label defined in
+   [I-D.ietf-mmusic-traffic-class-for-sdp].  Depending on the outcome of
 
 
 
-
-Eckert, et al.            Expires July 31, 2014                [Page 12]
+Eckert, et al.            Expires July 12, 2014                [Page 12]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
 
-   The data type of this information element is a string.  It carries
-   the Traffic Class Label defined in
-   [I-D.ietf-mmusic-traffic-class-for-sdp].  Depending on the outcome of
    that drafts standardization, the version carried as an information
    element may be slightly expanded over the its definition for SDP.
    The TCL is a structured string of the form:
@@ -722,15 +719,16 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
    5-7: reserved
 
+   Default Value: 0
 
 
 
-Eckert, et al.            Expires July 31, 2014                [Page 13]
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 13]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
-
-   Default Value: 0
 
    Conflict Resolution: For application to network, the most strict of
    non-default values.  For network to application, the least strict of
@@ -778,15 +776,15 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
    3 = medium
 
+   4 = high
 
 
 
-Eckert, et al.            Expires July 31, 2014                [Page 14]
+
+Eckert, et al.            Expires July 12, 2014                [Page 14]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
-
-   4 = high
 
    5-7: reserved
 
@@ -834,16 +832,16 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
    especially non-IANA registered ones is the complexity in making all
    network elements learn the semantic of the numeric encoding of e.g.
    the PANA-L7-PEN information element in signaling protocols that only
+   use the numeric encoding of information elements.  The second problem
+   may be to determine what PEN to use, because not every developer of
 
 
 
-Eckert, et al.            Expires July 31, 2014                [Page 15]
+Eckert, et al.            Expires July 12, 2014                [Page 15]
 
 Internet-DraftFramework for Signaling Flow Characteristics  January 2014
 
 
-   use the numeric encoding of information elements.  The second problem
-   may be to determine what PEN to use, because not every developer of
    an application may be a company that has a PEN or otherwise would
    intend to apply for one.  Application identification via a URL
    encoded string information element is a way to overcome both issues.
@@ -885,25 +883,20 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
    part is a DNS domain owned by the assigner, and that the rest of the
    string after the first / is as self explanatory as possible.
 
-
-
-
-
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 16]
-
-Internet-DraftFramework for Signaling Flow Characteristics  January 2014
-
-
    It should be noted that in the context of DPI, classification of web-
    based application traffic is very often performed by URL inspection
    of HTTP traffic.  This proposed intent based information element
    leverages that model and makes it usable where it can not be
    currently used with just DPI: encrypted HTTP, non-HTTP applications,
    HTTP applications with non-descriptive URLs, etc.
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 16]
+
+Internet-DraftFramework for Signaling Flow Characteristics  January 2014
+
 
 4.  Acknowledgements
 
@@ -945,15 +938,6 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
               Signaling with RSVP", draft-zamfir-tsvwg-flow-metadata-
               rsvp-00 (work in progress), July 2013.
 
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 17]
-
-Internet-DraftFramework for Signaling Flow Characteristics  January 2014
-
-
    [RFC4594]  Babiarz, J., Chan, K., and F. Baker, "Configuration
               Guidelines for DiffServ Service Classes", RFC 4594, August
               2006.
@@ -961,6 +945,14 @@ Internet-DraftFramework for Signaling Flow Characteristics  January 2014
    [RFC6759]  Claise, B., Aitken, P., and N. Ben-Dvora, "Cisco Systems
               Export of Application Information in IP Flow Information
               Export (IPFIX)", RFC 6759, November 2012.
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 17]
+
+Internet-DraftFramework for Signaling Flow Characteristics  January 2014
+
 
 Authors' Addresses
 
@@ -1005,4 +997,12 @@ Authors' Addresses
 
 
 
-Eckert, et al.            Expires July 31, 2014                [Page 18]
+
+
+
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 18]

@@ -5,9 +5,9 @@
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                              A. Choukir
-Expires: July 31, 2014                                          C. Eckel
+Expires: July 12, 2014                                          C. Eckel
                                                      Cisco Systems, Inc.
-                                                        January 27, 2014
+                                                         January 8, 2014
 
 
     Protocol Independent Encoding for Signaling Flow Characteristics
@@ -49,7 +49,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 31, 2014.
+   This Internet-Draft will expire on July 12, 2014.
 
 Copyright Notice
 
@@ -99,71 +99,6 @@ Table of Contents
      6.2.  Informative References
    Appendix A.  Encoding usage examples
    Authors' Addresses
-
-
-Internet Engineering Task Force                           T. Eckert, Ed.
-Internet-Draft                                                 A. Zamfir
-Intended status: Standards Track                              A. Choukir
-Expires: July 31, 2014                                          C. Eckel
-                                                     Cisco Systems, Inc.
-                                                        January 27, 2014
-
-
-    Protocol Independent Encoding for Signaling Flow Characteristics
-             draft-choukir-tsvwg-flow-metadata-encoding-01
-
-Abstract
-
-   This document describes a protocol independent encoding for flow
-   characteristics (a.k.a. metadata).  A flow is defined as a set of IP
-   packets passing through a network in a given direction.  All packets
-   belonging to a particular flow have a set of common properties (e.g.
-   IP, port, transport).  Flow metadata exposes key characteristics of
-   the flow such as the originating application, the type of media in
-   use (e.g.  audio, video) and others as defined in
-   [I-D.eckert-intarea-flow-metadata-framework].  The flow
-   characteristics are expressed in terms of information elements.
-   These information elements are signaled either out of band or in band
-   but always along the same path of the flow associated with the
-   application.
-
-   [I-D.eckert-intarea-flow-metadata-framework] defines the overall
-   framework for flow metadata and the definition of the flow
-   characteristics, whereas this document captures the encoding of these
-   characteristics.  The mapping of flow metadata encoding to different
-   signaling protocols is outside the scope of this document.
-
-Status of This Memo
-
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
-
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
-
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
-
-   This Internet-Draft will expire on July 31, 2014.
-
-Copyright Notice
-
-   Copyright (c) 2014 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
 
 1.  Introduction
 
@@ -401,29 +336,29 @@ Copyright Notice
    an example that contains an application section and two network
    sections.
 
-                    +--------------------------------+
-                    |      Application Section       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Network-1 Marker       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |         Network-1 Section      |
-                    |                                |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Network-2 Marker       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |         Network-2 Section      |
-                    |                                |
-                    |                                |
-                    |                                |
-                    +--------------------------------+
+   +--------------------------------+
+   |      Application Section       |
+   +--------------------------------+
+   +--------------------------------+
+   |         Network-1 Marker       |
+   +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |         Network-1 Section      |
+   |                                |
+   +--------------------------------+
+   +--------------------------------+
+   |         Network-2 Marker       |
+   +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |         Network-2 Section      |
+   |                                |
+   |                                |
+   |                                |
+   +--------------------------------+
 
                         Figure 1: Encoding section
 
@@ -434,38 +369,38 @@ Copyright Notice
    the following example, a separate security token is added to each
    section contained in the previous example.
 
-                    +--------------------------------+
-                    |         Security Token         |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |      Application Section       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Network-1 Marker       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Security Token N-1     |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |         Network-1 Section      |
-                    |                                |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Network-2 Marker       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Security Token N-2     |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |         Network-2 Section      |
-                    |                                |
-                    |                                |
-                    |                                |
-                    +--------------------------------+
+   +--------------------------------+
+   |         Security Token         |
+   +--------------------------------+
+   +--------------------------------+
+   |      Application Section       |
+   +--------------------------------+
+   +--------------------------------+
+   |         Network-1 Marker       |
+   +--------------------------------+
+   +--------------------------------+
+   |         Security Token N-1     |
+   +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |         Network-1 Section      |
+   |                                |
+   +--------------------------------+
+   +--------------------------------+
+   |         Network-2 Marker       |
+   +--------------------------------+
+   +--------------------------------+
+   |         Security Token N-2     |
+   +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |         Network-2 Section      |
+   |                                |
+   |                                |
+   |                                |
+   +--------------------------------+
 
                     Figure 2: Encoding security tokens
 
@@ -479,34 +414,34 @@ Copyright Notice
    subsection does not use the vendor marker and therefore must come
    first if present.  Figure 3 shows a sample section content.
 
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |      Standard Subsection       |
-                    |                                |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Vendor-1 Marker        |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |       Vendor-1 Subsection      |
-                    |                                |
-                    |                                |
-                    |                                |
-                    |                                |
-                    |                                |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Vendor-2 Marker        |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |       Vendor-2 Subsection      |
-                    |                                |
-                    |                                |
-                    |                                |
-                    |                                |
-                    |                                |
-                    +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |      Standard Subsection       |
+   |                                |
+   +--------------------------------+
+   +--------------------------------+
+   |         Vendor-1 Marker        |
+   +--------------------------------+
+   +--------------------------------+
+   |       Vendor-1 Subsection      |
+   |                                |
+   |                                |
+   |                                |
+   |                                |
+   |                                |
+   +--------------------------------+
+   +--------------------------------+
+   |         Vendor-2 Marker        |
+   +--------------------------------+
+   +--------------------------------+
+   |       Vendor-2 Subsection      |
+   |                                |
+   |                                |
+   |                                |
+   |                                |
+   |                                |
+   +--------------------------------+
 
                       Figure 3: Encoding subsections
 
@@ -519,18 +454,18 @@ Copyright Notice
    information element.  If the upstream and downstream blocks are both
    present, the upstream block MUST come first.
 
-                    +--------------------------------+
-                    |          Upstream block        |
-                    | +------------+  +------------+ |
-                    | |  MD tag    |  |  MD tag    | |
-                    | +------------+  +------------+ |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |        Downstream block        |
-                    | +------------+  +------------+ |
-                    | |  MD tag    |  |  MD tag    | |
-                    | +------------+  +------------+ |
-                    +--------------------------------+
+   +--------------------------------+
+   |          Upstream block        |
+   | +------------+  +------------+ |
+   | |  MD tag    |  |  MD tag    | |
+   | +------------+  +------------+ |
+   +--------------------------------+
+   +--------------------------------+
+   |        Downstream block        |
+   | +------------+  +------------+ |
+   | |  MD tag    |  |  MD tag    | |
+   | +------------+  +------------+ |
+   +--------------------------------+
 
              Figure 4: Encoding upstream and downstream blocks
 
@@ -543,51 +478,51 @@ Copyright Notice
    [I-D.eckert-intarea-flow-metadata-framework] for a full coverage of
    the information model and how the registries are handled.
 
-                 +--------------------------------+
-                 |         Security Token         |
-                 +--------------------------------+
-                 +--------------------------------+ ^  ^
-                 |          Upstream block        | |  |A
-                 | +------------+  +------------+ | |  |P
-                 | |  MD tag    |  |  MD tag    | | |S |P
-                 | +------------+  +------------+ | |T |L
-                 +--------------------------------+ |D |I
-                 +--------------------------------+ |  |C
-                 |         Downstream block       | |  |A
-                 | +------------+                 | |  |T
-                 | |  MD tag    |                 | |  |I
-                 | +------------+                 | |  |O
-                 +--------------------------------+ v  |N
-                 +--------------------------------+    |
-                 |     Vendor section marker      |    |S
-                 +--------------------------------+    |E
-                 +--------------------------------+ ^  |C
-                 |          Upstream block        | |V |T
-                 | +------------+  +------------+ | |N |I
-                 | |  MD tag    |  |  MD tag    | | |D |O
-                 | +------------+  +------------+ | |  |N
-                 +--------------------------------+ v  v
-                 +--------------------------------+    ^
-                 |     Network section marker     |    |
-                 +--------------------------------+    |
-                 +--------------------------------+    |N
-                 |         Security Token         |    |E
-                 +--------------------------------+    |T
-                 +--------------------------------+    |W
-                 |         Downstream block       |    |O
-                 | +------------+                 |    |R
-                 | |  MD tag    |                 |    |K
-                 | +------------+                 |    |
-                 +--------------------------------+    |
-                 +--------------------------------+    |S
-                 |     Vendor section marker      |    |E
-                 +--------------------------------+    |C
-                 +--------------------------------+    |T
-                 |         Downstream block       |    |I
-                 | +------------+                 |    |O
-                 | |  MD tag    |                 |    |N
-                 | +------------+                 |    |
-                 +--------------------------------+    v
+   +--------------------------------+
+   |         Security Token         |
+   +--------------------------------+
+   +--------------------------------+ ^  ^
+   |          Upstream block        | |  |A
+   | +------------+  +------------+ | |  |P
+   | |  MD tag    |  |  MD tag    | | |S |P
+   | +------------+  +------------+ | |T |L
+   +--------------------------------+ |D |I
+   +--------------------------------+ |  |C
+   |         Downstream block       | |  |A
+   | +------------+                 | |  |T
+   | |  MD tag    |                 | |  |I
+   | +------------+                 | |  |O
+   +--------------------------------+ v  |N
+   +--------------------------------+    |
+   |     Vendor section marker      |    |S
+   +--------------------------------+    |E
+   +--------------------------------+ ^  |C
+   |          Upstream block        | |V |T
+   | +------------+  +------------+ | |N |I
+   | |  MD tag    |  |  MD tag    | | |D |O
+   | +------------+  +------------+ | |  |N
+   +--------------------------------+ v  v
+   +--------------------------------+    ^
+   |     Network section marker     |    |
+   +--------------------------------+    |
+   +--------------------------------+    |N
+   |         Security Token         |    |E
+   +--------------------------------+    |T
+   +--------------------------------+    |W
+   |         Downstream block       |    |O
+   | +------------+                 |    |R
+   | |  MD tag    |                 |    |K
+   | +------------+                 |    |
+   +--------------------------------+    |
+   +--------------------------------+    |S
+   |     Vendor section marker      |    |E
+   +--------------------------------+    |C
+   +--------------------------------+    |T
+   |         Downstream block       |    |I
+   | +------------+                 |    |O
+   | |  MD tag    |                 |    |N
+   | +------------+                 |    |
+   +--------------------------------+    v
 
                     Figure 5: Complete encoding example
 
@@ -601,12 +536,12 @@ Copyright Notice
    characteristics.  This example also assumes a use case where no
    security token is needed.  Further examples are given in Appendix A.
 
-                    +--------------------------------+
-                    |          Upstream block        |
-                    | +------------+  +------------+ |
-                    | |  MD tag    |  |  MD tag    | |
-                    | +------------+  +------------+ |
-                    +--------------------------------+
+   +--------------------------------+
+   |          Upstream block        |
+   | +------------+  +------------+ |
+   | |  MD tag    |  |  MD tag    | |
+   | +------------+  +------------+ |
+   +--------------------------------+
 
                     Figure 6: Compact encoding example
 

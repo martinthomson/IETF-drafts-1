@@ -5,7 +5,7 @@
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                              A. Choukir
-Expires: January 07, 2014                                          Cisco
+Expires: January 7, 2014                                           Cisco
                                                             July 6, 2013
 
 
@@ -32,7 +32,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 07, 2014.
+   This Internet-Draft will expire on January 7, 2014.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 1]
+Eckert, et al.           Expires January 7, 2014                [Page 1]
 
 Internet-Draft                  FMD-RSVP                       July 2013
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 2]
+Eckert, et al.           Expires January 7, 2014                [Page 2]
 
 Internet-Draft                  FMD-RSVP                       July 2013
 
@@ -165,7 +165,7 @@ Internet-Draft                  FMD-RSVP                       July 2013
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 3]
+Eckert, et al.           Expires January 7, 2014                [Page 3]
 
 Internet-Draft                  FMD-RSVP                       July 2013
 
@@ -221,7 +221,7 @@ Internet-Draft                  FMD-RSVP                       July 2013
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 4]
+Eckert, et al.           Expires January 7, 2014                [Page 4]
 
 Internet-Draft                  FMD-RSVP                       July 2013
 
@@ -271,17 +271,20 @@ Internet-Draft                  FMD-RSVP                       July 2013
               Characteristics", draft-choukir-tsvwg-flow-metadata-
               encoding-01 (work in progress), July 2013.
 
-   [I-D.eckert-intarea-flow-metadata-framework]
-              Eckert, T., Penno, R., Choukir, A., and C. Eckel, "A
-              Framework for Signaling Flow Characteristics between
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 5]
+
+
+
+Eckert, et al.           Expires January 7, 2014                [Page 5]
 
 Internet-Draft                  FMD-RSVP                       July 2013
 
 
+   [I-D.eckert-intarea-flow-metadata-framework]
+              Eckert, T., Penno, R., Choukir, A., and C. Eckel, "A
+              Framework for Signaling Flow Characteristics between
               Applications and the Network", draft-eckert-intarea-flow-
               metadata-framework-02 (work in progress), October 2013.
 
@@ -330,7 +333,4 @@ Authors' Addresses
 
 
 
-
-
-
-Eckert, et al.          Expires January 07, 2014                [Page 6]
+Eckert, et al.           Expires January 7, 2014                [Page 6]

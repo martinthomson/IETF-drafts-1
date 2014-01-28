@@ -12,6 +12,28 @@
 	  a {
 	  text-decoration: none;
 	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
 	  a.smpl {
 	  color: black;
 	  }
@@ -324,7 +346,7 @@
 		   content: "December 2010"; 
 	  } 
 	  @top-center {
-		   content: "Abbreviated Title";3
+		   content: "Abbreviated Title";
 	  } 
 	  @bottom-left {
 		   content: "Doe"; 
@@ -373,7 +395,7 @@
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.4.5 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Reddy, T., Patil, P., Ravindranath, R., and J. Uberti" />
@@ -690,7 +712,7 @@ User : Alice
       <td class="reference">
         <b id="iana-stun">[iana-stun]</b>
       </td>
-      <td class="top"><a>IANA, .</a>, "<a href="http://www.iana.org/assignments/stun-parameters/stun-pa rameters.xml">IANA: STUN Attributes</a>", April 2011.</td>
+      <td class="top"><a>IANA, </a>, "<a href="http://www.iana.org/assignments/stun-parameters/stun-pa rameters.xml">IANA: STUN Attributes</a>", April 2011.</td>
     </tr>
   </tbody>
 </table>
@@ -705,27 +727,9 @@ User : Alice
     </tr>
     <tr>
       <td class="reference">
-        <b id="I-D.ietf-rtcweb-use-cases-and-requirements">[I-D.ietf-rtcweb-use-cases-and-requirements]</b>
-      </td>
-      <td class="top"><a>Holmberg, C.</a>, <a>Hakansson, S.</a> and <a>G. Eriksson</a>, "<a href="http://tools.ietf.org/html/draft-ietf-rtcweb-use-cases-and-requirements-12">Web Real-Time Communication Use-cases and Requirements</a>", Internet-Draft draft-ietf-rtcweb-use-cases-and-requirements-12, October 2013.</td>
-    </tr>
-    <tr>
-      <td class="reference">
         <b id="I-D.reddy-behave-turn-auth">[I-D.reddy-behave-turn-auth]</b>
       </td>
       <td class="top"><a>Reddy, T.</a>, <a>R, R.</a>, <a>Perumal, M.</a> and <a>A. Yegin</a>, "<a href="http://tools.ietf.org/html/draft-reddy-behave-turn-auth-04">Problems with STUN Authentication for TURN</a>", Internet-Draft draft-reddy-behave-turn-auth-04, September 2013.</td>
-    </tr>
-    <tr>
-      <td class="reference">
-        <b id="RFC3261">[RFC3261]</b>
-      </td>
-      <td class="top"><a>Rosenberg, J.</a>, <a>Schulzrinne, H.</a>, <a>Camarillo, G.</a>, <a>Johnston, A.</a>, <a>Peterson, J.</a>, <a>Sparks, R.</a>, <a>Handley, M.</a> and <a>E. Schooler</a>, "<a href="http://tools.ietf.org/html/rfc3261">SIP: Session Initiation Protocol</a>", RFC 3261, June 2002.</td>
-    </tr>
-    <tr>
-      <td class="reference">
-        <b id="RFC5245">[RFC5245]</b>
-      </td>
-      <td class="top"><a>Rosenberg, J.</a>, "<a href="http://tools.ietf.org/html/rfc5245">Interactive Connectivity Establishment (ICE): A Protocol for Network Address Translator (NAT) Traversal for Offer/Answer Protocols</a>", RFC 5245, April 2010.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -754,8 +758,8 @@ User : Alice
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>Cessna Business Park, Varthur Hobli</span>
-<span>Sarjapur Marathalli Outer Ring Road</span>
+	  <span class="vcardline">Cessna Business Park, Varthur Hobli</span>
+<span class="vcardline">Sarjapur Marathalli Outer Ring Road</span>
 
 	  <span class="vcardline">
 		<span class="locality">Bangalore</span>,  
@@ -798,9 +802,9 @@ User : Alice
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>Cessna Business Park,</span>
-<span>Kadabeesanahalli Village, Varthur Hobli,</span>
-<span>Sarjapur-Marathahalli Outer Ring Road</span>
+	  <span class="vcardline">Cessna Business Park,</span>
+<span class="vcardline">Kadabeesanahalli Village, Varthur Hobli,</span>
+<span class="vcardline">Sarjapur-Marathahalli Outer Ring Road</span>
 
 	  <span class="vcardline">
 		<span class="locality">Bangalore</span>,  
@@ -822,8 +826,8 @@ User : Alice
 	</span>
 	<span class="org vcardline">Google</span>
 	<span class="adr">
-	  <span>747 6th Ave S</span>
-<span>Kirkland, WA</span>
+	  <span class="vcardline">747 6th Ave S</span>
+<span class="vcardline">Kirkland, WA</span>
 
 	  <span class="vcardline">
 		<span class="locality"></span> 

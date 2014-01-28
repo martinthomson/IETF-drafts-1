@@ -5,9 +5,9 @@
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                              A. Choukir
-Expires: July 31, 2014                                          C. Eckel
+Expires: July 12, 2014                                          C. Eckel
                                                      Cisco Systems, Inc.
-                                                        January 27, 2014
+                                                         January 8, 2014
 
 
     Protocol Independent Encoding for Signaling Flow Characteristics
@@ -49,11 +49,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 31, 2014.
+   This Internet-Draft will expire on July 12, 2014.
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 1]
+Eckert, et al.            Expires July 12, 2014                 [Page 1]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
@@ -76,14 +76,14 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
-     1.1.  Requirements Language . . . . . . . . . . . . . . . . . .   4
+     1.1.  Requirements Language . . . . . . . . . . . . . . . . . .   3
    2.  Encoding Overview . . . . . . . . . . . . . . . . . . . . . .   4
      2.1.  General Principles  . . . . . . . . . . . . . . . . . . .   4
      2.2.  Encoding Goals  . . . . . . . . . . . . . . . . . . . . .   4
        2.2.1.  Transport independence  . . . . . . . . . . . . . . .   5
        2.2.2.  Standard and Vendor Specific Namespaces . . . . . . .   5
        2.2.3.  Multiple Producers  . . . . . . . . . . . . . . . . .   5
-       2.2.4.  Upstream and Downstream . . . . . . . . . . . . . . .   6
+       2.2.4.  Upstream and Downstream . . . . . . . . . . . . . . .   5
        2.2.5.  Application to Network and Network to Application . .   6
        2.2.6.  Extensibility . . . . . . . . . . . . . . . . . . . .   6
        2.2.7.  Flexibility . . . . . . . . . . . . . . . . . . . . .   6
@@ -95,21 +95,21 @@ Table of Contents
        3.1.2.  Security Tokens . . . . . . . . . . . . . . . . . . .   8
        3.1.3.  Subsections . . . . . . . . . . . . . . . . . . . . .   9
        3.1.4.  Upstream and Downstream  Blocks . . . . . . . . . . .  10
-       3.1.5.  Complete Encoding Example . . . . . . . . . . . . . .  10
-       3.1.6.  Compact Encoding Example  . . . . . . . . . . . . . .  11
-     3.2.  Encoding Structures . . . . . . . . . . . . . . . . . . .  12
-     3.3.  ABNF  . . . . . . . . . . . . . . . . . . . . . . . . . .  15
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  17
-   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  17
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .  17
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .  17
-   Appendix A.  Encoding usage examples  . . . . . . . . . . . . . .  18
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  18
+       3.1.5.  Complete Encoding Example . . . . . . . . . . . . . .  11
+       3.1.6.  Compact Encoding Example  . . . . . . . . . . . . . .  13
+     3.2.  Encoding Structures . . . . . . . . . . . . . . . . . . .  13
+     3.3.  ABNF  . . . . . . . . . . . . . . . . . . . . . . . . . .  16
+   4.  Security Considerations . . . . . . . . . . . . . . . . . . .  18
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  18
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .  18
+     6.2.  Informative References  . . . . . . . . . . . . . . . . .  19
+   Appendix A.  Encoding usage examples  . . . . . . . . . . . . . .  19
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  19
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 2]
+Eckert, et al.            Expires July 12, 2014                 [Page 2]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
@@ -157,24 +157,18 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    segregates information coming from the application from information
    coming from the network.
 
-
-
-
-
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                 [Page 3]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
-
-
 1.1.  Requirements Language
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in [RFC2119].
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 3]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
 
 2.  Encoding Overview
 
@@ -217,21 +211,20 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    o  Ability to encode flow characteristics for both the flow itself
       (upstream) and the flow in the reverse direction (downstream).
 
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                 [Page 4]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
-
-
    o  Ability to communicate flow characteristics from an application to
       the network as well as from the network back to the application
 
    o  Extensibility while allowing for backwards compatibility
 
    o  Flexibility
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 4]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
 
    o  Support for integrity, authentication and authorization on a per
       producer basis
@@ -275,19 +268,20 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    proxies and gateways exist for other applications and could produce
    information in relation to the flow.
 
-
-
-Eckert, et al.            Expires July 31, 2014                 [Page 5]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
-
-
 2.2.4.  Upstream and Downstream
 
    As explained in the introduction, a flow is unidirectional by
    definition, but some use cases and signaling protocols require or
    allow to signal both upstream and downstream flow characteristics.
    For example, in the context of a home user that needs to prioritize
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 5]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
+
    its upstream and downstream flow an end-to-edge protocol can expose
    flow characteristics to the edge ISP node controlling its access link
    for both its upstream and downstream flow.  This allows the edge node
@@ -330,17 +324,19 @@ Internet-Draft           Flow Metadata Encoding             January 2014
 
    Treatment applied on the basis of metadata may involve the
    consumption of scarce network resources and therefore contribute to
-
-
-
-Eckert, et al.            Expires July 31, 2014                 [Page 6]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
-
-
    their exhaustion.  Consequently, integrity, authentication, and
    authorization are all important aspects of any security mechanism
    used to secure the metadata.
+
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 6]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
 
    This specification defines an optional security element container;
    however, the actual security mechanism to be used is outside the
@@ -389,34 +385,38 @@ Internet-Draft           Flow Metadata Encoding             January 2014
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 7]
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 7]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
 
-                    +--------------------------------+
-                    |      Application Section       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Network-1 Marker       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |         Network-1 Section      |
-                    |                                |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Network-2 Marker       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |         Network-2 Section      |
-                    |                                |
-                    |                                |
-                    |                                |
-                    +--------------------------------+
+   +--------------------------------+
+   |      Application Section       |
+   +--------------------------------+
+   +--------------------------------+
+   |         Network-1 Marker       |
+   +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |         Network-1 Section      |
+   |                                |
+   +--------------------------------+
+   +--------------------------------+
+   |         Network-2 Marker       |
+   +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |         Network-2 Section      |
+   |                                |
+   |                                |
+   |                                |
+   +--------------------------------+
 
                         Figure 1: Encoding section
 
@@ -427,46 +427,61 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    the following example, a separate security token is added to each
    section contained in the previous example.
 
-                    +--------------------------------+
-                    |         Security Token         |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |      Application Section       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Network-1 Marker       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Security Token N-1     |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |                                |
-                    |                                |
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 8]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 8]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
 
-                    |         Network-1 Section      |
-                    |                                |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Network-2 Marker       |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Security Token N-2     |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |         Network-2 Section      |
-                    |                                |
-                    |                                |
-                    |                                |
-                    +--------------------------------+
+   +--------------------------------+
+   |         Security Token         |
+   +--------------------------------+
+   +--------------------------------+
+   |      Application Section       |
+   +--------------------------------+
+   +--------------------------------+
+   |         Network-1 Marker       |
+   +--------------------------------+
+   +--------------------------------+
+   |         Security Token N-1     |
+   +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |         Network-1 Section      |
+   |                                |
+   +--------------------------------+
+   +--------------------------------+
+   |         Network-2 Marker       |
+   +--------------------------------+
+   +--------------------------------+
+   |         Security Token N-2     |
+   +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |         Network-2 Section      |
+   |                                |
+   |                                |
+   |                                |
+   +--------------------------------+
 
                     Figure 2: Encoding security tokens
 
@@ -480,42 +495,45 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    subsection does not use the vendor marker and therefore must come
    first if present.  Figure 3 shows a sample section content.
 
-                    +--------------------------------+
-                    |                                |
-                    |                                |
-                    |      Standard Subsection       |
-                    |                                |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |         Vendor-1 Marker        |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |       Vendor-1 Subsection      |
-                    |                                |
-                    |                                |
-                    |                                |
-                    |                                |
-                    |                                |
-                    +--------------------------------+
-                    +--------------------------------+
 
 
 
-Eckert, et al.            Expires July 31, 2014                 [Page 9]
+
+
+
+Eckert, et al.            Expires July 12, 2014                 [Page 9]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
 
-                    |         Vendor-2 Marker        |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |       Vendor-2 Subsection      |
-                    |                                |
-                    |                                |
-                    |                                |
-                    |                                |
-                    |                                |
-                    +--------------------------------+
+   +--------------------------------+
+   |                                |
+   |                                |
+   |      Standard Subsection       |
+   |                                |
+   +--------------------------------+
+   +--------------------------------+
+   |         Vendor-1 Marker        |
+   +--------------------------------+
+   +--------------------------------+
+   |       Vendor-1 Subsection      |
+   |                                |
+   |                                |
+   |                                |
+   |                                |
+   |                                |
+   +--------------------------------+
+   +--------------------------------+
+   |         Vendor-2 Marker        |
+   +--------------------------------+
+   +--------------------------------+
+   |       Vendor-2 Subsection      |
+   |                                |
+   |                                |
+   |                                |
+   |                                |
+   |                                |
+   +--------------------------------+
 
                       Figure 3: Encoding subsections
 
@@ -528,18 +546,34 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    information element.  If the upstream and downstream blocks are both
    present, the upstream block MUST come first.
 
-                    +--------------------------------+
-                    |          Upstream block        |
-                    | +------------+  +------------+ |
-                    | |  MD tag    |  |  MD tag    | |
-                    | +------------+  +------------+ |
-                    +--------------------------------+
-                    +--------------------------------+
-                    |        Downstream block        |
-                    | +------------+  +------------+ |
-                    | |  MD tag    |  |  MD tag    | |
-                    | +------------+  +------------+ |
-                    +--------------------------------+
+
+
+
+
+
+
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 10]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
+
+   +--------------------------------+
+   |          Upstream block        |
+   | +------------+  +------------+ |
+   | |  MD tag    |  |  MD tag    | |
+   | +------------+  +------------+ |
+   +--------------------------------+
+   +--------------------------------+
+   |        Downstream block        |
+   | +------------+  +------------+ |
+   | |  MD tag    |  |  MD tag    | |
+   | +------------+  +------------+ |
+   +--------------------------------+
 
              Figure 4: Encoding upstream and downstream blocks
 
@@ -552,71 +586,95 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    [I-D.eckert-intarea-flow-metadata-framework] for a full coverage of
    the information model and how the registries are handled.
 
-                 +--------------------------------+
-                 |         Security Token         |
 
 
 
-Eckert, et al.            Expires July 31, 2014                [Page 10]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 11]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
 
-                 +--------------------------------+
-                 +--------------------------------+ ^  ^
-                 |          Upstream block        | |  |A
-                 | +------------+  +------------+ | |  |P
-                 | |  MD tag    |  |  MD tag    | | |S |P
-                 | +------------+  +------------+ | |T |L
-                 +--------------------------------+ |D |I
-                 +--------------------------------+ |  |C
-                 |         Downstream block       | |  |A
-                 | +------------+                 | |  |T
-                 | |  MD tag    |                 | |  |I
-                 | +------------+                 | |  |O
-                 +--------------------------------+ v  |N
-                 +--------------------------------+    |
-                 |     Vendor section marker      |    |S
-                 +--------------------------------+    |E
-                 +--------------------------------+ ^  |C
-                 |          Upstream block        | |V |T
-                 | +------------+  +------------+ | |N |I
-                 | |  MD tag    |  |  MD tag    | | |D |O
-                 | +------------+  +------------+ | |  |N
-                 +--------------------------------+ v  v
-                 +--------------------------------+    ^
-                 |     Network section marker     |    |
-                 +--------------------------------+    |
-                 +--------------------------------+    |N
-                 |         Security Token         |    |E
-                 +--------------------------------+    |T
-                 +--------------------------------+    |W
-                 |         Downstream block       |    |O
-                 | +------------+                 |    |R
-                 | |  MD tag    |                 |    |K
-                 | +------------+                 |    |
-                 +--------------------------------+    |
-                 +--------------------------------+    |S
-                 |     Vendor section marker      |    |E
-                 +--------------------------------+    |C
-                 +--------------------------------+    |T
-                 |         Downstream block       |    |I
-                 | +------------+                 |    |O
-                 | |  MD tag    |                 |    |N
-                 | +------------+                 |    |
-                 +--------------------------------+    v
+   +--------------------------------+
+   |         Security Token         |
+   +--------------------------------+
+   +--------------------------------+ ^  ^
+   |          Upstream block        | |  |A
+   | +------------+  +------------+ | |  |P
+   | |  MD tag    |  |  MD tag    | | |S |P
+   | +------------+  +------------+ | |T |L
+   +--------------------------------+ |D |I
+   +--------------------------------+ |  |C
+   |         Downstream block       | |  |A
+   | +------------+                 | |  |T
+   | |  MD tag    |                 | |  |I
+   | +------------+                 | |  |O
+   +--------------------------------+ v  |N
+   +--------------------------------+    |
+   |     Vendor section marker      |    |S
+   +--------------------------------+    |E
+   +--------------------------------+ ^  |C
+   |          Upstream block        | |V |T
+   | +------------+  +------------+ | |N |I
+   | |  MD tag    |  |  MD tag    | | |D |O
+   | +------------+  +------------+ | |  |N
+   +--------------------------------+ v  v
+   +--------------------------------+    ^
+   |     Network section marker     |    |
+   +--------------------------------+    |
+   +--------------------------------+    |N
+   |         Security Token         |    |E
+   +--------------------------------+    |T
+   +--------------------------------+    |W
+   |         Downstream block       |    |O
+   | +------------+                 |    |R
+   | |  MD tag    |                 |    |K
+   | +------------+                 |    |
+   +--------------------------------+    |
+   +--------------------------------+    |S
+   |     Vendor section marker      |    |E
+   +--------------------------------+    |C
+   +--------------------------------+    |T
+   |         Downstream block       |    |I
+   | +------------+                 |    |O
+   | |  MD tag    |                 |    |N
+   | +------------+                 |    |
+   +--------------------------------+    v
 
                     Figure 5: Complete encoding example
 
-3.1.6.  Compact Encoding Example
 
 
 
-
-Eckert, et al.            Expires July 31, 2014                [Page 11]
+Eckert, et al.            Expires July 12, 2014                [Page 12]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
+
+3.1.6.  Compact Encoding Example
 
    Figure 6 shows an encoding example for flow metadata standard
    characteristics produced by an application for the upstream (same as
@@ -626,12 +684,12 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    characteristics.  This example also assumes a use case where no
    security token is needed.  Further examples are given in Appendix A.
 
-                    +--------------------------------+
-                    |          Upstream block        |
-                    | +------------+  +------------+ |
-                    | |  MD tag    |  |  MD tag    | |
-                    | +------------+  +------------+ |
-                    +--------------------------------+
+   +--------------------------------+
+   |          Upstream block        |
+   | +------------+  +------------+ |
+   | |  MD tag    |  |  MD tag    | |
+   | +------------+  +------------+ |
+   +--------------------------------+
 
                     Figure 6: Compact encoding example
 
@@ -664,15 +722,16 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    security token.  The value of the security token TLV is broken down
    in two parts, a security-scheme indicating the security method used
    and the security-value holding the security payload specific to the
-   security scheme.  The definition of the different security schemes
-   and their payloads are left to a separate document.
 
 
 
-Eckert, et al.            Expires July 31, 2014                [Page 12]
+Eckert, et al.            Expires July 12, 2014                [Page 13]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
+
+   security scheme.  The definition of the different security schemes
+   and their payloads are left to a separate document.
 
    The value of the upstream and downstream block TLVs are subdivided in
    metadata tags.  Each tag is itself a TLV specifying a flow
@@ -719,16 +778,16 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    Private Enterprise Number (PEN) allocated by IANA.  The vendor marker
    does not include the downstream and the upstream block but rather
    sets the context to interpret them.  Multiple vendor sub-sections
-   within the same application or network section are allowed as long as
-   they pertain to different vendors.
 
 
 
-
-Eckert, et al.            Expires July 31, 2014                [Page 13]
+Eckert, et al.            Expires July 12, 2014                [Page 14]
 
 Internet-Draft           Flow Metadata Encoding             January 2014
 
+
+   within the same application or network section are allowed as long as
+   they pertain to different vendors.
 
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -770,6 +829,19 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    to merge information from different network producers and retain only
    the preferred one.
 
+
+
+
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 15]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
+
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ^
@@ -778,14 +850,6 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    |                          Precedence                           | |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |
    |        Security-type          |             Length            | |P
-
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 14]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
-
-
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ |R
    |       Security-scheme         |                               : |O
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+                               : |D
@@ -827,6 +891,13 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    Producer-block = [Security-tlv] (Standard-block / 1*Vendor-block /
    (Standard-block 1*Vendor-block))
 
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 16]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
+
    Vendor-blocks = PEN-tlv Flow-block
 
    Standard-block = Flow-block; We do not require the PEN-tlv
@@ -834,14 +905,6 @@ Internet-Draft           Flow Metadata Encoding             January 2014
 
    Flow-block = Upstream-tlv / Downstream-tlv /
    (Upstream-tlv Downstream-tlv)
-
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 15]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
-
-
    ; If both present, upstream must come first
 
    PEN-tlv = PEN-type Length PEN-id
@@ -883,20 +946,20 @@ Internet-Draft           Flow Metadata Encoding             January 2014
 
    Tag-type = 2(OCTET); Value according to IANA/Vendor-specific registry
 
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 17]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
+
    Producer-type = Zero %x01; The first foreseen producer is MD-NETWORK
    ; to cover for DPI engines, gateways and others
    ; Further values may be allocated later
 
 
    Security-type = Zero %x00 ;
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 16]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
-
 
    Upstream-type = Zero %x01 ;
 
@@ -935,6 +998,18 @@ Internet-Draft           Flow Metadata Encoding             January 2014
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
+
+
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 18]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
+
 6.2.  Informative References
 
    [I-D.eckert-intarea-flow-metadata-framework]
@@ -944,16 +1019,6 @@ Internet-Draft           Flow Metadata Encoding             January 2014
               metadata-framework-02 (work in progress), October 2013.
 
    [I-D.martinsen-mmusic-malice]
-
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 17]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
-
-
               Penno, R., Martinsen, P., Wing, D., and A. Zamfir, "Meta-
               data Attribute signaLling with ICE", draft-martinsen-
               mmusic-malice-00 (work in progress), July 2013.
@@ -989,25 +1054,24 @@ Authors' Addresses
    Email: ancaz@cisco.com
 
 
+
+
+
+
+
+
+
+Eckert, et al.            Expires July 12, 2014                [Page 19]
+
+Internet-Draft           Flow Metadata Encoding             January 2014
+
+
    Amine Choukir
    Cisco Systems, Inc.
    Lausanne
    CH
 
    Email: amchouki@cisco.com
-
-
-
-
-
-
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 18]
-
-Internet-Draft           Flow Metadata Encoding             January 2014
 
 
    Charles Eckel
@@ -1053,12 +1117,4 @@ Internet-Draft           Flow Metadata Encoding             January 2014
 
 
 
-
-
-
-
-
-
-
-
-Eckert, et al.            Expires July 31, 2014                [Page 19]
+Eckert, et al.            Expires July 12, 2014                [Page 20]
