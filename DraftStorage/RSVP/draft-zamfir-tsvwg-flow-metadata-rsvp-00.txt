@@ -66,12 +66,13 @@ Table of Contents
      2.1.  FLOW_METADATA Class . . . . . . . . . . . . . . . . . . .   3
        2.1.1.  Basic IPFIX FLOW_METADATA Object  . . . . . . . . . .   3
        2.1.2.  Enhanced Protocol Independent FLOW_METADATA Object  .   3
-     2.2.  Semantic of carrying the Metadata Object  . . . . . . . .   3
+     2.2.  Semantic of carrying the Metadata Object  . . . . . . . .   4
      2.3.  Processing by a Non-Metadata Capable RSVP Router  . . . .   4
      2.4.  Processing by a Metadata Capable RSVP Router  . . . . . .   4
-   3.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
-     3.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
-     3.2.  Informative References  . . . . . . . . . . . . . . . . .   5
+   3.  Security considerations . . . . . . . . . . . . . . . . . . .   5
+   4.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     4.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
+     4.2.  Informative References  . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
@@ -104,8 +105,7 @@ Table of Contents
    with SESSION Class = 1 and SENDER_TEMPLATE Class = 11).  The Metadata
    object SHOULD appear only once in the message.
 
-   The object definition is given in Section 2.1 while the details of
-   processing are covered in Section 2.2
+
 
 
 
@@ -113,6 +113,9 @@ Eckert, et al.           Expires January 7, 2014                [Page 2]
 
 Internet-Draft                  FMD-RSVP                       July 2013
 
+
+   The object definition is given in Section 2.1 while the details of
+   processing are covered in Section 2.2
 
 2.1.  FLOW_METADATA Class
 
@@ -155,13 +158,10 @@ Internet-Draft                  FMD-RSVP                       July 2013
       [I-D.eckert-intarea-flow-metadata-framework] and
       [I-D.choukir-tsvwg-flow-metadata-encoding].
 
-2.2.  Semantic of carrying the Metadata Object
 
-   The Metadata Object included in the Path message carries attributes
-   from the sender of the flow towards the receiver.  In some cases,
-   e.g.  if the sender does not support the generation and signaling of
-   Metadata attribute, these attributes may be inserted by a proxy along
-   the path of the flow.  Metadata RSVP nodes on path may modify the
+
+
+
 
 
 
@@ -170,6 +170,13 @@ Eckert, et al.           Expires January 7, 2014                [Page 3]
 Internet-Draft                  FMD-RSVP                       July 2013
 
 
+2.2.  Semantic of carrying the Metadata Object
+
+   The Metadata Object included in the Path message carries attributes
+   from the sender of the flow towards the receiver.  In some cases,
+   e.g.  if the sender does not support the generation and signaling of
+   Metadata attribute, these attributes may be inserted by a proxy along
+   the path of the flow.  Metadata RSVP nodes on path may modify the
    metadata attributes for purpose of influencing policy toward the
    receiver.
 
@@ -210,14 +217,7 @@ Internet-Draft                  FMD-RSVP                       July 2013
    implementation determines the content of the Metadata object is
    outside the scope of this document.
 
-   Intermediate nodes that support this specification, decode the Flow
-   Metadata information as indicated by the C-Type field only when
-   received in Path message.  Depending on the attributes, local
-   configuration and policies, the node may take some actions.  The
-   Metadata attribute semantics are described in
-   [I-D.eckert-intarea-flow-metadata-framework].  The received Flow
-   Metadata object is stored against the Path state.  When a subsequent
-   Path message is received with a modified Metadata object, the
+
 
 
 
@@ -226,6 +226,14 @@ Eckert, et al.           Expires January 7, 2014                [Page 4]
 Internet-Draft                  FMD-RSVP                       July 2013
 
 
+   Intermediate nodes that support this specification, decode the Flow
+   Metadata information as indicated by the C-Type field only when
+   received in Path message.  Depending on the attributes, local
+   configuration and policies, the node may take some actions.  The
+   Metadata attribute semantics are described in
+   [I-D.eckert-intarea-flow-metadata-framework].  The received Flow
+   Metadata object is stored against the Path state.  When a subsequent
+   Path message is received with a modified Metadata object, the
    intermediate node determines the attributes that have been removed,
    modified and/or added by comparing the old and new objects, and takes
    appropriate actions.
@@ -245,31 +253,23 @@ Internet-Draft                  FMD-RSVP                       July 2013
    Object SHOULD store the object against the state and forward it
    unexamined and unmodified.
 
-3.  References
+3.  Security considerations
 
-3.1.  Normative References
+   RSVP message security is described in [RFC2747]and provides message
+   integrity and host-based authentication using the INTEGRITY object.
+   In addition, user-based authentication is available as described in
+   [RFC3182] using the AUTH_DATA policy element.  Confidentiality is not
+   provided by [RFC2747].  There are some environments (e.g. enterprise,
+   single administrative domain scope) where signaling metadata in clear
+   is acceptable.  The legacy encoding should be limited to these
+   environments.  When leaving such environments and forwarding to
+   untrusted or unsecured networks, edge egress nodes should remove the
+   metadata that is confidential in nature.  If metadata confidentiality
+   is required, IPSEC encapsulation should be considered.  RSVP,
+   however, uses special processing of signaling messages that
+   complicates IPsec protection.  More details can be found in [RFC4230]
+   section 5.6.
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, March 1997.
-
-   [RFC2205]  Braden, B., Zhang, L., Berson, S., Herzog, S., and S.
-              Jamin, "Resource ReSerVation Protocol (RSVP) -- Version 1
-              Functional Specification", RFC 2205, September 1997.
-
-   [RFC2210]  Wroclawski, J., "The Use of RSVP with IETF Integrated
-              Services", RFC 2210, September 1997.
-
-   [RFC5101]  Claise, B., "Specification of the IP Flow Information
-              Export (IPFIX) Protocol for the Exchange of IP Traffic
-              Flow Information", RFC 5101, January 2008.
-
-3.2.  Informative References
-
-   [I-D.choukir-tsvwg-flow-metadata-encoding]
-              Eckert, T., Zamfir, A., Choukir, A., and C. Eckel,
-              "Protocol Independent Encoding for Signaling Flow
-              Characteristics", draft-choukir-tsvwg-flow-metadata-
-              encoding-01 (work in progress), July 2013.
 
 
 
@@ -282,6 +282,42 @@ Eckert, et al.           Expires January 7, 2014                [Page 5]
 Internet-Draft                  FMD-RSVP                       July 2013
 
 
+4.  References
+
+4.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC2205]  Braden, B., Zhang, L., Berson, S., Herzog, S., and S.
+              Jamin, "Resource ReSerVation Protocol (RSVP) -- Version 1
+              Functional Specification", RFC 2205, September 1997.
+
+   [RFC2210]  Wroclawski, J., "The Use of RSVP with IETF Integrated
+              Services", RFC 2210, September 1997.
+
+   [RFC2747]  Baker, F., Lindell, B., and M. Talwar, "RSVP Cryptographic
+              Authentication", RFC 2747, January 2000.
+
+   [RFC3182]  Yadav, S., Yavatkar, R., Pabbati, R., Ford, P., Moore, T.,
+              Herzog, S., and R. Hess, "Identity Representation for
+              RSVP", RFC 3182, October 2001.
+
+   [RFC4230]  Tschofenig, H. and R. Graveman, "RSVP Security
+              Properties", RFC 4230, December 2005.
+
+   [RFC5101]  Claise, B., "Specification of the IP Flow Information
+              Export (IPFIX) Protocol for the Exchange of IP Traffic
+              Flow Information", RFC 5101, January 2008.
+
+4.2.  Informative References
+
+   [I-D.choukir-tsvwg-flow-metadata-encoding]
+              Eckert, T., Zamfir, A., Choukir, A., and C. Eckel,
+              "Protocol Independent Encoding for Signaling Flow
+              Characteristics", draft-choukir-tsvwg-flow-metadata-
+              encoding-01 (work in progress), July 2013.
+
    [I-D.eckert-intarea-flow-metadata-framework]
               Eckert, T., Penno, R., Choukir, A., and C. Eckel, "A
               Framework for Signaling Flow Characteristics between
@@ -289,6 +325,18 @@ Internet-Draft                  FMD-RSVP                       July 2013
               metadata-framework-02 (work in progress), October 2013.
 
 Authors' Addresses
+
+
+
+
+
+
+
+
+Eckert, et al.           Expires January 7, 2014                [Page 6]
+
+Internet-Draft                  FMD-RSVP                       July 2013
+
 
    Toerless Eckert (editor)
    Cisco Systems, Inc.
@@ -333,4 +381,12 @@ Authors' Addresses
 
 
 
-Eckert, et al.           Expires January 7, 2014                [Page 6]
+
+
+
+
+
+
+
+
+Eckert, et al.           Expires January 7, 2014                [Page 7]

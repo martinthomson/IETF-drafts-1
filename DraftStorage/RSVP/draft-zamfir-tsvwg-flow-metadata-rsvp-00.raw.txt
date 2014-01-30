@@ -60,9 +60,10 @@ Table of Contents
      2.2.  Semantic of carrying the Metadata Object
      2.3.  Processing by a Non-Metadata Capable RSVP Router
      2.4.  Processing by a Metadata Capable RSVP Router
-   3.  References
-     3.1.  Normative References
-     3.2.  Informative References
+   3.  Security considerations
+   4.  References
+     4.1.  Normative References
+     4.2.  Informative References
    Authors' Addresses
 
 1.  Introduction
@@ -213,9 +214,26 @@ Table of Contents
    Object SHOULD store the object against the state and forward it
    unexamined and unmodified.
 
-3.  References
+3.  Security considerations
 
-3.1.  Normative References
+   RSVP message security is described in [RFC2747]and provides message
+   integrity and host-based authentication using the INTEGRITY object.
+   In addition, user-based authentication is available as described in
+   [RFC3182] using the AUTH_DATA policy element.  Confidentiality is not
+   provided by [RFC2747].  There are some environments (e.g. enterprise,
+   single administrative domain scope) where signaling metadata in clear
+   is acceptable.  The legacy encoding should be limited to these
+   environments.  When leaving such environments and forwarding to
+   untrusted or unsecured networks, edge egress nodes should remove the
+   metadata that is confidential in nature.  If metadata confidentiality
+   is required, IPSEC encapsulation should be considered.  RSVP,
+   however, uses special processing of signaling messages that
+   complicates IPsec protection.  More details can be found in [RFC4230]
+   section 5.6.
+
+4.  References
+
+4.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -227,11 +245,21 @@ Table of Contents
    [RFC2210]  Wroclawski, J., "The Use of RSVP with IETF Integrated
               Services", RFC 2210, September 1997.
 
+   [RFC2747]  Baker, F., Lindell, B., and M. Talwar, "RSVP Cryptographic
+              Authentication", RFC 2747, January 2000.
+
+   [RFC3182]  Yadav, S., Yavatkar, R., Pabbati, R., Ford, P., Moore, T.,
+              Herzog, S., and R. Hess, "Identity Representation for
+              RSVP", RFC 3182, October 2001.
+
+   [RFC4230]  Tschofenig, H. and R. Graveman, "RSVP Security
+              Properties", RFC 4230, December 2005.
+
    [RFC5101]  Claise, B., "Specification of the IP Flow Information
               Export (IPFIX) Protocol for the Exchange of IP Traffic
               Flow Information", RFC 5101, January 2008.
 
-3.2.  Informative References
+4.2.  Informative References
 
    [I-D.choukir-tsvwg-flow-metadata-encoding]
               Eckert, T., Zamfir, A., Choukir, A., and C. Eckel,

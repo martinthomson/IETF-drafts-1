@@ -383,9 +383,10 @@
 <link href="#rfc.section.2.2" rel="Chapter" title="2.2 Semantic of carrying the Metadata Object"/>
 <link href="#rfc.section.2.3" rel="Chapter" title="2.3 Processing by a Non-Metadata Capable RSVP Router"/>
 <link href="#rfc.section.2.4" rel="Chapter" title="2.4 Processing by a Metadata Capable RSVP Router"/>
-<link href="#rfc.references" rel="Chapter" title="3 References"/>
-<link href="#rfc.references.1" rel="Chapter" title="3.1 Normative References"/>
-<link href="#rfc.references.2" rel="Chapter" title="3.2 Informative References"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Security considerations "/>
+<link href="#rfc.references" rel="Chapter" title="4 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="4.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="4.2 Informative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -464,9 +465,10 @@
 <li>2.2.   <a href="#rfc.section.2.2">Semantic of carrying the Metadata Object</a></li>
 <li>2.3.   <a href="#rfc.section.2.3">Processing by a Non-Metadata Capable RSVP Router</a></li>
 <li>2.4.   <a href="#rfc.section.2.4">Processing by a Metadata Capable RSVP Router</a></li>
-<li>3.   <a href="#rfc.references">References</a></li>
-<li>3.1.   <a href="#rfc.references.1">Normative References</a></li>
-<li>3.2.   <a href="#rfc.references.2">Informative References</a></li>
+<li>3.   <a href="#rfc.section.3">Security considerations </a></li>
+<li>4.   <a href="#rfc.references">References</a></li>
+<li>4.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>4.2.   <a href="#rfc.references.2">Informative References</a></li>
 <li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
@@ -516,8 +518,10 @@
 <p id="rfc.section.2.4.p.2">Intermediate nodes that support this specification, decode the Flow Metadata information as indicated by the C-Type field only when received in Path message. Depending on the attributes, local configuration and policies, the node may take some actions. The Metadata attribute semantics are described in <a href="#I-D.eckert-intarea-flow-metadata-framework">[I-D.eckert-intarea-flow-metadata-framework]</a>. The received Flow Metadata object is stored against the Path state. When a subsequent Path message is received with a modified Metadata object, the intermediate node determines the attributes that have been removed, modified and/or added by comparing the old and new objects, and takes appropriate actions.</p>
 <p id="rfc.section.2.4.p.3">As a result of these actions, an intermediate node may add new attributes to the Metadata object received in the Path message and signal them downstream. It can also modify some of the attributes present in the Flow Metadata object. RSVP does not have any transport protocol specific restrictions and the exact set of attributes that can be inserted and modified by intermediate nodes is described in <a href="#I-D.eckert-intarea-flow-metadata-framework">[I-D.eckert-intarea-flow-metadata-framework]</a>. Depending on local policies, an intermediate node may also remove some of the attributes received in the Metadata object of a Path message before forwarding downstream.</p>
 <p id="rfc.section.2.4.p.4">An intermediate node that receives a Resv message with a Metadata Object SHOULD store the object against the state and forward it unexamined and unmodified.</p>
-<h1 id="rfc.references"><a href="#rfc.references">3.</a> References</h1>
-<h1 id="rfc.references.1"><a href="#rfc.references.1">3.1.</a> Normative References</h1>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Security considerations </h1>
+<p id="rfc.section.3.p.1">RSVP message security is described in <a href="#RFC2747">[RFC2747]</a>and provides message integrity and host-based authentication using the INTEGRITY object. In addition, user-based authentication is available as described in <a href="#RFC3182">[RFC3182]</a> using the AUTH_DATA policy element. Confidentiality is not provided by <a href="#RFC2747">[RFC2747]</a>.  There are some environments (e.g. enterprise, single administrative domain scope) where signaling metadata in clear is acceptable. The legacy encoding should be limited to these environments. When leaving such environments and forwarding to untrusted or unsecured networks, edge egress nodes should remove the metadata that is confidential in nature. If metadata confidentiality is required, IPSEC encapsulation should be considered. RSVP, however, uses special processing of signaling messages that complicates IPsec protection. More details can be found in <a href="#RFC4230">[RFC4230]</a> section 5.6.</p>
+<h1 id="rfc.references"><a href="#rfc.references">4.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">4.1.</a> Normative References</h1>
 <table>
   <tbody>
     <tr>
@@ -540,13 +544,31 @@
     </tr>
     <tr>
       <td class="reference">
+        <b id="RFC2747">[RFC2747]</b>
+      </td>
+      <td class="top"><a href="mailto:fred@cisco.com" title="Cisco Systems">Baker, F.</a>, <a href="mailto:lindell@ISI.EDU" title="USC Information Sciences Institute">Lindell, B.</a> and <a href="mailto:mohitt@microsoft.com" title="Microsoft Corporation">M. Talwar</a>, "<a href="http://tools.ietf.org/html/rfc2747">RSVP Cryptographic Authentication</a>", RFC 2747, January 2000.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC3182">[RFC3182]</b>
+      </td>
+      <td class="top"><a>Yadav, S.</a>, <a>Yavatkar, R.</a>, <a>Pabbati, R.</a>, <a>Ford, P.</a>, <a>Moore, T.</a>, <a>Herzog, S.</a> and <a>R. Hess</a>, "<a href="http://tools.ietf.org/html/rfc3182">Identity Representation for RSVP</a>", RFC 3182, October 2001.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4230">[RFC4230]</b>
+      </td>
+      <td class="top"><a>Tschofenig, H.</a> and <a>R. Graveman</a>, "<a href="http://tools.ietf.org/html/rfc4230">RSVP Security Properties</a>", RFC 4230, December 2005.</td>
+    </tr>
+    <tr>
+      <td class="reference">
         <b id="RFC5101">[RFC5101]</b>
       </td>
       <td class="top"><a>Claise, B.</a>, "<a href="http://tools.ietf.org/html/rfc5101">Specification of the IP Flow Information Export (IPFIX) Protocol for the Exchange of IP Traffic Flow Information</a>", RFC 5101, January 2008.</td>
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.references.2"><a href="#rfc.references.2">3.2.</a> Informative References</h1>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">4.2.</a> Informative References</h1>
 <table>
   <tbody>
     <tr>
