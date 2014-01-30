@@ -10,7 +10,7 @@ Expires: August 3, 2014                                            Cisco
 
 
                     Happy Eyeballs Extension for ICE
-                draft-reddy-mmusic-ice-happy-eyeballs-05
+                draft-reddy-mmusic-ice-happy-eyeballs-06
 
 Abstract
 
