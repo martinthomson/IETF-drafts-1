@@ -5,8 +5,8 @@
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: August 3, 2014                                            Cisco
-                                                        January 30, 2014
+Expires: August 4, 2014                                            Cisco
+                                                        January 31, 2014
 
 
                     Happy Eyeballs Extension for ICE
@@ -14,10 +14,9 @@ Expires: August 3, 2014                                            Cisco
 
 Abstract
 
-   This document provides guidelines on how to make ICE [RFC5245]
-   conclude faster in IPv4/IPv6 dual-stack scenarios where broken paths
-   exist.  This will lead to more sustained IPv6 deployment as users
-   will no longer have an incentive to disable IPv6.
+   This document provides guidelines on how to make Interactive
+   Connectivity Establishment (ICE) conclude faster in IPv4/IPv6 dual-
+   stack scenarios where broken paths exist.
 
 Status of This Memo
 
@@ -34,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 3, 2014.
+   This Internet-Draft will expire on August 4, 2014.
 
 Copyright Notice
 
@@ -53,7 +52,8 @@ Copyright Notice
 
 
 
-Reddy, et al.            Expires August 3, 2014                 [Page 1]
+
+Reddy, et al.            Expires August 4, 2014                 [Page 1]
 
 Internet-Draft           Happy Eyeballs for ICE             January 2014
 
@@ -62,12 +62,13 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Notational Conventions  . . . . . . . . . . . . . . . . . . .   2
-   3.  Improving ICE Dual-stack Fairness . . . . . . . . . . . . . .   2
+   3.  Improving ICE Dual-stack Fairness . . . . . . . . . . . . . .   3
    4.  Compatibility . . . . . . . . . . . . . . . . . . . . . . . .   3
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
-   6.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
-   7.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   4
-   8.  Normative References  . . . . . . . . . . . . . . . . . . . .   4
+   5.  Example Algorithm for Choosing the Local       Preference . .   4
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
+   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   5
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
 
 1.  Introduction
@@ -101,19 +102,23 @@ Table of Contents
 
    This document uses terminology defined in [RFC5245].
 
+
+
+
+
+
+
+
+Reddy, et al.            Expires August 4, 2014                 [Page 2]
+
+Internet-Draft           Happy Eyeballs for ICE             January 2014
+
+
 3.  Improving ICE Dual-stack Fairness
 
    Candidates SHOULD be prioritized such that a long sequence of
    candidates belonging to the same address family will be intermingled
    with candidates from an alternate IP family.  For example, promoting
-
-
-
-Reddy, et al.            Expires August 3, 2014                 [Page 2]
-
-Internet-Draft           Happy Eyeballs for ICE             January 2014
-
-
    IPv4 candidates in the presence of many IPv6 candidates such that an
    IPv4 address candidate is always present after a small sequence of
    IPv6 candidates, i.e., reordering candidates such that both IPv6 and
@@ -125,9 +130,9 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
    ensure that the resulting check lists have a fair intermingled mix of
    IPv4 and IPv6 address families.  Modifying the check list directly
    can lead to uncoordinated local and remote check lists that result in
-   ICE taking longer to complete.  The best approach is to modify the
-   formula for calculating the candidate priority value described in ICE
-   [RFC5245] section 4.1.2.1.
+   ICE taking longer to complete or in the worst case scenario fail.
+   The best approach is to modify the formula for calculating the
+   candidate priority value described in ICE [RFC5245] section 4.1.2.1.
 
 4.  Compatibility
 
@@ -148,8 +153,8 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
    RFLX, RELAY).
 
    The local and remote agent can have different algorithms for choosing
-   the local preference value without any impact on coordination between
-   the local and remote check list.
+   the local preference value without impacting the synchronization
+   between the local and remote check list.
 
    The check list is made up by candidate pairs.  A candidate pair is
    two candidates paired up and given a candidate pair priority as
@@ -158,17 +163,16 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
 
         pair priority = 2^32*MIN(G,D) + 2*MAX(G,D) + (G>D?1:0)
 
-   Where G is the candidate provided by the controlling agent and D the
-   priority provided by the controlled agent.  This ensures that the
-   local and remote check lists are coordinated.
 
 
-
-
-Reddy, et al.            Expires August 3, 2014                 [Page 3]
+Reddy, et al.            Expires August 4, 2014                 [Page 3]
 
 Internet-Draft           Happy Eyeballs for ICE             January 2014
 
+
+   Where G is the candidate priority provided by the controlling agent
+   and D the candidate priority provided by the controlled agent.  This
+   ensures that the local and remote check lists are coordinated.
 
    Even if the two agents have different algorithms for choosing the
    candidate priority value to get an intermingled set of IPv4 and IPv6
@@ -185,24 +189,64 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
    checklist is formed and the pair priority formula is used to
    calculate the pair priority.
 
-5.  IANA Considerations
+5.  Example Algorithm for Choosing the Local Preference
+
+   The value space for the local preference is from 0 to 65535
+   inclusive.  This value space can be divided up in chunks for each IP
+   address family.
+
+   An IPv6 and IPv4 start priority must be given.  In this example IPv6
+   starts at 60000 and IPv4 at 59000.  This leaves enough address space
+   to further play with the values if pr interface priorities needs to
+   be added.  The highest value should be given to the address family
+   that should be prioritized.
+
+         IPv6    IPv4
+         Start   Start
+   65535  60k     59k    58k    57k    56k    55k                    0
+   +--------+------+------+------+------+------+---------------------+
+   |        | IPv6 | IPv4 | IPv6 | IPv4 | IPv6 |                     |
+   |        | (1)  |  (1) |  (2) |  (2) |  (3) |                     |
+   +--------+------+------+------+------+------+---------------------+
+             <- N->
+
+   The local preference can be calculated by the given formula:
+
+
+         local_preference = N*2*(Cn/Cmax)
+
+   Where N is the absolute value of IPv6_start-IPv4_start.  This ensures
+   a positive number even if IPv4 is the highest priority.  Cn is the
+   number of current candidates of a specific IP address type and
+
+
+
+Reddy, et al.            Expires August 4, 2014                 [Page 4]
+
+Internet-Draft           Happy Eyeballs for ICE             January 2014
+
+
+   candidate type (HOST, SRFLX, RELAY).  Cmax is the number of allowed
+   consecutive candidates of the same IP address type.
+
+6.  IANA Considerations
 
    None.
 
-6.  Security Considerations
+7.  Security Considerations
 
    STUN connectivity check using MAC computed during key exchanged in
    the signaling channel provides message integrity and data origin
    authentication as described in section 2.5 of [RFC5245] apply to this
    use.
 
-7.  Acknowledgements
+8.  Acknowledgements
 
    Authors would like to thank Dan Wing, Ari Keranen, Bernard Aboba,
    Martin Thomson, Jonathan Lennox and Balint Menyhart for their
    comments and review.
 
-8.  Normative References
+9.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -219,13 +263,6 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
               "Default Address Selection for Internet Protocol Version 6
               (IPv6)", RFC 6724, September 2012.
 
-
-
-Reddy, et al.            Expires August 3, 2014                 [Page 4]
-
-Internet-Draft           Happy Eyeballs for ICE             January 2014
-
-
 Authors' Addresses
 
    Tirumaleswar Reddy
@@ -236,6 +273,13 @@ Authors' Addresses
    India
 
    Email: tireddy@cisco.com
+
+
+
+
+Reddy, et al.            Expires August 4, 2014                 [Page 5]
+
+Internet-Draft           Happy Eyeballs for ICE             January 2014
 
 
    Prashanth Patil
@@ -277,4 +321,16 @@ Authors' Addresses
 
 
 
-Reddy, et al.            Expires August 3, 2014                 [Page 5]
+
+
+
+
+
+
+
+
+
+
+
+
+Reddy, et al.            Expires August 4, 2014                 [Page 6]
