@@ -382,9 +382,8 @@
 <link href="#rfc.section.6" rel="Chapter" title="6 New STUN attributes"/>
 <link href="#rfc.section.6.1" rel="Chapter" title="6.1 STREAM-TYPE"/>
 <link href="#rfc.section.6.2" rel="Chapter" title="6.2 BANDWIDTH-USAGE"/>
-<link href="#rfc.section.6.3" rel="Chapter" title="6.3 DELAY-TOLERANCE"/>
-<link href="#rfc.section.6.4" rel="Chapter" title="6.4 LOSS-TOLERANCE"/>
-<link href="#rfc.section.6.5" rel="Chapter" title="6.5 NETWORK STATUS"/>
+<link href="#rfc.section.6.3" rel="Chapter" title="6.3 STREAM-PRIORITY"/>
+<link href="#rfc.section.6.4" rel="Chapter" title="6.4 NETWORK STATUS"/>
 <link href="#rfc.references" rel="Chapter" title="7 References"/>
 <link href="#rfc.references.1" rel="Chapter" title="7.1 Normative References"/>
 <link href="#rfc.references.2" rel="Chapter" title="7.2 Informational References"/>
@@ -467,9 +466,8 @@
 <li>6.   <a href="#rfc.section.6">New STUN attributes</a></li>
 <li>6.1.   <a href="#rfc.section.6.1">STREAM-TYPE</a></li>
 <li>6.2.   <a href="#rfc.section.6.2">BANDWIDTH-USAGE</a></li>
-<li>6.3.   <a href="#rfc.section.6.3">DELAY-TOLERANCE</a></li>
-<li>6.4.   <a href="#rfc.section.6.4">LOSS-TOLERANCE</a></li>
-<li>6.5.   <a href="#rfc.section.6.5">NETWORK STATUS</a></li>
+<li>6.3.   <a href="#rfc.section.6.3">STREAM-PRIORITY</a></li>
+<li>6.4.   <a href="#rfc.section.6.4">NETWORK STATUS</a></li>
 <li>7.   <a href="#rfc.references">References</a></li>
 <li>7.1.   <a href="#rfc.references.1">Normative References</a></li>
 <li>7.2.   <a href="#rfc.references.2">Informational References</a></li>
@@ -530,7 +528,7 @@
 <p> </p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Interaction with ICE</h1>
 <p id="rfc.section.3.p.1">An ICE connectivity check is performed by sending a STUN Binding indication. Prior to sending the agent can add one STREAM-TYPE attribute. If added, only one MUST be added.  This is to avoid unnecessary large STUN packets during the connectivity checks. If the connectivity check is sent on a 5-tuple that multiplexes different types of media and more detailed information wants to be signalled it should be done after the connectivity check phase is finished.  </p>
-<p id="rfc.section.3.p.2">This limits the information the STUN messages are able to convey during the connectivity checks, but also avoids adding network confution with BANDWIDTH-USAGE attributes describing different paths that never going to be utilized.  </p>
+<p id="rfc.section.3.p.2">This limits the information the STUN messages are able to convey during the connectivity checks, but also avoids adding network confusion with BANDWIDTH-USAGE attributes describing different paths that never going to be utilized.  </p>
 <p><a id="Q2" class="info">[Q2]<span class="info">palmarti: Problem with consent freshness if not based on STUN.  </span></a> </p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Multiplexed streams</h1>
 <p id="rfc.section.4.p.1">TODO: Write. Explain in detail what options you have with multiplexed streams. If not used in conn checks you can add more than one attribute.  </p>
@@ -542,8 +540,7 @@
 <pre>
       0xXXX0: STREAM-TYPE
       0xXXX1: BANDWIDTH-USAGE
-      0xXXX2: DELAY-TOLERANCE
-      0xXXX3: LOSS-TOLERANCE  
+      0xXXX2: STREAM-PRIORITY
       0xYYYY: NETWORK STATUS
            </pre>
 <h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> STREAM-TYPE</h1>
@@ -570,10 +567,10 @@
 <div id="rfc.figure.2"/>
 <div id="stream_types"/>
 <pre>
-     0x0001 Undescribed 
-     0x0002 Audio
-     0x0004 Video
-     0x0008 Application Data
+     0x0001 Audio
+     0x0002 Video
+     0x0004 Application Data
+     0x0008 Other
       </pre>
 <p class="figure">Figure 2: STREAM Types</p>
 <p id="rfc.section.6.1.p.3">There are four stream types types defined: </p>
@@ -587,7 +584,7 @@
 0                   1                   2                   3
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|            SUSTAINED (kbps)   |           MAX (kbps)          |
+|             AVARAGE (kbps)    |           MAX (kbps)          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
       </pre>
@@ -595,82 +592,60 @@
 <p/>
 
 <dl>
-  <dt>SUSTAINED:</dt>
+  <dt>AVARAGE:</dt>
   <dd style="margin-left: 8">Expected sustained bandwidth usage for this stream. Note that for elastic types of streams like video, sudden large movements in the picture my lead to this value being inaccurate.  </dd>
   <dt>MAX:</dt>
   <dd style="margin-left: 8">The maximum bandwidth usage for this stream. If the sustained and max value differ greatly it might be safe to assume that an elastic encoder is in use. (Would it be useful to say something about expected BURST lengths?) </dd>
 </dl>
 
 <p> </p>
-<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> DELAY-TOLERANCE</h1>
+<h1 id="rfc.section.6.3"><a href="#rfc.section.6.3">6.3.</a> STREAM-PRIORITY</h1>
 <p id="rfc.section.6.3.p.1">This attribute have a length that are multiples of 4 (32) so no padding is necessary.  </p>
 <div id="rfc.figure.4"/>
-<div id="delay_tolerance_attr"/>
+<div id="stream_priority_attr"/>
 <pre>
 0                   1                   2                   3
 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|       Loss of Quality (ms)    |       Loss of Service (ms)    |
+| Priority      |D|    TBD      |           Stream IDX          |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                           Session ID                          |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
       </pre>
-<p class="figure">Figure 4: DELAY TOLLERANCE Attribute</p>
+<p class="figure">Figure 4: STREAM PRIORITY Attribute</p>
 <p/>
 
 <dl>
-  <dt>Loss of Quality:</dt>
-  <dd style="margin-left: 8">Amount of delay in ms the streams can accept on the entire path without experiencing quality issues.  </dd>
-  <dt>Loss of Service:</dt>
-  <dd style="margin-left: 8">Amount of delay in ms on the entire path the without the service being unusable.  </dd>
+  <dt>Priority:</dt>
+  <dd style="margin-left: 8">Describes this streams priority among other streams coming from this endpoint/application (With same session ID). Values range from 255 (0xFF) to 0.  </dd>
+  <dt>D:</dt>
+  <dd style="margin-left: 8">Delay sensitive. The application can set this bit as a hint to the network element that the stream is delay sensitive. (Unsure if this is useful) </dd>
+  <dt>Stream IDX:</dt>
+  <dd style="margin-left: 8">Application can choose set this to ease debugging in the network. A reasonable value can foe example be the index have in the SDP.  </dd>
+  <dt>Stream ID:</dt>
+  <dd style="margin-left: 8">Identification to distinguish what session this stream is part of. This MUST have the same value for all the media streams the application wants to give differentiated services. (Note that this ID may overlap with other streams that originates from a different IP address. The network element MUST only prioritize among streams with the same Session Id originating from the same IP) </dd>
 </dl>
 
 <p> </p>
-<p id="rfc.section.6.3.p.3">Wanted to avoid terms like high/low delay tolerance and replace them with real numbers. But in the end the network elements will probably decide what queue they go into based on these values.  </p>
-<p id="rfc.section.6.3.p.4">If an agent have two video streams, one for live video and one for slide sharing. The video for the presentation sharing have much higher delay tolerances.  </p>
-<p id="rfc.section.6.3.p.5">Incentives to lie about the values. The network element can treat those values as internal prioritization for the streams coming out from particular agent or session. (But then we need to group them together. MSID in STUN packets?) </p>
-<h1 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4.</a> LOSS-TOLERANCE</h1>
+<h1 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4.</a> NETWORK STATUS</h1>
 <p id="rfc.section.6.4.p.1">This attribute have a length that are multiples of 4 (32) so no padding is necessary.  </p>
+<p id="rfc.section.6.4.p.2">This attribute MUST be added after any INTEGRITY attribute in the STUN message. Values in this attribute can be updated along the network path by nodes that are not able to regenerate a correct INTEGRITY attribute.  </p>
 <div id="rfc.figure.5"/>
-<div id="loss_tolerance_attr"/>
-<pre>
-0                   1                   2                   3
-0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|       Loss of Quality (%)     |       Loss of Service (%)     |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-      </pre>
-<p class="figure">Figure 5: LOSS TOLLERANCE Attribute</p>
-<p/>
-
-<dl>
-  <dt>Loss of Quality:</dt>
-  <dd style="margin-left: 8">Amount of packet loss in percentage the streams can accept on the entire path without experiencing quality issues.  </dd>
-  <dt>Loss of Service:</dt>
-  <dd style="margin-left: 8">Amount of packet loss in percentage on the entire path the without the service being unusable.  </dd>
-</dl>
-
-<p> </p>
-<p id="rfc.section.6.4.p.3">If an agent have two video streams, one for live video and one for slide sharing. The video for the presentation sharing have much higher loss tolerances.  </p>
-<p id="rfc.section.6.4.p.4">Incentives to lie about the values. The network element can treat those values as internal prioritization for the streams coming out from particular agent or session. (But then we need to group them together. MSID in STUN packets?) </p>
-<h1 id="rfc.section.6.5"><a href="#rfc.section.6.5">6.5.</a> NETWORK STATUS</h1>
-<p id="rfc.section.6.5.p.1">This attribute have a length that are multiples of 4 (32) so no padding is necessary.  </p>
-<p id="rfc.section.6.5.p.2">This attribute MUST be added after any INTEGRITY attribute in the STUN message. Values in this attribute can be updated along the network path by nodes that are not able to regenerate a correct INTEGRITY attribute.  </p>
-<div id="rfc.figure.6"/>
 <div id="network_status_attr"/>
 <pre>
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-|Conguestion Lvl| Node Cnt      |    0xFFFF                     |
+| Congestion Lvl| Node Cnt      |    0xFFFF                     |
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
       </pre>
-<p class="figure">Figure 6: NETWORK STATUS Attribute</p>
+<p class="figure">Figure 5: NETWORK STATUS Attribute</p>
 <p/>
 
 <dl>
-  <dt>Conguestion Lvl:</dt>
+  <dt>Congestion Lvl:</dt>
   <dd style="margin-left: 8">Value in the range 0x00 and Ox0F describing the level of congestion the network element is experiencing at this point. 0x00 means no congestion, 0x0F Fully congested. The router can choose any value between those value as it sees fit. The application that sees those values might act on by doing some rate adaption or similar. The values 0x10-0xFF are reserved for future use.  </dd>
   <dt>Node Cnt:</dt>
   <dd style="margin-left: 8">Numbers of nodes that supports IMPRESS in the notwork path. Any router on the path that understands IMPRESS should increase this number.  </dd>

@@ -90,13 +90,12 @@ Table of Contents
    6.  New STUN attributes . . . . . . . . . . . . . . . . . . . . .   6
      6.1.  STREAM-TYPE . . . . . . . . . . . . . . . . . . . . . . .   7
      6.2.  BANDWIDTH-USAGE . . . . . . . . . . . . . . . . . . . . .   8
-     6.3.  DELAY-TOLERANCE . . . . . . . . . . . . . . . . . . . . .   8
-     6.4.  LOSS-TOLERANCE  . . . . . . . . . . . . . . . . . . . . .   9
-     6.5.  NETWORK STATUS  . . . . . . . . . . . . . . . . . . . . .   9
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     6.3.  STREAM-PRIORITY . . . . . . . . . . . . . . . . . . . . .   8
+     6.4.  NETWORK STATUS  . . . . . . . . . . . . . . . . . . . . .   9
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
      7.2.  Informational References  . . . . . . . . . . . . . . . .  10
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  11
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -106,6 +105,7 @@ Table of Contents
    encrypted, peer-to-peer, possibly asymmetric, and might have
    different priorities depending on network conditions, direction, time
    of the day, dynamic user preferences and other factors.  These
+   factors may be time variant, and thus need to be signalled.
 
 
 
@@ -114,7 +114,6 @@ Martinsen                Expires August 11, 2014                [Page 2]
 Internet-Draft                   IMPRESS                   February 2014
 
 
-   factors may be time variant, and thus need to be signalled.
    Moreover, in many cases of peer-to-peer communication, flow
    information is known only to the endpoint.  These considerations,
    coupled with the trend to use encryption for browser-to-browser
@@ -162,6 +161,7 @@ Internet-Draft                   IMPRESS                   February 2014
    If the client wants to receive feedback from the network it must add
    a empty NETWORK-STATUS attribute.  This attribute MUST be added after
    the INTEGRITY attribute, as on-path devices will write information
+   into this attribute.  Having a readily available attribute to write
 
 
 
@@ -170,7 +170,6 @@ Martinsen                Expires August 11, 2014                [Page 3]
 Internet-Draft                   IMPRESS                   February 2014
 
 
-   into this attribute.  Having a readily available attribute to write
    into will save the the on-path device from growing buffers to add
    their own attribute.  On path devices SHOULD not add their own
    NETWORK-STATUS attribute.
@@ -211,6 +210,7 @@ Internet-Draft                   IMPRESS                   February 2014
    [[Q1: Do we want to restrict this to req/resp or do we want to allow
    for the attributes to be added in this fashion for indications as
    well? --palmarti]]
+
 
 
 
@@ -295,7 +295,7 @@ Internet-Draft                   IMPRESS                   February 2014
 
    This limits the information the STUN messages are able to convey
    during the connectivity checks, but also avoids adding network
-   confution with BANDWIDTH-USAGE attributes describing different paths
+   confusion with BANDWIDTH-USAGE attributes describing different paths
    that never going to be utilized.
 
    [[Q2: Problem with consent freshness if not based on STUN.
@@ -340,8 +340,7 @@ Internet-Draft                   IMPRESS                   February 2014
 
          0xXXX0: STREAM-TYPE
          0xXXX1: BANDWIDTH-USAGE
-         0xXXX2: DELAY-TOLERANCE
-         0xXXX3: LOSS-TOLERANCE
+         0xXXX2: STREAM-PRIORITY
          0xYYYY: NETWORK STATUS
 
 6.1.  STREAM-TYPE
@@ -363,10 +362,10 @@ Internet-Draft                   IMPRESS                   February 2014
 
    There are four stream types types defined:
 
-        0x0001 Undescribed
-        0x0002 Audio
-        0x0004 Video
-        0x0008 Application Data
+        0x0001 Audio
+        0x0002 Video
+        0x0004 Application Data
+        0x0008 Other
 
                           Figure 2: STREAM Types
 
@@ -385,7 +384,8 @@ Internet-Draft                   IMPRESS                   February 2014
    multiplexed streams is needed it is possible to add more than one
    attribute to a STUN message (See section ??).  This can be done to
    STUN messages that are being sent after the connectivity check phase
-
+   is finished (Keepalive, consent freshness).  During this phase the
+   added size of the STUN messages pose no security threat.
 
 
 
@@ -393,9 +393,6 @@ Martinsen                Expires August 11, 2014                [Page 7]
 
 Internet-Draft                   IMPRESS                   February 2014
 
-
-   is finished (Keepalive, consent freshness).  During this phase the
-   added size of the STUN messages pose no security threat.
 
 6.2.  BANDWIDTH-USAGE
 
@@ -405,13 +402,13 @@ Internet-Draft                   IMPRESS                   February 2014
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |            SUSTAINED (kbps)   |           MAX (kbps)          |
+       |             AVARAGE (kbps)    |           MAX (kbps)          |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                     Figure 3: BANDWIDTH USAGE Attribute
 
-   SUSTAINED:  Expected sustained bandwidth usage for this stream.  Note
+   AVARAGE:  Expected sustained bandwidth usage for this stream.  Note
       that for elastic types of streams like video, sudden large
       movements in the picture my lead to this value being inaccurate.
 
@@ -420,7 +417,7 @@ Internet-Draft                   IMPRESS                   February 2014
       elastic encoder is in use.  (Would it be useful to say something
       about expected BURST lengths?)
 
-6.3.  DELAY-TOLERANCE
+6.3.  STREAM-PRIORITY
 
    This attribute have a length that are multiples of 4 (32) so no
    padding is necessary.
@@ -428,18 +425,21 @@ Internet-Draft                   IMPRESS                   February 2014
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |       Loss of Quality (ms)    |       Loss of Service (ms)    |
+       | Priority      |D|    TBD      |           Stream IDX          |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                           Session ID                          |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                   Figure 4: DELAY TOLLERANCE Attribute
+                    Figure 4: STREAM PRIORITY Attribute
 
-   Loss of Quality:  Amount of delay in ms the streams can accept on the
-      entire path without experiencing quality issues.
+   Priority:  Describes this streams priority among other streams coming
+      from this endpoint/application (With same session ID).  Values
+      range from 255 (0xFF) to 0.
 
-   Loss of Service:  Amount of delay in ms on the entire path the
-      without the service being unusable.
-
+   D: Delay sensitive.  The application can set this bit as a hint to
+      the network element that the stream is delay sensitive.  (Unsure
+      if this is useful)
 
 
 
@@ -450,61 +450,22 @@ Martinsen                Expires August 11, 2014                [Page 8]
 Internet-Draft                   IMPRESS                   February 2014
 
 
-   Wanted to avoid terms like high/low delay tolerance and replace them
-   with real numbers.  But in the end the network elements will probably
-   decide what queue they go into based on these values.
+   Stream IDX:  Application can choose set this to ease debugging in the
+      network.  A reasonable value can foe example be the index have in
+      the SDP.
 
-   If an agent have two video streams, one for live video and one for
-   slide sharing.  The video for the presentation sharing have much
-   higher delay tolerances.
+   Stream ID:  Identification to distinguish what session this stream is
+      part of.  This MUST have the same value for all the media streams
+      the application wants to give differentiated services.  (Note that
+      this ID may overlap with other streams that originates from a
+      different IP address.  The network element MUST only prioritize
+      among streams with the same Session Id originating from the same
+      IP)
 
-   Incentives to lie about the values.  The network element can treat
-   those values as internal prioritization for the streams coming out
-   from particular agent or session.  (But then we need to group them
-   together.  MSID in STUN packets?)
-
-6.4.  LOSS-TOLERANCE
-
-   This attribute have a length that are multiples of 4 (32) so no
-   padding is necessary.
-
-       0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |       Loss of Quality (%)     |       Loss of Service (%)     |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-                    Figure 5: LOSS TOLLERANCE Attribute
-
-   Loss of Quality:  Amount of packet loss in percentage the streams can
-      accept on the entire path without experiencing quality issues.
-
-   Loss of Service:  Amount of packet loss in percentage on the entire
-      path the without the service being unusable.
-
-   If an agent have two video streams, one for live video and one for
-   slide sharing.  The video for the presentation sharing have much
-   higher loss tolerances.
-
-   Incentives to lie about the values.  The network element can treat
-   those values as internal prioritization for the streams coming out
-   from particular agent or session.  (But then we need to group them
-   together.  MSID in STUN packets?)
-
-6.5.  NETWORK STATUS
+6.4.  NETWORK STATUS
 
    This attribute have a length that are multiples of 4 (32) so no
    padding is necessary.
-
-
-
-
-
-Martinsen                Expires August 11, 2014                [Page 9]
-
-Internet-Draft                   IMPRESS                   February 2014
-
 
    This attribute MUST be added after any INTEGRITY attribute in the
    STUN message.  Values in this attribute can be updated along the
@@ -514,13 +475,13 @@ Internet-Draft                   IMPRESS                   February 2014
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |Conguestion Lvl| Node Cnt      |    0xFFFF                     |
+       | Congestion Lvl| Node Cnt      |    0xFFFF                     |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                    Figure 6: NETWORK STATUS Attribute
+                    Figure 5: NETWORK STATUS Attribute
 
-   Conguestion Lvl:  Value in the range 0x00 and Ox0F describing the
+   Congestion Lvl:  Value in the range 0x00 and Ox0F describing the
       level of congestion the network element is experiencing at this
       point. 0x00 means no congestion, 0x0F Fully congested.  The router
       can choose any value between those value as it sees fit.  The
@@ -533,6 +494,17 @@ Internet-Draft                   IMPRESS                   February 2014
       increase this number.
 
 7.  References
+
+
+
+
+
+
+
+Martinsen                Expires August 11, 2014                [Page 9]
+
+Internet-Draft                   IMPRESS                   February 2014
+
 
 7.1.  Normative References
 
@@ -553,14 +525,6 @@ Internet-Draft                   IMPRESS                   February 2014
    [I-D.ietf-rtcweb-security-arch]
               Rescorla, E., "WebRTC Security Architecture", draft-ietf-
               rtcweb-security-arch-07 (work in progress), July 2013.
-
-
-
-
-Martinsen                Expires August 11, 2014               [Page 10]
-
-Internet-Draft                   IMPRESS                   February 2014
-
 
 Author's Address
 
@@ -593,24 +557,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Martinsen                Expires August 11, 2014               [Page 11]
+Martinsen                Expires August 11, 2014               [Page 10]
