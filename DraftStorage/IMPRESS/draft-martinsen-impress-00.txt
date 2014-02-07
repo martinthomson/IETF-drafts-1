@@ -4,8 +4,8 @@
 
 TRAM                                                        P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        February 6, 2014
-Expires: August 10, 2014
+Intended status: Standards Track                        February 7, 2014
+Expires: August 11, 2014
 
 
              In-band Media PRopErties Signalling with STUN
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Martinsen                Expires August 10, 2014                [Page 1]
+Martinsen                Expires August 11, 2014                [Page 1]
 
 Internet-Draft                   IMPRESS                   February 2014
 
@@ -63,7 +63,7 @@ Internet-Draft                   IMPRESS                   February 2014
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 10, 2014.
+   This Internet-Draft will expire on August 11, 2014.
 
 Copyright Notice
 
@@ -84,19 +84,19 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  General Usage . . . . . . . . . . . . . . . . . . . . . . . .   3
-   3.  Interaction with ICE  . . . . . . . . . . . . . . . . . . . .   5
-   4.  Multiplexed streams . . . . . . . . . . . . . . . . . . . . .   5
-   5.  Network Processing  . . . . . . . . . . . . . . . . . . . . .   5
+   3.  Interaction with ICE  . . . . . . . . . . . . . . . . . . . .   6
+   4.  Multiplexed streams . . . . . . . . . . . . . . . . . . . . .   6
+   5.  Network Processing  . . . . . . . . . . . . . . . . . . . . .   6
    6.  New STUN attributes . . . . . . . . . . . . . . . . . . . . .   6
-     6.1.  STREAM PROPERTIES . . . . . . . . . . . . . . . . . . . .   6
-       6.1.1.  Generic . . . . . . . . . . . . . . . . . . . . . . .   7
-       6.1.2.  Audio . . . . . . . . . . . . . . . . . . . . . . . .   8
-       6.1.3.  Video . . . . . . . . . . . . . . . . . . . . . . . .   8
-     6.2.  NETWORK STATUS  . . . . . . . . . . . . . . . . . . . . .   9
+     6.1.  STREAM-TYPE . . . . . . . . . . . . . . . . . . . . . . .   7
+     6.2.  BANDWIDTH-USAGE . . . . . . . . . . . . . . . . . . . . .   8
+     6.3.  DELAY-TOLERANCE . . . . . . . . . . . . . . . . . . . . .   8
+     6.4.  LOSS-TOLERANCE  . . . . . . . . . . . . . . . . . . . . .   9
+     6.5.  NETWORK STATUS  . . . . . . . . . . . . . . . . . . . . .   9
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
      7.2.  Informational References  . . . . . . . . . . . . . . . .  10
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  11
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Martinsen                Expires August 10, 2014                [Page 2]
+Martinsen                Expires August 11, 2014                [Page 2]
 
 Internet-Draft                   IMPRESS                   February 2014
 
@@ -147,29 +147,31 @@ Internet-Draft                   IMPRESS                   February 2014
 
 2.  General Usage
 
-   This draft defines two attributes that can be added to a STUN
-   message; STREAM-PROPERTIES and NETWORK-STATUS.  Se section ?? for the
-   formal description.  It is RECOMMENDED to add them to a STUN request
+   This draft defines several attributes that can be added to a STUN
+   message; STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-
+   TOLERANCE and NETWORK-STATUS.  Se Section 6 for the formal
+   description.  It is RECOMMENDED to add them to a STUN request
    response pair, especially if the NETWORK STATUS attribute is in use.
 
-   The STREAM-PROPERTIES attribute MUST be added before any INTEGRITY
-   attribute.  It is RECOMMENDED to only add this attribute to STUN
-   messages containing a INTEGRITY attribute as this prevents tampering
-   with the content of the attribute.
+   The STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-TOLERANCE
+   attributes MUST be added before any INTEGRITY attribute.  It is
+   RECOMMENDED to only add this attribute to STUN messages containing a
+   INTEGRITY attribute as this prevents tampering with the content of
+   the attribute.
 
    If the client wants to receive feedback from the network it must add
    a empty NETWORK-STATUS attribute.  This attribute MUST be added after
    the INTEGRITY attribute, as on-path devices will write information
-   into this attribute.  Having a readily available attribute to write
-   into will save the the on-path device from growing buffers to add
 
 
 
-Martinsen                Expires August 10, 2014                [Page 3]
+Martinsen                Expires August 11, 2014                [Page 3]
 
 Internet-Draft                   IMPRESS                   February 2014
 
 
+   into this attribute.  Having a readily available attribute to write
+   into will save the the on-path device from growing buffers to add
    their own attribute.  On path devices SHOULD not add their own
    NETWORK-STATUS attribute.
 
@@ -185,9 +187,44 @@ Internet-Draft                   IMPRESS                   February 2014
    upstream direction.  A NETWORK-STATUS attribute after the INTEGRITY
    attribute describes the stream in the downstream direction.
 
+   It might make sense to distinguish IMPRESS packets from normal STUN
+   packets.  This would prevent unnecessary processing of normal STUN
+   packets on the network nodes.
+
+   A few alternatives (Needs discussion):
+
+   1.  Alter the STUN magic cookie.  (But than i would not be a STUN
+       packet anymore, and that raises a new set of problems)
+
+   2.  Add a special this is IMPRESS attribute.  This must be the first
+       attribute in the message.  This allows for network node to look
+       for IMPRESS packets at a fixed offset without needing to parse
+       the entire packet.
+
+   3.  Alter the transaction id.  This might be problematic if using it
+       in conjunction with ICE connectivity checks.  But probably fine
+       in other scenarios.
+
+   4.  Define a new STUN Method.  Also brakes ICE, makes it harder to
+       tag onto attributes to already in use messages.
+
    [[Q1: Do we want to restrict this to req/resp or do we want to allow
    for the attributes to be added in this fashion for indications as
    well? --palmarti]]
+
+
+
+
+
+
+
+
+
+
+Martinsen                Expires August 11, 2014                [Page 4]
+
+Internet-Draft                   IMPRESS                   February 2014
+
 
      Alice                router1            router2              Bob
       |                      |                   |                  |
@@ -206,50 +243,60 @@ Internet-Draft                   IMPRESS                   February 2014
 
                            IMPRESS example flow
 
-   1.  Alice creates a Binding Request, add STREAM-PROPERTY attribute
-       before the INTEGRITY attribute and a single NETWORK-STATUS
-       attribute after the INTEGRITY attribute.
+   1.  Alice creates a Binding Request, adds STREAM-TYPE, BANDWIDTH-
+       USAGE, DELAY-TOLERANCE, LOSS-TOLERANCE attributes before the
+       INTEGRITY attribute and a single NETWORK-STATUS attribute after
+       the INTEGRITY attribute.
 
-   2.  Router1 inspects the STUN Request message and reads STREAM-
-       PROPERTY attribute and the information it contains.  It then
-       updates the NETWORK-STATUS attribute with any information the
-       router have.  It then forwards the request.
+   2.  Router1 inspects the STUN Request message and reads any STREAM-
+       TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE
+       attributes and the information they contain.  It then updates the
+       NETWORK-STATUS attribute with any information the router have.
+       It then forwards the request.
 
    3.  Bob processes the STUN Request.  When Bob builds the response, it
        copies the NETWORK-STATUS attribute into the STUN Response before
-
-
-
-
-Martinsen                Expires August 10, 2014                [Page 4]
-
-Internet-Draft                   IMPRESS                   February 2014
-
-
        the INTEGRITY check and adds new empty NETWORK-STATUS attribute
        after the INTEGRITY attribute.  Bob then transmits the message.
 
    4.  Router2 (first IMPRESS network element for the downstream
-       direction) inspects the Response message, reads the STREAM-
-       PROPERTIES attribute and MAY alter the NETWORK-STATUS attribute
-       located after the INTEGRITY attribute.  It then transmits the
-       message.
+       direction) inspects the Response message, reads the STREAM-TYPE,
+       BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE attributes and
+       MAY alter the NETWORK-STATUS attribute located after the
+       INTEGRITY attribute.  It then transmits the message.
 
    5.  When Alice receives the STUN Response, she can extract the
-       STREAM-PROPERTIES attribute and the two NETWORK-STATUS attributes
-       to get a complete picture of what the remote agent is sending and
-       how the status of both the upstream and downstream path.
+       STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE
+       attributes and the two NETWORK-STATUS attributes to get a
+       complete picture of what the remote agent is sending and how the
+       status of both the upstream and downstream path.
+
+
+
+
+
+
+
+Martinsen                Expires August 11, 2014                [Page 5]
+
+Internet-Draft                   IMPRESS                   February 2014
+
 
 3.  Interaction with ICE
 
    An ICE connectivity check is performed by sending a STUN Binding
-   indication.  Prior to sending the agent can add one STREAM-PROPERTY
+   indication.  Prior to sending the agent can add one STREAM-TYPE
    attribute.  If added, only one MUST be added.  This is to avoid
    unnecessary large STUN packets during the connectivity checks.  If
    the connectivity check is sent on a 5-tuple that multiplexes
    different types of media and more detailed information wants to be
    signalled it should be done after the connectivity check phase is
    finished.
+
+   This limits the information the STUN messages are able to convey
+   during the connectivity checks, but also avoids adding network
+   confution with BANDWIDTH-USAGE attributes describing different paths
+   that never going to be utilized.
 
    [[Q2: Problem with consent freshness if not based on STUN.
    --palmarti]]
@@ -274,14 +321,6 @@ Internet-Draft                   IMPRESS                   February 2014
    the DSCP values was somehow reset on the path (That happens) the
    router can remark the IP packets correctly by looking at the STUN
    message.  (IE the signalling in the STUN message survives the whole
-
-
-
-Martinsen                Expires August 10, 2014                [Page 5]
-
-Internet-Draft                   IMPRESS                   February 2014
-
-
    path, and is integrity protects, but the network node have no way of
    detecting that...)
 
@@ -289,180 +328,183 @@ Internet-Draft                   IMPRESS                   February 2014
 
    This STUN extension defines the following new attributes:
 
-                            0xXXXX: STREAM PROPERTIES
-                            0xYYYY: NETWORK STATUS
 
-6.1.  STREAM PROPERTIES
 
-   This attribute have a length that are multiples of 4 (128) so no
+
+
+
+Martinsen                Expires August 11, 2014                [Page 6]
+
+Internet-Draft                   IMPRESS                   February 2014
+
+
+         0xXXX0: STREAM-TYPE
+         0xXXX1: BANDWIDTH-USAGE
+         0xXXX2: DELAY-TOLERANCE
+         0xXXX3: LOSS-TOLERANCE
+         0xYYYY: NETWORK STATUS
+
+6.1.  STREAM-TYPE
+
+   This attribute have a length that are multiples of 4 (32) so no
    padding is necessary.
 
-       0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |        STREAM TYPE            |   Bandwidth (kbps)            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |   Delay Tol   |   Loss Tol    |         TBD                   |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |             Stream Type specific Value (64 bits)              |
-       |                                                               |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |              TYPE             |         TBD                   |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-                   Figure 1: STREAM PROPERTIES Attribute
 
-   STREAM TYPE:  STREAM TYPE a a 16 bit value defined in section ??
-      describing the flow.
+                      Figure 1: STREAM TYPE Attribute
 
-   Bandwidth:  MUST be a number describing the approximate bandwidth
-      usage in kbps.  If this is unknown the value 0x0 is used.
-
-   Delay Tol:  Delay tolerance in ms.  A number describing the total
-      delay a stream can experience before problems occur.
-
-   Loss Tol:  Loss tolerance.  Number describing percentage of packets
-      that can be lost without severely affecting the quality of the
-      stream.
-
-   Stream Type Specific Value:  64 bits of the attribute is reserved for
-      further description of the specific STREAM TYPE.  This value field
-      is thus dependant on the type field and entities not understanding
-      the specific STREAM TYPE should ignore this when parsing.
+   TYPE:  STREAM TYPE a a 16 bit value defined in below describing the
+      flow.
 
    There are four stream types types defined:
 
-
-
-
-Martinsen                Expires August 10, 2014                [Page 6]
-
-Internet-Draft                   IMPRESS                   February 2014
-
-
-                            0x0001 Generic
-                            0x0002 Audio
-                            0x0004 Video
-                            0x0008 Application Data
+        0x0001 Undescribed
+        0x0002 Audio
+        0x0004 Video
+        0x0008 Application Data
 
                           Figure 2: STREAM Types
 
-   The intention is to keep the number of types limited and fairly
-   general.  There are 64 bits set aside for each stream type for
-   further description.
+   The intention is to keep the number of types limited and general.
+   (Avoiding descriptions like high quality and similar that change over
+   time)
 
    It is possible to combine the stream types if a stream contains more
-   than one type.  The 64 bit value filed MUST then be treated as if the
-   type was Generic (0x0001).  (TODO: Define generic field to better
-   suit this scenario)
+   than one type.
 
    If a 5-tuple is used to send both a audio and video stream, the
-   stream type can be set to 0x0006.  The type specific value field will
-   then have the same properties as if the type was generic.  This can
-   be useful if the application wants to hint that the 5-tuple contains
-   several streams, but have no other useful information to share.  This
-   is useful if the attribute is added to STUN binding requests during
-   ICE connectivity checks.  If more information regarding multiplexed
-   streams is needed it is possible to add more than one attribute to a
-   STUN message (See section ??).  This can be done to STUN messages
-   that are being sent after the connectivity check phase is finished
-   (Keepalive, consent freshness).  During this phase the added size of
-   the STUN messages pose no security threat.
-
-6.1.1.  Generic
-
-       0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |            0x0001              |      Bandwidth (kbps)        |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       | max retransmit|  retransmits   |           0xFF               |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                              0xFFFF                           |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-                       Figure 3: Stream Type Generic
-
-   max retransmits:  Maximal number of retransmits a client will do
-      before giving up.  For example a normal STUN transactions have 10
-      retransmits before it is considered as failed.  RTP will typically
-      have 0 retransmits.
+   stream type can be set to 0x0006.  This can be useful if the
+   application wants to hint that the 5-tuple contains several streams,
+   This is useful if the attribute is added to STUN binding requests
+   during ICE connectivity checks.  If more information regarding
+   multiplexed streams is needed it is possible to add more than one
+   attribute to a STUN message (See section ??).  This can be done to
+   STUN messages that are being sent after the connectivity check phase
 
 
 
-Martinsen                Expires August 10, 2014                [Page 7]
+
+Martinsen                Expires August 11, 2014                [Page 7]
 
 Internet-Draft                   IMPRESS                   February 2014
 
 
-   retransmits:  Current number of retransmits for non reliable packets
-      in this stream.  If this number is close to the mac retransmits it
-      might be nice of the network element to consider not to drop the
-      next packets coming.
+   is finished (Keepalive, consent freshness).  During this phase the
+   added size of the STUN messages pose no security threat.
 
-6.1.2.  Audio
+6.2.  BANDWIDTH-USAGE
 
-       0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |            0x0002             |       Bandwidth (kbps)        |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |    Sample Rate (Hz)           |          0xFF                 |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                              0xFFFF                           |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-                        Figure 4: Stream Type Audio
-
-   Sample Rate:  The current sample rate the audio codec used in this
-      stream is sampled with.
-
-6.1.3.  Video
-
-       0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |            0x0003              |      Bandwidth (kbps)        |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |      Vertical Resolution       |     Horizontal Resolution    |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |             FPS                |          Jitter (ms)         |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-                        Figure 5: STREAM Type Video
-
-   Bandwidth:  Bandwidth usage with video encoders are elastic.  This
-      value should indicate what max bandwidth value the encoder are set
-      up to use.  Dependant on movement in the picture and other video
-      specific parameters the actual bandwidth usage might be lower than
-      indicated.  Note that this value can change over time as rate
-      adaption algorithms in the encoder might change this value.
-
-   Vertical Resolution:  Current vertical resolution used in the video
-      encoded in the stream.  Note that this value might change over
-      time as the encoder might change this dependant on many different
-
-
-
-Martinsen                Expires August 10, 2014                [Page 8]
-
-Internet-Draft                   IMPRESS                   February 2014
-
-
-      parameters.  (In some instances a encoder can decide that changing
-      from 1080p30 to 720p60 will give the end user a better user
-      experience)
-
-   Horizontal Resolution:  Current horizontal resolution.
-
-   FPS:  How many frames per seconds the video in the stream is encoded
-      with.
-
-6.2.  NETWORK STATUS
-
-   This attribute have a length that are multiples of 4 (64) so no
+   This attribute have a length that are multiples of 4 (32) so no
    padding is necessary.
+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |            SUSTAINED (kbps)   |           MAX (kbps)          |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                    Figure 3: BANDWIDTH USAGE Attribute
+
+   SUSTAINED:  Expected sustained bandwidth usage for this stream.  Note
+      that for elastic types of streams like video, sudden large
+      movements in the picture my lead to this value being inaccurate.
+
+   MAX:  The maximum bandwidth usage for this stream.  If the sustained
+      and max value differ greatly it might be safe to assume that an
+      elastic encoder is in use.  (Would it be useful to say something
+      about expected BURST lengths?)
+
+6.3.  DELAY-TOLERANCE
+
+   This attribute have a length that are multiples of 4 (32) so no
+   padding is necessary.
+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |       Loss of Quality (ms)    |       Loss of Service (ms)    |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                   Figure 4: DELAY TOLLERANCE Attribute
+
+   Loss of Quality:  Amount of delay in ms the streams can accept on the
+      entire path without experiencing quality issues.
+
+   Loss of Service:  Amount of delay in ms on the entire path the
+      without the service being unusable.
+
+
+
+
+
+
+Martinsen                Expires August 11, 2014                [Page 8]
+
+Internet-Draft                   IMPRESS                   February 2014
+
+
+   Wanted to avoid terms like high/low delay tolerance and replace them
+   with real numbers.  But in the end the network elements will probably
+   decide what queue they go into based on these values.
+
+   If an agent have two video streams, one for live video and one for
+   slide sharing.  The video for the presentation sharing have much
+   higher delay tolerances.
+
+   Incentives to lie about the values.  The network element can treat
+   those values as internal prioritization for the streams coming out
+   from particular agent or session.  (But then we need to group them
+   together.  MSID in STUN packets?)
+
+6.4.  LOSS-TOLERANCE
+
+   This attribute have a length that are multiples of 4 (32) so no
+   padding is necessary.
+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |       Loss of Quality (%)     |       Loss of Service (%)     |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                    Figure 5: LOSS TOLLERANCE Attribute
+
+   Loss of Quality:  Amount of packet loss in percentage the streams can
+      accept on the entire path without experiencing quality issues.
+
+   Loss of Service:  Amount of packet loss in percentage on the entire
+      path the without the service being unusable.
+
+   If an agent have two video streams, one for live video and one for
+   slide sharing.  The video for the presentation sharing have much
+   higher loss tolerances.
+
+   Incentives to lie about the values.  The network element can treat
+   those values as internal prioritization for the streams coming out
+   from particular agent or session.  (But then we need to group them
+   together.  MSID in STUN packets?)
+
+6.5.  NETWORK STATUS
+
+   This attribute have a length that are multiples of 4 (32) so no
+   padding is necessary.
+
+
+
+
+
+Martinsen                Expires August 11, 2014                [Page 9]
+
+Internet-Draft                   IMPRESS                   February 2014
+
 
    This attribute MUST be added after any INTEGRITY attribute in the
    STUN message.  Values in this attribute can be updated along the
@@ -472,19 +514,11 @@ Internet-Draft                   IMPRESS                   February 2014
         0                   1                   2                   3
         0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       | Link TYPE     |Conguestion Lvl| Node Cnt      |    0xFF       |
+       |Conguestion Lvl| Node Cnt      |    0xFFFF                     |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       | Up Bandwidth (kbps)           |   Down Bandwidth (kbps)       |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 
                     Figure 6: NETWORK STATUS Attribute
-
-   Link TYPE:  Value describing what kind of link types the other fields
-      in the attribute describes.  For home and small routers where the
-      information is limited the value can for example be set to SHARED
-      (0x01).  For routers with more control the value can be set to
-      either HOST, APPLICATION, SESSION or STREAM.  (Todo: Link those to
-      fields in STREAM PROPERTIES?)
 
    Conguestion Lvl:  Value in the range 0x00 and Ox0F describing the
       level of congestion the network element is experiencing at this
@@ -496,20 +530,7 @@ Internet-Draft                   IMPRESS                   February 2014
 
    Node Cnt:  Numbers of nodes that supports IMPRESS in the notwork
       path.  Any router on the path that understands IMPRESS should
-      increase this number.  Other fields should only be updated if the
-      value is worse than what is already in the attribute.
-
-
-
-Martinsen                Expires August 10, 2014                [Page 9]
-
-Internet-Draft                   IMPRESS                   February 2014
-
-
-   Up Bandwidth:  Bandwidth in kbps available in the upstream direction.
-
-   Down Bandwidth:  Bandwidth in kbps available in the downstream
-      direction.
+      increase this number.
 
 7.  References
 
@@ -532,6 +553,14 @@ Internet-Draft                   IMPRESS                   February 2014
    [I-D.ietf-rtcweb-security-arch]
               Rescorla, E., "WebRTC Security Architecture", draft-ietf-
               rtcweb-security-arch-07 (work in progress), July 2013.
+
+
+
+
+Martinsen                Expires August 11, 2014               [Page 10]
+
+Internet-Draft                   IMPRESS                   February 2014
+
 
 Author's Address
 
@@ -557,4 +586,31 @@ Author's Address
 
 
 
-Martinsen                Expires August 10, 2014               [Page 10]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Martinsen                Expires August 11, 2014               [Page 11]
