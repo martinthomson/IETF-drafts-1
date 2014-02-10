@@ -4,36 +4,24 @@
 
 TRAM                                                        P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                        February 7, 2014
-Expires: August 11, 2014
+Intended status: Standards Track                       February 10, 2014
+Expires: August 14, 2014
 
 
-             In-band Media PRopErties Signalling with STUN
-                       draft-martinsen-impress-00
+ Differentiated prIorities and Status Code-points Using Stun Signalling
+                               (DISCUSS)
+                    draft-martinsen-tram-discuss-00
 
 Abstract
 
-   It can be useful for applications to provide some limited information
-   regarding the properties of the data the application is sending.
-   Such properties can be used by on-path devices to give the
-   application a better user experience.  It is also useful for the
-   application to know the current status of the on-path devices
-   (Network).  If the application knows that the network path is
-   congested, it can take appropriate action to not make the situation
-   any worse.
-
-   This draft describes how this can be achieved by adding two small
-   attributes to any STUN packet sent by the application.  For example;
-   such STUN packets are sent during call setup when ICE connectivity
-   checks er performed or when the call is established in keep-alive
-   messages.  The application and devices on the media path can use the
-   information in the two STUN attributes to prioritize the flow,
-   perform traffic engineering, or provide network analytics.
-
-   This STUN attributes in this draft are on purpose small and strictly
-   specified.  This is to avoid unnecessary information leakage and
-   other security concerns regarding growing the size of the STUN
-   message.  The functionality described here is referred to as IMPRESS.
+   This draft describes a mechanism for setting differentiated service
+   code points in-band in a stream to make it is easy for the
+   application developer.  Those code points can cross administrative
+   domains without being lost and may contain internal application
+   stream priorities.  This makes it possible for the network to
+   prioritize the streams that have the most value for the application.
+   It also describes a mechanism to signal early congestion notification
+   messages back to the application.
 
 Requirements Language
 
@@ -51,19 +39,24 @@ Status of This Memo
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at http://datatracker.ietf.org/drafts/current/.
 
-
-
-Martinsen                Expires August 11, 2014                [Page 1]
-
-Internet-Draft                   IMPRESS                   February 2014
-
-
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 11, 2014.
+   This Internet-Draft will expire on August 14, 2014.
+
+
+
+
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 1]
+
+Internet-Draft                   DISCUSS                   February 2014
+
 
 Copyright Notice
 
@@ -91,8 +84,8 @@ Table of Contents
      6.1.  STREAM-TYPE . . . . . . . . . . . . . . . . . . . . . . .   7
      6.2.  BANDWIDTH-USAGE . . . . . . . . . . . . . . . . . . . . .   8
      6.3.  STREAM-PRIORITY . . . . . . . . . . . . . . . . . . . . .   8
-     6.4.  NETWORK STATUS  . . . . . . . . . . . . . . . . . . . . .   9
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     6.4.  NETWORK-STATUS  . . . . . . . . . . . . . . . . . . . . .   9
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
      7.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
      7.2.  Informational References  . . . . . . . . . . . . . . . .  10
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
@@ -106,43 +99,52 @@ Table of Contents
    different priorities depending on network conditions, direction, time
    of the day, dynamic user preferences and other factors.  These
    factors may be time variant, and thus need to be signalled.
-
-
-
-Martinsen                Expires August 11, 2014                [Page 2]
-
-Internet-Draft                   IMPRESS                   February 2014
-
-
    Moreover, in many cases of peer-to-peer communication, flow
    information is known only to the endpoint.  These considerations,
    coupled with the trend to use encryption for browser-to-browser
    communication [I-D.ietf-rtcweb-security-arch], imply that access
    lists, deep packet inspection and other static prioritization methods
-   cannot be employed successfully to prioritize packet flows.  This
-   specification describes how these problems can be solved by using
-   defining two strictly defined STUN [RFC5389] attributes which can be
-   added to any STUN message the client wants to send.  STUN messages
-   are typically sent during the ICE [RFC5245] connectivity check phase
-   when the media session is established, or when keep-alive STUN
-   messages are sent after the session is established.  The application
-   is not limited to those two scenarios, if some communication between
+   cannot be employed successfully to prioritize packet flows.
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 2]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
+   There is a need for a solution that is easy for the application
+   developer to use.  That means consistent behaviour on all supported
+   platforms and preferably without need of administrative privileges to
+   set and read values.  The solution also needs to be able to cross
+   administrative domains without the risk of being rewritten.  [[Q1:
+   This draft will only offer tamper detection of some of the values.
+   Further discussion regarding the incentive to lie is needed.
+   --palmarti]]
+
+   This draft describes how these problems can be solved by defining a
+   few strictly defined STUN [RFC5389] attributes which can be added to
+   any STUN message the client wants to send.  STUN messages are
+   typically sent during the ICE [RFC5245] connectivity check phase when
+   the media session is established, or when keep-alive STUN messages
+   are sent after the session is established.  The application is not
+   limited to those two scenarios, if some communication between
    application and network is needed it can choose to do so at any time.
 
    Devices on the media path can use the information in the STUN
-   attributes to prioritize the flow, perform traffic engineering, or
-   provide network analytics.  Applications can use information in
-   network status attribute to influence rate stating points or rate
-   adaption mechanisms.
+   attributes to prioritize the flow, perform traffic engineering,
+   provide network analytics or as a gateway to existing methods for
+   prioritizing flows (DSCP [RFC2474]).  Applications can use
+   information in network status attribute to influence rate stating
+   points or rate adaption mechanisms.
 
-   This document describes a mechanism for how such application
-   properties and network status can be sent by STUN.  The functionality
-   described here is referred to as IMPRESS.  Due to the security
-   implications described in (TODO: Ref Martins draft) where large STUN
-   packet are used amplify an attack, keeping the added STUN attributes
-   is an important design consideration.  To avoid unwanted information
-   leakage the two defined attributes STREAM_PROPERTIES and
-   NETWORK_STATUS are strictly defined in this draft.
+   The functionality described here is referred to as DISCUSS.  Due to
+   the security implications described in
+   [I-D.thomson-mmusic-ice-webrtc] where large STUN packet are used
+   amplify an attack, keeping the added STUN attributes is an important
+   design consideration.  To avoid unwanted information leakage the new
+   defined STUN attributes are strictly defined in this draft.
 
 2.  General Usage
 
@@ -150,7 +152,9 @@ Internet-Draft                   IMPRESS                   February 2014
    message; STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-
    TOLERANCE and NETWORK-STATUS.  Se Section 6 for the formal
    description.  It is RECOMMENDED to add them to a STUN request
-   response pair, especially if the NETWORK STATUS attribute is in use.
+   response pair, especially if the NETWORK-STATUS attribute is in use.
+   This allows the information gathered to be sent back to the
+   requesting agent in the the STUN response.
 
    The STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-TOLERANCE
    attributes MUST be added before any INTEGRITY attribute.  It is
@@ -158,18 +162,18 @@ Internet-Draft                   IMPRESS                   February 2014
    INTEGRITY attribute as this prevents tampering with the content of
    the attribute.
 
+
+
+
+Martinsen                Expires August 14, 2014                [Page 3]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
    If the client wants to receive feedback from the network it must add
    a empty NETWORK-STATUS attribute.  This attribute MUST be added after
    the INTEGRITY attribute, as on-path devices will write information
    into this attribute.  Having a readily available attribute to write
-
-
-
-Martinsen                Expires August 11, 2014                [Page 3]
-
-Internet-Draft                   IMPRESS                   February 2014
-
-
    into will save the the on-path device from growing buffers to add
    their own attribute.  On path devices SHOULD not add their own
    NETWORK-STATUS attribute.
@@ -178,8 +182,9 @@ Internet-Draft                   IMPRESS                   February 2014
    after the INTEGRITY attribute, it should copy the content into a new
    NETWORK-STATUS attribute and add it before the INTEGRITY attribute
    when sending the STUN response.  A new empty NETWORK-STATUS attribute
-   can be added after the INTEGRITY attribute.  New STEAM-PROPERTIES
-   attributes can also be added describing the stream in this direction.
+   can be added after the INTEGRITY attribute.  New STUN attributes
+   defined in this draft can also be added describing the stream in this
+   direction.
 
    If an agent receives a STUN response with a NETWORK-STATUS attribute
    before the INTEGRITY attribute, this describes the stream in the
@@ -190,24 +195,18 @@ Internet-Draft                   IMPRESS                   February 2014
    packets.  This would prevent unnecessary processing of normal STUN
    packets on the network nodes.
 
-   A few alternatives (Needs discussion):
+   [[Q2: A few alternatives (Needs discussion): ---1: Alter the STUN
+   magic cookie.  (But than i would not be a STUN packet anymore, and
+   that raises a new set of problems) ---2: Add a special this is
+   IMPRESS attribute.  This must be the first attribute in the message.
+   This allows for network node to look for IMPRESS packets at a fixed
+   offset without needing to parse the entire packet.  ---3: Alter the
+   transaction id.  This might be problematic if using it in conjunction
+   with ICE connectivity checks.  But probably fine in other scenarios.
+   ---4: Define a new STUN Method.  Also brakes ICE, makes it harder to
+   tag onto attributes to already in use messages.  --palmarti]]
 
-   1.  Alter the STUN magic cookie.  (But than i would not be a STUN
-       packet anymore, and that raises a new set of problems)
-
-   2.  Add a special this is IMPRESS attribute.  This must be the first
-       attribute in the message.  This allows for network node to look
-       for IMPRESS packets at a fixed offset without needing to parse
-       the entire packet.
-
-   3.  Alter the transaction id.  This might be problematic if using it
-       in conjunction with ICE connectivity checks.  But probably fine
-       in other scenarios.
-
-   4.  Define a new STUN Method.  Also brakes ICE, makes it harder to
-       tag onto attributes to already in use messages.
-
-   [[Q1: Do we want to restrict this to req/resp or do we want to allow
+   [[Q3: Do we want to restrict this to req/resp or do we want to allow
    for the attributes to be added in this fashion for indications as
    well? --palmarti]]
 
@@ -221,9 +220,10 @@ Internet-Draft                   IMPRESS                   February 2014
 
 
 
-Martinsen                Expires August 11, 2014                [Page 4]
+
+Martinsen                Expires August 14, 2014                [Page 4]
 
-Internet-Draft                   IMPRESS                   February 2014
+Internet-Draft                   DISCUSS                   February 2014
 
 
      Alice                router1            router2              Bob
@@ -277,9 +277,9 @@ Internet-Draft                   IMPRESS                   February 2014
 
 
 
-Martinsen                Expires August 11, 2014                [Page 5]
+Martinsen                Expires August 14, 2014                [Page 5]
 
-Internet-Draft                   IMPRESS                   February 2014
+Internet-Draft                   DISCUSS                   February 2014
 
 
 3.  Interaction with ICE
@@ -298,7 +298,7 @@ Internet-Draft                   IMPRESS                   February 2014
    confusion with BANDWIDTH-USAGE attributes describing different paths
    that never going to be utilized.
 
-   [[Q2: Problem with consent freshness if not based on STUN.
+   [[Q4: Problem with consent freshness if not based on STUN.
    --palmarti]]
 
 4.  Multiplexed streams
@@ -333,15 +333,15 @@ Internet-Draft                   IMPRESS                   February 2014
 
 
 
-Martinsen                Expires August 11, 2014                [Page 6]
+Martinsen                Expires August 14, 2014                [Page 6]
 
-Internet-Draft                   IMPRESS                   February 2014
+Internet-Draft                   DISCUSS                   February 2014
 
 
          0xXXX0: STREAM-TYPE
          0xXXX1: BANDWIDTH-USAGE
          0xXXX2: STREAM-PRIORITY
-         0xYYYY: NETWORK STATUS
+         0xYYYY: NETWORK-STATUS
 
 6.1.  STREAM-TYPE
 
@@ -351,16 +351,14 @@ Internet-Draft                   IMPRESS                   February 2014
    0                   1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |              TYPE             |         TBD                   |
+   |              TYPE             | Interactivity |               |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                       Figure 1: STREAM TYPE Attribute
 
-   TYPE:  STREAM TYPE a a 16 bit value defined in below describing the
-      flow.
-
-   There are four stream types types defined:
+   TYPE:  STREAM TYPE is a 16 bit value defined in Figure 2 below
+      describing the flow.
 
         0x0001 Audio
         0x0002 Video
@@ -369,9 +367,14 @@ Internet-Draft                   IMPRESS                   February 2014
 
                           Figure 2: STREAM Types
 
-   The intention is to keep the number of types limited and general.
-   (Avoiding descriptions like high quality and similar that change over
-   time)
+   Interactivity:  Is a 8 bit value defined in Figure 3 below describing
+      the flow.
+
+        0x00 Undef
+        0x01 Stream (Broadcast? Oneway?)
+        0x02 Interactive
+
+                       Figure 3: Interactivity Types
 
    It is possible to combine the stream types if a stream contains more
    than one type.
@@ -383,16 +386,17 @@ Internet-Draft                   IMPRESS                   February 2014
    during ICE connectivity checks.  If more information regarding
    multiplexed streams is needed it is possible to add more than one
    attribute to a STUN message (See section ??).  This can be done to
+
+
+
+Martinsen                Expires August 14, 2014                [Page 7]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
    STUN messages that are being sent after the connectivity check phase
    is finished (Keepalive, consent freshness).  During this phase the
    added size of the STUN messages pose no security threat.
-
-
-
-Martinsen                Expires August 11, 2014                [Page 7]
-
-Internet-Draft                   IMPRESS                   February 2014
-
 
 6.2.  BANDWIDTH-USAGE
 
@@ -402,13 +406,13 @@ Internet-Draft                   IMPRESS                   February 2014
        0                   1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |             AVARAGE (kbps)    |           MAX (kbps)          |
+       |             AVERAGE (kbps)    |           MAX (kbps)          |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                    Figure 3: BANDWIDTH USAGE Attribute
+                    Figure 4: BANDWIDTH USAGE Attribute
 
-   AVARAGE:  Expected sustained bandwidth usage for this stream.  Note
+   AVERAGE:  Expected sustained bandwidth usage for this stream.  Note
       that for elastic types of streams like video, sudden large
       movements in the picture my lead to this value being inaccurate.
 
@@ -431,24 +435,24 @@ Internet-Draft                   IMPRESS                   February 2014
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                    Figure 4: STREAM PRIORITY Attribute
+                    Figure 5: STREAM PRIORITY Attribute
 
    Priority:  Describes this streams priority among other streams coming
       from this endpoint/application (With same session ID).  Values
       range from 255 (0xFF) to 0.
 
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 8]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
    D: Delay sensitive.  The application can set this bit as a hint to
       the network element that the stream is delay sensitive.  (Unsure
       if this is useful)
-
-
-
-
-
-Martinsen                Expires August 11, 2014                [Page 8]
-
-Internet-Draft                   IMPRESS                   February 2014
-
 
    Stream IDX:  Application can choose set this to ease debugging in the
       network.  A reasonable value can foe example be the index have in
@@ -462,10 +466,14 @@ Internet-Draft                   IMPRESS                   February 2014
       among streams with the same Session Id originating from the same
       IP)
 
-6.4.  NETWORK STATUS
+6.4.  NETWORK-STATUS
 
    This attribute have a length that are multiples of 4 (32) so no
-   padding is necessary.
+   padding is necessary.  The values are kept in the same attribute to
+   make it easier for the network element to process it.  Only one
+   attribute, with static placement of the fields.  [[Q5: Does this
+   matter?  Could we have several attributes with possible different
+   ordering without any problem for the network element?  --palmarti]]
 
    This attribute MUST be added after any INTEGRITY attribute in the
    STUN message.  Values in this attribute can be updated along the
@@ -479,7 +487,7 @@ Internet-Draft                   IMPRESS                   February 2014
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
-                    Figure 5: NETWORK STATUS Attribute
+                    Figure 6: NETWORK-STATUS Attribute
 
    Congestion Lvl:  Value in the range 0x00 and Ox0F describing the
       level of congestion the network element is experiencing at this
@@ -489,27 +497,30 @@ Internet-Draft                   IMPRESS                   February 2014
       adaption or similar.  The values 0x10-0xFF are reserved for future
       use.
 
-   Node Cnt:  Numbers of nodes that supports IMPRESS in the notwork
-      path.  Any router on the path that understands IMPRESS should
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 9]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
+   Node Cnt:  Numbers of nodes that supports DISCUSS in the network
+      path.  Any router on the path that understands DISCUSS should
       increase this number.
 
 7.  References
-
-
-
-
-
-
-
-Martinsen                Expires August 11, 2014                [Page 9]
-
-Internet-Draft                   IMPRESS                   February 2014
-
 
 7.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC2474]  Nichols, K., Blake, S., Baker, F., and D. Black,
+              "Definition of the Differentiated Services Field (DS
+              Field) in the IPv4 and IPv6 Headers", RFC 2474, December
+              1998.
 
    [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,
               "Session Traversal Utilities for NAT (STUN)", RFC 5389,
@@ -526,6 +537,12 @@ Internet-Draft                   IMPRESS                   February 2014
               Rescorla, E., "WebRTC Security Architecture", draft-ietf-
               rtcweb-security-arch-07 (work in progress), July 2013.
 
+   [I-D.thomson-mmusic-ice-webrtc]
+              Thomson, M., "Using Interactive Connectivity Establishment
+              (ICE) in Web Real-Time Communications (WebRTC)", draft-
+              thomson-mmusic-ice-webrtc-01 (work in progress), October
+              2013.
+
 Author's Address
 
    Paal-Erik Martinsen
@@ -540,21 +557,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Martinsen                Expires August 11, 2014               [Page 10]
+Martinsen                Expires August 14, 2014               [Page 10]

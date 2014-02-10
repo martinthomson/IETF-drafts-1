@@ -46,6 +46,18 @@ Status of This Memo
 
    This Internet-Draft will expire on August 14, 2014.
 
+
+
+
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 1]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
 Copyright Notice
 
    Copyright (c) 2014 IETF Trust and the persons identified as the
@@ -63,20 +75,20 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-   2.  General Usage
-   3.  Interaction with ICE
-   4.  Multiplexed streams
-   5.  Network Processing
-   6.  New STUN attributes
-     6.1.  STREAM-TYPE
-     6.2.  BANDWIDTH-USAGE
-     6.3.  STREAM-PRIORITY
-     6.4.  NETWORK-STATUS
-   7.  References
-     7.1.  Normative References
-     7.2.  Informational References
-   Author's Address
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  General Usage . . . . . . . . . . . . . . . . . . . . . . . .   3
+   3.  Interaction with ICE  . . . . . . . . . . . . . . . . . . . .   6
+   4.  Multiplexed streams . . . . . . . . . . . . . . . . . . . . .   6
+   5.  Network Processing  . . . . . . . . . . . . . . . . . . . . .   6
+   6.  New STUN attributes . . . . . . . . . . . . . . . . . . . . .   6
+     6.1.  STREAM-TYPE . . . . . . . . . . . . . . . . . . . . . . .   7
+     6.2.  BANDWIDTH-USAGE . . . . . . . . . . . . . . . . . . . . .   8
+     6.3.  STREAM-PRIORITY . . . . . . . . . . . . . . . . . . . . .   8
+     6.4.  NETWORK-STATUS  . . . . . . . . . . . . . . . . . . . . .   9
+   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .  10
+     7.2.  Informational References  . . . . . . . . . . . . . . . .  10
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -93,6 +105,14 @@ Table of Contents
    communication [I-D.ietf-rtcweb-security-arch], imply that access
    lists, deep packet inspection and other static prioritization methods
    cannot be employed successfully to prioritize packet flows.
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 2]
+
+Internet-Draft                   DISCUSS                   February 2014
+
 
    There is a need for a solution that is easy for the application
    developer to use.  That means consistent behaviour on all supported
@@ -142,6 +162,14 @@ Table of Contents
    INTEGRITY attribute as this prevents tampering with the content of
    the attribute.
 
+
+
+
+Martinsen                Expires August 14, 2014                [Page 3]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
    If the client wants to receive feedback from the network it must add
    a empty NETWORK-STATUS attribute.  This attribute MUST be added after
    the INTEGRITY attribute, as on-path devices will write information
@@ -155,8 +183,8 @@ Table of Contents
    NETWORK-STATUS attribute and add it before the INTEGRITY attribute
    when sending the STUN response.  A new empty NETWORK-STATUS attribute
    can be added after the INTEGRITY attribute.  New STUN attributes
-   defined in this draft can also be added describing the stream in this
-   direction.
+   described in this draft can also be added describing the stream in
+   this direction.
 
    If an agent receives a STUN response with a NETWORK-STATUS attribute
    before the INTEGRITY attribute, this describes the stream in the
@@ -181,6 +209,22 @@ Table of Contents
    [[Q3: Do we want to restrict this to req/resp or do we want to allow
    for the attributes to be added in this fashion for indications as
    well? --palmarti]]
+
+
+
+
+
+
+
+
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 4]
+
+Internet-Draft                   DISCUSS                   February 2014
+
 
      Alice                router1            router2              Bob
       |                      |                   |                  |
@@ -227,6 +271,17 @@ Table of Contents
        complete picture of what the remote agent is sending and how the
        status of both the upstream and downstream path.
 
+
+
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 5]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
 3.  Interaction with ICE
 
    An ICE connectivity check is performed by sending a STUN Binding
@@ -272,6 +327,16 @@ Table of Contents
 6.  New STUN attributes
 
    This STUN extension defines the following new attributes:
+
+
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 6]
+
+Internet-Draft                   DISCUSS                   February 2014
+
 
          0xXXX0: STREAM-TYPE
          0xXXX1: BANDWIDTH-USAGE
@@ -321,6 +386,14 @@ Table of Contents
    during ICE connectivity checks.  If more information regarding
    multiplexed streams is needed it is possible to add more than one
    attribute to a STUN message (See section ??).  This can be done to
+
+
+
+Martinsen                Expires August 14, 2014                [Page 7]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
    STUN messages that are being sent after the connectivity check phase
    is finished (Keepalive, consent freshness).  During this phase the
    added size of the STUN messages pose no security threat.
@@ -367,6 +440,15 @@ Table of Contents
    Priority:  Describes this streams priority among other streams coming
       from this endpoint/application (With same session ID).  Values
       range from 255 (0xFF) to 0.
+
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 8]
+
+Internet-Draft                   DISCUSS                   February 2014
+
 
    D: Delay sensitive.  The application can set this bit as a hint to
       the network element that the stream is delay sensitive.  (Unsure
@@ -415,6 +497,15 @@ Table of Contents
       adaption or similar.  The values 0x10-0xFF are reserved for future
       use.
 
+
+
+
+
+Martinsen                Expires August 14, 2014                [Page 9]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
    Node Cnt:  Numbers of nodes that supports DISCUSS in the network
       path.  Any router on the path that understands DISCUSS should
       increase this number.
@@ -462,3 +553,8 @@ Author's Address
 
    Email: palmarti@cisco.com
 
+
+
+
+
+Martinsen                Expires August 14, 2014               [Page 10]

@@ -155,8 +155,8 @@ Table of Contents
    NETWORK-STATUS attribute and add it before the INTEGRITY attribute
    when sending the STUN response.  A new empty NETWORK-STATUS attribute
    can be added after the INTEGRITY attribute.  New STUN attributes
-   defined in this draft can also be added describing the stream in this
-   direction.
+   described in this draft can also be added describing the stream in
+   this direction.
 
    If an agent receives a STUN response with a NETWORK-STATUS attribute
    before the INTEGRITY attribute, this describes the stream in the
