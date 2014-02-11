@@ -3,9 +3,9 @@
 
 
 TRAM                                                        P. Martinsen
-Internet-Draft                                                     Cisco
-Intended status: Standards Track                       February 10, 2014
-Expires: August 14, 2014
+Internet-Draft                                              H. Wildfeuer
+Intended status: Standards Track                                   Cisco
+Expires: August 15, 2014                               February 11, 2014
 
 
  Differentiated prIorities and Status Code-points Using Stun Signalling
@@ -14,14 +14,13 @@ Expires: August 14, 2014
 
 Abstract
 
-   This draft describes a mechanism for setting differentiated service
-   code points in-band in a stream to make it is easy for the
-   application developer.  Those code points can cross administrative
-   domains without being lost and may contain internal application
-   stream priorities.  This makes it possible for the network to
-   prioritize the streams that have the most value for the application.
-   It also describes a mechanism to signal early congestion notification
-   messages back to the application.
+   This draft describes a mechanism for information exchange between an
+   application and the network.  The information provided from the
+   application to the network MAY be used by a network element in the
+   path to modify its behavior to improve application quality of
+   experience (QoE).  Likewise, the information provided by the network
+   to the application MAY be used by the application to modify its
+   behavior to optimize for QoE.
 
 Requirements Language
 
@@ -44,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 14, 2014.
+   This Internet-Draft will expire on August 15, 2014.
 
 Copyright Notice
 
@@ -65,18 +64,21 @@ Table of Contents
 
    1.  Introduction
    2.  General Usage
-   3.  Interaction with ICE
-   4.  Multiplexed streams
-   5.  Network Processing
+   3.  Network Processing
+     3.1.  Packet Processing by Network Device
+     3.2.  Interaction with DSCP
+   4.  Interaction with ICE
+   5.  Multiplexed Streams
    6.  New STUN attributes
      6.1.  STREAM-TYPE
      6.2.  BANDWIDTH-USAGE
      6.3.  STREAM-PRIORITY
      6.4.  NETWORK-STATUS
-   7.  References
-     7.1.  Normative References
-     7.2.  Informational References
-   Author's Address
+   7.  Acknowledgements
+   8.  References
+     8.1.  Normative References
+     8.2.  Informational References
+   Authors' Addresses
 
 1.  Introduction
 
@@ -129,31 +131,32 @@ Table of Contents
 2.  General Usage
 
    This draft defines several attributes that can be added to a STUN
-   message; STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-
-   TOLERANCE and NETWORK-STATUS.  Se Section 6 for the formal
-   description.  It is RECOMMENDED to add them to a STUN request
-   response pair, especially if the NETWORK-STATUS attribute is in use.
-   This allows the information gathered to be sent back to the
-   requesting agent in the the STUN response.
+   message; STREAM-TYPE, BANDWIDTH-USAGE, STREAM-PRIORITY and NETWORK-
+   STATUS.  See Section 6 for the formal description.  It is RECOMMENDED
+   to add them to a STUN request response pair, especially if the
+   NETWORK-STATUS attribute is in use.  This allows the information
+   gathered to be sent back to the requesting agent in the the STUN
+   response.
 
-   The STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-TOLERANCE
-   attributes MUST be added before any INTEGRITY attribute.  It is
-   RECOMMENDED to only add this attribute to STUN messages containing a
-   INTEGRITY attribute as this prevents tampering with the content of
-   the attribute.
+   The STREAM-TYPE, BANDWIDTH-USAGE, STREAM-PRIORITY attributes MUST be
+   added before any INTEGRITY attribute.  It is RECOMMENDED to only add
+   these attributes to STUN messages containing a INTEGRITY attribute as
+   this prevents tampering with the content of the attribute.
 
    If the client wants to receive feedback from the network it must add
-   a empty NETWORK-STATUS attribute.  This attribute MUST be added after
-   the INTEGRITY attribute, as on-path devices will write information
-   into this attribute.  Having a readily available attribute to write
-   into will save the the on-path device from growing buffers to add
-   their own attribute.  On path devices SHOULD not add their own
-   NETWORK-STATUS attribute.
+   a null NETWORK-STATUS attribute.  A null NETWORK_STATUS attribute
+   consists of the attribute with the Node Cnt field set to zero (0) and
+   the CS bit set to 0 (Off).  This attribute MUST be added after the
+   INTEGRITY attribute, as on-path devices may write information into
+   this attribute.  Having a readily available attribute to write into
+   will save the the on-path device from growing buffers to add their
+   own attribute.  On path devices SHOULD not add their own NETWORK-
+   STATUS attribute (or any other STUN attribute).
 
    If an agent receives a STUN request with a NETWORK-STATUS attribute
    after the INTEGRITY attribute, it should copy the content into a new
    NETWORK-STATUS attribute and add it before the INTEGRITY attribute
-   when sending the STUN response.  A new empty NETWORK-STATUS attribute
+   when sending the STUN response.  A new null NETWORK-STATUS attribute
    can be added after the INTEGRITY attribute.  New STUN attributes
    described in this draft can also be added describing the stream in
    this direction.
@@ -163,15 +166,15 @@ Table of Contents
    upstream direction.  A NETWORK-STATUS attribute after the INTEGRITY
    attribute describes the stream in the downstream direction.
 
-   It might make sense to distinguish IMPRESS packets from normal STUN
+   It might make sense to distinguish DISCUSS packets from normal STUN
    packets.  This would prevent unnecessary processing of normal STUN
    packets on the network nodes.
 
    [[Q2: A few alternatives (Needs discussion): ---1: Alter the STUN
    magic cookie.  (But than i would not be a STUN packet anymore, and
    that raises a new set of problems) ---2: Add a special this is
-   IMPRESS attribute.  This must be the first attribute in the message.
-   This allows for network node to look for IMPRESS packets at a fixed
+   DISCUSS attribute.  This must be the first attribute in the message.
+   This allows for network node to look for DISCUSS packets at a fixed
    offset without needing to parse the entire packet.  ---3: Alter the
    transaction id.  This might be problematic if using it in conjunction
    with ICE connectivity checks.  But probably fine in other scenarios.
@@ -197,37 +200,123 @@ Table of Contents
       |(5)                   |                   |                  |
 
 
-                           IMPRESS example flow
+                           DISCUSS example flow
 
    1.  Alice creates a Binding Request, adds STREAM-TYPE, BANDWIDTH-
-       USAGE, DELAY-TOLERANCE, LOSS-TOLERANCE attributes before the
-       INTEGRITY attribute and a single NETWORK-STATUS attribute after
-       the INTEGRITY attribute.
+       USAGE, STREAM-PRIORITY attributes before the INTEGRITY attribute
+       and a single null NETWORK-STATUS attribute after the INTEGRITY
+       attribute.
 
    2.  Router1 inspects the STUN Request message and reads any STREAM-
-       TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE
-       attributes and the information they contain.  It then updates the
-       NETWORK-STATUS attribute with any information the router have.
-       It then forwards the request.
+       TYPE, BANDWIDTH-USAGE, or STREAM-PRIORITY attributes and the
+       information they contain.  It then updates the NETWORK-STATUS
+       attribute with any information the router have.  It then forwards
+       the request.
 
    3.  Bob processes the STUN Request.  When Bob builds the response, it
        copies the NETWORK-STATUS attribute into the STUN Response before
-       the INTEGRITY check and adds new empty NETWORK-STATUS attribute
+       the INTEGRITY check and adds new null NETWORK-STATUS attribute
        after the INTEGRITY attribute.  Bob then transmits the message.
 
-   4.  Router2 (first IMPRESS network element for the downstream
+   4.  Router2 (first DISCUSS network element for the downstream
        direction) inspects the Response message, reads the STREAM-TYPE,
-       BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE attributes and
-       MAY alter the NETWORK-STATUS attribute located after the
-       INTEGRITY attribute.  It then transmits the message.
+       BANDWIDTH-USAGE, or STREAM-PRIORITY attributes and MAY alter the
+       NETWORK-STATUS attribute located after the INTEGRITY attribute.
+       It then transmits the message.
 
    5.  When Alice receives the STUN Response, she can extract the
-       STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE
-       attributes and the two NETWORK-STATUS attributes to get a
-       complete picture of what the remote agent is sending and how the
-       status of both the upstream and downstream path.
+       STREAM-TYPE, BANDWIDTH-USAGE, or STREAM-PRIORITY attributes and
+       the two NETWORK-STATUS attributes to get a complete picture of
+       what the remote agent is sending and how the status of both the
+       upstream and downstream path.
 
-3.  Interaction with ICE
+3.  Network Processing
+
+   This section describes the processing of DISCUSS packets by network
+   devices.
+
+3.1.  Packet Processing by Network Device
+
+   Network devices are said to support DISCUSS if they perform
+   inspection of packets being forward or switched in order to identify
+   an DISCUSS STUN packet.  These devices will also be able to read/
+   write STUN attributes to/from this packet.  It is not required that
+   every network device in the path support DISCUSS.  It is expected
+   that DISCUSS will have the most value being implemented at certain
+   points in the network (PIN's) such as WAN edge devices, wireless
+   access devices, and Internet gateways.
+
+   Network devices that support DISCUSS MAY utilize the information
+   provided by the application in the STUN attributes to modify their
+   behavior.  These include the attributes defined in this document with
+   the exception of the NETWORK-STATUS attribute.  The NETWORK-STATUS
+   attribute SHOULD NOT be used by the DISCUSS capable network device to
+   modify its behavior.  The intent of the NEWTORK-STATUS attribute is
+   for the application to modify its behavior.
+
+   If the NETWORK-STATUS attributes exists in a DISCUSS packet after an
+   INTEGRITY attribute, the DISCUSS capable network device MUST process
+   it as described in this section.  NETWORK-STATUS attributes that
+   exist before the INTEGRITY attribute MUST NOT be modified by the
+   network device.  The modifications to the NETWORK-STATUS attribute
+   are:
+
+   o  Update the Node Cnt field in the attribute.  The device SHALL
+      increment this field by one unless it is at its maximum
+      (saturated) value.  If the field is at its maximum value, the
+      device SHALL NOT modify this field.
+
+   o  Overwrite the attribute CS bit if the value at this device is
+      "worst" than the current value.  In other words, only write to
+      this bit if the device is experiencing congestion on relevant
+      queues/interfaces for this flow AND the current value of this
+      field is 0 (Off).
+
+   The determination of congestion at a device is out of the scope of
+   this document.  Setting of CS bit to On by the device is meant to
+   provide direct feedback to the application of potential or current
+   loss of packets in its flow (s).  The application can then react to
+   this indication by altering its encoding of information in the packet
+   to deal with congestion/packet loss, e.g. reduce its encoding rate or
+   switch to embedded encoding.  Devices SHOULD ensure that the DISCUSS
+   capable applications that do react to congestion notification by
+   reducing their transmission rate be treated properly to ensure
+   fairness with non reacting applications (i.e. ensure fairness for
+   well behaving applications).
+
+   The DISCUSS STUN packet SHOULD experience minimal extra processing
+   delay through the DISCUSS capable network device relative to non-
+   DISCUSS packets in the flow.  The DISCUSS STUN packet MAY be placed
+   out of order in the packet flow, but SHOULD NOT be delayed more than
+   a few packet interval times.
+
+3.2.  Interaction with DSCP
+
+   One of the attributes that may be added to the STUN packet by the
+   application is the STREAM-PRIORITY attribute.  This attribute
+   indicates the relative priority of streams inside of an application
+   session.  This attribute is compatible with the use of DSCP (or other
+   priority markings) at the networking layer as described in this
+   section.
+
+   Since transport layer markings may be modified by middle boxes or
+   devices in the path or at the interface of the application itself due
+   to the lack of support in the OS network stack, the STREAM-PRIORITY
+   attribute can be used as a mechanism for ensuring proper QoS
+   treatment through multiple domains.  DISCUSS capable device may use
+   the STREAM-PRIORITY attribute to remark the DSCP value to the
+   appropriate value.  DSCP re-marking based on STREAM-PRIORITY
+   attribute may make sense at certain PIN's, e.g. gateway between
+   network domains (e.g. managed network to/from Internet), access
+   switches in managed network, etc.  The translation from the Priority
+   number in the STREAM-PRIORITY attribute to the correct transport
+   layer marking (e.g. DSCP) is implementation specific and out of the
+   scope of this document.
+
+   [I-D.dhesikan-tsvwg-rtcweb-qos] provides the recommended DSCP values
+   for webrtc enabled browsers to use for various classes of traffic.
+
+4.  Interaction with ICE
 
    An ICE connectivity check is performed by sending a STUN Binding
    indication.  Prior to sending the agent can add one STREAM-TYPE
@@ -246,28 +335,24 @@ Table of Contents
    [[Q4: Problem with consent freshness if not based on STUN.
    --palmarti]]
 
-4.  Multiplexed streams
+5.  Multiplexed Streams
 
-   TODO: Write.  Explain in detail what options you have with
-   multiplexed streams.  If not used in conn checks you can add more
-   than one attribute.
+   In some scenarios a 5-tuple can be used to transport several media
+   streams.  BUNDLE [I-D.ietf-mmusic-sdp-bundle-negotiation] describes
+   such a mechanism.
 
-5.  Network Processing
+   When describing the stream with a STREAM-TYPE attribute there are two
+   possibilities to describe the streams that are multiplexed.  Adding
+   one attribute for each type (Audio, Video,++), or to save a few bits
+   on the wire it is also possible to construct the STREAM-TYPE so a one
+   type value describes several types.  For example audio have the value
+   of 1 and application data have the value of 4.  If the STREAM_TYPE
+   value is set to 5 the only combination that gives that is audio and
+   application data.
 
-   TODO: Write properly.  Update the node cont field.  Only update other
-   fields if they are worse than what is already there (Aggregated
-   result).  Values are only hints, no promises.  Will not describe
-   algorithm to calculate congestion value.  But values close to MAX may
-   lead to applications rate adoption mechanisms to kick in.  (Fairness
-   problem)
-
-   TODO: Describe interaction with DSCP.  The rtcweb-qos documents
-   explicitly says how to map for instance video to a DSCP value.  If
-   the DSCP values was somehow reset on the path (That happens) the
-   router can remark the IP packets correctly by looking at the STUN
-   message.  (IE the signalling in the STUN message survives the whole
-   path, and is integrity protects, but the network node have no way of
-   detecting that...)
+   The other attributes BANDWIDTH-USAGE, STREAM-PRIORITY and NETWORK-
+   STATUS SHOULD only be added once as they describe the behaviour of
+   the 5-tuple and not individual streams.
 
 6.  New STUN attributes
 
@@ -376,13 +461,13 @@ Table of Contents
       network.  A reasonable value can foe example be the index have in
       the SDP.
 
-   Stream ID:  Identification to distinguish what session this stream is
-      part of.  This MUST have the same value for all the media streams
-      the application wants to give differentiated services.  (Note that
-      this ID may overlap with other streams that originates from a
-      different IP address.  The network element MUST only prioritize
-      among streams with the same Session Id originating from the same
-      IP)
+   Session ID:  Identification to distinguish what session this stream
+      is part of.  This MUST have the same value for all the media
+      streams the application wants to give differentiated services.
+      (Note that this ID may overlap with other streams that originates
+      from a different IP address.  The network element MUST only
+      prioritize among streams with the same Session Id originating from
+      the same IP)
 
 6.4.  NETWORK-STATUS
 
@@ -398,30 +483,36 @@ Table of Contents
    network path by nodes that are not able to regenerate a correct
    INTEGRITY attribute.
 
-        0                   1                   2                   3
-        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       | Congestion Lvl| Node Cnt      |    0xFFFF                     |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                    1                   2                   3
+       0  1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      +--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |CS|   Node Cnt    |           0x7FFFFF                          |
+      +--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                     Figure 6: NETWORK-STATUS Attribute
 
-   Congestion Lvl:  Value in the range 0x00 and Ox0F describing the
-      level of congestion the network element is experiencing at this
-      point. 0x00 means no congestion, 0x0F Fully congested.  The router
-      can choose any value between those value as it sees fit.  The
-      application that sees those values might act on by doing some rate
-      adaption or similar.  The values 0x10-0xFF are reserved for future
-      use.
+   CS:  Congestion Status.  This bit is set to indicate that there is
+      congestion at the network device's relevant queues/interfaces for
+      this flow.  The network element should set this bit to 1 (On) if
+      it is experiencing congestion.  This bit is set to 0 (off) when
+      the attribute is created by the application.  The application that
+      sees this bit set might act on it by doing some rate adaption or
+      similar action.
 
    Node Cnt:  Numbers of nodes that supports DISCUSS in the network
       path.  Any router on the path that understands DISCUSS should
-      increase this number.
+      increase this number.  This field is set to 0 when the attribute
+      is created by the application.
 
-7.  References
+7.  Acknowledgements
 
-7.1.  Normative References
+   Authors would like to thank Dan Wing, Anca Zamfir and Cullen Jennings
+   for their comments and review.
+
+8.  References
+
+8.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -440,7 +531,7 @@ Table of Contents
               Traversal for Offer/Answer Protocols", RFC 5245, April
               2010.
 
-7.2.  Informational References
+8.2.  Informational References
 
    [I-D.ietf-rtcweb-security-arch]
               Rescorla, E., "WebRTC Security Architecture", draft-ietf-
@@ -452,13 +543,33 @@ Table of Contents
               thomson-mmusic-ice-webrtc-01 (work in progress), October
               2013.
 
-Author's Address
+   [I-D.dhesikan-tsvwg-rtcweb-qos]
+              Dhesikan, S., Druta, D., Jones, P., and J. Polk, "DSCP and
+              other packet markings for RTCWeb QoS", draft-dhesikan-
+              tsvwg-rtcweb-qos-04 (work in progress), January 2014.
+
+   [I-D.ietf-mmusic-sdp-bundle-negotiation]
+              Holmberg, C., Alvestrand, H., and C. Jennings,
+              "Multiplexing Negotiation Using Session Description
+              Protocol (SDP) Port Numbers", draft-ietf-mmusic-sdp-
+              bundle-negotiation-05 (work in progress), October 2013.
+
+Authors' Addresses
 
    Paal-Erik Martinsen
    Cisco Systems, Inc.
    Philip Pedersens vei 20
    Lysaker, Akershus  1366
    Norway
+
+   Email: palmarti@cisco.com
+
+
+   Herb Wildfeuer
+   Cisco Systems, Inc.
+   821 Alder Drive
+   Milpitas, California  95035
+   United States
 
    Email: palmarti@cisco.com
 

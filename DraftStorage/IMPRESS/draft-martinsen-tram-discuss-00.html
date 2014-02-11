@@ -376,28 +376,31 @@
   <link href="#rfc.toc" rel="Contents"/>
 <link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
 <link href="#rfc.section.2" rel="Chapter" title="2 General Usage"/>
-<link href="#rfc.section.3" rel="Chapter" title="3 Interaction with ICE"/>
-<link href="#rfc.section.4" rel="Chapter" title="4 Multiplexed streams"/>
-<link href="#rfc.section.5" rel="Chapter" title="5 Network Processing"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Network Processing"/>
+<link href="#rfc.section.3.1" rel="Chapter" title="3.1 Packet Processing by Network Device"/>
+<link href="#rfc.section.3.2" rel="Chapter" title="3.2 Interaction with DSCP"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Interaction with ICE"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Multiplexed Streams"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 New STUN attributes"/>
 <link href="#rfc.section.6.1" rel="Chapter" title="6.1 STREAM-TYPE"/>
 <link href="#rfc.section.6.2" rel="Chapter" title="6.2 BANDWIDTH-USAGE"/>
 <link href="#rfc.section.6.3" rel="Chapter" title="6.3 STREAM-PRIORITY"/>
 <link href="#rfc.section.6.4" rel="Chapter" title="6.4 NETWORK-STATUS"/>
-<link href="#rfc.references" rel="Chapter" title="7 References"/>
-<link href="#rfc.references.1" rel="Chapter" title="7.1 Normative References"/>
-<link href="#rfc.references.2" rel="Chapter" title="7.2 Informational References"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="8 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="8.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="8.2 Informational References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
   <meta name="generator" content="xml2rfc version 2.4.5 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Martinsen, P." />
+  <meta name="dct.creator" content="Martinsen, P. and H. Wildfeuer" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-martinsen-tram-discuss-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-2-10" />
-  <meta name="dct.abstract" content="This draft describes a mechanism for setting differentiated service code points in-band in a stream to make it is easy for the application developer. Those code points can cross administrative domains without being lost and may contain internal application stream priorities. This makes it possible for the network to prioritize the streams that have the most value for the application. It also describes a mechanism to signal early congestion notification messages back to the application.  " />
-  <meta name="description" content="This draft describes a mechanism for setting differentiated service code points in-band in a stream to make it is easy for the application developer. Those code points can cross administrative domains without being lost and may contain internal application stream priorities. This makes it possible for the network to prioritize the streams that have the most value for the application. It also describes a mechanism to signal early congestion notification messages back to the application.  " />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-2-11" />
+  <meta name="dct.abstract" content="This draft describes a mechanism for information exchange between an application and the network.  The information provided from the application to the network MAY be used by a network element in the path to modify its behavior to improve application quality of experience (QoE).  Likewise, the information provided by the network to the application MAY be used by the application to modify its behavior to optimize for QoE.  " />
+  <meta name="description" content="This draft describes a mechanism for information exchange between an application and the network.  The information provided from the application to the network MAY be used by a network element in the path to modify its behavior to improve application quality of experience (QoE).  Likewise, the information provided by the network to the application MAY be used by the application to modify its behavior to optimize for QoE.  " />
 
 </head>
 
@@ -412,15 +415,15 @@
 </tr>
 <tr>
   <td class="left">Internet-Draft</td>
-  <td class="right">Cisco</td>
+  <td class="right">H. Wildfeuer</td>
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
-  <td class="right">February 10, 2014</td>
+  <td class="right">Cisco</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 14, 2014</td>
-  <td class="right"></td>
+  <td class="left">Expires: August 15, 2014</td>
+  <td class="right">February 11, 2014</td>
 </tr>
 
     	
@@ -433,7 +436,7 @@
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
-<p>This draft describes a mechanism for setting differentiated service code points in-band in a stream to make it is easy for the application developer. Those code points can cross administrative domains without being lost and may contain internal application stream priorities. This makes it possible for the network to prioritize the streams that have the most value for the application. It also describes a mechanism to signal early congestion notification messages back to the application.  </p>
+<p>This draft describes a mechanism for information exchange between an application and the network.  The information provided from the application to the network MAY be used by a network element in the path to modify its behavior to improve application quality of experience (QoE).  Likewise, the information provided by the network to the application MAY be used by the application to modify its behavior to optimize for QoE.  </p>
 <h1>
   <a>Requirements Language</a>
 </h1>
@@ -444,7 +447,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 14, 2014.</p>
+<p>This Internet-Draft will expire on August 15, 2014.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -458,18 +461,21 @@
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
 <li>2.   <a href="#rfc.section.2">General Usage</a></li>
-<li>3.   <a href="#rfc.section.3">Interaction with ICE</a></li>
-<li>4.   <a href="#rfc.section.4">Multiplexed streams</a></li>
-<li>5.   <a href="#rfc.section.5">Network Processing</a></li>
+<li>3.   <a href="#rfc.section.3">Network Processing</a></li>
+<li>3.1.   <a href="#rfc.section.3.1">Packet Processing by Network Device</a></li>
+<li>3.2.   <a href="#rfc.section.3.2">Interaction with DSCP</a></li>
+<li>4.   <a href="#rfc.section.4">Interaction with ICE</a></li>
+<li>5.   <a href="#rfc.section.5">Multiplexed Streams</a></li>
 <li>6.   <a href="#rfc.section.6">New STUN attributes</a></li>
 <li>6.1.   <a href="#rfc.section.6.1">STREAM-TYPE</a></li>
 <li>6.2.   <a href="#rfc.section.6.2">BANDWIDTH-USAGE</a></li>
 <li>6.3.   <a href="#rfc.section.6.3">STREAM-PRIORITY</a></li>
 <li>6.4.   <a href="#rfc.section.6.4">NETWORK-STATUS</a></li>
-<li>7.   <a href="#rfc.references">References</a></li>
-<li>7.1.   <a href="#rfc.references.1">Normative References</a></li>
-<li>7.2.   <a href="#rfc.references.2">Informational References</a></li>
-<li><a href="#rfc.authors">Author's Address</a></li>
+<li>7.   <a href="#rfc.section.7">Acknowledgements</a></li>
+<li>8.   <a href="#rfc.references">References</a></li>
+<li>8.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>8.2.   <a href="#rfc.references.2">Informational References</a></li>
+<li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
   </ul>
@@ -481,13 +487,13 @@
 <p id="rfc.section.1.p.4">Devices on the media path can use the information in the STUN attributes to prioritize the flow, perform traffic engineering, provide network analytics or as a gateway to existing methods for prioritizing flows (DSCP <a href="#RFC2474">[RFC2474]</a>). Applications can use information in network status attribute to influence rate stating points or rate adaption mechanisms.  </p>
 <p id="rfc.section.1.p.5">The functionality described here is referred to as DISCUSS. Due to the security implications described in <a href="#I-D.thomson-mmusic-ice-webrtc">[I-D.thomson-mmusic-ice-webrtc]</a> where large STUN packet are used amplify an attack, keeping the added STUN attributes is an important design consideration. To avoid unwanted information leakage the new defined STUN attributes are strictly defined in this draft.  </p>
 <h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> General Usage</h1>
-<p id="rfc.section.2.p.1">This draft defines several attributes that can be added to a STUN message; STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-TOLERANCE and NETWORK-STATUS. Se <a href="#new_attributes">Section 6</a> for the formal description. It is RECOMMENDED to add them to a STUN request response pair, especially if the NETWORK-STATUS attribute is in use. This allows the information gathered to be sent back to the requesting agent in the the STUN response.  </p>
-<p id="rfc.section.2.p.2">The STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-TOLERANCE attributes MUST be added before any INTEGRITY attribute. It is RECOMMENDED to only add this attribute to STUN messages containing a INTEGRITY attribute as this prevents tampering with the content of the attribute.  </p>
-<p id="rfc.section.2.p.3">If the client wants to receive feedback from the network it must add a empty NETWORK-STATUS attribute. This attribute MUST be added after the INTEGRITY attribute, as on-path devices will write information into this attribute. Having a readily available attribute to write into will save the the on-path device from growing buffers to add their own attribute. On path devices SHOULD not add their own NETWORK-STATUS attribute.  </p>
-<p id="rfc.section.2.p.4">If an agent receives a STUN request with a NETWORK-STATUS attribute after the INTEGRITY attribute, it should copy the content into a new NETWORK-STATUS attribute and add it before the INTEGRITY attribute when sending the STUN response. A new empty NETWORK-STATUS attribute can be added after the INTEGRITY attribute. New STUN attributes described in this draft can also be added describing the stream in this direction.  </p>
+<p id="rfc.section.2.p.1">This draft defines several attributes that can be added to a STUN message; STREAM-TYPE, BANDWIDTH-USAGE, STREAM-PRIORITY and NETWORK-STATUS. See <a href="#new_attributes">Section 6</a> for the formal description. It is RECOMMENDED to add them to a STUN request response pair, especially if the NETWORK-STATUS attribute is in use. This allows the information gathered to be sent back to the requesting agent in the the STUN response.  </p>
+<p id="rfc.section.2.p.2">The STREAM-TYPE, BANDWIDTH-USAGE, STREAM-PRIORITY attributes MUST be added before any INTEGRITY attribute. It is RECOMMENDED to only add these attributes to STUN messages containing a INTEGRITY attribute as this prevents tampering with the content of the attribute.  </p>
+<p id="rfc.section.2.p.3">If the client wants to receive feedback from the network it must add a null NETWORK-STATUS attribute. A null NETWORK_STATUS attribute consists of the attribute with the Node Cnt field set to zero (0) and the CS bit set to 0 (Off).  This attribute MUST be added after the INTEGRITY attribute, as on-path devices may write information into this attribute. Having a readily available attribute to write into will save the the on-path device from growing buffers to add their own attribute. On path devices SHOULD not add their own NETWORK-STATUS attribute (or any other STUN attribute).  </p>
+<p id="rfc.section.2.p.4">If an agent receives a STUN request with a NETWORK-STATUS attribute after the INTEGRITY attribute, it should copy the content into a new NETWORK-STATUS attribute and add it before the INTEGRITY attribute when sending the STUN response. A new null NETWORK-STATUS attribute can be added after the INTEGRITY attribute. New STUN attributes described in this draft can also be added describing the stream in this direction.  </p>
 <p id="rfc.section.2.p.5">If an agent receives a STUN response with a NETWORK-STATUS attribute before the INTEGRITY attribute, this describes the stream in the upstream direction. A NETWORK-STATUS attribute after the INTEGRITY attribute describes the stream in the downstream direction.  </p>
-<p id="rfc.section.2.p.6">It might make sense to distinguish IMPRESS packets from normal STUN packets. This would prevent unnecessary processing of normal STUN packets on the network nodes.  </p>
-<p><a id="Q2" class="info">[Q2]<span class="info">palmarti: A few alternatives (Needs discussion): ---1: Alter the STUN magic cookie. (But than i would not be a STUN packet anymore, and that raises a new set of problems) ---2: Add a special this is IMPRESS attribute. This must be the first attribute in the message. This allows for network node to look for IMPRESS packets at a fixed offset without needing to parse the entire packet.  ---3: Alter the transaction id. This might be problematic if using it in conjunction with ICE connectivity checks. But probably fine in other scenarios.  ---4: Define a new STUN Method. Also brakes ICE, makes it harder to tag onto attributes to already in use messages.  </span></a> </p>
+<p id="rfc.section.2.p.6">It might make sense to distinguish DISCUSS packets from normal STUN packets. This would prevent unnecessary processing of normal STUN packets on the network nodes.  </p>
+<p><a id="Q2" class="info">[Q2]<span class="info">palmarti: A few alternatives (Needs discussion): ---1: Alter the STUN magic cookie. (But than i would not be a STUN packet anymore, and that raises a new set of problems) ---2: Add a special this is DISCUSS attribute. This must be the first attribute in the message. This allows for network node to look for DISCUSS packets at a fixed offset without needing to parse the entire packet.  ---3: Alter the transaction id. This might be problematic if using it in conjunction with ICE connectivity checks. But probably fine in other scenarios.  ---4: Define a new STUN Method. Also brakes ICE, makes it harder to tag onto attributes to already in use messages.  </span></a> </p>
 <p><a id="Q3" class="info">[Q3]<span class="info">palmarti: Do we want to restrict this to req/resp or do we want to allow for the attributes to be added in this fashion for indications as well?</span></a> </p>
 <pre>  
   Alice                router1            router2              Bob
@@ -505,27 +511,45 @@
    |(5)                   |                   |                  |
 
 </pre>
-<p class="figure">IMPRESS example flow</p>
+<p class="figure">DISCUSS example flow</p>
 <p/>
 
 <ol>
-  <li>Alice creates a Binding Request, adds STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE, LOSS-TOLERANCE attributes before the INTEGRITY attribute and a single NETWORK-STATUS attribute after the INTEGRITY attribute.  </li>
-  <li>Router1 inspects the STUN Request message and reads any STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE attributes and the information they contain. It then updates the NETWORK-STATUS attribute with any information the router have. It then forwards the request.  </li>
-  <li>Bob processes the STUN Request. When Bob builds the response, it copies the NETWORK-STATUS attribute into the STUN Response before the INTEGRITY check and adds new empty NETWORK-STATUS attribute after the INTEGRITY attribute. Bob then transmits the message.  </li>
-  <li>Router2 (first IMPRESS network element for the downstream direction) inspects the Response message, reads the STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE attributes and MAY alter the NETWORK-STATUS attribute located after the INTEGRITY attribute. It then transmits the message.  </li>
-  <li>When Alice receives the STUN Response, she can extract the STREAM-TYPE, BANDWIDTH-USAGE, DELAY-TOLERANCE or LOSS-TOLERANCE attributes and the two NETWORK-STATUS attributes to get a complete picture of what the remote agent is sending and how the status of both the upstream and downstream path.  </li>
+  <li>Alice creates a Binding Request, adds STREAM-TYPE, BANDWIDTH-USAGE, STREAM-PRIORITY attributes before the INTEGRITY attribute and a single null NETWORK-STATUS attribute after the INTEGRITY attribute.  </li>
+  <li>Router1 inspects the STUN Request message and reads any STREAM-TYPE, BANDWIDTH-USAGE, or STREAM-PRIORITY attributes and the information they contain. It then updates the NETWORK-STATUS attribute with any information the router have. It then forwards the request.  </li>
+  <li>Bob processes the STUN Request. When Bob builds the response, it copies the NETWORK-STATUS attribute into the STUN Response before the INTEGRITY check and adds new null NETWORK-STATUS attribute after the INTEGRITY attribute. Bob then transmits the message.  </li>
+  <li>Router2 (first DISCUSS network element for the downstream direction) inspects the Response message, reads the STREAM-TYPE, BANDWIDTH-USAGE, or STREAM-PRIORITY attributes and MAY alter the NETWORK-STATUS attribute located after the INTEGRITY attribute. It then transmits the message.  </li>
+  <li>When Alice receives the STUN Response, she can extract the STREAM-TYPE, BANDWIDTH-USAGE, or STREAM-PRIORITY attributes and the two NETWORK-STATUS attributes to get a complete picture of what the remote agent is sending and how the status of both the upstream and downstream path.  </li>
 </ol>
 
 <p> </p>
-<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Interaction with ICE</h1>
-<p id="rfc.section.3.p.1">An ICE connectivity check is performed by sending a STUN Binding indication. Prior to sending the agent can add one STREAM-TYPE attribute. If added, only one MUST be added.  This is to avoid unnecessary large STUN packets during the connectivity checks. If the connectivity check is sent on a 5-tuple that multiplexes different types of media and more detailed information wants to be signalled it should be done after the connectivity check phase is finished.  </p>
-<p id="rfc.section.3.p.2">This limits the information the STUN messages are able to convey during the connectivity checks, but also avoids adding network confusion with BANDWIDTH-USAGE attributes describing different paths that never going to be utilized.  </p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Network Processing</h1>
+<p id="rfc.section.3.p.1">This section describes the processing of DISCUSS packets by network devices.  </p>
+<h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> Packet Processing by Network Device</h1>
+<p id="rfc.section.3.1.p.1">Network devices are said to support DISCUSS if they perform inspection of packets being forward or switched in order to identify an DISCUSS STUN packet.  These devices will also be able to read/write STUN attributes to/from this packet.  It is not required that every network device in the path support DISCUSS.  It is expected that DISCUSS will have the most value being implemented at certain points in the network (PIN's) such as WAN edge devices, wireless access devices, and Internet gateways.  </p>
+<p id="rfc.section.3.1.p.2">Network devices that support DISCUSS MAY utilize the information provided by the application in the STUN attributes to modify their behavior.  These include the attributes defined in this document with the exception of the NETWORK-STATUS attribute.  The NETWORK-STATUS attribute SHOULD NOT be used by the DISCUSS capable network device to modify its behavior.  The intent of the NEWTORK-STATUS attribute is for the application to modify its behavior.  </p>
+<p id="rfc.section.3.1.p.3">If the NETWORK-STATUS attributes exists in a DISCUSS packet after an INTEGRITY attribute, the DISCUSS capable network device MUST process it as described in this section.  NETWORK-STATUS attributes that exist before the INTEGRITY attribute MUST NOT be modified by the network device.  The modifications to the NETWORK-STATUS attribute are: </p>
+
+<ul>
+  <li>Update the Node Cnt field in the attribute.  The device SHALL increment this field by one unless it is at its maximum (saturated) value.  If the field is at its maximum value, the device SHALL NOT modify this field.  </li>
+  <li>Overwrite the attribute CS bit if the value at this device is "worst" than the current value.  In other words, only write to this bit if the device is experiencing congestion on relevant queues/interfaces for this flow AND the current value of this field is 0 (Off).  </li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.3.1.p.4">The determination of congestion at a device is out of the scope of this document.  Setting of CS bit to On by the device is meant to provide direct feedback to the application of potential or current loss of packets in its flow (s).  The application can then react to this indication by altering its encoding of information in the packet to deal with congestion/packet loss, e.g. reduce its encoding rate or switch to embedded encoding.  Devices SHOULD ensure that the DISCUSS capable applications that do react to congestion notification by reducing their transmission rate be treated properly to ensure fairness with non reacting applications (i.e. ensure fairness for well behaving applications).  </p>
+<p id="rfc.section.3.1.p.5">The DISCUSS STUN packet SHOULD experience minimal extra processing delay through the DISCUSS capable network device relative to non-DISCUSS packets in the flow.  The DISCUSS STUN packet MAY be placed out of order in the packet flow, but SHOULD NOT be delayed more than a few packet interval times.  </p>
+<h1 id="rfc.section.3.2"><a href="#rfc.section.3.2">3.2.</a> Interaction with DSCP</h1>
+<p id="rfc.section.3.2.p.1">One of the attributes that may be added to the STUN packet by the application is the STREAM-PRIORITY attribute.  This attribute indicates the relative priority of streams inside of an application session.  This attribute is compatible with the use of DSCP (or other priority markings) at the networking layer as described in this section.  </p>
+<p id="rfc.section.3.2.p.2">Since transport layer markings may be modified by middle boxes or devices in the path or at the interface of the application itself due to the lack of support in the OS network stack, the STREAM-PRIORITY attribute can be used as a mechanism for ensuring proper QoS treatment through multiple domains.  DISCUSS capable device may use the STREAM-PRIORITY attribute to remark the DSCP value to the appropriate value.  DSCP re-marking based on STREAM-PRIORITY attribute may make sense at certain PIN's, e.g. gateway between network domains (e.g. managed network to/from Internet), access switches in managed network, etc.  The translation from the Priority number in the STREAM-PRIORITY attribute to the correct transport layer marking (e.g. DSCP) is implementation specific and out of the scope of this document.  </p>
+<p><a href="#I-D.dhesikan-tsvwg-rtcweb-qos">[I-D.dhesikan-tsvwg-rtcweb-qos]</a> provides the recommended DSCP values for webrtc enabled browsers to use for various classes of traffic.  </p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Interaction with ICE</h1>
+<p id="rfc.section.4.p.1">An ICE connectivity check is performed by sending a STUN Binding indication. Prior to sending the agent can add one STREAM-TYPE attribute. If added, only one MUST be added. This is to avoid unnecessary large STUN packets during the connectivity checks. If the connectivity check is sent on a 5-tuple that multiplexes different types of media and more detailed information wants to be signalled it should be done after the connectivity check phase is finished.  </p>
+<p id="rfc.section.4.p.2">This limits the information the STUN messages are able to convey during the connectivity checks, but also avoids adding network confusion with BANDWIDTH-USAGE attributes describing different paths that never going to be utilized.  </p>
 <p><a id="Q4" class="info">[Q4]<span class="info">palmarti: Problem with consent freshness if not based on STUN.  </span></a> </p>
-<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Multiplexed streams</h1>
-<p id="rfc.section.4.p.1">TODO: Write. Explain in detail what options you have with multiplexed streams. If not used in conn checks you can add more than one attribute.  </p>
-<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> Network Processing</h1>
-<p id="rfc.section.5.p.1">TODO: Write properly. Update the node cont field. Only update other fields if they are worse than what is already there (Aggregated result). Values are only hints, no promises. Will not describe algorithm to calculate congestion value. But values close to MAX may lead to applications rate adoption mechanisms to kick in. (Fairness problem) </p>
-<p id="rfc.section.5.p.2">TODO: Describe interaction with DSCP. The rtcweb-qos documents explicitly says how to map for instance video to a DSCP value. If the DSCP values was somehow reset on the path (That happens) the router can remark the IP packets correctly by looking at the STUN message. (IE the signalling in the STUN message survives the whole path, and is integrity protects, but the network node have no way of detecting that...) </p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> Multiplexed Streams</h1>
+<p id="rfc.section.5.p.1">In some scenarios a 5-tuple can be used to transport several media streams. BUNDLE <a href="#I-D.ietf-mmusic-sdp-bundle-negotiation">[I-D.ietf-mmusic-sdp-bundle-negotiation]</a> describes such a mechanism.  </p>
+<p id="rfc.section.5.p.2">When describing the stream with a STREAM-TYPE attribute there are two possibilities to describe the streams that are multiplexed. Adding one attribute for each type (Audio, Video,++), or to save a few bits on the wire it is also possible to construct the STREAM-TYPE so a one type value describes several types. For example audio have the value of 1 and application data have the value of 4. If the STREAM_TYPE value is set to 5 the only combination that gives that is audio and application data.  </p>
+<p id="rfc.section.5.p.3">The other attributes BANDWIDTH-USAGE, STREAM-PRIORITY and NETWORK-STATUS SHOULD only be added once as they describe the behaviour of the 5-tuple and not individual streams.  </p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#new_attributes" id="new_attributes">New STUN attributes</a></h1>
 <p id="rfc.section.6.p.1">This STUN extension defines the following new attributes: </p>
 <pre>
@@ -623,7 +647,7 @@
   <dd style="margin-left: 8">Delay sensitive. The application can set this bit as a hint to the network element that the stream is delay sensitive. (Unsure if this is useful) </dd>
   <dt>Stream IDX:</dt>
   <dd style="margin-left: 8">Application can choose set this to ease debugging in the network. A reasonable value can foe example be the index have in the SDP.  </dd>
-  <dt>Stream ID:</dt>
+  <dt>Session ID:</dt>
   <dd style="margin-left: 8">Identification to distinguish what session this stream is part of. This MUST have the same value for all the media streams the application wants to give differentiated services. (Note that this ID may overlap with other streams that originates from a different IP address. The network element MUST only prioritize among streams with the same Session Id originating from the same IP) </dd>
 </dl>
 
@@ -634,26 +658,28 @@
 <div id="rfc.figure.6"/>
 <div id="network_status_attr"/>
 <pre>
- 0                   1                   2                   3
- 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-| Congestion Lvl| Node Cnt      |    0xFFFF                     |
-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ 0                    1                   2                   3
+ 0  1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|CS|   Node Cnt    |           0x7FFFFF                          |
++--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
       </pre>
 <p class="figure">Figure 6: NETWORK-STATUS Attribute</p>
 <p/>
 
 <dl>
-  <dt>Congestion Lvl:</dt>
-  <dd style="margin-left: 8">Value in the range 0x00 and Ox0F describing the level of congestion the network element is experiencing at this point. 0x00 means no congestion, 0x0F Fully congested. The router can choose any value between those value as it sees fit. The application that sees those values might act on by doing some rate adaption or similar. The values 0x10-0xFF are reserved for future use.  </dd>
+  <dt>CS:</dt>
+  <dd style="margin-left: 8">Congestion Status.  This bit is set to indicate that there is congestion at the network device's relevant queues/interfaces for this flow.  The network element should set this bit to 1 (On) if it is experiencing congestion.  This bit is set to 0 (off) when the attribute is created by the application.  The application that sees this bit set might act on it by doing some rate adaption or similar action.  </dd>
   <dt>Node Cnt:</dt>
-  <dd style="margin-left: 8">Numbers of nodes that supports DISCUSS in the network path. Any router on the path that understands DISCUSS should increase this number.  </dd>
+  <dd style="margin-left: 8">Numbers of nodes that supports DISCUSS in the network path. Any router on the path that understands DISCUSS should increase this number.  This field is set to 0 when the attribute is created by the application.  </dd>
 </dl>
 
 <p> </p>
-<h1 id="rfc.references"><a href="#rfc.references">7.</a> References</h1>
-<h1 id="rfc.references.1"><a href="#rfc.references.1">7.1.</a> Normative References</h1>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#ack" id="ack">Acknowledgements</a></h1>
+<p id="rfc.section.7.p.1">Authors would like to thank Dan Wing, Anca Zamfir and Cullen Jennings for their comments and review.  </p>
+<h1 id="rfc.references"><a href="#rfc.references">8.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">8.1.</a> Normative References</h1>
 <table>
   <tbody>
     <tr>
@@ -682,7 +708,7 @@
     </tr>
   </tbody>
 </table>
-<h1 id="rfc.references.2"><a href="#rfc.references.2">7.2.</a> Informational References</h1>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">8.2.</a> Informational References</h1>
 <table>
   <tbody>
     <tr>
@@ -697,10 +723,22 @@
       </td>
       <td class="top"><a>Thomson, M.</a>, "<a href="http://tools.ietf.org/html/draft-thomson-mmusic-ice-webrtc-01">Using Interactive Connectivity Establishment (ICE) in Web Real-Time Communications (WebRTC)</a>", Internet-Draft draft-thomson-mmusic-ice-webrtc-01, October 2013.</td>
     </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.dhesikan-tsvwg-rtcweb-qos">[I-D.dhesikan-tsvwg-rtcweb-qos]</b>
+      </td>
+      <td class="top"><a>Dhesikan, S.</a>, <a>Druta, D.</a>, <a>Jones, P.</a> and <a>J. Polk</a>, "<a href="http://tools.ietf.org/html/draft-dhesikan-tsvwg-rtcweb-qos-04">DSCP and other packet markings for RTCWeb QoS</a>", Internet-Draft draft-dhesikan-tsvwg-rtcweb-qos-04, January 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.ietf-mmusic-sdp-bundle-negotiation">[I-D.ietf-mmusic-sdp-bundle-negotiation]</b>
+      </td>
+      <td class="top"><a>Holmberg, C.</a>, <a>Alvestrand, H.</a> and <a>C. Jennings</a>, "<a href="http://tools.ietf.org/html/draft-ietf-mmusic-sdp-bundle-negotiation-05">Multiplexing Negotiation Using Session Description Protocol (SDP) Port Numbers</a>", Internet-Draft draft-ietf-mmusic-sdp-bundle-negotiation-05, October 2013.</td>
+    </tr>
   </tbody>
 </table>
 <h1 id="rfc.authors">
-  <a href="#rfc.authors">Author's Address</a>
+  <a href="#rfc.authors">Authors' Addresses</a>
 </h1>
 <div class="avoidbreak">
   <address class="vcard">
@@ -720,6 +758,28 @@
 		<span class="code">1366</span>
 	  </span>
 	  <span class="country-name vcardline">Norway</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:palmarti@cisco.com">palmarti@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Herb Wildfeuer</span> 
+	  <span class="n hidden">
+		<span class="family-name">Wildfeuer</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span class="vcardline">821 Alder Drive</span>
+
+	  <span class="vcardline">
+		<span class="locality">Milpitas</span>,  
+		<span class="region">California</span> 
+		<span class="code">95035</span>
+	  </span>
+	  <span class="country-name vcardline">United States</span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:palmarti@cisco.com">palmarti@cisco.com</a></span>
 
