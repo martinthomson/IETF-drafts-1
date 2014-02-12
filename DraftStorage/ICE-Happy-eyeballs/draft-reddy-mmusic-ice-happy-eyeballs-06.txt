@@ -5,8 +5,8 @@
 MMUSIC                                                          T. Reddy
 Internet-Draft                                                  P. Patil
 Intended status: Standards Track                            P. Martinsen
-Expires: August 4, 2014                                            Cisco
-                                                        January 31, 2014
+Expires: August 16, 2014                                           Cisco
+                                                       February 12, 2014
 
 
                     Happy Eyeballs Extension for ICE
@@ -33,7 +33,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 4, 2014.
+   This Internet-Draft will expire on August 16, 2014.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Reddy, et al.            Expires August 4, 2014                 [Page 1]
+Reddy, et al.            Expires August 16, 2014                [Page 1]
 
-Internet-Draft           Happy Eyeballs for ICE             January 2014
+Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
 Table of Contents
@@ -67,9 +67,11 @@ Table of Contents
    5.  Example Algorithm for Choosing the Local       Preference . .   4
    6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .   5
-   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
-   9.  Normative References  . . . . . . . . . . . . . . . . . . . .   5
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   5
+   8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
+   9.  Implementation Status . . . . . . . . . . . . . . . . . . . .   6
+     9.1.  HappyE-ICE-Test . . . . . . . . . . . . . . . . . . . . .   6
+   10. Normative References  . . . . . . . . . . . . . . . . . . . .   7
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
 
 1.  Introduction
 
@@ -107,11 +109,9 @@ Table of Contents
 
 
 
-
-
-Reddy, et al.            Expires August 4, 2014                 [Page 2]
+Reddy, et al.            Expires August 16, 2014                [Page 2]
 
-Internet-Draft           Happy Eyeballs for ICE             January 2014
+Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
 3.  Improving ICE Dual-stack Fairness
@@ -165,9 +165,9 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
 
 
 
-Reddy, et al.            Expires August 4, 2014                 [Page 3]
+Reddy, et al.            Expires August 16, 2014                [Page 3]
 
-Internet-Draft           Happy Eyeballs for ICE             January 2014
+Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
    Where G is the candidate priority provided by the controlling agent
@@ -221,13 +221,47 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
 
 
 
-Reddy, et al.            Expires August 4, 2014                 [Page 4]
+Reddy, et al.            Expires August 16, 2014                [Page 4]
 
-Internet-Draft           Happy Eyeballs for ICE             January 2014
+Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
    candidate type (HOST, SRFLX, RELAY).  Cmax is the number of allowed
    consecutive candidates of the same IP address type.
+
+   Using the values N=abs(60000-59000) and Cmax = 2 yields the following
+   sorted local candidate list:
+
+    (1)  HOST  IPv6 (1) Priority: 2129289471
+    (2)  HOST  IPv6 (2) Priority: 2129289470
+    (3)  HOST  IPv4 (1) Priority: 2129033471
+    (4)  HOST  IPv4 (2) Priority: 2129033470
+    (5)  HOST  IPv6 (1) Priority: 2128777471
+    (6)  HOST  IPv6 (2) Priority: 2128777470
+    (7)  HOST  IPv4 (1) Priority: 2128521471
+    (8)  HOST  IPv4 (2) Priority: 2128521470
+    (9)  HOST  IPv6 (1) Priority: 2128265471
+    (10) HOST  IPv6 (2) Priority: 2128265470
+    (11) SRFLX IPv6 (1) Priority: 1693081855
+    (12) SRFLX IPv6 (2) Priority: 1693081854
+    (13) SRFLX IPv4 (1) Priority: 1692825855
+    (14) SRFLX IPv4 (2) Priority: 1692825854
+    (15) RELAY IPv6 (1) Priority: 15360255
+    (16) RELAY IPv6 (2) Priority: 15360254
+    (17) RELAY IPv4 (1) Priority: 15104255
+    (18) RELAY IPv4 (2) Priority: 15104254
+
+   The result is an even spread of IPv6 and IPv4 candidates among the
+   different candidate types (HOST, SRFLX, RELAY).  The local_preference
+   value is calculated separately for each candidate type.
+
+   The resulting checklist will depend on the priorities of the remote
+   candidates.  It is not possible to ensure an even spread of IPv4 and
+   IPv6 addresses unless both the remote and local sides uses the simple
+   recommendations in this draft.  It is worth noting that there is a
+   good chance it will some effect even if the remote side does not
+   support this.  It will not break interoperability with other ICE
+   implementations.
 
 6.  IANA Considerations
 
@@ -240,13 +274,79 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
    authentication as described in section 2.5 of [RFC5245] apply to this
    use.
 
+
+
+
+Reddy, et al.            Expires August 16, 2014                [Page 5]
+
+Internet-Draft           Happy Eyeballs for ICE            February 2014
+
+
 8.  Acknowledgements
 
    Authors would like to thank Dan Wing, Ari Keranen, Bernard Aboba,
    Martin Thomson, Jonathan Lennox and Balint Menyhart for their
    comments and review.
 
-9.  Normative References
+9.  Implementation Status
+
+   [Note to RFC Editor: Please remove this section and reference to
+   [RFC6982] prior to publication.]
+
+   This section records the status of known implementations of the
+   protocol defined by this specification at the time of posting of this
+   Internet-Draft, and is based on a proposal described in [RFC6982].
+   The description of implementations in this section is intended to
+   assist the IETF in its decision processes in progressing drafts to
+   RFCs.  Please note that the listing of any individual implementation
+   here does not imply endorsement by the IETF.  Furthermore, no effort
+   has been spent to verify the information presented here that was
+   supplied by IETF contributors.  This is not intended as, and must not
+   be construed to be, a catalog of available implementations or their
+   features.  Readers are advised to note that other implementations may
+   exist.
+
+   According to [RFC6982], "this will allow reviewers and working groups
+   to assign due consideration to documents that have the benefit of
+   running code, which may serve as evidence of valuable experimentation
+   and feedback that have made the implemented protocols more mature.
+   It is up to the individual working groups to use this information as
+   they see fit".
+
+9.1.  HappyE-ICE-Test
+
+   Organization:   Private Initiative (palerikm@gmail.com)
+
+   Description:   A private initiative to create working code to show
+      how the recommendations in this draft can be implemented.  The
+      code is publicly available at github.
+
+   Implementation:   https://github.com/palerikm/HappyE-ICE-Test
+
+   Level of maturity:   The code only implements the parts that cover
+      this draft and not a full ICE implementation.  There is work in
+      progress to get this into a full implementation, unfortunately
+      that source code is not at the current time available to the
+      public.
+
+   Coverage:   Implement this draft.
+
+
+
+Reddy, et al.            Expires August 16, 2014                [Page 6]
+
+Internet-Draft           Happy Eyeballs for ICE            February 2014
+
+
+   Licensing:   BSD
+
+   Implementation experience:   Fiddly.  Please not that the developer
+      also is author of this draft.  The implementation also helped
+      writing parts of this draft.
+
+   Contact:   Paal-Erik Martinsen <palmarti@gmail.com>.
+
+10.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -263,6 +363,10 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
               "Default Address Selection for Internet Protocol Version 6
               (IPv6)", RFC 6724, September 2012.
 
+   [RFC6982]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", RFC 6982, July
+              2013.
+
 Authors' Addresses
 
    Tirumaleswar Reddy
@@ -275,19 +379,19 @@ Authors' Addresses
    Email: tireddy@cisco.com
 
 
-
-
-Reddy, et al.            Expires August 4, 2014                 [Page 5]
-
-Internet-Draft           Happy Eyeballs for ICE             January 2014
-
-
    Prashanth Patil
    Cisco Systems, Inc.
    Bangalore
    India
 
    Email: praspati@cisco.com
+
+
+
+
+Reddy, et al.            Expires August 16, 2014                [Page 7]
+
+Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
    Paal-Erik Martinsen
@@ -333,4 +437,12 @@ Internet-Draft           Happy Eyeballs for ICE             January 2014
 
 
 
-Reddy, et al.            Expires August 4, 2014                 [Page 6]
+
+
+
+
+
+
+
+
+Reddy, et al.            Expires August 16, 2014                [Page 8]
