@@ -3,12 +3,12 @@
 
 
 Internet Engineering Task Force                                 C. Eckel
-Internet-Draft                                       Cisco Systems, Inc.
-Intended status: Informational                         February 11, 2014
-Expires: August 15, 2014
+Internet-Draft                                                  T. Reddy
+Intended status: Informational                       Cisco Systems, Inc.
+Expires: August 17, 2014                               February 13, 2014
 
 
-         Application Enabled Open Networking Problem Statement
+Application Enabled Open Networking: Problem Statement and Requirements
                  draft-eckel-aeon-problem-statement-00
 
 Abstract
@@ -18,14 +18,13 @@ Abstract
    wide range of signaling protocols.  Historically, this functionality
    has been accomplished to the extent possible using heuristics, which
    inspect and infer flow characteristics.  Heuristics may be based on
-   port ranges, IP subnetting, or deep packet inspection (DPI), e.g. by
-   an application level gateway (ALG).  Current trends in application
-   deployment, usage, and traffic renders such techniques less effective
-   and/or result in compromises to application security or user privacy.
-   A better solution is required that allows applications to explicitly
-   and willingly communicate flow characteristics to the network, and
-   that allows the network to communicate what it can provide as
-   feedback to applications.
+   port ranges, network separation, or deep packet inspection (DPI).
+   But many application flows in current usages are dynamic, time-bound
+   (short lived for some of them), possibly encrypted (TLS for
+   signaling), peer-to-peer, possibly asymmetric, and used on non-
+   dedicated devices, any combination of which renders such techniques
+   less effective or results in compromises to application security or
+   user privacy.
 
 Status of This Memo
 
@@ -42,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 15, 2014.
+   This Internet-Draft will expire on August 17, 2014.
 
 Copyright Notice
 
@@ -65,8 +64,9 @@ Table of Contents
    2.  Typical Workflows
    3.  Limitations of Existing Solutions
    4.  Efforts in Progress
-   5.  Acknowledgements
-   Author's Address
+   5.  Requirements
+   6.  Acknowledgements
+   Authors' Addresses
 
 1.  Introduction
 
@@ -80,7 +80,7 @@ Table of Contents
    is added.
 
    Now more so than ever before, identification and treatment of
-   application flows is critical for the successful deployment and
+   application flows are critical for the successful deployment and
    operation of applications.  These applications are based on wide
    range of signaling protocols and deployed by a diverse set of
    application providers that is not necessarily affiliated with the
@@ -88,76 +88,73 @@ Table of Contents
 
    Historically, identification of application flows has been
    accomplished using heuristics, which inspect and infer flow
-   characteristics.  Heuristics may be based on port ranges, IP
-   subnetting, or deep packet inspection (DPI), e.g. by an application
-   level gateway (ALG).  Each of these techniques suffers from a set of
-   limitations, particularly in the face of challenges on the network
-   outlined previously.
+   characteristics.  Heuristics may be based on port ranges, network
+   separation, or deep packet inspection (DPI).  Each of these
+   techniques suffers from a set of limitations, particularly in the
+   face of challenges on the network outlined previously.
 
    Port based solutions suffer from port overloading and inconsistent
-   port usage.  IP subnetting solutions are error prone and result
-   increase network management complexity.  DPI is computationally
-   expensive and becomes a greater challenge with the wider adoption of
-   encrypted signaling and secured media.  An additional drawback of DPI
-   is that the resulting insights are not available, or need to be
-   recomputed, at network nodes further down the application flow path.
+   port usage.  Network separation techniques like IP subnetting are
+   error prone and increase network management complexity.  DPI is
+   computationally expensive and becomes a greater challenge with the
+   wider adoption of encrypted signaling and secured media.  An
+   additional drawback of DPI is that any insights are not available, or
+   need to be recomputed, at network nodes further down the application
+   flow path.
 
 2.  Typical Workflows
 
    Various heuristic based approaches are used prevalently and
-   successfully for two types of workflows:
+   successfully for two types of work flows:
 
    1.  Provide network operators with visibility into traffic for
-       troubleshooting, capacity planning, accounting and billing and
-       other off network workflows.  This is done by exporting observed
+       troubleshooting, capacity planning, accounting and billing, and
+       other off-network work flows.  This is done by exporting observed
        traffic analysis via protocols such as IPFIX and SNMP.
 
-   2.  Provide differentiated network services for the traffic according
-       to network operator defined rule sets, including policing and
-       shaping of traffic, providing admission control, impacting
-       routing, permitting passage of traffic (e.g. firewall functions),
-       etc.
+   2.  Provide differentiated network services for specific traffic
+       according to network operator defined rule sets, including
+       policing and shaping of traffic, providing admission control,
+       impacting routing, and permitting passage of specific traffic
+       (e.g. firewall functions).
 
 3.  Limitations of Existing Solutions
 
-   These typical workflows, visibility and differentiated network
+   These typical work flows, visibility and differentiated network
    services, are critical in many networks.  However, their reliance on
-   inspection and observation limits the ability to enable these
-   workflows more widely.  Reasons for this include the following:
+   inspection and observation limits the ability to enable these work
+   flows more widely.  Reasons for this include the following:
 
-   o  Simple observation based classification, especially ones relying
-      on TCP/UDP, ports often result in incorrect results due to port
-      overloading (i.e. ports used by applications other than those
-      claiming the port with IANA).
+   o  Simple observation based classification based on TCP/UDP port
+      numbers often result in incorrect results due to port overloading
+      (i.e. ports used by applications other than those claiming the
+      port with IANA).
 
    o  More and more traffic is encrypted, rendering DPI impossible, or
       much more complex, and sometimes at the expense of privacy or
       security (e.g. need to share encryption keys with intermediary
       performing DPI).
 
-   o  Observation generally requires inspecting the control and
-      signaling traffic of applications.  This traffic may flow through
-      a different network path than the actual application data traffic.
-      Impacting the traffic behavior is ineffective in those scenarios.
+   o  Visibility generally requires inspecting the signaling traffic of
+      applications.  This traffic may flow through a different network
+      path than the actual application data traffic.  Impacting the
+      traffic behavior is ineffective in those scenarios.
 
-   o  Observation of control, signaling and data traffic with DPI will
-      in general result in less insight into the applications intent
-      than if the application was explicitly signaling its intent to the
-      network.
+   o  Extensions to signaling protocols can result in false negatives or
+      false positives during inspection.
 
-   o  Without explicit involvement of the application, network services
-      leveraging DPI traffic classification impact the application
-      behavior by impacting its traffic, but cannot provide explicit
-      feedback to the application.  This results in a lost opportunity
-      for the application to gain insight and cooperate with the
-      network.
+   o  Network services leveraging DPI traffic classification impact the
+      application behavior by impacting its traffic, but they do not
+      provide explicit feedback to the application.  This results in a
+      lost opportunity for the application to gain insight and cooperate
+      with the network.
 
 4.  Efforts in Progress
 
    There are a variety of existing and evolving signaling options that
    can provide explicit application to network signaling and serve the
-   visibility and differentiated network services workflows where DPI is
-   currently being used.  It seems clear that there will be no single
+   visibility and differentiated network services work flows where DPI
+   is currently being used.  It seems clear that there will be no single
    one-protocol-fits-all solution.  Every protocol is currently defined
    in its own silo, creating duplicate or inconsistent information
    models.  This results in duplicate work, more operational complexity
@@ -172,35 +169,41 @@ Table of Contents
       Its original goal was to provide admission control.  Arguably, its
       success was impacted by its reliance on router-alert because this
       often leads to RSVP packets being filtered by intervening
-      networks.  To date, more lightweight signaling workflows utilizing
-      RSVP have not been standardized within the IETF.
+      networks.  To date, more lightweight signaling work flows
+      utilizing RSVP have not been standardized within the IETF.
 
    o  NSIS (next Steps in Signaling) is the next iteration of RSVP-like
       signaling defined by the IETF.  Because it focused on the same
-      fundamental workflow as RSVP admission control as its main driver,
-      and because it did not provide significant enough use-case
+      fundamental work flow as RSVP admission control as its main
+      driver, and because it did not provide significant enough use-case
       benefits over RSVP, it has seen even less adoption than RSVP.
+
+   o  DiffServ style packet marking can help provide QoS in some
+      environments but DSCP markings are often modified or removed at
+      various points in the network or when crossing network boundaries.
 
    o  STUN is an on path, in-band signaling protocol that could easily
       be extended to provide signaling to on path network devices
       because it provides an easily inspected packet signature, at least
-      for transport protocols such as UDP and SCTP.  Through its
-      extensions TURN and ICE, it is becoming quite popular in
-      application signaling driven by the initial use-case of
-      automatically opening up firewall pinholes and determining the
-      best local and remote addresses for peer-to-peer connectivity
-      (ICE).
+      for transport protocols such as UDP.  Through its extensions TURN
+      and ICE, it is becoming quite popular in application signaling
+      driven by the initial use-case of providing NAT and firewall
+      traversal capabilities and determining the best local and remote
+      addresses for peer-to-peer connectivity (ICE).
 
-   o  PCP is a protocol designed to support use cases similar to UPnP
-      firewall traversal.  It also can easily be extended to provide
-      more generic application to network signaling for traffic flows.
-      Unlike the prior protocols, it is not meant to be used on path
-      end-to-end but rather independently on one "edge" of a traffic
-      flow.  It is therefore an attractive alternative (albeit with
-      challenges under path redundancy) because it allows the
-      introduction of application to network signaling without relying
-      on the remote peer.  This is especially useful in multi-domain
-      communications.
+   o  Port Control Protocol (PCP) provides a mechanism to describe a
+      flow to the network.  The primary driver for PCP has been creating
+      port mappings on NAT and firewall devices.  When doing this, PCP
+      pushes flow information from the host into the network
+      (specifically to the network's NAT or firewall device), and
+      receives information back from the network (from the NAT or
+      firewall device).  Unlike the prior protocols, it is not meant to
+      be used on path end-to-end but rather independently on one "edge"
+      of a traffic flow.  It is therefore an attractive alternative
+      (albeit with challenges under path redundancy) because it allows
+      the introduction of application to network signaling without
+      relying on the remote peer.  This is especially useful in multi-
+      domain communications.
 
    o  Depending on the devices where it is performed, different degrees
       of DPI may be used to achieve explicit signaling.  For example,
@@ -210,38 +213,57 @@ Table of Contents
       that are meant to be signaled to the network in the clear, or
       knowingly uses an encryption scheme shared with the network.
 
+   o  Interface to the Routing System (I2RS) is a working group
+      chartered to provide interfaces for management applications,
+      network controllers, and user applications to make specific
+      demands on the network.
+
+   o  Abstraction and Control of Transport Networks (ACTN) is a non-
+      working group mailing list intended to enable discussion of the
+      architecture, use-cases, and requirements that provide abstraction
+      and virtual control of transport networks to various applications/
+      clients.
+
+   o  Prefix coloring has been proposed for use in HOMENET and 6MAN
+      working groups to provide differentiated services to applications
+      based on its IP address.
+
+5.  Requirements
+
    Rather than encourage independent, protocol specific solutions to
    this problem, this draft calls for a protocol and application
    independent solution that can be applied in a consistent fashion
-   across a variety of protocols.  The solution should:
+   across a variety of protocols.  The requirements are:
 
-   o  allow applications to explicitly signal their flow characteristics
-      to the network
+   Req-1:  Allow applications to explicitly signal their flow
+      characteristics to the network.
 
-   o  provide network nodes visibility to application flow
-      characteristics
+   Req-2:  Provide network nodes visibility to application flow
+      characteristics.
 
-   o  enable network nodes to contribute to application flow
-      descriptions
+   Req-3:  Enable network nodes to contribute to application flow
+      descriptions.
 
-   o  allow applications to receive resulting flow descriptions as
-      feedback from the network
+   Req-4:  Allow applications to receive resulting flow descriptions as
+      feedback from the network.
 
-   o  complement existing heuristic based mechanisms
+   Req-5:  Complement existing heuristic based mechanisms.
 
-   The solution should not:
+   Req-6:  Provide differentiated service for both directions of a flow,
+      including flows that cross administrative boundaries.
 
-   o  compromise the privacy or security of applications, their end
-      users, or network nodes
+   Req-7:  Provide mechanism to authenticate and authorize endpoints/
+      applications to signal flow characteristics.
 
-   o  preclude the use of existing heuristic based mechanisms
+   Req-8:  Provide mechanism for integrity and replay protection of
+      messages exchanged between the application and the network.
 
-5.  Acknowledgements
+6.  Acknowledgements
 
-   The authors thank Toerless Eckert, Reinaldo Penno, and Amine Choukir
-   for contributing much of the original content.
+   The authors thank Toerless Eckert, Reinaldo Penno, Dan Wing and Amine
+   Choukir for contributing much of the original content.
 
-Author's Address
+Authors' Addresses
 
    Charles Eckel
    Cisco Systems, Inc.
@@ -250,4 +272,14 @@ Author's Address
    USA
 
    Email: eckelcu@cisco.com
+
+
+   Tirumaleswar Reddy
+   Cisco Systems, Inc.
+   Cessna Business Park, Varthur Hobli
+   Sarjapur Marathalli Outer Ring Road
+   Bangalore, Karnataka  560103
+   India
+
+   Email: tireddy@cisco.com
 
