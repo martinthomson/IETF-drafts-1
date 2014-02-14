@@ -378,13 +378,14 @@
 <link href="#rfc.section.2" rel="Chapter" title="2 Notational Conventions"/>
 <link href="#rfc.section.3" rel="Chapter" title="3 Improving ICE Dual-stack Fairness"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Compatibility"/>
-<link href="#rfc.section.5" rel="Chapter" title="5 Example Algorithm for Choosing the Local       Preference"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Example Algorithm for Choosing the Local Preference"/>
 <link href="#rfc.section.6" rel="Chapter" title="6 IANA Considerations"/>
 <link href="#rfc.section.7" rel="Chapter" title="7 Security Considerations"/>
 <link href="#rfc.section.8" rel="Chapter" title="8 Acknowledgements"/>
 <link href="#rfc.section.9" rel="Chapter" title="9 Implementation Status"/>
 <link href="#rfc.section.9.1" rel="Chapter" title="9.1 HappyE-ICE-Test"/>
 <link href="#rfc.references" rel="Chapter" title="10 Normative References"/>
+<link href="#rfc.appendix.A" rel="Chapter" title="A Examples"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
@@ -393,7 +394,7 @@
 
   <meta name="dct.creator" content="Reddy, T., Patil, P., and P. Martinsen" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-reddy-mmusic-ice-happy-eyeballs-06" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-2-12" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-2-14" />
   <meta name="dct.abstract" content="This document provides guidelines on how to make Interactive Connectivity Establishment (ICE) conclude faster in IPv4/IPv6 dual-stack scenarios where broken paths exist." />
   <meta name="description" content="This document provides guidelines on how to make Interactive Connectivity Establishment (ICE) conclude faster in IPv4/IPv6 dual-stack scenarios where broken paths exist." />
 
@@ -417,12 +418,12 @@
   <td class="right">P. Martinsen</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 16, 2014</td>
+  <td class="left">Expires: August 18, 2014</td>
   <td class="right">Cisco</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">February 12, 2014</td>
+  <td class="right">February 14, 2014</td>
 </tr>
 
     	
@@ -442,7 +443,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 16, 2014.</p>
+<p>This Internet-Draft will expire on August 18, 2014.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -458,13 +459,14 @@
 <li>2.   <a href="#rfc.section.2">Notational Conventions</a></li>
 <li>3.   <a href="#rfc.section.3">Improving ICE Dual-stack Fairness</a></li>
 <li>4.   <a href="#rfc.section.4">Compatibility</a></li>
-<li>5.   <a href="#rfc.section.5">Example Algorithm for Choosing the Local       Preference</a></li>
+<li>5.   <a href="#rfc.section.5">Example Algorithm for Choosing the Local Preference</a></li>
 <li>6.   <a href="#rfc.section.6">IANA Considerations</a></li>
 <li>7.   <a href="#rfc.section.7">Security Considerations</a></li>
 <li>8.   <a href="#rfc.section.8">Acknowledgements</a></li>
 <li>9.   <a href="#rfc.section.9">Implementation Status</a></li>
 <li>9.1.   <a href="#rfc.section.9.1">HappyE-ICE-Test</a></li>
 <li>10.   <a href="#rfc.references">Normative References</a></li>
+<li>Appendix A.   <a href="#rfc.appendix.A">Examples</a></li>
 <li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
@@ -498,7 +500,7 @@
 <p id="rfc.section.4.p.8">Even if the two agents have different algorithms for choosing the candidate priority value to get an intermingled set of IPv4 and IPv6 candidates, the resulting checklist, that is a list sorted by the pair priority value, will be identical on the two agents.</p>
 <p id="rfc.section.4.p.9">The agent that has promoted IPv4 cautiously i.e. lower IPv4 candidate priority values compared to the other agent, will influence the check list the most due to (2^32*MIN(G,D)) in the formula.</p>
 <p id="rfc.section.4.p.10">These recommendations are backward compatible with a standard ICE implementation. If the other agent have IPv4 candidates with higher priorities due to intermingling, the effect is canceled when the checklist is formed and the pair priority formula is used to calculate the pair priority.</p>
-<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> Example Algorithm for Choosing the Local       Preference</h1>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> Example Algorithm for Choosing the Local Preference</h1>
 <p id="rfc.section.5.p.1">The value space for the local preference is from 0 to 65535 inclusive. This value space can be divided up in chunks for each IP address family.  </p>
 <p id="rfc.section.5.p.2">An IPv6 and IPv4 start priority must be given. In this example IPv6 starts at 60000 and IPv4 at 59000. This leaves enough address space to further play with the values if pr interface priorities needs to be added. The highest value should be given to the address family that should be prioritized.  </p>
 <pre>
@@ -541,6 +543,7 @@
          </pre>
 <p id="rfc.section.5.p.7">Using the values N=abs(60000-59000) and Cmax = 2 yields the following sorted local candidate list: </p>
 <p id="rfc.section.5.p.8">The resulting checklist will depend on the priorities of the remote candidates. It is not possible to ensure an even spread of IPv4 and IPv6 addresses unless both the remote and local sides uses the simple recommendations in this draft. It is worth noting that there is a good chance it will some effect even if the remote side does not support this. It will not break interoperability with other ICE implementations.  </p>
+<p><a id="Q1" class="info">[Q1]<span class="info">palmarti: Need to take a closer look at how the unfreezing happens and how this affects the component id is the sorting above.</span></a> <a id="Q2" class="info">[Q2]<span class="info">palmarti: The implementations of the algorithm does not implement pruning of the pairs. So the checklist is shorter in real life than the example in the appendix.  </span></a> </p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> IANA Considerations</h1>
 <p id="rfc.section.6.p.1">None.</p>
 <h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#security" id="security">Security Considerations</a></h1>
@@ -562,7 +565,7 @@
   <dt>Implementation: </dt>
   <dd style="margin-left: 8">https://github.com/palerikm/HappyE-ICE-Test </dd>
   <dt>Level of maturity: </dt>
-  <dd style="margin-left: 8">The code only implements the parts that cover this draft and not a full ICE implementation. There is work in progress to get this into a full implementation, unfortunately that source code is not at the current time available to the public.  </dd>
+  <dd style="margin-left: 8">The code only implements the parts that cover this draft and not a full ICE implementation. There is work in progress to get this into a full implementation, unfortunately that source code is not at the current time available to the public. It is currently not implementing the pruning of the checklist pairs as described in section 5.7.3 of the ICE RFC.  </dd>
   <dt>Coverage: </dt>
   <dd style="margin-left: 8">Implement this draft.  </dd>
   <dt>Licensing: </dt>
@@ -607,6 +610,140 @@
     </tr>
   </tbody>
 </table>
+<h1 id="rfc.appendix.A"><a href="#rfc.appendix.A">Appendix A.</a> Examples</h1>
+<pre>
+********** Local Candidates (sorted) *********
+(1)  HOST  IPv6 (1) Priority: 2129289471
+(2)  HOST  IPv6 (2) Priority: 2129289470
+(3)  HOST  IPv4 (1) Priority: 2129033471
+(4)  HOST  IPv4 (2) Priority: 2129033470
+(5)  HOST  IPv6 (1) Priority: 2128777471
+(6)  HOST  IPv6 (2) Priority: 2128777470
+(7)  HOST  IPv4 (1) Priority: 2128521471
+(8)  HOST  IPv4 (2) Priority: 2128521470
+(9)  HOST  IPv6 (1) Priority: 2128265471
+(10) HOST  IPv6 (2) Priority: 2128265470
+(11) SRFLX IPv6 (1) Priority: 1693081855
+(12) SRFLX IPv6 (2) Priority: 1693081854
+(13) SRFLX IPv4 (1) Priority: 1692825855
+(14) SRFLX IPv4 (2) Priority: 1692825854
+(15) RELAY IPv6 (1) Priority: 15360255
+(16) RELAY IPv6 (2) Priority: 15360254
+(17) RELAY IPv4 (1) Priority: 15104255
+(18) RELAY IPv4 (2) Priority: 15104254
+
+          </pre>
+<p/>
+<pre>
+********** Remote Candidates *********
+(1)  HOST  IPv6 (1) Priority: 2129289471
+(2)  HOST  IPv6 (1) Priority: 2129289471
+(3)  HOST  IPv6 (1) Priority: 2129289471
+(4)  HOST  IPv6 (2) Priority: 2129289470
+(5)  HOST  IPv6 (2) Priority: 2129289470
+(6)  HOST  IPv6 (2) Priority: 2129289470
+(7)  HOST  IPv4 (1) Priority: 2129033471
+(8)  HOST  IPv4 (1) Priority: 2129033471
+(9)  HOST  IPv4 (2) Priority: 2129033470
+(10) HOST  IPv4 (2) Priority: 2129033470
+(11) IPv6 (1) Priority: 1693081855
+(12) IPv6 (2) Priority: 1693081854
+(13) IPv4 (1) Priority: 1692825855
+(14) IPv4 (2) Priority: 1692825854
+(15) RELAY IPv6 (1) Priority: 15360255
+(16) RELAY IPv6 (2) Priority: 15360254
+(17) RELAY IPv4 (1) Priority: 15104255
+(18) RELAY IPv4 (2) Priority: 15104254
+
+          </pre>
+<p/>
+<pre>
+********** CheckList *********
+0 HOST  6(1) 2129289471 HOST  6(1) 2129289471(9145228645920719358)
+1 HOST  6(1) 2129289471 HOST  6(1) 2129289471(9145228645920719358)
+2 HOST  6(1) 2129289471 HOST  6(1) 2129289471(9145228645920719358)
+3 HOST  6(2) 2129289470 HOST  6(2) 2129289470(9145228641625752060)
+4 HOST  6(2) 2129289470 HOST  6(2) 2129289470(9145228641625752060)
+5 HOST  6(2) 2129289470 HOST  6(2) 2129289470(9145228641625752060)
+6 HOST  4(1) 2129033471 HOST  4(1) 2129033471(9144129134292431358)
+7 HOST  4(1) 2129033471 HOST  4(1) 2129033471(9144129134292431358)
+8 HOST  4(2) 2129033470 HOST  4(2) 2129033470(9144129129997464060)
+9 HOST  4(2) 2129033470 HOST  4(2) 2129033470(9144129129997464060)
+10 HOST  6(1) 2128777471 HOST  6(1) 2129289471(9143029622665167358)
+11 HOST  6(1) 2128777471 HOST  6(1) 2129289471(9143029622665167358)
+12 HOST  6(1) 2128777471 HOST  6(1) 2129289471(9143029622665167358)
+13 HOST  6(2) 2128777470 HOST  6(2) 2129289470(9143029618370200060)
+14 HOST  6(2) 2128777470 HOST  6(2) 2129289470(9143029618370200060)
+15 HOST  6(2) 2128777470 HOST  6(2) 2129289470(9143029618370200060)
+16 HOST  4(1) 2128521471 HOST  4(1) 2129033471(9141930111036879358)
+17 HOST  4(1) 2128521471 HOST  4(1) 2129033471(9141930111036879358)
+18 HOST  4(2) 2128521470 HOST  4(2) 2129033470(9141930106741912060)
+19 HOST  4(2) 2128521470 HOST  4(2) 2129033470(9141930106741912060)
+20 HOST  6(1) 2128265471 HOST  6(1) 2129289471(9140830599409615358)
+21 HOST  6(1) 2128265471 HOST  6(1) 2129289471(9140830599409615358)
+22 HOST  6(1) 2128265471 HOST  6(1) 2129289471(9140830599409615358)
+23 HOST  6(2) 2128265470 HOST  6(2) 2129289470(9140830595114648060)
+24 HOST  6(2) 2128265470 HOST  6(2) 2129289470(9140830595114648060)
+25 HOST  6(2) 2128265470 HOST  6(2) 2129289470(9140830595114648060)
+26 HOST  6(1) 2129289471 SRFLX 6(1) 1693081855(7271731200934593023)
+27 SRFLX 6(1) 1693081855 HOST  6(1) 2129289471(7271731200934593022)
+28 SRFLX 6(1) 1693081855 HOST  6(1) 2129289471(7271731200934593022)
+29 SRFLX 6(1) 1693081855 HOST  6(1) 2129289471(7271731200934593022)
+30 HOST  6(1) 2128777471 SRFLX 6(1) 1693081855(7271731200933569023)
+31 HOST  6(1) 2128265471 SRFLX 6(1) 1693081855(7271731200932545023)
+32 SRFLX 6(1) 1693081855 SRFLX 6(1) 1693081855(7271731200062177790)
+33 HOST  6(2) 2129289470 SRFLX 6(2) 1693081854(7271731196639625725)
+34 SRFLX 6(2) 1693081854 HOST  6(2) 2129289470(7271731196639625724)
+35 SRFLX 6(2) 1693081854 HOST  6(2) 2129289470(7271731196639625724)
+36 SRFLX 6(2) 1693081854 HOST  6(2) 2129289470(7271731196639625724)
+37 HOST  6(2) 2128777470 SRFLX 6(2) 1693081854(7271731196638601725)
+38 HOST  6(2) 2128265470 SRFLX 6(2) 1693081854(7271731196637577725)
+39 SRFLX 6(2) 1693081854 SRFLX 6(2) 1693081854(7271731195767210492)
+40 HOST  4(1) 2129033471 SRFLX 4(1) 1692825855(7270631689306305023)
+41 SRFLX 4(1) 1692825855 HOST  4(1) 2129033471(7270631689306305022)
+42 SRFLX 4(1) 1692825855 HOST  4(1) 2129033471(7270631689306305022)
+43 HOST  4(1) 2128521471 SRFLX 4(1) 1692825855(7270631689305281023)
+44 SRFLX 4(1) 1692825855 SRFLX 4(1) 1692825855(7270631688433889790)
+45 HOST  4(2) 2129033470 SRFLX 4(2) 1692825854(7270631685011337725)
+46 SRFLX 4(2) 1692825854 HOST  4(2) 2129033470(7270631685011337724)
+47 SRFLX 4(2) 1692825854 HOST  4(2) 2129033470(7270631685011337724)
+48 HOST  4(2) 2128521470 SRFLX 4(2) 1692825854(7270631685010313725)
+49 SRFLX 4(2) 1692825854 SRFLX 4(2) 1692825854(7270631684138922492)
+50 HOST  6(1) 2129289471 RELAY 6(1) 15360255  (65971797141799423)
+51 RELAY 6(1) 15360255   HOST  6(1) 2129289471(65971797141799422)
+52 RELAY 6(1) 15360255   HOST  6(1) 2129289471(65971797141799422)
+53 RELAY 6(1) 15360255   HOST  6(1) 2129289471(65971797141799422)
+54 HOST  6(1) 2128777471 RELAY 6(1) 15360255  (65971797140775423)
+55 HOST  6(1) 2128265471 RELAY 6(1) 15360255  (65971797139751423)
+56 SRFLX 6(1) 1693081855 RELAY 6(1) 15360255  (65971796269384191)
+57 RELAY 6(1) 15360255   SRFLX 6(1) 1693081855(65971796269384190)
+58 RELAY 6(1) 15360255   RELAY 6(1) 15360255  (65971792913940990)
+59 HOST  6(2) 2129289470 RELAY 6(2) 15360254  (65971792846832125)
+60 RELAY 6(2) 15360254   HOST  6(2) 2129289470(65971792846832124)
+61 RELAY 6(2) 15360254   HOST  6(2) 2129289470(65971792846832124)
+62 RELAY 6(2) 15360254   HOST  6(2) 2129289470(65971792846832124)
+63 HOST  6(2) 2128777470 RELAY 6(2) 15360254  (65971792845808125)
+64 HOST  6(2) 2128265470 RELAY 6(2) 15360254  (65971792844784125)
+65 SRFLX 6(2) 1693081854 RELAY 6(2) 15360254  (65971791974416893)
+66 RELAY 6(2) 15360254   SRFLX 6(2) 1693081854(65971791974416892)
+67 RELAY 6(2) 15360254   RELAY 6(2) 15360254  (65971788618973692)
+68 HOST  4(1) 2129033471 RELAY 4(1) 15104255  (64872285513511423)
+69 RELAY 4(1) 15104255   HOST  4(1) 2129033471(64872285513511422)
+70 RELAY 4(1) 15104255   HOST  4(1) 2129033471(64872285513511422)
+71 HOST  4(1) 2128521471 RELAY 4(1) 15104255  (64872285512487423)
+72 SRFLX 4(1) 1692825855 RELAY 4(1) 15104255  (64872284641096191)
+73 RELAY 4(1) 15104255   SRFLX 4(1) 1692825855(64872284641096190)
+74 RELAY 4(1) 15104255   RELAY 4(1) 15104255  (64872281285652990)
+75 HOST  4(2) 2129033470 RELAY 4(2) 15104254  (64872281218544125)
+76 RELAY 4(2) 15104254   HOST  4(2) 2129033470(64872281218544124)
+77 RELAY 4(2) 15104254   HOST  4(2) 2129033470(64872281218544124)
+78 HOST  4(2) 2128521470 RELAY 4(2) 15104254  (64872281217520125)
+79 SRFLX 4(2) 1692825854 RELAY 4(2) 15104254  (64872280346128893)
+80 RELAY 4(2) 15104254   SRFLX 4(2) 1692825854(64872280346128892)
+81 RELAY 4(2) 15104254   RELAY 4(2) 15104254  (64872276990685692)
+
+          </pre>
+<p id="rfc.section.A.p.3">The pairs have not been pruned a described in section 5.7.3 of the ICE spec.  </p>
 <h1 id="rfc.authors">
   <a href="#rfc.authors">Authors' Addresses</a>
 </h1>
