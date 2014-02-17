@@ -418,7 +418,7 @@ Table of Contents
    [I-D.ietf-oauth-v2-http-mac]
               Richer, J., Mills, W., Tschofenig, H., and P. Hunt, "OAuth
               2.0 Message Authentication Code (MAC) Tokens", draft-ietf-
-              oauth-v2-http-mac-04 (work in progress), July 2013.
+              oauth-v2-http-mac-05 (work in progress), January 2014.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -446,8 +446,8 @@ Table of Contents
 
    [I-D.ietf-rtcweb-overview]
               Alvestrand, H., "Overview: Real Time Protocols for Brower-
-              based Applications", draft-ietf-rtcweb-overview-08 (work
-              in progress), September 2013.
+              based Applications", draft-ietf-rtcweb-overview-09 (work
+              in progress), February 2014.
 
    [I-D.reddy-behave-turn-auth]
               Reddy, T., R, R., Perumal, M., and A. Yegin, "Problems

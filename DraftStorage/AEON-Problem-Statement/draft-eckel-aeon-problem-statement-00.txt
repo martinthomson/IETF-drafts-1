@@ -5,7 +5,7 @@
 Internet Engineering Task Force                                 C. Eckel
 Internet-Draft                                                  T. Reddy
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: August 17, 2014                               February 13, 2014
+Expires: August 18, 2014                               February 14, 2014
 
 
 Application Enabled Open Networking: Problem Statement and Requirements
@@ -14,17 +14,16 @@ Application Enabled Open Networking: Problem Statement and Requirements
 Abstract
 
    Identification and treatment of application flows are critical for
-   the successful deployment and operation of applications based on a
-   wide range of signaling protocols.  Historically, this functionality
-   has been accomplished to the extent possible using heuristics, which
-   inspect and infer flow characteristics.  Heuristics may be based on
-   port ranges, network separation, or deep packet inspection (DPI).
-   But many application flows in current usages are dynamic, time-bound
-   (short lived for some of them), possibly encrypted (TLS for
-   signaling), peer-to-peer, possibly asymmetric, and used on non-
-   dedicated devices, any combination of which renders such techniques
-   less effective or results in compromises to application security or
-   user privacy.
+   the successful deployment and operation of applications.
+   Historically, this functionality has been accomplished to the extent
+   possible using heuristics, which inspect and infer flow
+   characteristics.  Heuristics may be based on port ranges, network
+   separation, or deep packet inspection (DPI).  But many application
+   flows in current usages are dynamic, time-bound (short lived for some
+   of them), possibly encrypted (TLS for signaling), peer-to-peer,
+   possibly asymmetric, and used on non-dedicated devices, any
+   combination of which renders such techniques less effective or
+   results in compromises to application security or user privacy.
 
 Status of This Memo
 
@@ -41,7 +40,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 17, 2014.
+   This Internet-Draft will expire on August 18, 2014.
 
 Copyright Notice
 
@@ -50,15 +49,15 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
 
 
 
-Eckel & Reddy            Expires August 17, 2014                [Page 1]
+Eckel & Reddy            Expires August 18, 2014                [Page 1]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
-   (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -81,11 +80,10 @@ Table of Contents
    Networks today, whether public or private, are challenged with
    demands to support rapidly increasing amounts of traffic.  New
    channels for creating and consuming rich media are deployed at a
-   rapid pace.  Pervasive video and on demand access are becoming second
+   rapid pace.  Pervasive video and access on demand are becoming second
    nature to consumers.  Communication applications make extensive use
    of rich media, placing unprecedented quality of experience demands on
-   the network.  All available capacity is saturated at whatever rate it
-   is added.
+   the network.
 
    Now more so than ever before, identification and treatment of
    application flows are critical for the successful deployment and
@@ -106,15 +104,16 @@ Table of Contents
    error prone and increase network management complexity.  DPI is
    computationally expensive and becomes a greater challenge with the
    wider adoption of encrypted signaling and secured media.  An
+   additional drawback of DPI is that any insights are not available, or
 
 
 
-Eckel & Reddy            Expires August 17, 2014                [Page 2]
+
+Eckel & Reddy            Expires August 18, 2014                [Page 2]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
-   additional drawback of DPI is that any insights are not available, or
    need to be recomputed, at network nodes further down the application
    flow path.
 
@@ -125,7 +124,7 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
    1.  Provide network operators with visibility into traffic for
        troubleshooting, capacity planning, accounting and billing, and
-       other off-network work flows.  This is done by exporting observed
+       other off network work flows.  This is done by exporting observed
        traffic analysis via protocols such as IPFIX and SNMP.
 
    2.  Provide differentiated network services for specific traffic
@@ -165,27 +164,28 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
 
-Eckel & Reddy            Expires August 17, 2014                [Page 3]
+
+Eckel & Reddy            Expires August 18, 2014                [Page 3]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
-      lost opportunity for the application to gain insight and cooperate
-      with the network.
+      lost opportunity for the application to gain insight and adjust
+      its operation accordingly.
 
 4.  Efforts in Progress
 
    There are a variety of existing and evolving signaling options that
    can provide explicit application to network signaling and serve the
-   visibility and differentiated network services work flows where DPI
-   is currently being used.  It seems clear that there will be no single
-   one-protocol-fits-all solution.  Every protocol is currently defined
-   in its own silo, creating duplicate or inconsistent information
-   models.  This results in duplicate work, more operational complexity
-   and an inability to easily convert information between protocols to
-   easily leverage the best protocol option for each specific use case.
-   Examples of existing and evolving signaling options include the
-   following:
+   visibility and differentiated network services work flows where
+   heuristics are currently being used.  It seems clear that there will
+   be no single one-protocol-fits-all solution.  Every protocol is
+   currently defined in its own silo, creating duplicate or inconsistent
+   information models.  This results in duplicate work, more operational
+   complexity and an inability to easily convert information between
+   protocols to easily leverage the best protocol option for each
+   specific use case.  Examples of existing and evolving signaling
+   options include the following:
 
    o  RSVP is the original on path signaling protocol standardized by
       the IETF.  It operates on path out-of-band and could support any
@@ -221,7 +221,7 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
 
-Eckel & Reddy            Expires August 17, 2014                [Page 4]
+Eckel & Reddy            Expires August 18, 2014                [Page 4]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
@@ -232,18 +232,9 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
       firewall device).  Unlike the prior protocols, it is not meant to
       be used on path end-to-end but rather independently on one "edge"
       of a traffic flow.  It is therefore an attractive alternative
-      (albeit with challenges under path redundancy) because it allows
-      the introduction of application to network signaling without
-      relying on the remote peer.  This is especially useful in multi-
-      domain communications.
-
-   o  Depending on the devices where it is performed, different degrees
-      of DPI may be used to achieve explicit signaling.  For example,
-      inspection of HTTP connections is often viable in high-touch
-      network devices.  Such inspection may provide explicit signaling
-      if the application purposely keeps or inserts information elements
-      that are meant to be signaled to the network in the clear, or
-      knowingly uses an encryption scheme shared with the network.
+      because it allows the introduction of application to network
+      signaling without relying on the remote peer.  This is especially
+      useful in multi-domain communications.
 
    o  Interface to the Routing System (I2RS) is a working group
       chartered to provide interfaces for management applications,
@@ -273,15 +264,6 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
    Req-2:  Provide network nodes visibility to application flow
       characteristics.
 
-
-
-
-
-Eckel & Reddy            Expires August 17, 2014                [Page 5]
-
-Internet-Draft       AEON Problem Statement and Req        February 2014
-
-
    Req-3:  Enable network nodes to contribute to application flow
       descriptions.
 
@@ -293,6 +275,13 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
    Req-6:  Provide differentiated service for both directions of a flow,
       including flows that cross administrative boundaries.
 
+
+
+Eckel & Reddy            Expires August 18, 2014                [Page 5]
+
+Internet-Draft       AEON Problem Statement and Req        February 2014
+
+
    Req-7:  Provide mechanism to authenticate and authorize endpoints/
       applications to signal flow characteristics.
 
@@ -301,8 +290,8 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
 6.  Acknowledgements
 
-   The authors thank Toerless Eckert, Reinaldo Penno, Dan Wing and Amine
-   Choukir for contributing much of the original content.
+   The authors thank Toerless Eckert, Reinaldo Penno, Dan Wing, Amine
+   Choukir, and Paul Jones for their contributions to this draft.
 
 Authors' Addresses
 
@@ -333,4 +322,15 @@ Authors' Addresses
 
 
 
-Eckel & Reddy            Expires August 17, 2014                [Page 6]
+
+
+
+
+
+
+
+
+
+
+
+Eckel & Reddy            Expires August 18, 2014                [Page 6]

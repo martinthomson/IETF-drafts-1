@@ -535,7 +535,7 @@ Table of Contents
 
    [I-D.ietf-rtcweb-security-arch]
               Rescorla, E., "WebRTC Security Architecture", draft-ietf-
-              rtcweb-security-arch-07 (work in progress), July 2013.
+              rtcweb-security-arch-09 (work in progress), February 2014.
 
    [I-D.thomson-mmusic-ice-webrtc]
               Thomson, M., "Using Interactive Connectivity Establishment
