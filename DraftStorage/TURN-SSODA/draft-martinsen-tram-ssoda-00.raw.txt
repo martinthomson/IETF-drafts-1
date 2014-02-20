@@ -1,0 +1,288 @@
+
+
+
+
+TRAM                                                        P. Martinsen
+Internet-Draft                                                     Cisco
+Intended status: Standards Track                            S. Perreault
+Expires: August 24, 2014                                        Viagenie
+                                                       February 20, 2014
+
+
+                Single SOcket Dual Allocation with TURN
+                     draft-martinsen-tram-ssoda-00
+
+Abstract
+
+   This draft describes a simple method for allocating on IPv4 and one
+   IPv6 RELAY address by sending one allocate request to the TURN
+   server.  This saves local port on the agent and reduces the number of
+   messages sent between the agent and the TURN server.
+
+Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on August 24, 2014.
+
+Copyright Notice
+
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Creating an Allocation
+     2.1.  Sending an Allocate Request
+     2.2.  Receiving an Allocate Request
+       2.2.1.  New Error Responses
+     2.3.  Receiving an Allocate Success Response
+     2.4.  Receiving an Allocate Error Response
+   3.  Refreshing an Allocation
+     3.1.  Sending a Refresh Request
+     3.2.  Receiving a Refresh Request
+     3.3.  CreatePermission
+       3.3.1.  Sending a CreatePermission Request
+       3.3.2.  Receiving a CreatePermission Request
+   4.  Channels
+   5.  Normative References
+   Authors' Addresses
+
+1.  Introduction
+
+   The main motivation for this draft is to reduce the number of open
+   local ports on the agent and reduce the number of messages that needs
+   to me exchanged to allocate the RELAY addresses an agent needs.
+
+   Reducing the number of local ports is important as it saves resources
+   at three places in the network.  First locally at the host itself.
+   Secondly at the NAT.  With fewer local host ports there will be fewer
+   NAT binding for the NAT to keep track of.  And at last it reduces the
+   number of open ports the TURN server needs to open on the interface
+   towards the agent (Private side).  As ports are a scarce resource
+   (16bit number) preserving them on the NAT and a the TURN server can
+   potentially lead to easier large scale deployments.
+
+2.  Creating an Allocation
+
+   The behavior specified here affects the processing defined in
+   Section 6 of [RFC5766] and Section 4 of [RFC6156].
+
+2.1.  Sending an Allocate Request
+
+   A client that wishes to obtain one IPv6 and one IPv4 by sending one
+   Allocate request MUST include two REQUESTED-ADDRESS-FAMILY
+   attributes, one for each address family, in the Allocate request that
+   it sends to the TURN server.  The mechanisms to formulate an Allocate
+   request are described in Section 6.1 of [RFC5766].  [[Q1: Rewrite to
+   me more generic regarding address type?  One attribute allowed for
+   each desired family?  --palmarti]]
+
+   Clients MUST NOT include a REQUESTED-ADDRESS-FAMILY attribute in an
+   Allocate request that contains a RESERVATION-TOKEN attribute.  [[Q2:
+   Or should we disallow the whole odd even port scheme when this
+   mechanism is in use?  Will simplify things on the server.
+   --palmarti]]
+
+2.2.  Receiving an Allocate Request
+
+   Once a server has verified that the request is authenticated and has
+   not been tampered with, the TURN server processes the Allocate
+   request following the rules in [RFC5766] and [RFC6156].  Only one
+   REQUESTED-ADDRESS-FAMILY attribute with the same family value is
+   allowed in the request.  If two attributes with the same family value
+   exist the server MUST return a 450 (Multiple Address Allocation not
+   Supported) Error Allocate message.
+
+   If the server can successfully process the request, it allocates a
+   RELAY address for each of the REQUESTED-ADDRESS-FAMILY attributes in
+   the Allocate request.  The allocated RELAY addresses are returned in
+   separate XOR-RELAYED-ADDRESS attributes in the Allocate response
+   message.
+
+   If the requested address family is not supported on the TURN server,
+   the REQUEST-ADDRESS-FAMILY attribute MUST be included in the response
+   instead of the XOR-RELAYED-ADDRESS attribute that would have been
+   added if the address family was supported.  This will notify the
+   client that the REQUESTED-ADDRESS-FAMILY was understood, but not
+   supported.
+
+   If all of the requested address families included in the Allocate
+   request are unsupported on the TURN server it MUST respond with a 460
+   (None of the address families are supported) Allocate Error Response.
+   An old TURN server implementation would potentially return 440, so a
+   new error response was defined.
+
+   If the REQUESTED-ADDRESS-FAMILY attributes are absent, the server
+   MUST allocate an IPv4-relayed transport address for the TURN client.
+   If allocation of IPv4 addresses is disabled by local policy, the
+   server returns a 440 (Address Family not Supported) Allocate error
+   response.
+
+2.2.1.  New Error Responses
+
+   This document defines the following new error response code:
+
+   450 (Multiple Address Allocation not Supported): The server does not
+   support allocation more than one RELAY address of the same type.
+
+   460 (None of the Address Families are Supported): The server did not
+   support any of the requested address families.
+
+2.3.  Receiving an Allocate Success Response
+
+   If the client receives a Allocate Response containing a XOR-RELAYED-
+   ADDRESS attribute for each of the corresponding REQUESTED-ADDRESS-
+   FAMILY attributes in the Allocate request sent by the client, the
+   client knows that the TURN server supports multiple address family
+   allocation over a single socket.  The RELAY addresses can now be used
+   by the client.
+
+   If the Allocate response contains at least one XOR-RELAYED-ADDRESS
+   and at least one REQUESTED-ADDRESS-FAMILY attribute, the client know
+   that the TURN server supports SSODA, and the allocated RELAY
+   addresses can be used.  The client MUST not try to allocate any of
+   the included requested address families on a different 5-tuple.
+
+   If the Allocate Response contain one XOR-RELAYED-ADDRESS attribute
+   and no additional REQUESTED-ADDRESS-FAMILY attributes the client
+   knows that the TURN server does not support SSODA.  The client can
+   retry the the missing address family allocations on new 5-tuples
+   (from a new local HOST address).  Subsequent Allocate Request towards
+   the same TURN server MUST not include multiple REQUESTED-ADDRESS-
+   FAMILY attributes.
+
+2.4.  Receiving an Allocate Error Response
+
+   If the client receives an Allocate error response with the 450
+   (Multiple Address Allocation not Supported) or 460 (None of the
+   Address Families are Supported) error code, the client MUST NOT retry
+   its request.
+
+   If the client receives an Allocate error response with the 440
+   (Unsupported Address Family) error code, the client knows that the
+   TURN server does not SSODA and might have misinterpreted any of the
+   included REQUESTED-ADDRESS-FAMILY attributes in the Allocate request.
+   The client should retry the allocations by sending the Allocate
+   request messages from different local HOST ports and without
+   including multiple REQUESTED-ADDRESS-FAMILY attributes.
+
+3.  Refreshing an Allocation
+
+   The behavior specified here affects the processing defined in
+   Section 7 of [RFC5766] and Section 5 of [RFC6156].  This section MUST
+   only be used id the client have verified that the TURN server
+   supports SSODA during the allocation creation described in
+   Section 2.1.
+
+3.1.  Sending a Refresh Request
+
+   To perform an allocation refresh, the client generates a Refresh
+   Request as described in Section 7.1 of [RFC5766].  The client MUST
+   include one ore more REQUESTED-ADDRESS-FAMILY attributes describing
+   the the family types that should be refreshed.
+
+   If the clients wants to delete an existing allocation of a specific
+   address type the lifetime of that refresh request must be set to 0
+   and requested address type must be included.  It is possible to
+   delete one ore more allocations dependant on how many REQUESTED-
+   ADDRESS-FAMILY attributes that are included.
+
+3.2.  Receiving a Refresh Request
+
+   The server refreshes the allocated address families that matches the
+   requested address family value.  If some of the values in the request
+   do not match an allocated family this is silently ignored.  (No point
+   in refreshing or deleting an allocation that does not exist.)
+
+   If a server receives a Refresh Request with REQUESTED-ADDRESS- FAMILY
+   attributes, and none attributes values don't match any of the address
+   family allocations, the server MUST reply with a 443 (Peer Address
+   Family Mismatch) Refresh error response.
+
+3.3.  CreatePermission
+
+   The behavior specified here affects the processing defined in
+   Section 9 of [RFC5766] and Section 6 of [RFC6156]
+
+3.3.1.  Sending a CreatePermission Request
+
+   The client MUST only include XOR-PEER-ADDRESS attributes with
+   addresses of the same address family as that of the relayed transport
+   addresses that are allocated.
+
+3.3.2.  Receiving a CreatePermission Request
+
+   If an XOR-PEER-ADDRESS attribute contains an address of an address
+   family different than that any of the relayed transport addresses
+   allocated, the server MUST generate an error response with the 443
+   (Peer Address Family Mismatch) response code, which is defined in
+   Section 6.2.1 of [RFC6156].
+
+4.  Channels
+
+   [[Q3: Allow to bind two channels?  Or only bind one and discard the
+   other address types?  --palmarti]]
+
+5.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC5766]  Mahy, R., Matthews, P., and J. Rosenberg, "Traversal Using
+              Relays around NAT (TURN): Relay Extensions to Session
+              Traversal Utilities for NAT (STUN)", RFC 5766, April 2010.
+
+   [RFC6156]  Camarillo, G., Novo, O., and S. Perreault, "Traversal
+              Using Relays around NAT (TURN) Extension for IPv6", RFC
+              6156, April 2011.
+
+Authors' Addresses
+
+   Paal-Erik Martinsen
+   Cisco Systems, Inc.
+   Philip Pedersens vei 20
+   Lysaker, Akershus  1366
+   Norway
+
+   Email: palmarti@cisco.com
+
+
+   Simon Perreault
+   Viagenie
+   2600 boul. Laurier, suite 625
+   Quebec, QC  G1V 4W1
+   Canada
+
+   Phone: +1 418 656 9254
+   Email: simon.perreault@viagenie.ca
+   URI:   http://www.viagenie.ca
+
