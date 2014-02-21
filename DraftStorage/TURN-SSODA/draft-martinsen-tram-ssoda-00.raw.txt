@@ -4,9 +4,11 @@
 
 TRAM                                                        P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                            S. Perreault
-Expires: August 24, 2014                                        Viagenie
-                                                       February 20, 2014
+Intended status: Standards Track                               J. Uberti
+Expires: August 25, 2014                                          Google
+                                                           O. Moskalenko
+                                      public project rfc5766-turn-server
+                                                       February 21, 2014
 
 
                 Single SOcket Dual Allocation with TURN
@@ -40,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 24, 2014.
+   This Internet-Draft will expire on August 25, 2014.
 
 Copyright Notice
 
@@ -73,7 +75,8 @@ Table of Contents
        3.3.1.  Sending a CreatePermission Request
        3.3.2.  Receiving a CreatePermission Request
    4.  Channels
-   5.  Normative References
+   5.  Acknowledgements
+   6.  Normative References
    Authors' Addresses
 
 1.  Introduction
@@ -252,7 +255,12 @@ Table of Contents
    [[Q3: Allow to bind two channels?  Or only bind one and discard the
    other address types?  --palmarti]]
 
-5.  Normative References
+5.  Acknowledgements
+
+   Authors would like to thank Simon Perreault for providing ideas
+   direction and insight.
+
+6.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -276,13 +284,19 @@ Authors' Addresses
    Email: palmarti@cisco.com
 
 
-   Simon Perreault
-   Viagenie
-   2600 boul. Laurier, suite 625
-   Quebec, QC  G1V 4W1
-   Canada
+   Justin Uberti
+   Google
+   Kirkland, WA
+   USA
 
-   Phone: +1 418 656 9254
-   Email: simon.perreault@viagenie.ca
-   URI:   http://www.viagenie.ca
+   Email: justin@uberti.name
+
+
+   Oleg Moskalenko
+   public project rfc5766-turn-server
+   Walnut Creek, CA
+   USA
+
+   Email: mom040267@gmail.com
+   URI:   https://code.google.com/p/rfc5766-turn-server/
 

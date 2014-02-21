@@ -388,16 +388,17 @@
 <link href="#rfc.section.3.3.1" rel="Chapter" title="3.3.1 Sending a CreatePermission Request"/>
 <link href="#rfc.section.3.3.2" rel="Chapter" title="3.3.2 Receiving a CreatePermission Request"/>
 <link href="#rfc.section.4" rel="Chapter" title="4 Channels"/>
-<link href="#rfc.references" rel="Chapter" title="5 Normative References"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="6 Normative References"/>
 <link href="#rfc.authors" rel="Chapter"/>
 
 
   <meta name="generator" content="xml2rfc version 2.4.5 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Martinsen, P. and S. Perreault" />
+  <meta name="dct.creator" content="Martinsen, P., Uberti, J., and O. Moskalenko" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-martinsen-tram-ssoda-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-2-20" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-2-21" />
   <meta name="dct.abstract" content="This draft describes a simple method for allocating on IPv4 and one IPv6 RELAY address by sending one allocate request to the TURN server. This saves local port on the agent and reduces the number of messages sent between the agent and the TURN server.  " />
   <meta name="description" content="This draft describes a simple method for allocating on IPv4 and one IPv6 RELAY address by sending one allocate request to the TURN server. This saves local port on the agent and reduces the number of messages sent between the agent and the TURN server.  " />
 
@@ -418,15 +419,23 @@
 </tr>
 <tr>
   <td class="left">Intended status: Standards Track</td>
-  <td class="right">S. Perreault</td>
+  <td class="right">J. Uberti</td>
 </tr>
 <tr>
-  <td class="left">Expires: August 24, 2014</td>
-  <td class="right">Viag&#233;nie</td>
+  <td class="left">Expires: August 25, 2014</td>
+  <td class="right">Google</td>
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">February 20, 2014</td>
+  <td class="right">O. Moskalenko</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">public project rfc5766-turn-server</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">February 21, 2014</td>
 </tr>
 
     	
@@ -450,7 +459,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on August 24, 2014.</p>
+<p>This Internet-Draft will expire on August 25, 2014.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -476,7 +485,8 @@
 <li>3.3.1.   <a href="#rfc.section.3.3.1">Sending a CreatePermission Request</a></li>
 <li>3.3.2.   <a href="#rfc.section.3.3.2">Receiving a CreatePermission Request</a></li>
 <li>4.   <a href="#rfc.section.4">Channels</a></li>
-<li>5.   <a href="#rfc.references">Normative References</a></li>
+<li>5.   <a href="#rfc.section.5">Acknowledgements</a></li>
+<li>6.   <a href="#rfc.references">Normative References</a></li>
 <li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
@@ -523,7 +533,9 @@
 <p id="rfc.section.3.3.2.p.1">If an XOR-PEER-ADDRESS attribute contains an address of an address family different than that any of the relayed transport addresses allocated, the server MUST generate an error response with the 443 (Peer Address Family Mismatch) response code, which is defined in Section 6.2.1 of <a href="#RFC6156">[RFC6156]</a>.  </p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Channels</h1>
 <p><a id="Q3" class="info">[Q3]<span class="info">palmarti: Allow to bind two channels? Or only bind one and discard the other address types? </span></a> </p>
-<h1 id="rfc.references"><a href="#rfc.references">5.</a> Normative References</h1>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#ack" id="ack">Acknowledgements</a></h1>
+<p id="rfc.section.5.p.1">Authors would like to thank Simon Perreault for providing ideas direction and insight.  </p>
+<h1 id="rfc.references"><a href="#rfc.references">6.</a> Normative References</h1>
 <table>
   <tbody>
     <tr>
@@ -574,27 +586,45 @@
 </div><div class="avoidbreak">
   <address class="vcard">
 	<span class="vcardline">
-	  <span class="fn">Simon Perreault</span> 
+	  <span class="fn">Justin Uberti</span> 
 	  <span class="n hidden">
-		<span class="family-name">Perreault</span>
+		<span class="family-name">Uberti</span>
 	  </span>
 	</span>
-	<span class="org vcardline">Viag&#233;nie</span>
+	<span class="org vcardline">Google</span>
 	<span class="adr">
-	  <span class="vcardline">2600 boul. Laurier, suite 625</span>
-
+	  
 	  <span class="vcardline">
-		<span class="locality">Qu&#233;bec</span>,  
-		<span class="region">QC</span> 
-		<span class="code">G1V 4W1</span>
+		<span class="locality">Kirkland</span>,  
+		<span class="region">WA</span> 
+		<span class="code"></span>
 	  </span>
-	  <span class="country-name vcardline">Canada</span>
+	  <span class="country-name vcardline">USA</span>
 	</span>
-	<span class="vcardline">Phone: +1 418 656 9254</span>
+	<span class="vcardline">EMail: <a href="mailto:justin@uberti.name">justin@uberti.name</a></span>
 
-<span class="vcardline">EMail: <a href="mailto:simon.perreault@viagenie.ca">simon.perreault@viagenie.ca</a></span>
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Oleg Moskalenko</span> 
+	  <span class="n hidden">
+		<span class="family-name">Moskalenko</span>
+	  </span>
+	</span>
+	<span class="org vcardline">public project rfc5766-turn-server</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality">Walnut Creek</span>,  
+		<span class="region">CA</span> 
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline">USA</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:mom040267@gmail.com">mom040267@gmail.com</a></span>
 
-<span class="vcardline">URI: <a href="http://www.viagenie.ca">http://www.viagenie.ca</a></span>
+<span class="vcardline">URI: <a href="https://code.google.com/p/rfc5766-turn-server/">https://code.google.com/p/rfc5766-turn-server/</a></span>
 
   </address>
 </div>

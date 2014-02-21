@@ -4,9 +4,11 @@
 
 TRAM                                                        P. Martinsen
 Internet-Draft                                                     Cisco
-Intended status: Standards Track                            S. Perreault
-Expires: August 24, 2014                                        Viagenie
-                                                       February 20, 2014
+Intended status: Standards Track                               J. Uberti
+Expires: August 25, 2014                                          Google
+                                                           O. Moskalenko
+                                      public project rfc5766-turn-server
+                                                       February 21, 2014
 
 
                 Single SOcket Dual Allocation with TURN
@@ -40,24 +42,25 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 24, 2014.
+   This Internet-Draft will expire on August 25, 2014.
 
 Copyright Notice
 
    Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
 
 
 
-Martinsen & Perreault    Expires August 24, 2014                [Page 1]
+
+Martinsen, et al.        Expires August 25, 2014                [Page 1]
 
 Internet-Draft                    SSODA                    February 2014
 
 
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -68,7 +71,7 @@ Internet-Draft                    SSODA                    February 2014
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  Creating an Allocation  . . . . . . . . . . . . . . . . . . .   2
+   2.  Creating an Allocation  . . . . . . . . . . . . . . . . . . .   3
      2.1.  Sending an Allocate Request . . . . . . . . . . . . . . .   3
      2.2.  Receiving an Allocate Request . . . . . . . . . . . . . .   3
        2.2.1.  New Error Responses . . . . . . . . . . . . . . . . .   4
@@ -78,10 +81,11 @@ Table of Contents
      3.1.  Sending a Refresh Request . . . . . . . . . . . . . . . .   5
      3.2.  Receiving a Refresh Request . . . . . . . . . . . . . . .   5
      3.3.  CreatePermission  . . . . . . . . . . . . . . . . . . . .   5
-       3.3.1.  Sending a CreatePermission Request  . . . . . . . . .   5
+       3.3.1.  Sending a CreatePermission Request  . . . . . . . . .   6
        3.3.2.  Receiving a CreatePermission Request  . . . . . . . .   6
    4.  Channels  . . . . . . . . . . . . . . . . . . . . . . . . . .   6
-   5.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
+   6.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
@@ -99,20 +103,21 @@ Table of Contents
    (16bit number) preserving them on the NAT and a the TURN server can
    potentially lead to easier large scale deployments.
 
+
+
+
+
+
+
+Martinsen, et al.        Expires August 25, 2014                [Page 2]
+
+Internet-Draft                    SSODA                    February 2014
+
+
 2.  Creating an Allocation
 
    The behavior specified here affects the processing defined in
    Section 6 of [RFC5766] and Section 4 of [RFC6156].
-
-
-
-
-
-
-Martinsen & Perreault    Expires August 24, 2014                [Page 2]
-
-Internet-Draft                    SSODA                    February 2014
-
 
 2.1.  Sending an Allocate Request
 
@@ -156,20 +161,21 @@ Internet-Draft                    SSODA                    February 2014
    If all of the requested address families included in the Allocate
    request are unsupported on the TURN server it MUST respond with a 460
    (None of the address families are supported) Allocate Error Response.
+
+
+
+
+Martinsen, et al.        Expires August 25, 2014                [Page 3]
+
+Internet-Draft                    SSODA                    February 2014
+
+
    An old TURN server implementation would potentially return 440, so a
    new error response was defined.
 
    If the REQUESTED-ADDRESS-FAMILY attributes are absent, the server
    MUST allocate an IPv4-relayed transport address for the TURN client.
    If allocation of IPv4 addresses is disabled by local policy, the
-
-
-
-Martinsen & Perreault    Expires August 24, 2014                [Page 3]
-
-Internet-Draft                    SSODA                    February 2014
-
-
    server returns a 440 (Address Family not Supported) Allocate error
    response.
 
@@ -213,19 +219,18 @@ Internet-Draft                    SSODA                    February 2014
    Address Families are Supported) error code, the client MUST NOT retry
    its request.
 
+
+
+Martinsen, et al.        Expires August 25, 2014                [Page 4]
+
+Internet-Draft                    SSODA                    February 2014
+
+
    If the client receives an Allocate error response with the 440
    (Unsupported Address Family) error code, the client knows that the
    TURN server does not SSODA and might have misinterpreted any of the
    included REQUESTED-ADDRESS-FAMILY attributes in the Allocate request.
    The client should retry the allocations by sending the Allocate
-
-
-
-Martinsen & Perreault    Expires August 24, 2014                [Page 4]
-
-Internet-Draft                    SSODA                    February 2014
-
-
    request messages from different local HOST ports and without
    including multiple REQUESTED-ADDRESS-FAMILY attributes.
 
@@ -267,20 +272,21 @@ Internet-Draft                    SSODA                    February 2014
    The behavior specified here affects the processing defined in
    Section 9 of [RFC5766] and Section 6 of [RFC6156]
 
+
+
+
+
+
+Martinsen, et al.        Expires August 25, 2014                [Page 5]
+
+Internet-Draft                    SSODA                    February 2014
+
+
 3.3.1.  Sending a CreatePermission Request
 
    The client MUST only include XOR-PEER-ADDRESS attributes with
    addresses of the same address family as that of the relayed transport
    addresses that are allocated.
-
-
-
-
-
-Martinsen & Perreault    Expires August 24, 2014                [Page 5]
-
-Internet-Draft                    SSODA                    February 2014
-
 
 3.3.2.  Receiving a CreatePermission Request
 
@@ -295,7 +301,12 @@ Internet-Draft                    SSODA                    February 2014
    [[Q3: Allow to bind two channels?  Or only bind one and discard the
    other address types?  --palmarti]]
 
-5.  Normative References
+5.  Acknowledgements
+
+   Authors would like to thank Simon Perreault for providing ideas
+   direction and insight.
+
+6.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
@@ -319,18 +330,63 @@ Authors' Addresses
    Email: palmarti@cisco.com
 
 
-   Simon Perreault
-   Viagenie
-   2600 boul. Laurier, suite 625
-   Quebec, QC  G1V 4W1
-   Canada
-
-   Phone: +1 418 656 9254
-   Email: simon.perreault@viagenie.ca
-   URI:   http://www.viagenie.ca
 
 
 
+Martinsen, et al.        Expires August 25, 2014                [Page 6]
+
+Internet-Draft                    SSODA                    February 2014
 
 
-Martinsen & Perreault    Expires August 24, 2014                [Page 6]
+   Justin Uberti
+   Google
+   Kirkland, WA
+   USA
+
+   Email: justin@uberti.name
+
+
+   Oleg Moskalenko
+   public project rfc5766-turn-server
+   Walnut Creek, CA
+   USA
+
+   Email: mom040267@gmail.com
+   URI:   https://code.google.com/p/rfc5766-turn-server/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Martinsen, et al.        Expires August 25, 2014                [Page 7]
