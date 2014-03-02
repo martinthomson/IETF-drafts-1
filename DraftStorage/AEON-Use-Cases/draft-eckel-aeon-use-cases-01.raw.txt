@@ -149,6 +149,57 @@ Table of Contents
    4.  Informative References
    Authors' Addresses
 
+
+Internet Engineering Task Force                                 C. Eckel
+Internet-Draft                                                  T. Reddy
+Intended status: Informational                       Cisco Systems, Inc.
+Expires: August 18, 2014                               February 14, 2014
+
+
+             Application Enabled Open Networking Use Cases
+                     draft-eckel-aeon-use-cases-01
+
+Abstract
+
+   This document describes application enabled open networking use
+   cases.  Application enabled open networking (AEON) is a framework in
+   which applications explicitly signal their flow characteristics to
+   the network.  This provides network nodes with visibility of the
+   application flow characteristics, which enables them to apply the
+   correct flow treatment and provide feedback to applications.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on August 18, 2014.
+
+Copyright Notice
+
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
 1.  Introduction
 
    Identification and treatment of application flows are critical for
@@ -157,7 +208,7 @@ Table of Contents
    has been accomplished to the extent possible using heuristics, which
    inspect and infer flow characteristics.  Heuristics may be based on
    port ranges, network separation, or deep packet inspection (DPI),
-   e.g. application level gateway (ALG).  Port based solutions suffer
+   e.g.  application level gateway (ALG).  Port based solutions suffer
    from port overloading and inconsistent port usage.  Network
    separation solutions are error prone and result in network management
    hassle.  DPI is computationally expensive and becomes a challenge
@@ -295,7 +346,7 @@ Table of Contents
    need to be enhanced to perform ALG on new applications.  For example
    Enterprise firewall could have granular policies to permit peer-to-
    peer UDP media session only when the call is initiated using the
-   selected WebRTC server (Dr. Good) it trusts and block others (Dr.
+   selected WebRTC server (Dr.  Good) it trusts and block others (Dr.
    Evil).  PCP-aware firewalls can enforce such granular security
    policies without performing ALG on the session signaling protocols.
    This mechanism can be used by any other Application Function trusted
@@ -536,8 +587,8 @@ Table of Contents
 
    Many end-to-end application sessions involve multiple application
    protocols, devices and administrative domains.  These sessions
-   involve multiple media flows (e.g. an audio flow and a video flow for
-   a video call, media flows between different entities in a
+   involve multiple media flows (e.g.  an audio flow and a video flow
+   for a video call, media flows between different entities in a
    supplementary service session consisting of multiple SIP dialogs or
    H.323 calls).  Media flows may be added/removed from a application
    session during the lifetime of the session.  From within the network,
@@ -547,7 +598,7 @@ Table of Contents
 
 2.8.2.  Proposed Solution
 
-   Including a session identify (e.g. as defined in
+   Including a session identify (e.g.  as defined in
    [I-D.ietf-insipid-session-id-reqts]) in the flow characteristics
    communicated by the application to the network would allow the
    network to identify media flows belonging to a common application
@@ -557,7 +608,7 @@ Table of Contents
       associate media flows with application sessions
 
    o  media flows that are part of established application sessions to
-      be identified (e.g. the triggered call in the case of a transfer)
+      be identified (e.g.  the triggered call in the case of a transfer)
       and given dedicated QoS.  Preserving established sessions
       generally is higher priority than setting up new sessions (except
       when there is some form of multi-level preemption).  Giving more
@@ -610,7 +661,7 @@ Table of Contents
               Eckert, T., Penno, R., Choukir, A., and C. Eckel, "A
               Framework for Signaling Flow Characteristics between
               Applications and the Network", draft-eckert-intarea-flow-
-              metadata-framework-02 (work in progress), October 2013.
+              metadata-framework-01 (work in progress), July 2013.
 
    [I-D.ietf-insipid-session-id-reqts]
               Jones, P., Salgueiro, G., Polk, J., Liess, L., and H.

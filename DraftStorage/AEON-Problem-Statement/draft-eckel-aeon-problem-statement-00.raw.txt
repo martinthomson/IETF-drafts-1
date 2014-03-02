@@ -65,7 +65,64 @@ Table of Contents
    4.  Efforts in Progress
    5.  Requirements
    6.  Acknowledgements
+   7.  References
    Authors' Addresses
+
+
+Internet Engineering Task Force                                 C. Eckel
+Internet-Draft                                                  T. Reddy
+Intended status: Informational                       Cisco Systems, Inc.
+Expires: August 18, 2014                               February 14, 2014
+
+
+Application Enabled Open Networking: Problem Statement and Requirements
+                 draft-eckel-aeon-problem-statement-00
+
+Abstract
+
+   Identification and treatment of application flows are critical for
+   the successful deployment and operation of applications.
+   Historically, this functionality has been accomplished to the extent
+   possible using heuristics, which inspect and infer flow
+   characteristics.  Heuristics may be based on port ranges, network
+   separation, or deep packet inspection (DPI).  But many application
+   flows in current usages are dynamic, time-bound (short lived for some
+   of them), possibly encrypted (TLS for signaling), peer-to-peer,
+   possibly asymmetric, and used on non-dedicated devices, any
+   combination of which renders such techniques less effective or
+   results in compromises to application security or user privacy.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on August 18, 2014.
+
+Copyright Notice
+
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
 
 1.  Introduction
 
@@ -114,7 +171,7 @@ Table of Contents
        according to network operator defined rule sets, including
        policing and shaping of traffic, providing admission control,
        impacting routing, and permitting passage of specific traffic
-       (e.g. firewall functions).
+       (e.g.  firewall functions).
 
 3.  Limitations of Existing Solutions
 
@@ -125,12 +182,12 @@ Table of Contents
 
    o  Simple observation based classification based on TCP/UDP port
       numbers often result in incorrect results due to port overloading
-      (i.e. ports used by applications other than those claiming the
+      (i.e.  ports used by applications other than those claiming the
       port with IANA).
 
    o  More and more traffic is encrypted, rendering DPI impossible, or
       much more complex, and sometimes at the expense of privacy or
-      security (e.g. need to share encryption keys with intermediary
+      security (e.g.  need to share encryption keys with intermediary
       performing DPI).
 
    o  Visibility generally requires inspecting the signaling traffic of
@@ -251,6 +308,8 @@ Table of Contents
 
    The authors thank Toerless Eckert, Reinaldo Penno, Dan Wing, Amine
    Choukir, and Paul Jones for their contributions to this draft.
+
+7.  References
 
 Authors' Addresses
 
