@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Eckel & Reddy           Expires August 18, 2014                 [Page 1]
+Eckel & Reddy            Expires August 18, 2014                [Page 1]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
@@ -73,7 +73,6 @@ Table of Contents
    4.  Efforts in Progress . . . . . . . . . . . . . . . . . . . . .   4
    5.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   5
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
@@ -109,7 +108,8 @@ Table of Contents
 
 
 
-Eckel & Reddy           Expires August 18, 2014                 [Page 2]
+
+Eckel & Reddy            Expires August 18, 2014                [Page 2]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
@@ -131,7 +131,7 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
        according to network operator defined rule sets, including
        policing and shaping of traffic, providing admission control,
        impacting routing, and permitting passage of specific traffic
-       (e.g.  firewall functions).
+       (e.g. firewall functions).
 
 3.  Limitations of Existing Solutions
 
@@ -142,12 +142,12 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
    o  Simple observation based classification based on TCP/UDP port
       numbers often result in incorrect results due to port overloading
-      (i.e.  ports used by applications other than those claiming the
+      (i.e. ports used by applications other than those claiming the
       port with IANA).
 
    o  More and more traffic is encrypted, rendering DPI impossible, or
       much more complex, and sometimes at the expense of privacy or
-      security (e.g.  need to share encryption keys with intermediary
+      security (e.g. need to share encryption keys with intermediary
       performing DPI).
 
    o  Visibility generally requires inspecting the signaling traffic of
@@ -158,21 +158,18 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
    o  Extensions to signaling protocols can result in false negatives or
       false positives during inspection.
 
+   o  Network services leveraging DPI traffic classification impact the
+      application behavior by impacting its traffic, but they do not
+      provide explicit feedback to the application.  This results in a
 
 
 
 
-
-
-
-Eckel & Reddy           Expires August 18, 2014                 [Page 3]
+Eckel & Reddy            Expires August 18, 2014                [Page 3]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
-   o  Network services leveraging DPI traffic classification impact the
-      application behavior by impacting its traffic, but they do not
-      provide explicit feedback to the application.  This results in a
       lost opportunity for the application to gain insight and adjust
       its operation accordingly.
 
@@ -218,17 +215,17 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
       traversal capabilities and determining the best local and remote
       addresses for peer-to-peer connectivity (ICE).
 
+   o  Port Control Protocol (PCP) provides a mechanism to describe a
+      flow to the network.  The primary driver for PCP has been creating
+      port mappings on NAT and firewall devices.  When doing this, PCP
 
 
 
-Eckel & Reddy           Expires August 18, 2014                 [Page 4]
+Eckel & Reddy            Expires August 18, 2014                [Page 4]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
-   o  Port Control Protocol (PCP) provides a mechanism to describe a
-      flow to the network.  The primary driver for PCP has been creating
-      port mappings on NAT and firewall devices.  When doing this, PCP
       pushes flow information from the host into the network
       (specifically to the network's NAT or firewall device), and
       receives information back from the network (from the NAT or
@@ -275,15 +272,15 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
    Req-5:  Complement existing heuristic based mechanisms.
 
+   Req-6:  Provide differentiated service for both directions of a flow,
+      including flows that cross administrative boundaries.
 
 
-Eckel & Reddy           Expires August 18, 2014                 [Page 5]
+
+Eckel & Reddy            Expires August 18, 2014                [Page 5]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
-
-   Req-6:  Provide differentiated service for both directions of a flow,
-      including flows that cross administrative boundaries.
 
    Req-7:  Provide mechanism to authenticate and authorize endpoints/
       applications to signal flow characteristics.
@@ -295,8 +292,6 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
    The authors thank Toerless Eckert, Reinaldo Penno, Dan Wing, Amine
    Choukir, and Paul Jones for their contributions to this draft.
-
-7.  References
 
 Authors' Addresses
 
@@ -333,4 +328,9 @@ Authors' Addresses
 
 
 
-Eckel & Reddy           Expires August 18, 2014                 [Page 6]
+
+
+
+
+
+Eckel & Reddy            Expires August 18, 2014                [Page 6]

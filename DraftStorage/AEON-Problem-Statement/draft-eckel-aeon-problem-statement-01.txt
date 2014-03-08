@@ -5,18 +5,19 @@
 Internet Engineering Task Force                                 C. Eckel
 Internet-Draft                                                  T. Reddy
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: August 18, 2014                               February 14, 2014
+Expires: September 9, 2014                                 March 8, 2014
 
 
 Application Enabled Open Networking: Problem Statement and Requirements
-                 draft-eckel-aeon-problem-statement-00
+                 draft-eckel-aeon-problem-statement-01
 
 Abstract
 
-   Identification and treatment of application flows are critical for
-   the successful deployment and operation of applications.
-   Historically, this functionality has been accomplished to the extent
-   possible using heuristics, which inspect and infer flow
+   Identification and treatment of application flows are important to
+   many network operators.  They often rely on these capabilites to
+   deploy and/or support a wide range of applications that run on their
+   networks.  Historically, this functionality has been accomplished to
+   the extent possible using heuristics, which inspect and infer flow
    characteristics.  Heuristics may be based on port ranges, network
    separation, or deep packet inspection (DPI).  But many application
    flows in current usages are dynamic, time-bound (short lived for some
@@ -40,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 18, 2014.
+   This Internet-Draft will expire on September 9, 2014.
 
 Copyright Notice
 
@@ -49,6 +50,14 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
+
+
+
+Eckel & Reddy           Expires September 9, 2014               [Page 1]
+
+Internet-Draft       AEON Problem Statement and Req           March 2014
+
+
    (http://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
@@ -59,13 +68,13 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction
-   2.  Typical Workflows
-   3.  Limitations of Existing Solutions
-   4.  Efforts in Progress
-   5.  Requirements
-   6.  Acknowledgements
-   Authors' Addresses
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  Typical Workflows . . . . . . . . . . . . . . . . . . . . . .   3
+   3.  Limitations of Existing Solutions . . . . . . . . . . . . . .   3
+   4.  Efforts in Progress . . . . . . . . . . . . . . . . . . . . .   4
+   5.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   5
+   6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
 
@@ -97,6 +106,14 @@ Table of Contents
    computationally expensive and becomes a greater challenge with the
    wider adoption of encrypted signaling and secured media.  An
    additional drawback of DPI is that any insights are not available, or
+
+
+
+Eckel & Reddy           Expires September 9, 2014               [Page 2]
+
+Internet-Draft       AEON Problem Statement and Req           March 2014
+
+
    need to be recomputed, at network nodes further down the application
    flow path.
 
@@ -144,6 +161,15 @@ Table of Contents
    o  Network services leveraging DPI traffic classification impact the
       application behavior by impacting its traffic, but they do not
       provide explicit feedback to the application.  This results in a
+
+
+
+
+Eckel & Reddy           Expires September 9, 2014               [Page 3]
+
+Internet-Draft       AEON Problem Statement and Req           March 2014
+
+
       lost opportunity for the application to gain insight and adjust
       its operation accordingly.
 
@@ -192,6 +218,14 @@ Table of Contents
    o  Port Control Protocol (PCP) provides a mechanism to describe a
       flow to the network.  The primary driver for PCP has been creating
       port mappings on NAT and firewall devices.  When doing this, PCP
+
+
+
+Eckel & Reddy           Expires September 9, 2014               [Page 4]
+
+Internet-Draft       AEON Problem Statement and Req           March 2014
+
+
       pushes flow information from the host into the network
       (specifically to the network's NAT or firewall device), and
       receives information back from the network (from the NAT or
@@ -241,6 +275,13 @@ Table of Contents
    Req-6:  Provide differentiated service for both directions of a flow,
       including flows that cross administrative boundaries.
 
+
+
+Eckel & Reddy           Expires September 9, 2014               [Page 5]
+
+Internet-Draft       AEON Problem Statement and Req           March 2014
+
+
    Req-7:  Provide mechanism to authenticate and authorize endpoints/
       applications to signal flow characteristics.
 
@@ -272,3 +313,24 @@ Authors' Addresses
 
    Email: tireddy@cisco.com
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Eckel & Reddy           Expires September 9, 2014               [Page 6]
