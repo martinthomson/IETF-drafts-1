@@ -66,6 +66,55 @@ Table of Contents
    Appendix A.  Examples
    Authors' Addresses
 
+
+MMUSIC                                                          T. Reddy
+Internet-Draft                                                  P. Patil
+Intended status: Standards Track                            P. Martinsen
+Expires: August 18, 2014                                           Cisco
+                                                       February 14, 2014
+
+
+                    Happy Eyeballs Extension for ICE
+                draft-reddy-mmusic-ice-happy-eyeballs-06
+
+Abstract
+
+   This document provides guidelines on how to make Interactive
+   Connectivity Establishment (ICE) conclude faster in IPv4/IPv6 dual-
+   stack scenarios where broken paths exist.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on August 18, 2014.
+
+Copyright Notice
+
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
 1.  Introduction
 
    There is a need to introduce more fairness in the handling of
@@ -123,9 +172,10 @@ Table of Contents
    4.1.2.1 SHOULD be used to calculate the candidate priority.  The
    formula is as follows:
 
-        priority = (2^24)*(type preference) +
-                   (2^8)*(local preference) +
-                   (2^0)*(256 - component ID)
+     priority = (2^24)*(type preference) +
+                (2^8)*(local preference) +
+                (2^0)*(256 - component ID)
+
 
    ICE [RFC5245] section 4.1.2.2 has guidelines for how the type
    preference and local preference value should be chosen.  Instead of
@@ -144,7 +194,8 @@ Table of Contents
    described in [RFC5245] section 5.7.2.  Using the pair priority
    formula:
 
-        pair priority = 2^32*MIN(G,D) + 2*MAX(G,D) + (G>D?1:0)
+     pair priority = 2^32*MIN(G,D) + 2*MAX(G,D) + (G>D?1:0)
+
 
    Where G is the candidate priority provided by the controlling agent
    and D the candidate priority provided by the controlled agent.  This
@@ -186,10 +237,12 @@ Table of Contents
    +--------+------+------+------+------+------+---------------------+
              <- N->
 
+
    The local preference can be calculated by the given formula:
 
 
          local_preference = N*2*(Cn/Cmax)
+
 
    Where N is the absolute value of IPv6_start-IPv4_start.  This ensures
    a positive number even if IPv4 is the highest priority.  Cn is the
@@ -200,24 +253,25 @@ Table of Contents
    Using the values N=abs(60000-59000) and Cmax = 2 yields the following
    sorted local candidate list:
 
-    (1)  HOST  IPv6 (1) Priority: 2129289471
-    (2)  HOST  IPv6 (2) Priority: 2129289470
-    (3)  HOST  IPv4 (1) Priority: 2129033471
-    (4)  HOST  IPv4 (2) Priority: 2129033470
-    (5)  HOST  IPv6 (1) Priority: 2128777471
-    (6)  HOST  IPv6 (2) Priority: 2128777470
-    (7)  HOST  IPv4 (1) Priority: 2128521471
-    (8)  HOST  IPv4 (2) Priority: 2128521470
-    (9)  HOST  IPv6 (1) Priority: 2128265471
-    (10) HOST  IPv6 (2) Priority: 2128265470
-    (11) SRFLX IPv6 (1) Priority: 1693081855
-    (12) SRFLX IPv6 (2) Priority: 1693081854
-    (13) SRFLX IPv4 (1) Priority: 1692825855
-    (14) SRFLX IPv4 (2) Priority: 1692825854
-    (15) RELAY IPv6 (1) Priority: 15360255
-    (16) RELAY IPv6 (2) Priority: 15360254
-    (17) RELAY IPv4 (1) Priority: 15104255
-    (18) RELAY IPv4 (2) Priority: 15104254
+   (1)  HOST  IPv6 (1) Priority: 2129289471
+   (2)  HOST  IPv6 (2) Priority: 2129289470
+   (3)  HOST  IPv4 (1) Priority: 2129033471
+   (4)  HOST  IPv4 (2) Priority: 2129033470
+   (5)  HOST  IPv6 (1) Priority: 2128777471
+   (6)  HOST  IPv6 (2) Priority: 2128777470
+   (7)  HOST  IPv4 (1) Priority: 2128521471
+   (8)  HOST  IPv4 (2) Priority: 2128521470
+   (9)  HOST  IPv6 (1) Priority: 2128265471
+   (10) HOST  IPv6 (2) Priority: 2128265470
+   (11) SRFLX IPv6 (1) Priority: 1693081855
+   (12) SRFLX IPv6 (2) Priority: 1693081854
+   (13) SRFLX IPv4 (1) Priority: 1692825855
+   (14) SRFLX IPv4 (2) Priority: 1692825854
+   (15) RELAY IPv6 (1) Priority: 15360255
+   (16) RELAY IPv6 (2) Priority: 15360254
+   (17) RELAY IPv4 (1) Priority: 15104255
+   (18) RELAY IPv4 (2) Priority: 15104254
+
 
    The result is an even spread of IPv6 and IPv4 candidates among the
    different candidate types (HOST, SRFLX, RELAY).  The local_preference
@@ -231,11 +285,11 @@ Table of Contents
    support this.  It will not break interoperability with other ICE
    implementations.
 
-   [[Q1: Need to take a closer look at how the unfreezing happens and
-   how this affects the component id is the sorting above. --palmarti]]
-   [[Q2: The implementations of the algorithm does not implement pruning
-   of the pairs.  So the checklist is shorter in real life than the
-   example in the appendix.  --palmarti]]
+   [[: Q1Need to take a closer look at how the unfreezing happens and
+   how this affects the component id is the sorting above.]] [[: Q2The
+   implementations of the algorithm does not implement pruning of the
+   pairs.  So the checklist is shorter in real life than the example in
+   the appendix.  ]]
 
 6.  IANA Considerations
 
@@ -350,6 +404,7 @@ Appendix A.  Examples
    (18) RELAY IPv4 (2) Priority: 15104254
 
 
+
    ********** Remote Candidates *********
    (1)  HOST  IPv6 (1) Priority: 2129289471
    (2)  HOST  IPv6 (1) Priority: 2129289471
@@ -369,6 +424,7 @@ Appendix A.  Examples
    (16) RELAY IPv6 (2) Priority: 15360254
    (17) RELAY IPv4 (1) Priority: 15104255
    (18) RELAY IPv4 (2) Priority: 15104254
+
 
 
    The pairs have not been pruned a described in section 5.7.3 of the
@@ -457,6 +513,7 @@ Appendix A.  Examples
    79 SRFLX 4(2) 1692825854 RELAY 4(2) 15104254  (64872280346128893)
    80 RELAY 4(2) 15104254   SRFLX 4(2) 1692825854(64872280346128892)
    81 RELAY 4(2) 15104254   RELAY 4(2) 15104254  (64872276990685692)
+
 
 
 Authors' Addresses

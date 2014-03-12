@@ -47,8 +47,8 @@ Status of This Memo
    This Internet-Draft is submitted in full conformance with the
    provisions of BCP 78 and BCP 79.
 
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
+
+
 
 
 
@@ -58,6 +58,9 @@ Penno, et al.             Expires May 25, 2014                  [Page 1]
 Internet-Draft                   MALICE                    November 2013
 
 
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at http://datatracker.ietf.org/drafts/current/.
 
@@ -89,23 +92,20 @@ Table of Contents
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
    3.  Overview of MALICE  . . . . . . . . . . . . . . . . . . . . .   5
      3.1.  Metadata Attributes . . . . . . . . . . . . . . . . . . .   6
-       3.1.1.  Sending and Receiving . . . . . . . . . . . . . . . .   7
+       3.1.1.  Sending and Receiving . . . . . . . . . . . . . . . .   6
        3.1.2.  Directionality and Asymmetry  . . . . . . . . . . . .   7
        3.1.3.  Network Element Processing  . . . . . . . . . . . . .   8
        3.1.4.  MALICE Client and Server Processing . . . . . . . . .   8
      3.2.  Connectivity Checks . . . . . . . . . . . . . . . . . . .   9
        3.2.1.  MALICE to non-MALICE  . . . . . . . . . . . . . . . .   9
        3.2.2.  MALICE to MALICE  . . . . . . . . . . . . . . . . . .   9
-     3.3.  Keepalives  . . . . . . . . . . . . . . . . . . . . . . .  11
-     3.4.  Aggressive Nomination . . . . . . . . . . . . . . . . . .  11
+     3.3.  Keepalives  . . . . . . . . . . . . . . . . . . . . . . .  10
+     3.4.  Aggressive Nomination . . . . . . . . . . . . . . . . . .  10
      3.5.  Implications on Concluding ICE  . . . . . . . . . . . . .  11
      3.6.  Lite Implementations and MALICE . . . . . . . . . . . . .  12
-   4.  Performing Connectivity Checks  . . . . . . . . . . . . . . .  13
-     4.1.  MALICE Client Procedures  . . . . . . . . . . . . . . . .  13
-       4.1.1.  Building the MALICE Request . . . . . . . . . . . . .  13
-       4.1.2.  Processing MALICE Responses . . . . . . . . . . . . .  13
-     4.2.  MALICE Network Element Procedures . . . . . . . . . . . .  14
-       4.2.1.  Adding a new Metadata IE  . . . . . . . . . . . . . .  15
+   4.  Performing Connectivity Checks  . . . . . . . . . . . . . . .  12
+     4.1.  MALICE Client Procedures  . . . . . . . . . . . . . . . .  12
+       4.1.1.  Building the MALICE Request . . . . . . . . . . . . .  12
 
 
 
@@ -114,24 +114,27 @@ Penno, et al.             Expires May 25, 2014                  [Page 2]
 Internet-Draft                   MALICE                    November 2013
 
 
+       4.1.2.  Processing MALICE Responses . . . . . . . . . . . . .  13
+     4.2.  MALICE Network Element Procedures . . . . . . . . . . . .  14
+       4.2.1.  Adding a new Metadata IE  . . . . . . . . . . . . . .  15
        4.2.2.  Removing a Metadata IE  . . . . . . . . . . . . . . .  16
-       4.2.3.  Changing a metadata IE  . . . . . . . . . . . . . . .  19
-       4.2.4.  Network Element Response Change . . . . . . . . . . .  20
-       4.2.5.  Solving Conflicts in Metadata Attribute Values  . . .  20
+       4.2.3.  Changing a metadata IE  . . . . . . . . . . . . . . .  18
+       4.2.4.  Network Element Response Change . . . . . . . . . . .  19
+       4.2.5.  Solving Conflicts in Metadata Attribute Values  . . .  19
        4.2.6.  Conflict Resolution . . . . . . . . . . . . . . . . .  23
-     4.3.  MALICE Server Procedures  . . . . . . . . . . . . . . . .  24
+     4.3.  MALICE Server Procedures  . . . . . . . . . . . . . . . .  23
    5.  Concluding MALICE Processing  . . . . . . . . . . . . . . . .  24
    6.  Subsequent Connectivity Checks  . . . . . . . . . . . . . . .  24
-   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  25
-     7.1.  STUN Inspection . . . . . . . . . . . . . . . . . . . . .  25
+   7.  Security Considerations . . . . . . . . . . . . . . . . . . .  24
+     7.1.  STUN Inspection . . . . . . . . . . . . . . . . . . . . .  24
      7.2.  Authentication  . . . . . . . . . . . . . . . . . . . . .  25
-   8.  STUN Extensions . . . . . . . . . . . . . . . . . . . . . . .  26
-     8.1.  New Attributes  . . . . . . . . . . . . . . . . . . . . .  26
+   8.  STUN Extensions . . . . . . . . . . . . . . . . . . . . . . .  25
+     8.1.  New Attributes  . . . . . . . . . . . . . . . . . . . . .  25
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  26
      9.1.  STUN Attribute TLV Definitions  . . . . . . . . . . . . .  26
-       9.1.1.  MD-AGENT Attribute  . . . . . . . . . . . . . . . . .  27
+       9.1.1.  MD-AGENT Attribute  . . . . . . . . . . . . . . . . .  26
        9.1.2.  MD-RESP-UP and MD-RESP-DN Attributes  . . . . . . . .  27
-       9.1.3.  MD-PEER-CHECK Attribute . . . . . . . . . . . . . . .  28
+       9.1.3.  MD-PEER-CHECK Attribute . . . . . . . . . . . . . . .  27
      9.2.  Metadata Attributes sub-TLV Definitions . . . . . . . . .  28
        9.2.1.  FLOWDATA Request  . . . . . . . . . . . . . . . . . .  28
        9.2.2.  FLOWDATA Response . . . . . . . . . . . . . . . . . .  30
@@ -159,9 +162,6 @@ Internet-Draft                   MALICE                    November 2013
    cannot be employed successfully to prioritize packet flows.  It can
    also be useful for the endpoints to provide flow metadata and receive
    network feedback in order select an optimal media communication path.
-   This specification describes how these problems can be solved at
-   different points in the network by using either STUN [RFC5389]
-   packets sent during ICE's [RFC5245] connectivity check phase during
 
 
 
@@ -170,6 +170,9 @@ Penno, et al.             Expires May 25, 2014                  [Page 3]
 Internet-Draft                   MALICE                    November 2013
 
 
+   This specification describes how these problems can be solved at
+   different points in the network by using either STUN [RFC5389]
+   packets sent during ICE's [RFC5245] connectivity check phase during
    establishment of a media session, or as part a slightly modified
    keep-alive mechanism after the session is established.  Devices on
    the media path can use the metadata information to prioritize the
@@ -218,12 +221,10 @@ Internet-Draft                   MALICE                    November 2013
 
 
 
-
-
-
 Penno, et al.             Expires May 25, 2014                  [Page 4]
 
 Internet-Draft                   MALICE                    November 2013
+
 
 
 3.  Overview of MALICE
@@ -276,10 +277,10 @@ Internet-Draft                   MALICE                    November 2013
 
 
 
-
 Penno, et al.             Expires May 25, 2014                  [Page 5]
 
 Internet-Draft                   MALICE                    November 2013
+
 
 
       *  Query : Endpoints may request information from the network.
@@ -327,8 +328,7 @@ Internet-Draft                   MALICE                    November 2013
    attribute signaling.  For these services, most of the actions
    described here apply.
 
-
-
+3.1.1.  Sending and Receiving
 
 
 
@@ -338,7 +338,6 @@ Penno, et al.             Expires May 25, 2014                  [Page 6]
 Internet-Draft                   MALICE                    November 2013
 
 
-3.1.1.  Sending and Receiving
 
    Sending metadata can be done early in the connectivity check phase of
    ICE [RFC5245] section-7 and the result of metadata processing may be
@@ -389,9 +388,11 @@ Internet-Draft                   MALICE                    November 2013
 
 
 
+
 Penno, et al.             Expires May 25, 2014                  [Page 7]
 
 Internet-Draft                   MALICE                    November 2013
+
 
 
 3.1.3.  Network Element Processing
@@ -444,10 +445,10 @@ Internet-Draft                   MALICE                    November 2013
 
 
 
-
 Penno, et al.             Expires May 25, 2014                  [Page 8]
 
 Internet-Draft                   MALICE                    November 2013
+
 
 
 3.2.  Connectivity Checks
@@ -486,26 +487,6 @@ Internet-Draft                   MALICE                    November 2013
    STUN binding response are processed by network elements (router2) in
    the downstream path.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Penno, et al.             Expires May 25, 2014                  [Page 9]
-
-Internet-Draft                   MALICE                    November 2013
-
-
      Alice                router1            router2              Bob
       |                      |                   |                  |
       |Binding_Request       |                   |                  |
@@ -517,6 +498,14 @@ Internet-Draft                   MALICE                    November 2013
       |                      |                   | Binding_Response |
       |                      |                   |<-----------------|(3)
       |                      |  Binding_Response |                  |
+
+
+
+Penno, et al.             Expires May 25, 2014                  [Page 9]
+
+Internet-Draft                   MALICE                    November 2013
+
+
       |<-----------------------------------------|(4)               |
       |(5)                   |                   |                  |
 
@@ -552,16 +541,6 @@ Internet-Draft                   MALICE                    November 2013
        selection step (if this check was part of the initial
        connectivity check sequence).
 
-
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 10]
-
-Internet-Draft                   MALICE                    November 2013
-
-
 3.3.  Keepalives
 
    This specification proposes the use of consent freshness messages
@@ -575,6 +554,14 @@ Internet-Draft                   MALICE                    November 2013
 
    With aggressive nomination, the controlling agent includes the
    nominated flag in every connectivity check it sends for all media
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 10]
+
+Internet-Draft                   MALICE                    November 2013
+
+
    components.  Once the first check for a component succeeds, it is
    added to the valid list with the nominated flag set.  The nominated
    candidate pair may start being used by the media at any time after.
@@ -600,24 +587,6 @@ Internet-Draft                   MALICE                    November 2013
    decision process.  The figure below shows MALICE used in a regular
    nomination process.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 11]
-
-Internet-Draft                   MALICE                    November 2013
-
-
       L(Malice)                            R(Malice)
       ---------                            ---------
 
@@ -639,7 +608,16 @@ Internet-Draft                   MALICE                    November 2013
                  <----- STUN response           /  check
                         + {MDlr(i)}
 
+
    Notations:
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 11]
+
+Internet-Draft                   MALICE                    November 2013
+
+
 
    L is the controlling agent.
 
@@ -666,14 +644,6 @@ Internet-Draft                   MALICE                    November 2013
    connectivity checks but only reply to them.  A lite ICE
    implementation may be extended to become a lite MALICE implementation
    by adding the functionality associated with the MALICE Server.  When
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 12]
-
-Internet-Draft                   MALICE                    November 2013
-
-
    a lite MALICE server agent receives a STUN binding request, it copies
    the metadata related attributes as described in earlier sections.  A
    lite MALICE implementation will never include an MD-PEER-CHECK-RES
@@ -694,6 +664,16 @@ Internet-Draft                   MALICE                    November 2013
    metadata attributes and refers to them in generic terms.  The new
    attributes and their usage defined in Section 9 are included in the
    connectivity checks performed by MALICE agents.
+
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 12]
+
+Internet-Draft                   MALICE                    November 2013
+
+
 
    The Client agent starts the connectivity check by sending a STUN
    binding request following the procedures described in Section 7.1.2
@@ -717,18 +697,6 @@ Internet-Draft                   MALICE                    November 2013
    presence of metadata attributes, their contents, and the procedures
    of [RFC5245] section 7.1.3.1 the result of MALICE connectivity check
    is considered unknown, failure or success as described below
-
-
-
-
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 13]
-
-Internet-Draft                   MALICE                    November 2013
-
 
 4.1.2.1.  Unknown
 
@@ -754,6 +722,15 @@ Internet-Draft                   MALICE                    November 2013
       success.  The success criteria is application dependent and
       outside the scope of this specification.
 
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 13]
+
+Internet-Draft                   MALICE                    November 2013
+
+
+
 4.1.2.3.  Success
 
    A MALICE check is considered successful if all of the following are
@@ -778,14 +755,6 @@ Internet-Draft                   MALICE                    November 2013
 
    MALICE NEs consume router resources to maintain per flow state and,
    depending on the information elements and requests, to enforce per
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 14]
-
-Internet-Draft                   MALICE                    November 2013
-
-
    flow QoS or perform monitoring.  State and associated attributes are
    considered alive as long as periodic refresh messages that include
    those attributes are received.  In the absence of refreshes
@@ -808,6 +777,16 @@ Internet-Draft                   MALICE                    November 2013
    indicates if new IEs are being created or if existing ones are being
    modified or removed.
 
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 14]
+
+Internet-Draft                   MALICE                    November 2013
+
+
+
 4.2.1.  Adding a new Metadata IE
 
    When a new IE is signaled in a STUN message, a network element should
@@ -829,18 +808,6 @@ Internet-Draft                   MALICE                    November 2013
    processing (r: x=N).  It then updates the response attribute MD-RESP-
    UP in the STUN request with X=N and forwards it to Bob. Bob reflects
    back the original metadata requested value and the result.
-
-
-
-
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 15]
-
-Internet-Draft                   MALICE                    November 2013
-
 
       Alice(L)          NE                Bob(R)
       --------          ---                ------
@@ -867,6 +834,15 @@ Internet-Draft                   MALICE                    November 2013
    NE's actions (intercept, flow state creation, etc.) happen when a
    STUN response is intercepted.
 
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 15]
+
+Internet-Draft                   MALICE                    November 2013
+
+
+
    There are many possible transaction types for "X=A".  For example:
 
    o  Endpoint requests a particular service: "Reserve BW=5Mbps", the
@@ -889,15 +865,6 @@ Internet-Draft                   MALICE                    November 2013
 
    Flow state and all its metadata ages out and should be removed when
    the state has not been refreshed recently by a request or response
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 16]
-
-Internet-Draft                   MALICE                    November 2013
-
-
    message.  The way to determine the timeout interval is described in
    [I-D.muthu-behave-consent-freshness].
 
@@ -919,6 +886,18 @@ Internet-Draft                   MALICE                    November 2013
        to Bob. When the NE intercepts this L->R response message, it
        extracts X=A, retrieves the existing information f(L,R) and adds
        MALICE Response as a new source.
+
+
+
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 16]
+
+Internet-Draft                   MALICE                    November 2013
+
+
 
    3.  Alice sends a new check without any metadata attributes.  The NE
        retrieves the f(L,R) state and removes the MALICE Request from
@@ -946,14 +925,6 @@ Internet-Draft                   MALICE                    November 2013
                       r: x=N
 
       <---------...................------------
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 17]
-
-Internet-Draft                   MALICE                    November 2013
-
-
                                        IE   x=A
                                        resp x=N
 
@@ -973,6 +944,14 @@ Internet-Draft                   MALICE                    November 2013
                       a: x=A, s: req
                          x=A, s: resp
                       r: x=N
+
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 17]
+
+Internet-Draft                   MALICE                    November 2013
 
 
       Alice's STUN Request                       (3)
@@ -997,18 +976,6 @@ Internet-Draft                   MALICE                    November 2013
 
 
                         Upstream Attribute Removal
-
-
-
-
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 18]
-
-Internet-Draft                   MALICE                    November 2013
-
 
 4.2.3.  Changing a metadata IE
 
@@ -1035,6 +1002,14 @@ Internet-Draft                   MALICE                    November 2013
       resp x=<>                        resp x=N
       ---------------->      ----------------->
                     f(L,R): create
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 18]
+
+Internet-Draft                   MALICE                    November 2013
+
+
                       m: x=A, s: req
                       r: x=N
 
@@ -1058,13 +1033,6 @@ Internet-Draft                   MALICE                    November 2013
 
 
                          Upstream Attribute Change
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 19]
-
-Internet-Draft                   MALICE                    November 2013
-
 
 4.2.4.  Network Element Response Change
 
@@ -1091,6 +1059,14 @@ Internet-Draft                   MALICE                    November 2013
    perform conflict resolution as described in the diagram below and act
    on the result.
 
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 19]
+
+Internet-Draft                   MALICE                    November 2013
+
+
+
    1.  Alice sends a request for X with value A for the upstream
        direction.  The NE intercepts the message, creates f(L,R) state
        and stores X=A remembering this was received in Alice's request.
@@ -1115,13 +1091,6 @@ Internet-Draft                   MALICE                    November 2013
       Alice(L)          NE               Bob(R)
       --------          --               ------
 
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 20]
-
-Internet-Draft                   MALICE                    November 2013
-
-
       Alice's STUN Request                       (1)
        x=A for Upstream (L->R)
 
@@ -1144,6 +1113,14 @@ Internet-Draft                   MALICE                    November 2013
                                        IE  x=B
                                       resp x=<>
       <---------...................<-----------
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 20]
+
+Internet-Draft                   MALICE                    November 2013
+
 
       IE   x=B                         IE   x=B
       resp x=<>                        resp x=M
@@ -1170,14 +1147,6 @@ Internet-Draft                   MALICE                    November 2013
 
       <---------...................------------
                                    attr UP(x=A)
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 21]
-
-Internet-Draft                   MALICE                    November 2013
-
-
                                    resp UP(x=M)
 
 
@@ -1201,6 +1170,14 @@ Internet-Draft                   MALICE                    November 2013
       IE   bw=10Mbps                  IE  bw=10M
       resp bw=<>                     resp bw=<>
       ---------------->      ----------------->
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 21]
+
+Internet-Draft                   MALICE                    November 2013
+
+
                     f(L,R): create:
                       m: bw=10M, s: req
                       r: bw=<>, start monitor
@@ -1226,14 +1203,6 @@ Internet-Draft                   MALICE                    November 2013
 
 
                              Bob's STUN Request  (3)
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 22]
-
-Internet-Draft                   MALICE                    November 2013
-
-
                       x=A for Downstream (L->R)
 
                                      IE   bw=6Mbps
@@ -1251,6 +1220,20 @@ Internet-Draft                   MALICE                    November 2013
 
 
                     Network Analytics and Notifications
+
+
+
+
+
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 22]
+
+Internet-Draft                   MALICE                    November 2013
+
+
 
 4.2.6.  Conflict Resolution
 
@@ -1283,13 +1266,6 @@ Internet-Draft                   MALICE                    November 2013
       different service classes, the less restrictive is first selected
       and then the MIN function is applied to the bandwidth values.
 
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 23]
-
-Internet-Draft                   MALICE                    November 2013
-
-
    o  Advisory transactions (Network Analytics): there should not be any
       conflict resolution applied to these attributes.  It is perfectly
       valid for Alice to request different network analytics than Bob or
@@ -1305,6 +1281,15 @@ Internet-Draft                   MALICE                    November 2013
    building the STUN Response the following rules MUST be followed:
 
    o  MD-AGENT and MD-RESP-UP attributes are inserted before INTEGRITY
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 23]
+
+Internet-Draft                   MALICE                    November 2013
+
+
 
    o  If the result of the local MALICE check is present, an MD-PEER-
       CHECK-RES attribute with the result is included before INTEGRITY
@@ -1337,15 +1322,6 @@ Internet-Draft                   MALICE                    November 2013
    support for other specification, these MALICE check status changes
    are informative only.
 
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 24]
-
-Internet-Draft                   MALICE                    November 2013
-
-
 7.  Security Considerations
 
 7.1.  STUN Inspection
@@ -1362,6 +1338,14 @@ Internet-Draft                   MALICE                    November 2013
    the slow path, such an attack could consume a significant share of
    the NE's slow path and could also lead to packet drops in the slow
    path (affecting operation of all other applications and protocols
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 24]
+
+Internet-Draft                   MALICE                    November 2013
+
+
    operating in the slow path), thereby resulting in a denial of service
    (DoS) [RFC4732].  Like with other protocols, it is recommended that
    network elements that implement this functionality use rate limited
@@ -1393,15 +1377,6 @@ Internet-Draft                   MALICE                    November 2013
    is well-behaved, the network elements need a means of ensuring STUN
    messages are not altered during transmission.
 
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 25]
-
-Internet-Draft                   MALICE                    November 2013
-
-
 8.  STUN Extensions
 
 8.1.  New Attributes
@@ -1416,6 +1391,17 @@ Internet-Draft                   MALICE                    November 2013
    o  The MD-RESP-UP is inserted by the client agent in the Binding
       request and updated by MALICE nodes on upstream path.  A MALICE
       server agent copies this attribute in the response message.
+
+
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 25]
+
+Internet-Draft                   MALICE                    November 2013
+
+
 
    o  The MD-PEER-CHECK attribute is inserted by the MALICE server agent
       in the response message and includes the result of the MALICE
@@ -1450,18 +1436,11 @@ Internet-Draft                   MALICE                    November 2013
    [RFC5389].
 
 
+        0x0C02: MD-AGENT
+        0x0C03: MD-RESP-UP
+        0x0C04: MD-RESP-DN
+        0x0C05: MD-PEER-CHECK
 
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 26]
-
-Internet-Draft                   MALICE                    November 2013
-
-
-                             0x0C02: MD-AGENT
-                             0x0C03: MD-RESP-UP
-                             0x0C04: MD-RESP-DN
-                             0x0C05: MD-PEER-CHECK
 
 9.1.1.  MD-AGENT Attribute
 
@@ -1472,13 +1451,21 @@ Internet-Draft                   MALICE                    November 2013
    the MD-AGENT STUN attribute Length should be used to identify the
    location of next STUN attribute.
 
-       0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |          MD-AGENT              |            Length            |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                 <Attribute Block sub-TLV format>              |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 26]
+
+Internet-Draft                   MALICE                    November 2013
+
+
+
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |          MD-AGENT              |            Length            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                 <Attribute Block sub-TLV format>              |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                        Figure 1: MD-AGENT Attribute
@@ -1492,20 +1479,33 @@ Internet-Draft                   MALICE                    November 2013
    the MD-RESP-XX STUN attribute Length should be used to identify the
    location of next STUN attribute.
 
-       0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |            MD-RESP-*          |            Length             |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |                 <Attribute Block sub-TLV format>              |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |            MD-RESP-*          |            Length             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                 <Attribute Block sub-TLV format>              |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                        Figure 2: MD-RESP- Attribute
 
    Where MD-RESP-* = {MD-RESP-UP | MD-RESP-DN}
 
+9.1.3.  MD-PEER-CHECK Attribute
 
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |     MD-PEER-CHECK-RES         |            Length             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |         Reserved              |   Peer Malice Check Result    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+                     Figure 3: MD-PEER-CHECK Attribute
+
+   Peer Malice Check Result - "Success" or "Failure".
 
 
 
@@ -1514,20 +1514,6 @@ Penno, et al.             Expires May 25, 2014                 [Page 27]
 Internet-Draft                   MALICE                    November 2013
 
 
-9.1.3.  MD-PEER-CHECK Attribute
-
-       0                   1                   2                   3
-       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |     MD-PEER-CHECK-RES         |            Length             |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |         Reserved              |   Peer Malice Check Result    |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-
-                     Figure 3: MD-PEER-CHECK Attribute
-
-   Peer Malice Check Result - "Success" or "Failure".
 
 9.2.  Metadata Attributes sub-TLV Definitions
 
@@ -1538,37 +1524,29 @@ Internet-Draft                   MALICE                    November 2013
 
    The FLOWDATA IE has the following format.
 
-      0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |    Type=TBD   |   Reserved    |             Length            |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                                                               |
-     |                    Instance Identifier                        |
-     |                                                               |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     | uDT | uLT | uJT |   RSVD1     | dDT | dLT | dJT |    RSVD2    |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                   Upstream Min Bandwidth                      |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                   Downstream Min Bandwidth                    |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                   Upstream Max Bandwidth                      |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                   Downstream Max Bandwidth                    |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Type=TBD   |   Reserved    |             Length            |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   |                    Instance Identifier                        |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   | uDT | uLT | uJT |   RSVD1     | dDT | dLT | dJT |    RSVD2    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                   Upstream Min Bandwidth                      |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                   Downstream Min Bandwidth                    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                   Upstream Max Bandwidth                      |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                   Downstream Max Bandwidth                    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                         Figure 4: FLOWDATA Request
 
    Type:  TBD (optional to process)
-
-
-
-
-Penno, et al.             Expires May 25, 2014                 [Page 28]
-
-Internet-Draft                   MALICE                    November 2013
-
 
    Reserved:  Must be 0 and ignored by the server.
 
@@ -1582,6 +1560,16 @@ Internet-Draft                   MALICE                    November 2013
    Description of the fields:
 
    Instance Identifier:  Instance identifier, see below for description.
+
+
+
+
+
+Penno, et al.             Expires May 25, 2014                 [Page 28]
+
+Internet-Draft                   MALICE                    November 2013
+
+
 
    uDT:  Upstream Delay Tolerance, 0 means no information is available.
       1=very low, 2=low, 3=medium, 4=high.
@@ -1621,9 +1609,22 @@ Internet-Draft                   MALICE                    November 2013
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 Penno, et al.             Expires May 25, 2014                 [Page 29]
 
 Internet-Draft                   MALICE                    November 2013
+
 
 
    The instance identifier accommodates network traffic where multiple
@@ -1645,21 +1646,21 @@ Internet-Draft                   MALICE                    November 2013
    included in MD-RESP-UP or MD-RESP-DN, therefore indicating the
    direction for which the response applies.
 
-      0                   1                   2                   3
-      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |    Type=TBD   |  Reserved     |            Length             |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                                                               |
-     |                        Reserved                               |
-     |                                                               |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |  DT |  LT |  JT |                 Reserved                    |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                        Min Bandwidth                          |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                        Min Bandwidth                          |
-     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |    Type=TBD   |  Reserved     |            Length             |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                                                               |
+   |                        Reserved                               |
+   |                                                               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  DT |  LT |  JT |                 Reserved                    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                        Min Bandwidth                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                        Min Bandwidth                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                         Figure 5: FLOWDATA Response
 
@@ -1676,10 +1677,10 @@ Internet-Draft                   MALICE                    November 2013
 
 
 
-
 Penno, et al.             Expires May 25, 2014                 [Page 30]
 
 Internet-Draft                   MALICE                    November 2013
+
 
 
    When included in MD-RESP-UP TLV the FLOWDATA Response indicate the
@@ -1729,7 +1730,6 @@ Internet-Draft                   MALICE                    November 2013
             dJT=2, uMinBW=4mbps, uMaxBW=5mbps, uMinBW=5mbps,
             MaxBW=10mbps)
 
-         +  MD-RESP-UP (DT=0, LT=0, JT=0, MinBW=0mbps, MaxBW=0mbps)
 
 
 
@@ -1737,6 +1737,9 @@ Penno, et al.             Expires May 25, 2014                 [Page 31]
 
 Internet-Draft                   MALICE                    November 2013
 
+
+
+         +  MD-RESP-UP (DT=0, LT=0, JT=0, MinBW=0mbps, MaxBW=0mbps)
 
          +  MD-RESP-DN (DT=0, LT=0, JT=0, MinBW=0mbps, MaxBW=0mbps)
 
@@ -1764,7 +1767,7 @@ Internet-Draft                   MALICE                    November 2013
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
 
-   [RFC4732]  Handley, M., Rescorla, E., and IAB, "Internet Denial-of-
+   [RFC4732]  Handley, M., Rescorla, E., IAB, "Internet Denial-of-
               Service Considerations", RFC 4732, December 2006.
 
    [RFC5389]  Rosenberg, J., Mahy, R., Matthews, P., and D. Wing,
@@ -1782,9 +1785,6 @@ Internet-Draft                   MALICE                    November 2013
 11.2.  Informational References
 
    [I-D.ietf-rtcweb-security-arch]
-              Rescorla, E., "WebRTC Security Architecture", draft-ietf-
-              rtcweb-security-arch-09 (work in progress), February 2014.
-
 
 
 
@@ -1793,6 +1793,9 @@ Penno, et al.             Expires May 25, 2014                 [Page 32]
 
 Internet-Draft                   MALICE                    November 2013
 
+
+              Rescorla, E., "WebRTC Security Architecture", draft-ietf-
+              rtcweb-security-arch-09 (work in progress), February 2014.
 
    [I-D.muthu-behave-consent-freshness]
               Perumal, M., Wing, D., R, R., and T. Reddy, "STUN Usage
@@ -1835,9 +1838,6 @@ Authors' Addresses
    Switzerland
 
    Email: ancaz@cisco.com
-
-
-
 
 
 

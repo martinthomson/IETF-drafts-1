@@ -58,6 +58,7 @@ Reddy, et al.            Expires August 18, 2014                [Page 1]
 Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
+
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
@@ -65,13 +66,13 @@ Table of Contents
    3.  Improving ICE Dual-stack Fairness . . . . . . . . . . . . . .   3
    4.  Compatibility . . . . . . . . . . . . . . . . . . . . . . . .   3
    5.  Example Algorithm for Choosing the Local Preference . . . . .   4
-   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
+   6.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    7.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
    8.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
    9.  Implementation Status . . . . . . . . . . . . . . . . . . . .   6
      9.1.  HappyE-ICE-Test . . . . . . . . . . . . . . . . . . . . .   6
    10. Normative References  . . . . . . . . . . . . . . . . . . . .   7
-   Appendix A.  Examples . . . . . . . . . . . . . . . . . . . . . .   7
+   Appendix A.  Examples . . . . . . . . . . . . . . . . . . . . . .   8
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
@@ -108,10 +109,10 @@ Table of Contents
 
 
 
-
 Reddy, et al.            Expires August 18, 2014                [Page 2]
 
 Internet-Draft           Happy Eyeballs for ICE            February 2014
+
 
 
 3.  Improving ICE Dual-stack Fairness
@@ -140,9 +141,10 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    4.1.2.1 SHOULD be used to calculate the candidate priority.  The
    formula is as follows:
 
-        priority = (2^24)*(type preference) +
-                   (2^8)*(local preference) +
-                   (2^0)*(256 - component ID)
+     priority = (2^24)*(type preference) +
+                (2^8)*(local preference) +
+                (2^0)*(256 - component ID)
+
 
    ICE [RFC5245] section 4.1.2.2 has guidelines for how the type
    preference and local preference value should be chosen.  Instead of
@@ -161,13 +163,15 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    described in [RFC5245] section 5.7.2.  Using the pair priority
    formula:
 
-        pair priority = 2^32*MIN(G,D) + 2*MAX(G,D) + (G>D?1:0)
-
 
 
 Reddy, et al.            Expires August 18, 2014                [Page 3]
 
 Internet-Draft           Happy Eyeballs for ICE            February 2014
+
+
+
+     pair priority = 2^32*MIN(G,D) + 2*MAX(G,D) + (G>D?1:0)
 
 
    Where G is the candidate priority provided by the controlling agent
@@ -210,14 +214,10 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    +--------+------+------+------+------+------+---------------------+
              <- N->
 
+
    The local preference can be calculated by the given formula:
 
 
-         local_preference = N*2*(Cn/Cmax)
-
-   Where N is the absolute value of IPv6_start-IPv4_start.  This ensures
-   a positive number even if IPv4 is the highest priority.  Cn is the
-   number of current candidates of a specific IP address type and
 
 
 
@@ -226,30 +226,39 @@ Reddy, et al.            Expires August 18, 2014                [Page 4]
 Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
+
+
+         local_preference = N*2*(Cn/Cmax)
+
+
+   Where N is the absolute value of IPv6_start-IPv4_start.  This ensures
+   a positive number even if IPv4 is the highest priority.  Cn is the
+   number of current candidates of a specific IP address type and
    candidate type (HOST, SRFLX, RELAY).  Cmax is the number of allowed
    consecutive candidates of the same IP address type.
 
    Using the values N=abs(60000-59000) and Cmax = 2 yields the following
    sorted local candidate list:
 
-    (1)  HOST  IPv6 (1) Priority: 2129289471
-    (2)  HOST  IPv6 (2) Priority: 2129289470
-    (3)  HOST  IPv4 (1) Priority: 2129033471
-    (4)  HOST  IPv4 (2) Priority: 2129033470
-    (5)  HOST  IPv6 (1) Priority: 2128777471
-    (6)  HOST  IPv6 (2) Priority: 2128777470
-    (7)  HOST  IPv4 (1) Priority: 2128521471
-    (8)  HOST  IPv4 (2) Priority: 2128521470
-    (9)  HOST  IPv6 (1) Priority: 2128265471
-    (10) HOST  IPv6 (2) Priority: 2128265470
-    (11) SRFLX IPv6 (1) Priority: 1693081855
-    (12) SRFLX IPv6 (2) Priority: 1693081854
-    (13) SRFLX IPv4 (1) Priority: 1692825855
-    (14) SRFLX IPv4 (2) Priority: 1692825854
-    (15) RELAY IPv6 (1) Priority: 15360255
-    (16) RELAY IPv6 (2) Priority: 15360254
-    (17) RELAY IPv4 (1) Priority: 15104255
-    (18) RELAY IPv4 (2) Priority: 15104254
+   (1)  HOST  IPv6 (1) Priority: 2129289471
+   (2)  HOST  IPv6 (2) Priority: 2129289470
+   (3)  HOST  IPv4 (1) Priority: 2129033471
+   (4)  HOST  IPv4 (2) Priority: 2129033470
+   (5)  HOST  IPv6 (1) Priority: 2128777471
+   (6)  HOST  IPv6 (2) Priority: 2128777470
+   (7)  HOST  IPv4 (1) Priority: 2128521471
+   (8)  HOST  IPv4 (2) Priority: 2128521470
+   (9)  HOST  IPv6 (1) Priority: 2128265471
+   (10) HOST  IPv6 (2) Priority: 2128265470
+   (11) SRFLX IPv6 (1) Priority: 1693081855
+   (12) SRFLX IPv6 (2) Priority: 1693081854
+   (13) SRFLX IPv4 (1) Priority: 1692825855
+   (14) SRFLX IPv4 (2) Priority: 1692825854
+   (15) RELAY IPv6 (1) Priority: 15360255
+   (16) RELAY IPv6 (2) Priority: 15360254
+   (17) RELAY IPv4 (1) Priority: 15104255
+   (18) RELAY IPv4 (2) Priority: 15104254
+
 
    The result is an even spread of IPv6 and IPv4 candidates among the
    different candidate types (HOST, SRFLX, RELAY).  The local_preference
@@ -263,17 +272,8 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    support this.  It will not break interoperability with other ICE
    implementations.
 
-   [[Q1: Need to take a closer look at how the unfreezing happens and
-   how this affects the component id is the sorting above. --palmarti]]
-   [[Q2: The implementations of the algorithm does not implement pruning
-   of the pairs.  So the checklist is shorter in real life than the
-   example in the appendix.  --palmarti]]
-
-6.  IANA Considerations
-
-   None.
-
-
+   [[: Q1Need to take a closer look at how the unfreezing happens and
+   how this affects the component id is the sorting above.]] [[: Q2The
 
 
 
@@ -281,6 +281,14 @@ Reddy, et al.            Expires August 18, 2014                [Page 5]
 
 Internet-Draft           Happy Eyeballs for ICE            February 2014
 
+
+   implementations of the algorithm does not implement pruning of the
+   pairs.  So the checklist is shorter in real life than the example in
+   the appendix.  ]]
+
+6.  IANA Considerations
+
+   None.
 
 7.  Security Considerations
 
@@ -322,14 +330,6 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 9.1.  HappyE-ICE-Test
 
-   Organization:   Private Initiative (palerikm@gmail.com)
-
-   Description:   A private initiative to create working code to show
-      how the recommendations in this draft can be implemented.  The
-      code is publicly available at github.
-
-   Implementation:   https://github.com/palerikm/HappyE-ICE-Test
-
 
 
 
@@ -337,6 +337,15 @@ Reddy, et al.            Expires August 18, 2014                [Page 6]
 
 Internet-Draft           Happy Eyeballs for ICE            February 2014
 
+
+
+   Organization:   Private Initiative (palerikm@gmail.com)
+
+   Description:   A private initiative to create working code to show
+      how the recommendations in this draft can be implemented.  The
+      code is publicly available at github.
+
+   Implementation:   https://github.com/palerikm/HappyE-ICE-Test
 
    Level of maturity:   The code only implements the parts that cover
       this draft and not a full ICE implementation.  There is work in
@@ -376,15 +385,6 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
               Code: The Implementation Status Section", RFC 6982, July
               2013.
 
-Appendix A.  Examples
-
-
-
-
-
-
-
-
 
 
 
@@ -393,6 +393,9 @@ Reddy, et al.            Expires August 18, 2014                [Page 7]
 
 Internet-Draft           Happy Eyeballs for ICE            February 2014
 
+
+
+Appendix A.  Examples
 
    ********** Local Candidates (sorted) *********
    (1)  HOST  IPv6 (1) Priority: 2129289471
@@ -413,6 +416,7 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    (16) RELAY IPv6 (2) Priority: 15360254
    (17) RELAY IPv4 (1) Priority: 15104255
    (18) RELAY IPv4 (2) Priority: 15104254
+
 
 
    ********** Remote Candidates *********
@@ -436,12 +440,8 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    (18) RELAY IPv4 (2) Priority: 15104254
 
 
-   The pairs have not been pruned a described in section 5.7.3 of the
-   ICE spec.
 
-   ********** CheckList *********
-   0 HOST  6(1) 2129289471 HOST  6(1) 2129289471(9145228645920719358)
-   1 HOST  6(1) 2129289471 HOST  6(1) 2129289471(9145228645920719358)
+
 
 
 
@@ -450,6 +450,13 @@ Reddy, et al.            Expires August 18, 2014                [Page 8]
 Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
+
+   The pairs have not been pruned a described in section 5.7.3 of the
+   ICE spec.
+
+   ********** CheckList *********
+   0 HOST  6(1) 2129289471 HOST  6(1) 2129289471(9145228645920719358)
+   1 HOST  6(1) 2129289471 HOST  6(1) 2129289471(9145228645920719358)
    2 HOST  6(1) 2129289471 HOST  6(1) 2129289471(9145228645920719358)
    3 HOST  6(2) 2129289470 HOST  6(2) 2129289470(9145228641625752060)
    4 HOST  6(2) 2129289470 HOST  6(2) 2129289470(9145228641625752060)
@@ -491,13 +498,6 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    40 HOST  4(1) 2129033471 SRFLX 4(1) 1692825855(7270631689306305023)
    41 SRFLX 4(1) 1692825855 HOST  4(1) 2129033471(7270631689306305022)
    42 SRFLX 4(1) 1692825855 HOST  4(1) 2129033471(7270631689306305022)
-   43 HOST  4(1) 2128521471 SRFLX 4(1) 1692825855(7270631689305281023)
-   44 SRFLX 4(1) 1692825855 SRFLX 4(1) 1692825855(7270631688433889790)
-   45 HOST  4(2) 2129033470 SRFLX 4(2) 1692825854(7270631685011337725)
-   46 SRFLX 4(2) 1692825854 HOST  4(2) 2129033470(7270631685011337724)
-   47 SRFLX 4(2) 1692825854 HOST  4(2) 2129033470(7270631685011337724)
-   48 HOST  4(2) 2128521470 SRFLX 4(2) 1692825854(7270631685010313725)
-   49 SRFLX 4(2) 1692825854 SRFLX 4(2) 1692825854(7270631684138922492)
 
 
 
@@ -506,6 +506,13 @@ Reddy, et al.            Expires August 18, 2014                [Page 9]
 Internet-Draft           Happy Eyeballs for ICE            February 2014
 
 
+   43 HOST  4(1) 2128521471 SRFLX 4(1) 1692825855(7270631689305281023)
+   44 SRFLX 4(1) 1692825855 SRFLX 4(1) 1692825855(7270631688433889790)
+   45 HOST  4(2) 2129033470 SRFLX 4(2) 1692825854(7270631685011337725)
+   46 SRFLX 4(2) 1692825854 HOST  4(2) 2129033470(7270631685011337724)
+   47 SRFLX 4(2) 1692825854 HOST  4(2) 2129033470(7270631685011337724)
+   48 HOST  4(2) 2128521470 SRFLX 4(2) 1692825854(7270631685010313725)
+   49 SRFLX 4(2) 1692825854 SRFLX 4(2) 1692825854(7270631684138922492)
    50 HOST  6(1) 2129289471 RELAY 6(1) 15360255  (65971797141799423)
    51 RELAY 6(1) 15360255   HOST  6(1) 2129289471(65971797141799422)
    52 RELAY 6(1) 15360255   HOST  6(1) 2129289471(65971797141799422)
@@ -540,16 +547,9 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    81 RELAY 4(2) 15104254   RELAY 4(2) 15104254  (64872276990685692)
 
 
+
 Authors' Addresses
 
-   Tirumaleswar Reddy
-   Cisco Systems, Inc.
-   Cessna Business Park, Varthur Hobli
-   Sarjapur Marathalli Outer Ring Road
-   Bangalore, Karnataka  560103
-   India
-
-   Email: tireddy@cisco.com
 
 
 
@@ -560,6 +560,17 @@ Authors' Addresses
 Reddy, et al.            Expires August 18, 2014               [Page 10]
 
 Internet-Draft           Happy Eyeballs for ICE            February 2014
+
+
+
+   Tirumaleswar Reddy
+   Cisco Systems, Inc.
+   Cessna Business Park, Varthur Hobli
+   Sarjapur Marathalli Outer Ring Road
+   Bangalore, Karnataka  560103
+   India
+
+   Email: tireddy@cisco.com
 
 
    Prashanth Patil
@@ -577,17 +588,6 @@ Internet-Draft           Happy Eyeballs for ICE            February 2014
    Norway
 
    Email: palmarti@cisco.com
-
-
-
-
-
-
-
-
-
-
-
 
 
 

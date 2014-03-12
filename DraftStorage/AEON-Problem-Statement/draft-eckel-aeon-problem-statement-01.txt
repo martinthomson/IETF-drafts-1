@@ -282,6 +282,7 @@ Eckel & Reddy          Expires September 09, 2014               [Page 5]
 Internet-Draft       AEON Problem Statement and Req           March 2014
 
 
+
    Req-7:  Provide mechanism to authenticate and authorize endpoints/
       applications to signal flow characteristics.
 
@@ -314,7 +315,6 @@ Authors' Addresses
    India
 
    Email: tireddy@cisco.com
-
 
 
 

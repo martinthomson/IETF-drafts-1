@@ -58,6 +58,7 @@ Eckel & Reddy             Expires July 11, 2014                 [Page 1]
 Internet-Draft               AEON Use Cases                 January 2014
 
 
+
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
    (http://trustee.ietf.org/license-info) in effect on the date of
@@ -89,7 +90,7 @@ Table of Contents
        2.2.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .   6
        2.2.5.  Flow characteristics provided by application  . . . .   6
        2.2.6.  Action taken by firewall as result of receiving flow
-               characteristics . . . . . . . . . . . . . . . . . . .   6
+               characteristics . . . . . . . . . . . . . . . . . . .   7
        2.2.7.  Feedback provided by firewall . . . . . . . . . . . .   7
      2.3.  Load Balancing: Identification of application for better
            load balancing without solely relying on inspection
@@ -105,7 +106,6 @@ Table of Contents
      2.4.  Scavenger class: Creation of a scavenger class. Use
            metadata to shift high-bandwidth, low priority traffic to
            off-peak hours  . . . . . . . . . . . . . . . . . . . . .   7
-       2.4.1.  Description of Problem  . . . . . . . . . . . . . . .   7
 
 
 
@@ -114,13 +114,14 @@ Eckel & Reddy             Expires July 11, 2014                 [Page 2]
 Internet-Draft               AEON Use Cases                 January 2014
 
 
+       2.4.1.  Description of Problem  . . . . . . . . . . . . . . .   7
        2.4.2.  Proposed Solution . . . . . . . . . . . . . . . . . .   7
        2.4.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .   7
-       2.4.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .   7
-       2.4.5.  Flow characteristics provided by application  . . . .   7
+       2.4.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .   8
+       2.4.5.  Flow characteristics provided by application  . . . .   8
        2.4.6.  Action taken by network as result of receiving flow
-               characteristics . . . . . . . . . . . . . . . . . . .   7
-       2.4.7.  Feedback provided by network  . . . . . . . . . . . .   7
+               characteristics . . . . . . . . . . . . . . . . . . .   8
+       2.4.7.  Feedback provided by network  . . . . . . . . . . . .   8
      2.5.  Video Adaptation: Use client metadata to help video bit
            rate selection  . . . . . . . . . . . . . . . . . . . . .   8
        2.5.1.  Description of Problem  . . . . . . . . . . . . . . .   8
@@ -132,8 +133,8 @@ Internet-Draft               AEON Use Cases                 January 2014
                characteristics . . . . . . . . . . . . . . . . . . .   9
        2.5.7.  Feedback provided by network  . . . . . . . . . . . .   9
      2.6.  Mobile Host/App Metadata: Use metadata for
-           troubleshooting and network planning  . . . . . . . . . .   9
-       2.6.1.  Description of Problem  . . . . . . . . . . . . . . .   9
+           troubleshooting and network planning  . . . . . . . . . .  10
+       2.6.1.  Description of Problem  . . . . . . . . . . . . . . .  10
        2.6.2.  User Benefit  . . . . . . . . . . . . . . . . . . . .  10
        2.6.3.  Operator Benefit  . . . . . . . . . . . . . . . . . .  10
        2.6.4.  Flow characteristics provided by application  . . . .  10
@@ -146,7 +147,7 @@ Internet-Draft               AEON Use Cases                 January 2014
        2.7.2.  Proposed Solution . . . . . . . . . . . . . . . . . .  10
        2.7.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .  10
        2.7.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .  10
-       2.7.5.  Flow characteristics provided by application  . . . .  10
+       2.7.5.  Flow characteristics provided by application  . . . .  11
    3.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  11
    4.  Informative References  . . . . . . . . . . . . . . . . . . .  11
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
@@ -161,7 +162,6 @@ Internet-Draft               AEON Use Cases                 January 2014
    port ranges, IP subnetting, or deep packet inspection (DPI), e.g.
    application level gateway (ALG).  Port based solutions suffer from
    port overloading and inconsistent port usage.  IP subnetting
-   solutions are error prone and result in network management hassle.
 
 
 
@@ -170,6 +170,7 @@ Eckel & Reddy             Expires July 11, 2014                 [Page 3]
 Internet-Draft               AEON Use Cases                 January 2014
 
 
+   solutions are error prone and result in network management hassle.
    DPI is computationally expensive and becomes a challenge with the
    wider adoption of encrypted signaling and secured traffic.  An
    additional drawback of DPI is that the resulting insights are not
@@ -217,7 +218,6 @@ Internet-Draft               AEON Use Cases                 January 2014
 
    In describing each use case, the following information is provided.
 
-   o  description of the problem
 
 
 
@@ -225,6 +225,9 @@ Eckel & Reddy             Expires July 11, 2014                 [Page 4]
 
 Internet-Draft               AEON Use Cases                 January 2014
 
+
+
+   o  description of the problem
 
    o  proposed solution
 
@@ -274,12 +277,10 @@ Internet-Draft               AEON Use Cases                 January 2014
 
 
 
-
-
-
 Eckel & Reddy             Expires July 11, 2014                 [Page 5]
 
 Internet-Draft               AEON Use Cases                 January 2014
+
 
 
    2.  Firewall does not understand the session signaling protocol, or
@@ -328,8 +329,7 @@ Internet-Draft               AEON Use Cases                 January 2014
    characteristics of the flow, such as the anticipated bandwidth needs
    as well as the tolerance to delay, loss, and jitter.
 
-2.2.6.  Action taken by firewall as result of receiving flow
-        characteristics
+
 
 
 
@@ -337,6 +337,10 @@ Eckel & Reddy             Expires July 11, 2014                 [Page 6]
 
 Internet-Draft               AEON Use Cases                 January 2014
 
+
+
+2.2.6.  Action taken by firewall as result of receiving flow
+        characteristics
 
    The firewall uses the client request to permit and prioritize the
    traffic associated with those flows.  The cryptographic token
@@ -377,14 +381,10 @@ Internet-Draft               AEON Use Cases                 January 2014
 
 2.4.3.  User Benefit
 
-2.4.4.  Operator Benefit
 
-2.4.5.  Flow characteristics provided by application
 
-2.4.6.  Action taken by network as result of receiving flow
-        characteristics
 
-2.4.7.  Feedback provided by network
+
 
 
 
@@ -393,6 +393,16 @@ Eckel & Reddy             Expires July 11, 2014                 [Page 7]
 
 Internet-Draft               AEON Use Cases                 January 2014
 
+
+
+2.4.4.  Operator Benefit
+
+2.4.5.  Flow characteristics provided by application
+
+2.4.6.  Action taken by network as result of receiving flow
+        characteristics
+
+2.4.7.  Feedback provided by network
 
 2.5.  Video Adaptation: Use client metadata to help video bit rate
       selection
@@ -433,6 +443,14 @@ Internet-Draft               AEON Use Cases                 January 2014
           also no way to differentiate content which could be available
           in different bitrates.
 
+
+
+Eckel & Reddy             Expires July 11, 2014                 [Page 8]
+
+Internet-Draft               AEON Use Cases                 January 2014
+
+
+
       2.  If HAS client is behind NAT and content provider uses RESTful
           API (OneAPI) to install differentiated QoS then ISP will
           struggle to find the pre-NAT information.  Content provider
@@ -440,15 +458,6 @@ Internet-Draft               AEON Use Cases                 January 2014
           attached and the IP address of the Policy Decision Point (PDP)
           in the ISP to which it needs to signal the flow
           characteristics.
-
-
-
-
-
-Eckel & Reddy             Expires July 11, 2014                 [Page 8]
-
-Internet-Draft               AEON Use Cases                 January 2014
-
 
    o  ISP can use DPI to prioritize one-way video streaming content but
       is expensive and fails if the traffic is encrypted.
@@ -489,6 +498,15 @@ Internet-Draft               AEON Use Cases                 January 2014
 
 2.5.7.  Feedback provided by network
 
+
+
+
+Eckel & Reddy             Expires July 11, 2014                 [Page 9]
+
+Internet-Draft               AEON Use Cases                 January 2014
+
+
+
    The network responds that the client request can be fully or
    partially accommodated.  It also notifies the client when conditions
    change.
@@ -497,14 +515,6 @@ Internet-Draft               AEON Use Cases                 January 2014
       network planning
 
 2.6.1.  Description of Problem
-
-
-
-
-Eckel & Reddy             Expires July 11, 2014                 [Page 9]
-
-Internet-Draft               AEON Use Cases                 January 2014
-
 
 2.6.2.  User Benefit
 
@@ -542,6 +552,17 @@ Internet-Draft               AEON Use Cases                 January 2014
 
 2.7.4.  Operator Benefit
 
+
+
+
+
+
+Eckel & Reddy             Expires July 11, 2014                [Page 10]
+
+Internet-Draft               AEON Use Cases                 January 2014
+
+
+
    The network that can provide the requested flow characteristics will
    be selected by the application thus increasing the subscriber base of
    the operator.
@@ -554,14 +575,6 @@ Internet-Draft               AEON Use Cases                 January 2014
    addresses from the interface which best fulfills the desired flow
    characteristics are assigned the highest priority and would be tried
    first to communicate with the server or remote peer.  For example
-
-
-
-Eckel & Reddy             Expires July 11, 2014                [Page 10]
-
-Internet-Draft               AEON Use Cases                 January 2014
-
-
    draft-reddy-mmusic-ice-best-interface-pcp-00 explains the mechanism
    where Interactive Connectivity Establishment (ICE) agent on a host
    with multiple interfaces uses AEON to determine the link
@@ -594,6 +607,18 @@ Authors' Addresses
    Email: eckelcu@cisco.com
 
 
+
+
+
+
+
+
+Eckel & Reddy             Expires July 11, 2014                [Page 11]
+
+Internet-Draft               AEON Use Cases                 January 2014
+
+
+
    Tirumaleswar Reddy
    Cisco Systems, Inc.
    Cessna Business Park, Varthur Hobli
@@ -613,4 +638,35 @@ Authors' Addresses
 
 
 
-Eckel & Reddy             Expires July 11, 2014                [Page 11]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Eckel & Reddy             Expires July 11, 2014                [Page 12]

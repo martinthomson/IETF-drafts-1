@@ -70,21 +70,21 @@ Table of Contents
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
    3.  Solution Overview . . . . . . . . . . . . . . . . . . . . . .   3
    4.  Obtaining a Token Using OAuth . . . . . . . . . . . . . . . .   5
-   5.  Forming a Request . . . . . . . . . . . . . . . . . . . . . .   7
-   6.  TURN Server validating Request  . . . . . . . . . . . . . . .   8
-   7.  STUN Attributes . . . . . . . . . . . . . . . . . . . . . . .   8
+   5.  Forming a Request . . . . . . . . . . . . . . . . . . . . . .   6
+   6.  TURN Server validating Request  . . . . . . . . . . . . . . .   7
+   7.  STUN Attributes . . . . . . . . . . . . . . . . . . . . . . .   7
      7.1.  THIRD-PARTY-AUTHORIZATION . . . . . . . . . . . . . . . .   8
-     7.2.  ACCESS-TOKEN  . . . . . . . . . . . . . . . . . . . . . .   9
-     7.3.  TIMESTAMP . . . . . . . . . . . . . . . . . . . . . . . .   9
-     7.4.  KEY-ID  . . . . . . . . . . . . . . . . . . . . . . . . .   9
-     7.5.  MAC-ALGORITHM . . . . . . . . . . . . . . . . . . . . . .   9
+     7.2.  ACCESS-TOKEN  . . . . . . . . . . . . . . . . . . . . . .   8
+     7.3.  TIMESTAMP . . . . . . . . . . . . . . . . . . . . . . . .   8
+     7.4.  KEY-ID  . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     7.5.  MAC-ALGORITHM . . . . . . . . . . . . . . . . . . . . . .   8
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .   9
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  10
-   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  10
-   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
-     11.1.  Normative References . . . . . . . . . . . . . . . . . .  10
-     11.2.  Informative References . . . . . . . . . . . . . . . . .  11
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   9
+   11. References  . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     11.1.  Normative References . . . . . . . . . . . . . . . . . .   9
+     11.2.  Informative References . . . . . . . . . . . . . . . . .  10
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
 
 1.  Introduction
 
@@ -112,6 +112,7 @@ Table of Contents
 Reddy, et al.             Expires July 31, 2014                 [Page 2]
 
 Internet-Draft      TURN for 3rd party Authorization        January 2014
+
 
 
    To achieve third party authorization, a resource owner eg WebRTC
@@ -164,10 +165,11 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
 
 
 
-
 Reddy, et al.             Expires July 31, 2014                 [Page 3]
 
 Internet-Draft      TURN for 3rd party Authorization        January 2014
+
+
 
 
    +-------------------+                         +--------+  +---------+
@@ -207,25 +209,6 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
 
    For example HTTP response from Authorization server:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                 [Page 4]
-
-Internet-Draft      TURN for 3rd party Authorization        January 2014
-
-
         HTTP/1.1 200 OK
         Content-Type: application/json
         Cache-Control: no-store
@@ -235,6 +218,14 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
       "eyJhbGciOiJSU0ExXzUiLCJlbmMiOiJBMTI4Q0JDK0hTMjU2In0.
       pwaFh7yJPivLjjPkzC-GeAyHuy7AinGcS51AZ7TXnwkC80Ow1aW47kcT_UV54ubo
       nONbeArwOVuR7shveXnwPmucwrk_3OCcHrCbE1HR-Jfme2mF_WR3zUMcwqmU0RlH
+
+
+
+Reddy, et al.             Expires July 31, 2014                 [Page 4]
+
+Internet-Draft      TURN for 3rd party Authorization        January 2014
+
+
       kwx9txo_sKRasjlXc8RYP-evLCmT1XRXKjtY5l44Gnh0A84hGvVfMxMfCWXh38hi",
           "token_type":"mac",
           "expires_in":1800,
@@ -260,41 +251,19 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
    THIRD-PARTY-AUTHORIZATION signalling the TURN client that the TURN
    server supports third party authorization.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                 [Page 5]
-
-Internet-Draft      TURN for 3rd party Authorization        January 2014
-
-
    The following mapping of OAuth concepts to WebRTC is used :
 
-                 +----------------------+----------------------------+
-                 |         OAuth        |            WebRTC          |
-                 +======================+============================+
-                 | Client               | WebRTC client              |
-                 +----------------------+----------------------------+
-                 | Resource owner       | WebRTC server              |
-                 +----------------------+----------------------------+
-                 | Authorization server | Authorization server       |
-                 +----------------------+----------------------------+
-                 | Resource server      | TURN Server                |
-                 +----------------------+----------------------------+
+              +----------------------+----------------------------+
+              |         OAuth        |            WebRTC          |
+              +======================+============================+
+              | Client               | WebRTC client              |
+              +----------------------+----------------------------+
+              | Resource owner       | WebRTC server              |
+              +----------------------+----------------------------+
+              | Authorization server | Authorization server       |
+              +----------------------+----------------------------+
+              | Resource server      | TURN Server                |
+              +----------------------+----------------------------+
 
          Figure 3: OAuth terminology mapped to WebRTC terminology
 
@@ -305,6 +274,14 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
    by the resource owner (WebRTC server) and hosted by the resource
    server (TURN server).  The WebRTC client obtains access token,
    lifetime, session key (in the mac_key parameter), key-id and
+
+
+
+Reddy, et al.             Expires July 31, 2014                 [Page 5]
+
+Internet-Draft      TURN for 3rd party Authorization        January 2014
+
+
    mac_algorithm OAuth parameters from the authorization server as
    specified in [I-D.ietf-oauth-v2-http-mac].  The TURN client conveys
    the access token and other OAuth parameters learnt from the
@@ -315,28 +292,6 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
    computes the message integrity of the request and takes appropriate
    action i.e permits the TURN client to create allocations.  This is
    shown in an abstract way in Figure 4.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                 [Page 6]
-
-Internet-Draft      TURN for 3rd party Authorization        January 2014
-
 
                            +---------------+
                            |               +<******+
@@ -374,6 +329,16 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
 
 5.  Forming a Request
 
+
+
+
+
+Reddy, et al.             Expires July 31, 2014                 [Page 6]
+
+Internet-Draft      TURN for 3rd party Authorization        January 2014
+
+
+
    When a TURN server responds that third party authorization is
    required, a TURN client re-attempts the request, this time including
    access token, timestamp, lifetime, kid and mac_algorithm values in
@@ -383,16 +348,6 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
    message using the mac_key and mac_algorithm.  MESSAGE-INTEGRITY
    attribute is calculated using the other rules specified in section
    15.4 of [RFC5389].
-
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                 [Page 7]
-
-Internet-Draft      TURN for 3rd party Authorization        January 2014
-
 
    The TURN client MUST not include the USERNAME attribute in the
    request.  This differs from the long-term credential mechanism
@@ -430,6 +385,16 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
 
 7.  STUN Attributes
 
+
+
+
+
+Reddy, et al.             Expires July 31, 2014                 [Page 7]
+
+Internet-Draft      TURN for 3rd party Authorization        January 2014
+
+
+
    The following new STUN attributes are introduced by this
    specification to accomplish third party authorization.
 
@@ -438,17 +403,6 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
    This attribute is used by the TURN server to inform the client that
    it supports third party authorization.  This attribute has no value
    part and thus the attribute length field is 0.
-
-
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                 [Page 8]
-
-Internet-Draft      TURN for 3rd party Authorization        January 2014
-
 
 7.2.  ACCESS-TOKEN
 
@@ -486,6 +440,17 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
 
 7.5.  MAC-ALGORITHM
 
+
+
+
+
+
+Reddy, et al.             Expires July 31, 2014                 [Page 8]
+
+Internet-Draft      TURN for 3rd party Authorization        January 2014
+
+
+
    Indicates the MAC algorithm.  The MAC Algorithm ID field contains an
    IKEv2 Transform ID of Transform Type 3 [RFC4306].  All TURN
    implementations MUST support AUTH_HMAC_SHA1_160 (7) [RFC4595].
@@ -498,13 +463,6 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
    MUST NOT be transmitted in clear since this would completely destroy
    the security benefits of the proposed scheme.  Other security
    considerations are discussed in [I-D.ietf-oauth-v2-http-mac].
-
-
-
-Reddy, et al.             Expires July 31, 2014                 [Page 9]
-
-Internet-Draft      TURN for 3rd party Authorization        January 2014
-
 
 9.  IANA Considerations
 
@@ -541,6 +499,14 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
    [RFC4306]  Kaufman, C., "Internet Key Exchange (IKEv2) Protocol", RFC
               4306, December 2005.
 
+
+
+Reddy, et al.             Expires July 31, 2014                 [Page 9]
+
+Internet-Draft      TURN for 3rd party Authorization        January 2014
+
+
+
    [RFC4595]  Maino, F. and D. Black, "Use of IKEv2 in the Fibre Channel
               Security Association Management Protocol", RFC 4595, July
               2006.
@@ -552,18 +518,8 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
    [RFC6749]  Hardt, D., "The OAuth 2.0 Authorization Framework", RFC
               6749, October 2012.
 
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                [Page 10]
-
-Internet-Draft      TURN for 3rd party Authorization        January 2014
-
-
    [iana-stun]
-              IANA, , "IANA: STUN Attributes", April 2011,
+              IANA, ., "IANA: STUN Attributes", April 2011,
               <http://www.iana.org/assignments/stun-parameters/stun-pa
               rameters.xml>.
 
@@ -599,23 +555,20 @@ Authors' Addresses
    Email: tireddy@cisco.com
 
 
+
+
+Reddy, et al.             Expires July 31, 2014                [Page 10]
+
+Internet-Draft      TURN for 3rd party Authorization        January 2014
+
+
+
    Prashanth Patil
    Cisco Systems, Inc.
    Bangalore
    India
 
    Email: praspati@cisco.com
-
-
-
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                [Page 11]
-
-Internet-Draft      TURN for 3rd party Authorization        January 2014
 
 
    Ram Mohan Ravindranath
@@ -660,13 +613,4 @@ Internet-Draft      TURN for 3rd party Authorization        January 2014
 
 
 
-
-
-
-
-
-
-
-
-
-Reddy, et al.             Expires July 31, 2014                [Page 12]
+Reddy, et al.             Expires July 31, 2014                [Page 11]

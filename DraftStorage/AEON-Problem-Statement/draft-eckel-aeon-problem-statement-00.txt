@@ -170,6 +170,7 @@ Eckel & Reddy            Expires August 18, 2014                [Page 3]
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
+
    o  Network services leveraging DPI traffic classification impact the
       application behavior by impacting its traffic, but they do not
       provide explicit feedback to the application.  This results in a
@@ -220,10 +221,10 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
 
-
 Eckel & Reddy            Expires August 18, 2014                [Page 4]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
+
 
 
    o  Port Control Protocol (PCP) provides a mechanism to describe a
@@ -273,7 +274,6 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
    Req-4:  Allow applications to receive resulting flow descriptions as
       feedback from the network.
 
-   Req-5:  Complement existing heuristic based mechanisms.
 
 
 
@@ -281,6 +281,9 @@ Eckel & Reddy            Expires August 18, 2014                [Page 5]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
+
+
+   Req-5:  Complement existing heuristic based mechanisms.
 
    Req-6:  Provide differentiated service for both directions of a flow,
       including flows that cross administrative boundaries.
@@ -317,9 +320,6 @@ Authors' Addresses
    India
 
    Email: tireddy@cisco.com
-
-
-
 
 
 

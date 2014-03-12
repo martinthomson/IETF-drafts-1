@@ -5,10 +5,10 @@
 TRAM                                                        P. Martinsen
 Internet-Draft                                                     Cisco
 Intended status: Standards Track                               J. Uberti
-Expires: September 7, 2014                                        Google
+Expires: September 12, 2014                                       Google
                                                            O. Moskalenko
                                       public project rfc5766-turn-server
-                                                           March 6, 2014
+                                                          March 11, 2014
 
 
                 Single SOcket Dual Allocation with TURN
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 7, 2014.
+   This Internet-Draft will expire on September 12, 2014.
 
 Copyright Notice
 
@@ -53,9 +53,10 @@ Copyright Notice
 
 
 
-Martinsen, et al.       Expires September 7, 2014               [Page 1]
+Martinsen, et al.      Expires September 12, 2014               [Page 1]
 
 Internet-Draft                    SSODA                       March 2014
+
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -71,19 +72,19 @@ Internet-Draft                    SSODA                       March 2014
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  Creating an Allocation  . . . . . . . . . . . . . . . . . . .   3
+   2.  Creating an Allocation  . . . . . . . . . . . . . . . . . . .   2
      2.1.  Sending an Allocate Request . . . . . . . . . . . . . . .   3
      2.2.  Receiving an Allocate Request . . . . . . . . . . . . . .   3
-     2.3.  Receiving an Allocate Success Response  . . . . . . . . .   4
+     2.3.  Receiving an Allocate Success Response  . . . . . . . . .   3
      2.4.  Receiving an Allocate Error Response  . . . . . . . . . .   4
    3.  Refreshing an Allocation  . . . . . . . . . . . . . . . . . .   4
-     3.1.  Sending a Refresh Request . . . . . . . . . . . . . . . .   4
+     3.1.  Sending a Refresh Request . . . . . . . . . . . . . . . .   5
      3.2.  Receiving a Refresh Request . . . . . . . . . . . . . . .   5
      3.3.  CreatePermission  . . . . . . . . . . . . . . . . . . . .   5
        3.3.1.  Sending a CreatePermission Request  . . . . . . . . .   5
        3.3.2.  Receiving a CreatePermission Request  . . . . . . . .   5
    4.  Channels  . . . . . . . . . . . . . . . . . . . . . . . . . .   5
-   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   5
+   5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
    6.  Normative References  . . . . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
@@ -102,19 +103,17 @@ Table of Contents
    (16bit number) preserving them on the NAT and a the TURN server can
    potentially lead to easier large scale deployments.
 
+2.  Creating an Allocation
 
 
 
 
 
-
-
-Martinsen, et al.       Expires September 7, 2014               [Page 2]
+Martinsen, et al.      Expires September 12, 2014               [Page 2]
 
 Internet-Draft                    SSODA                       March 2014
 
 
-2.  Creating an Allocation
 
    The behavior specified here affects the processing defined in
    Section 6 of [RFC5766] and Section 4 of [RFC6156].
@@ -124,14 +123,13 @@ Internet-Draft                    SSODA                       March 2014
    A client that wishes to obtain one IPv6 and one IPv4 by sending one
    Allocate request MUST include two REQUESTED-ADDRESS-FAMILY
    attributes, one for each address family, in the Allocate request that
-   it sends to the TURN server.  The mechanisms to formulate an Allocate
-   request are described in Section 6.1 of [RFC5766].
+   it sends to the TURN server.  The mechanism to formulate an Allocate
+   request is described in Section 6.1 of [RFC5766].
 
    Clients MUST NOT include a REQUESTED-ADDRESS-FAMILY attribute in an
-   Allocate request that contains a RESERVATION-TOKEN attribute.  [[Q2:
-   Or should we disallow the whole odd even port scheme when this
-   mechanism is in use?  Will simplify things on the server.
-   --palmarti]]
+   Allocate request that contains a RESERVATION-TOKEN or an EVEN-PORT
+   attributes.  The dual allocation mechanism is not available with odd/
+   even port allocation scheme.
 
 2.2.  Receiving an Allocate Request
 
@@ -149,10 +147,11 @@ Internet-Draft                    SSODA                       March 2014
    message.
 
    If the requested address family is not supported on the TURN server,
-   a XOR-ADDRESS-ATTRIBUTE with a NULL address corresponding to the
-   address family not allocated MUST be included in the response.  This
-   will notify the client that the REQUESTED-ADDRESS-FAMILY was
-   understood, but not supported.
+   a XOR-RELAYED-ADDRESS with a NULL address (that is IPv4 address
+   0.0.0.0:0 or IPv6 address [::0]:0) corresponding to the address
+   family not allocated MUST be included in the response.  This will
+   notify the client that the REQUESTED-ADDRESS-FAMILY was understood,
+   but not supported.
 
    If the REQUESTED-ADDRESS-FAMILY attributes are absent, the server
    MUST allocate an IPv4-relayed transport address for the TURN client.
@@ -160,47 +159,53 @@ Internet-Draft                    SSODA                       March 2014
    server returns a 440 (Address Family not Supported) Allocate error
    response.
 
+2.3.  Receiving an Allocate Success Response
 
 
 
 
 
-Martinsen, et al.       Expires September 7, 2014               [Page 3]
+Martinsen, et al.      Expires September 12, 2014               [Page 3]
 
 Internet-Draft                    SSODA                       March 2014
 
 
-2.3.  Receiving an Allocate Success Response
 
-   If the client receives a Allocate Response containing a XOR-RELAYED-
-   ADDRESS attribute for each of the corresponding REQUESTED-ADDRESS-
+   This section describes how the client must react on receiving a
+   response to the dual allocation request.  If the client is not using
+   dual allocation, then the behavior is not different from the rules in
+   [RFC5766] and in [RFC6156].
+
+   If the client receives an Allocate Response containing a non-NULL
+   XOR-RELAYED-ADDRESS attribute for each of the REQUESTED-ADDRESS-
    FAMILY attributes in the Allocate request sent by the client, the
    client knows that the TURN server supports multiple address family
-   allocation over a single socket.  The RELAY addresses can now be used
-   by the client.
+   allocation over a single socket.  Both RELAY addresses can now be
+   used by the client.
 
-   If the Allocate response contains at least one XOR-RELAYED-ADDRESS
-   and at least one REQUESTED-ADDRESS-FAMILY attribute, the client know
-   that the TURN server supports SSODA, and the allocated RELAY
-   addresses can be used.  The client MUST not try to allocate any of
-   the included requested address families on a different 5-tuple.
+   If the Allocate response contains one non-NULL XOR-RELAYED-ADDRESS
+   and also one NULL XOR-RELAYED-ADDRESS, of different requested address
+   families, then the client knows that the TURN server "understands"
+   SSODA, but the server policy does not allow dual allocations.  The
+   allocated non-NULL RELAY address can be used.  The client MUST not
+   try to allocate any of the included requested address families on a
+   different 5-tuple.
 
-   If the Allocate Response contain one XOR-RELAYED-ADDRESS attribute
-   and no additional REQUESTED-ADDRESS-FAMILY attributes the client
-   knows that the TURN server does not support SSODA.  The client can
-   retry the the missing address family allocations on new 5-tuples
-   (from a new local HOST address).  Subsequent Allocate Request towards
-   the same TURN server MUST not include multiple REQUESTED-ADDRESS-
-   FAMILY attributes.
+   If the Allocate Response contain only one XOR-RELAYED-ADDRESS
+   attribute then the client knows that the TURN server does not support
+   SSODA.  The client can retry the the missing address family
+   allocations on new 5-tuples.  Subsequent Allocate Request towards the
+   same TURN server MUST not include multiple REQUESTED-ADDRESS-FAMILY
+   attributes.
 
 2.4.  Receiving an Allocate Error Response
 
    If the client receives an Allocate error response with the 440
    (Unsupported Address Family) error code, the client knows that the
-   TURN server does not SSODA and might have misinterpreted any of the
-   included REQUESTED-ADDRESS-FAMILY attributes in the Allocate request.
-   The client should retry the allocations by sending the Allocate
-   request messages from different local HOST ports and without
+   TURN server does not support SSODA and might have misinterpreted any
+   of the included REQUESTED-ADDRESS-FAMILY attributes in the Allocate
+   request.  The client should retry the allocations by sending the
+   Allocate request messages from different local HOST ports and without
    including multiple REQUESTED-ADDRESS-FAMILY attributes.
 
 3.  Refreshing an Allocation
@@ -209,7 +214,18 @@ Internet-Draft                    SSODA                       March 2014
    Section 7 of [RFC5766] and Section 5 of [RFC6156].  This section MUST
    only be used if the client have verified that the TURN server
    supports SSODA during the allocation creation described in
-   Section 2.1.  Otherwise rewert back to 5766 behaviour.
+   Section 2.1.  Otherwise rewert back to RFC 5766 or RFC 6156
+   vbehaviour.
+
+
+
+
+
+Martinsen, et al.      Expires September 12, 2014               [Page 4]
+
+Internet-Draft                    SSODA                       March 2014
+
+
 
 3.1.  Sending a Refresh Request
 
@@ -217,14 +233,6 @@ Internet-Draft                    SSODA                       March 2014
    Request as described in Section 7.1 of [RFC5766].  The client MUST
    include one ore more REQUESTED-ADDRESS-FAMILY attributes describing
    the the family types that should be refreshed.
-
-
-
-
-Martinsen, et al.       Expires September 7, 2014               [Page 4]
-
-Internet-Draft                    SSODA                       March 2014
-
 
    If the clients wants to delete an existing allocation of a specific
    address type the lifetime of that refresh request must be set to 0
@@ -235,11 +243,12 @@ Internet-Draft                    SSODA                       March 2014
 3.2.  Receiving a Refresh Request
 
    The server refreshes the allocated address families that matches the
-   requested address family value.  If some of the values in the request
-   do not match an allocated family this is silently ignored.  (No point
-   in refreshing or deleting an allocation that does not exist.)
+   requested address family values.  If some of the values in the
+   request do not match an allocated family this is silently ignored.
+   (No point in refreshing or deleting an allocation that does not
+   exist.)
 
-   If a server receives a Refresh Request with REQUESTED-ADDRESS- FAMILY
+   If a server receives a Refresh Request with REQUESTED-ADDRESS-FAMILY
    attributes, and none attributes values don't match any of the address
    family allocations, the server MUST reply with a 443 (Peer Address
    Family Mismatch) Refresh error response.
@@ -265,22 +274,27 @@ Internet-Draft                    SSODA                       March 2014
 
 4.  Channels
 
-   [[Q3: Allow to bind two channels?  Or only bind one and discard the
-   other address types?  --palmarti]]
+
+
+
+Martinsen, et al.      Expires September 12, 2014               [Page 5]
+
+Internet-Draft                    SSODA                       March 2014
+
+
+
+   The session channels setup process follows the same rules as in
+   [RFC5766] and in [RFC6156].  The client is allowed to setup multiple
+   channels within the same 5-tuple session.  The only new feature if
+   that, is the server supports SSODA and a dual allocation is used by
+   the session, then the peer addresses of those channels may be of
+   different families.  Thus, a single 5-tuple session may set several
+   IPv4 channels and several IPv6 channels.
 
 5.  Acknowledgements
 
    Authors would like to thank Simon Perreault for providing ideas
    direction and insight.
-
-
-
-
-
-Martinsen, et al.       Expires September 7, 2014               [Page 5]
-
-Internet-Draft                    SSODA                       March 2014
-
 
 6.  Normative References
 
@@ -314,6 +328,17 @@ Authors' Addresses
    Email: justin@uberti.name
 
 
+
+
+
+
+
+Martinsen, et al.      Expires September 12, 2014               [Page 6]
+
+Internet-Draft                    SSODA                       March 2014
+
+
+
    Oleg Moskalenko
    public project rfc5766-turn-server
    Walnut Creek, CA
@@ -333,4 +358,35 @@ Authors' Addresses
 
 
 
-Martinsen, et al.       Expires September 7, 2014               [Page 6]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Martinsen, et al.      Expires September 12, 2014               [Page 7]
