@@ -375,7 +375,7 @@
 
   <meta name="dct.creator" content="Martinsen, P., Uberti, J., and O. Moskalenko" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-martinsen-tram-ssoda-00" />
-  <meta name="dct.issued" scheme="ISO8601" content="2014-3-11" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-3-13" />
   <meta name="dct.abstract" content="This draft describes a simple method for allocating on IPv4 and one IPv6 RELAY address by sending one allocate request to the TURN server. This saves local port on the agent and reduces the number of messages sent between the agent and the TURN server.  " />
   <meta name="description" content="This draft describes a simple method for allocating on IPv4 and one IPv6 RELAY address by sending one allocate request to the TURN server. This saves local port on the agent and reduces the number of messages sent between the agent and the TURN server.  " />
 
@@ -399,7 +399,7 @@
   <td class="right">J. Uberti</td>
 </tr>
 <tr>
-  <td class="left">Expires: September 12, 2014</td>
+  <td class="left">Expires: September 14, 2014</td>
   <td class="right">Google</td>
 </tr>
 <tr>
@@ -412,7 +412,7 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">March 11, 2014</td>
+  <td class="right">March 13, 2014</td>
 </tr>
 
     	
@@ -436,7 +436,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 12, 2014.</p>
+<p>This Internet-Draft will expire on September 14, 2014.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -487,7 +487,7 @@
 <p id="rfc.section.2.3.p.3">If the Allocate response contains one non-NULL XOR-RELAYED-ADDRESS and also one NULL XOR-RELAYED-ADDRESS, of different requested address families, then the client knows that the TURN server "understands" SSODA, but the server policy does not allow dual allocations. The allocated non-NULL RELAY address can be used. The client MUST not try to allocate any of the included requested address families on a different 5-tuple.  </p>
 <p id="rfc.section.2.3.p.4">If the Allocate Response contain only one XOR-RELAYED-ADDRESS attribute then the client knows that the TURN server does not support SSODA. The client can retry the the missing address family allocations on new 5-tuples. Subsequent Allocate Request towards the same TURN server MUST not include multiple REQUESTED-ADDRESS-FAMILY attributes.  </p>
 <h1 id="rfc.section.2.4"><a href="#rfc.section.2.4">2.4.</a> Receiving an Allocate Error Response</h1>
-<p id="rfc.section.2.4.p.1">If the client receives an Allocate error response with the 440 (Unsupported Address Family) error code, the client knows that the TURN server does not support SSODA and might have misinterpreted any of the included REQUESTED-ADDRESS-FAMILY attributes in the Allocate request. The client should retry the allocations by sending the Allocate request messages from different local HOST ports and without including multiple REQUESTED-ADDRESS-FAMILY attributes.  </p>
+<p id="rfc.section.2.4.p.1">If the client receives an Allocate error response with the 440 (Unsupported Address Family) error code, then the client knows that the TURN server does not support SSODA and might have misinterpreted any of the included REQUESTED-ADDRESS-FAMILY attributes in the Allocate request. The client should retry the allocations by sending the Allocate request messages from different local HOST ports and without including multiple REQUESTED-ADDRESS-FAMILY attributes.  </p>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> Refreshing an Allocation</h1>
 <p id="rfc.section.3.p.1">The behavior specified here affects the processing defined in Section 7 of <a href="#RFC5766">[RFC5766]</a> and Section 5 of <a href="#RFC6156">[RFC6156]</a>. This section MUST only be used if the client have verified that the TURN server supports SSODA during the allocation creation described in <a href="#create_allocation">Section 2.1</a>. Otherwise rewert back to RFC 5766 or RFC 6156 vbehaviour.  </p>
 <h1 id="rfc.section.3.1"><a href="#rfc.section.3.1">3.1.</a> Sending a Refresh Request</h1>
@@ -503,7 +503,7 @@
 <h1 id="rfc.section.3.3.2"><a href="#rfc.section.3.3.2">3.3.2.</a> Receiving a CreatePermission Request</h1>
 <p id="rfc.section.3.3.2.p.1">If an XOR-PEER-ADDRESS attribute contains an address of an address family different than that any of the relayed transport addresses allocated, the server MUST generate an error response with the 443 (Peer Address Family Mismatch) response code, which is defined in Section 6.2.1 of <a href="#RFC6156">[RFC6156]</a>.  </p>
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Channels</h1>
-<p id="rfc.section.4.p.1">The session channels setup process follows the same rules as in <a href="#RFC5766">[RFC5766]</a> and in <a href="#RFC6156">[RFC6156]</a>.  The client is allowed to setup multiple channels within the same 5-tuple session. The only new feature if that, is the server supports SSODA and a dual allocation is used by the session, then the peer addresses of those channels may be of different families.  Thus, a single 5-tuple session may set several IPv4 channels and several IPv6 channels.  </p>
+<p id="rfc.section.4.p.1">The session channels setup process follows the same rules as in <a href="#RFC5766">[RFC5766]</a> and in <a href="#RFC6156">[RFC6156]</a>: the client is allowed to setup multiple channels within the same 5-tuple session. The new feature is that if the server supports SSODA and a dual allocation is used by the session, then the peer addresses of those channels may be of different families.  Thus, a single 5-tuple session may set several IPv4 channels and several IPv6 channels.  </p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#ack" id="ack">Acknowledgements</a></h1>
 <p id="rfc.section.5.p.1">Authors would like to thank Simon Perreault for providing ideas direction and insight.  </p>
 <h1 id="rfc.references"><a href="#rfc.references">6.</a> Normative References</h1>

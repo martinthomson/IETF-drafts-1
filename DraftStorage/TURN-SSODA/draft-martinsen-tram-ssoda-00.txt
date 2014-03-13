@@ -5,10 +5,10 @@
 TRAM                                                        P. Martinsen
 Internet-Draft                                                     Cisco
 Intended status: Standards Track                               J. Uberti
-Expires: September 12, 2014                                       Google
+Expires: September 14, 2014                                       Google
                                                            O. Moskalenko
                                       public project rfc5766-turn-server
-                                                          March 11, 2014
+                                                          March 13, 2014
 
 
                 Single SOcket Dual Allocation with TURN
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 12, 2014.
+   This Internet-Draft will expire on September 14, 2014.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Martinsen, et al.      Expires September 12, 2014               [Page 1]
+Martinsen, et al.      Expires September 14, 2014               [Page 1]
 
 Internet-Draft                    SSODA                       March 2014
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Martinsen, et al.      Expires September 12, 2014               [Page 2]
+Martinsen, et al.      Expires September 14, 2014               [Page 2]
 
 Internet-Draft                    SSODA                       March 2014
 
@@ -165,7 +165,7 @@ Internet-Draft                    SSODA                       March 2014
 
 
 
-Martinsen, et al.      Expires September 12, 2014               [Page 3]
+Martinsen, et al.      Expires September 14, 2014               [Page 3]
 
 Internet-Draft                    SSODA                       March 2014
 
@@ -201,12 +201,12 @@ Internet-Draft                    SSODA                       March 2014
 2.4.  Receiving an Allocate Error Response
 
    If the client receives an Allocate error response with the 440
-   (Unsupported Address Family) error code, the client knows that the
-   TURN server does not support SSODA and might have misinterpreted any
-   of the included REQUESTED-ADDRESS-FAMILY attributes in the Allocate
-   request.  The client should retry the allocations by sending the
-   Allocate request messages from different local HOST ports and without
-   including multiple REQUESTED-ADDRESS-FAMILY attributes.
+   (Unsupported Address Family) error code, then the client knows that
+   the TURN server does not support SSODA and might have misinterpreted
+   any of the included REQUESTED-ADDRESS-FAMILY attributes in the
+   Allocate request.  The client should retry the allocations by sending
+   the Allocate request messages from different local HOST ports and
+   without including multiple REQUESTED-ADDRESS-FAMILY attributes.
 
 3.  Refreshing an Allocation
 
@@ -221,7 +221,7 @@ Internet-Draft                    SSODA                       March 2014
 
 
 
-Martinsen, et al.      Expires September 12, 2014               [Page 4]
+Martinsen, et al.      Expires September 14, 2014               [Page 4]
 
 Internet-Draft                    SSODA                       March 2014
 
@@ -277,17 +277,17 @@ Internet-Draft                    SSODA                       March 2014
 
 
 
-Martinsen, et al.      Expires September 12, 2014               [Page 5]
+Martinsen, et al.      Expires September 14, 2014               [Page 5]
 
 Internet-Draft                    SSODA                       March 2014
 
 
 
    The session channels setup process follows the same rules as in
-   [RFC5766] and in [RFC6156].  The client is allowed to setup multiple
-   channels within the same 5-tuple session.  The only new feature if
-   that, is the server supports SSODA and a dual allocation is used by
-   the session, then the peer addresses of those channels may be of
+   [RFC5766] and in [RFC6156]: the client is allowed to setup multiple
+   channels within the same 5-tuple session.  The new feature is that if
+   the server supports SSODA and a dual allocation is used by the
+   session, then the peer addresses of those channels may be of
    different families.  Thus, a single 5-tuple session may set several
    IPv4 channels and several IPv6 channels.
 
@@ -333,7 +333,7 @@ Authors' Addresses
 
 
 
-Martinsen, et al.      Expires September 12, 2014               [Page 6]
+Martinsen, et al.      Expires September 14, 2014               [Page 6]
 
 Internet-Draft                    SSODA                       March 2014
 
@@ -389,4 +389,4 @@ Internet-Draft                    SSODA                       March 2014
 
 
 
-Martinsen, et al.      Expires September 12, 2014               [Page 7]
+Martinsen, et al.      Expires September 14, 2014               [Page 7]
