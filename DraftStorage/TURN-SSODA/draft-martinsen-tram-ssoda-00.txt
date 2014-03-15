@@ -83,12 +83,12 @@ Table of Contents
      2.3.  Receiving an Allocate Success Response  . . . . . . . . .   4
      2.4.  Receiving an Allocate Error Response  . . . . . . . . . .   5
    3.  Refreshing an Allocation  . . . . . . . . . . . . . . . . . .   5
-     3.1.  Sending a Refresh Request . . . . . . . . . . . . . . . .   5
+     3.1.  Sending a Refresh Request . . . . . . . . . . . . . . . .   6
      3.2.  Receiving a Refresh Request . . . . . . . . . . . . . . .   6
      3.3.  CreatePermission  . . . . . . . . . . . . . . . . . . . .   6
        3.3.1.  Sending a CreatePermission Request  . . . . . . . . .   6
        3.3.2.  Receiving a CreatePermission Request  . . . . . . . .   6
-   4.  Channels  . . . . . . . . . . . . . . . . . . . . . . . . . .   6
+   4.  Channels  . . . . . . . . . . . . . . . . . . . . . . . . . .   7
    5.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   7
    6.  Normative References  . . . . . . . . . . . . . . . . . . . .   7
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   7
@@ -171,7 +171,7 @@ Internet-Draft                    SSODA                       March 2014
 
 
    response message.  The ordering of the XOR-RELAYED-ADDRESS attributes
-   is arbitrary.
+   in the response is arbitrary.
 
    If the server cannot satisfy the request at all, because none of the
    specified address families are supported, the server MUST return a
@@ -205,7 +205,27 @@ Internet-Draft                    SSODA                       March 2014
    any attempt to "add" an address family to an existing allocation with
    a 437 (Allocation Mismatch) error code.
 
+   [OPEN ISSUE 1: do we need to include REQUESTED-ADDRESS-FAMILY
+   attribute(s) with failed address family (or families) to help the
+   client to recognize whether this is an "old" non-SSODA server or a
+   "new" SSODA-supporting server ?]
+
+   [OPEN ISSUE 2: do we have to consider a particular ordering of
+   REQUESTED-ADDRESS-FAMILY and REQUESTED-ADDRESS-FAMILY attributes in
+   the ALLOCATE request and response ? Can attribute ordering provide
+   some benefits in this case ?]
+
 2.3.  Receiving an Allocate Success Response
+
+
+
+
+
+Martinsen, et al.      Expires September 15, 2014               [Page 4]
+
+Internet-Draft                    SSODA                       March 2014
+
+
 
    This section describes how the client must react on receiving a
    response to the dual allocation request.  If the client is not using
@@ -218,14 +238,6 @@ Internet-Draft                    SSODA                       March 2014
    by the client, the client knows that the TURN server supports
    multiple address family allocation over a single socket.  All relay
    addresses can now be used by the client.
-
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 4]
-
-Internet-Draft                    SSODA                       March 2014
-
-
 
    If the Allocate response contains both usable XOR-RELAYED-ADDRESS
    attributes as well as ANY XOR-RELAYED-ADDRESS attributes, then the
@@ -263,6 +275,14 @@ Internet-Draft                    SSODA                       March 2014
    SSODA during the allocation creation described in Section 2.1.
    Otherwise, revert back to RFC 5766 or RFC 6156 behaviour.
 
+
+
+Martinsen, et al.      Expires September 15, 2014               [Page 5]
+
+Internet-Draft                    SSODA                       March 2014
+
+
+
 3.1.  Sending a Refresh Request
 
    To perform an allocation refresh, the client generates a Refresh
@@ -274,14 +294,6 @@ Internet-Draft                    SSODA                       March 2014
    (single) allocation on a server that does not not support SSODA,
    REQUESTED-ADDRESS-FAMILY should be omitted, for backwards
    compatibility.
-
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 5]
-
-Internet-Draft                    SSODA                       March 2014
-
-
 
    This process can also be used to delete an allocation of a specific
    address type, by setting the lifetime of that refresh request to 0.
@@ -296,7 +308,8 @@ Internet-Draft                    SSODA                       March 2014
    The server refreshes the allocated address families that match the
    supplied REQUESTED-ADDRESS-FAMILY values.  If any of the values in
    the request do not match a currently allocated address, the server
-   MUST respond with a 443 (Peer Address Family Mismatch) error.  If no
+   MUST respond with a 437 (Allocation Mismatch) error.  [OPEN ISSUE:
+   discuss whether this is the right error code for the situation] If no
    REQUESTED-ADDRESS-FAMILY is present, the request should be treated as
    applying to all current allocations, for backward compatibility.
 
@@ -316,6 +329,16 @@ Internet-Draft                    SSODA                       March 2014
 
 3.3.2.  Receiving a CreatePermission Request
 
+
+
+
+
+Martinsen, et al.      Expires September 15, 2014               [Page 6]
+
+Internet-Draft                    SSODA                       March 2014
+
+
+
    If an XOR-PEER-ADDRESS attribute contains an address of an address
    family different than that any of the relayed transport addresses
    allocated, the server MUST generate an error response with the 443
@@ -330,14 +353,6 @@ Internet-Draft                    SSODA                       March 2014
    and dual allocation, the peer addresses of those channels may be of
    different families.  Thus, a single 5-tuple session may create
    several IPv4 channels and several IPv6 channels.
-
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 6]
-
-Internet-Draft                    SSODA                       March 2014
-
-
 
 5.  Acknowledgements
 
@@ -368,6 +383,18 @@ Authors' Addresses
    Email: palmarti@cisco.com
 
 
+
+
+
+
+
+
+Martinsen, et al.      Expires September 15, 2014               [Page 7]
+
+Internet-Draft                    SSODA                       March 2014
+
+
+
    Justin Uberti
    Google
    Kirkland, WA
@@ -389,4 +416,33 @@ Authors' Addresses
 
 
 
-Martinsen, et al.      Expires September 15, 2014               [Page 7]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Martinsen, et al.      Expires September 15, 2014               [Page 8]

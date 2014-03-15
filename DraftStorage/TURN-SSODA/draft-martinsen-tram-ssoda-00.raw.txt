@@ -200,7 +200,7 @@ Copyright Notice
    present in the Allocate request.  The allocated relay addresses are
    returned in separate XOR-RELAYED-ADDRESS attributes in the Allocate
    response message.  The ordering of the XOR-RELAYED-ADDRESS attributes
-   is arbitrary.
+   in the response is arbitrary.
 
    If the server cannot satisfy the request at all, because none of the
    specified address families are supported, the server MUST return a
@@ -233,6 +233,16 @@ Copyright Notice
    is supported, doing this sequentially is not.  The server MUST reject
    any attempt to "add" an address family to an existing allocation with
    a 437 (Allocation Mismatch) error code.
+
+   [OPEN ISSUE 1: do we need to include REQUESTED-ADDRESS-FAMILY
+   attribute(s) with failed address family (or families) to help the
+   client to recognize whether this is an "old" non-SSODA server or a
+   "new" SSODA-supporting server ?]
+
+   [OPEN ISSUE 2: do we have to consider a particular ordering of
+   REQUESTED-ADDRESS-FAMILY and REQUESTED-ADDRESS-FAMILY attributes in
+   the ALLOCATE request and response ? Can attribute ordering provide
+   some benefits in this case ?]
 
 2.3.  Receiving an Allocate Success Response
 
@@ -309,7 +319,8 @@ Copyright Notice
    The server refreshes the allocated address families that match the
    supplied REQUESTED-ADDRESS-FAMILY values.  If any of the values in
    the request do not match a currently allocated address, the server
-   MUST respond with a 443 (Peer Address Family Mismatch) error.  If no
+   MUST respond with a 437 (Allocation Mismatch) error.  [OPEN ISSUE:
+   discuss whether this is the right error code for the situation] If no
    REQUESTED-ADDRESS-FAMILY is present, the request should be treated as
    applying to all current allocations, for backward compatibility.
 
