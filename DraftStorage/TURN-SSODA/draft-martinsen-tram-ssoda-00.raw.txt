@@ -5,10 +5,10 @@
 TRAM                                                        P. Martinsen
 Internet-Draft                                                     Cisco
 Intended status: Standards Track                               J. Uberti
-Expires: September 15, 2014                                       Google
+Expires: September 18, 2014                                       Google
                                                            O. Moskalenko
                                       public project rfc5766-turn-server
-                                                          March 14, 2014
+                                                          March 17, 2014
 
 
                 Single SOcket Dual Allocation with TURN
@@ -43,7 +43,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 15, 2014.
+   This Internet-Draft will expire on September 18, 2014.
 
 Copyright Notice
 
@@ -78,65 +78,6 @@ Table of Contents
    5.  Acknowledgements
    6.  Normative References
    Authors' Addresses
-
-
-TRAM                                                        P. Martinsen
-Internet-Draft                                                     Cisco
-Intended status: Standards Track                               J. Uberti
-Expires: September 15, 2014                                       Google
-                                                           O. Moskalenko
-                                      public project rfc5766-turn-server
-                                                          March 14, 2014
-
-
-                Single SOcket Dual Allocation with TURN
-                     draft-martinsen-tram-ssoda-00
-
-Abstract
-
-   This draft describes a simple method for allocating one IPv4 and one
-   IPv6 relay address from a single ALLOCATE request to the TURN server.
-   This saves local ports on the client, reduces the number of
-   candidates gathered by the client, and reduces the number of messages
-   sent between the client and the TURN server.
-
-Requirements Language
-
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in RFC 2119 [RFC2119].
-
-Status of This Memo
-
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
-
-   Internet-Drafts are working documents of the Internet Engineering
-   Task Force (IETF).  Note that other groups may also distribute
-   working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
-
-   Internet-Drafts are draft documents valid for a maximum of six months
-   and may be updated, replaced, or obsoleted by other documents at any
-   time.  It is inappropriate to use Internet-Drafts as reference
-   material or to cite them other than as "work in progress."
-
-   This Internet-Draft will expire on September 15, 2014.
-
-Copyright Notice
-
-   Copyright (c) 2014 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
 
 1.  Introduction
 
@@ -207,7 +148,7 @@ Copyright Notice
    440 error code, as indicated in [RFC6156].
 
    If the server cannot satisfy the request at all, because the server
-   could not allocate any of the specified adresses, the server MUST
+   could not allocate any of the specified addresses, the server MUST
    return a 508 (Insufficient Capacity) error code as indicated in
    [RFC5766].
 
@@ -282,7 +223,7 @@ Copyright Notice
    desired address families, or might be a non-SSODA server that
    misinterpreted the included REQUESTED-ADDRESS-FAMILY attributes in
    the Allocate request.  The client SHOULD retry its IPv4 request on
-   the same 5-tuple, with no REQUSTED-ADDRESS-FAMILY attribute, and MAY
+   the same 5-tuple, with no REQUESTED-ADDRESS-FAMILY attribute, and MAY
    retry other address families on different local ports, by sending an
    Allocate request with only one REQUESTED-ADDRESS-FAMILY attribute.
 

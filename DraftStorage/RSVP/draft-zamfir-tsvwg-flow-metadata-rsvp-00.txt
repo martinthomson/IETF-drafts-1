@@ -5,7 +5,7 @@
 Internet Engineering Task Force                           T. Eckert, Ed.
 Internet-Draft                                                 A. Zamfir
 Intended status: Standards Track                              A. Choukir
-Expires: January 07, 2014                                          Cisco
+Expires: January 7, 2014                                           Cisco
                                                             July 6, 2013
 
 
@@ -32,7 +32,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 07, 2014.
+   This Internet-Draft will expire on January 7, 2014.
 
 Copyright Notice
 
@@ -53,10 +53,9 @@ Copyright Notice
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 1]
+Eckert, et al.           Expires January 7, 2014                [Page 1]
 
 Internet-Draft                  FMD-RSVP                       July 2013
-
 
 
 Table of Contents
@@ -67,12 +66,12 @@ Table of Contents
      2.1.  FLOW_METADATA Class . . . . . . . . . . . . . . . . . . .   3
        2.1.1.  Basic IPFIX FLOW_METADATA Object  . . . . . . . . . .   3
        2.1.2.  Enhanced Protocol Independent FLOW_METADATA Object  .   3
-     2.2.  Semantic of carrying the Metadata Object  . . . . . . . .   3
+     2.2.  Semantic of carrying the Metadata Object  . . . . . . . .   4
      2.3.  Processing by a Non-Metadata Capable RSVP Router  . . . .   4
      2.4.  Processing by a Metadata Capable RSVP Router  . . . . . .   4
    3.  Security considerations . . . . . . . . . . . . . . . . . . .   5
-   4.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
-     4.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
+   4.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
+     4.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
      4.2.  Informative References  . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
@@ -109,10 +108,10 @@ Table of Contents
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 2]
+
+Eckert, et al.           Expires January 7, 2014                [Page 2]
 
 Internet-Draft                  FMD-RSVP                       July 2013
-
 
 
    The object definition is given in Section 2.1 while the details of
@@ -159,17 +158,19 @@ Internet-Draft                  FMD-RSVP                       July 2013
       [I-D.eckert-intarea-flow-metadata-framework] and
       [I-D.choukir-tsvwg-flow-metadata-encoding].
 
-2.2.  Semantic of carrying the Metadata Object
 
 
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 3]
+
+
+Eckert, et al.           Expires January 7, 2014                [Page 3]
 
 Internet-Draft                  FMD-RSVP                       July 2013
 
 
+2.2.  Semantic of carrying the Metadata Object
 
    The Metadata Object included in the Path message carries attributes
    from the sender of the flow towards the receiver.  In some cases,
@@ -216,16 +217,17 @@ Internet-Draft                  FMD-RSVP                       July 2013
    implementation determines the content of the Metadata object is
    outside the scope of this document.
 
-   Intermediate nodes that support this specification, decode the Flow
-   Metadata information as indicated by the C-Type field only when
 
 
 
-Eckert, et al.          Expires January 07, 2014                [Page 4]
+
+Eckert, et al.           Expires January 7, 2014                [Page 4]
 
 Internet-Draft                  FMD-RSVP                       July 2013
 
 
+   Intermediate nodes that support this specification, decode the Flow
+   Metadata information as indicated by the C-Type field only when
    received in Path message.  Depending on the attributes, local
    configuration and policies, the node may take some actions.  The
    Metadata attribute semantics are described in
@@ -268,20 +270,24 @@ Internet-Draft                  FMD-RSVP                       July 2013
    complicates IPsec protection.  More details can be found in [RFC4230]
    section 5.6.
 
+
+
+
+
+
+
+
+Eckert, et al.           Expires January 7, 2014                [Page 5]
+
+Internet-Draft                  FMD-RSVP                       July 2013
+
+
 4.  References
 
 4.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119, March 1997.
-
-
-
-Eckert, et al.          Expires January 07, 2014                [Page 5]
-
-Internet-Draft                  FMD-RSVP                       July 2013
-
-
 
    [RFC2205]  Braden, B., Zhang, L., Berson, S., Herzog, S., and S.
               Jamin, "Resource ReSerVation Protocol (RSVP) -- Version 1
@@ -320,23 +326,24 @@ Internet-Draft                  FMD-RSVP                       July 2013
 
 Authors' Addresses
 
+
+
+
+
+
+
+
+Eckert, et al.           Expires January 7, 2014                [Page 6]
+
+Internet-Draft                  FMD-RSVP                       July 2013
+
+
    Toerless Eckert (editor)
    Cisco Systems, Inc.
    San Jose
    US
 
    Email: eckert@cisco.com
-
-
-
-
-
-
-
-Eckert, et al.          Expires January 07, 2014                [Page 6]
-
-Internet-Draft                  FMD-RSVP                       July 2013
-
 
 
    Anca Zamfir
@@ -382,11 +389,4 @@ Internet-Draft                  FMD-RSVP                       July 2013
 
 
 
-
-
-
-
-
-
-
-Eckert, et al.          Expires January 07, 2014                [Page 7]
+Eckert, et al.           Expires January 7, 2014                [Page 7]

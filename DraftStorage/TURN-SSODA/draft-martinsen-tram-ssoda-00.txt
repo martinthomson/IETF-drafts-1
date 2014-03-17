@@ -5,10 +5,10 @@
 TRAM                                                        P. Martinsen
 Internet-Draft                                                     Cisco
 Intended status: Standards Track                               J. Uberti
-Expires: September 15, 2014                                       Google
+Expires: September 18, 2014                                       Google
                                                            O. Moskalenko
                                       public project rfc5766-turn-server
-                                                          March 14, 2014
+                                                          March 17, 2014
 
 
                 Single SOcket Dual Allocation with TURN
@@ -43,26 +43,20 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 15, 2014.
-
-
-
-
-
-
-
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 1]
-
-Internet-Draft                    SSODA                       March 2014
-
-
+   This Internet-Draft will expire on September 18, 2014.
 
 Copyright Notice
 
    Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
+
+
+
+
+Martinsen, et al.      Expires September 18, 2014               [Page 1]
+
+Internet-Draft                    SSODA                       March 2014
+
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
@@ -83,7 +77,7 @@ Table of Contents
      2.3.  Receiving an Allocate Success Response  . . . . . . . . .   4
      2.4.  Receiving an Allocate Error Response  . . . . . . . . . .   5
    3.  Refreshing an Allocation  . . . . . . . . . . . . . . . . . .   5
-     3.1.  Sending a Refresh Request . . . . . . . . . . . . . . . .   6
+     3.1.  Sending a Refresh Request . . . . . . . . . . . . . . . .   5
      3.2.  Receiving a Refresh Request . . . . . . . . . . . . . . .   6
      3.3.  CreatePermission  . . . . . . . . . . . . . . . . . . . .   6
        3.3.1.  Sending a CreatePermission Request  . . . . . . . . .   6
@@ -106,18 +100,19 @@ Table of Contents
    with fewer local host ports there will be fewer NAT bindings for the
    NAT to keep track of, and fewer server reflexive candidates.  Lastly,
    with a single 5-tuple in use, it reduces the number of open ports the
-
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 2]
-
-Internet-Draft                    SSODA                       March 2014
-
-
    TURN server needs to open on the interface towards the client
    (Private side).  As ports are a scarce resource (16-bit number)
    preserving them on the NAT and a the TURN server can make large scale
    deployments easier.
+
+
+
+
+
+Martinsen, et al.      Expires September 18, 2014               [Page 2]
+
+Internet-Draft                    SSODA                       March 2014
+
 
 2.  Creating an Allocation
 
@@ -162,23 +157,25 @@ Internet-Draft                    SSODA                       March 2014
    relay address for each of the REQUESTED-ADDRESS-FAMILY attributes
    present in the Allocate request.  The allocated relay addresses are
    returned in separate XOR-RELAYED-ADDRESS attributes in the Allocate
+   response message.  The ordering of the XOR-RELAYED-ADDRESS attributes
+   in the response is arbitrary.
 
 
 
-Martinsen, et al.      Expires September 15, 2014               [Page 3]
+
+
+
+Martinsen, et al.      Expires September 18, 2014               [Page 3]
 
 Internet-Draft                    SSODA                       March 2014
 
-
-   response message.  The ordering of the XOR-RELAYED-ADDRESS attributes
-   in the response is arbitrary.
 
    If the server cannot satisfy the request at all, because none of the
    specified address families are supported, the server MUST return a
    440 error code, as indicated in [RFC6156].
 
    If the server cannot satisfy the request at all, because the server
-   could not allocate any of the specified adresses, the server MUST
+   could not allocate any of the specified addresses, the server MUST
    return a 508 (Insufficient Capacity) error code as indicated in
    [RFC5766].
 
@@ -217,20 +214,17 @@ Internet-Draft                    SSODA                       March 2014
 
 2.3.  Receiving an Allocate Success Response
 
-
-
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 4]
-
-Internet-Draft                    SSODA                       March 2014
-
-
-
    This section describes how the client must react on receiving a
    response to the dual allocation request.  If the client is not using
    dual allocation, then the behavior is the same as the rules in
    [RFC5766] and in [RFC6156].
+
+
+
+Martinsen, et al.      Expires September 18, 2014               [Page 4]
+
+Internet-Draft                    SSODA                       March 2014
+
 
    If the client receives an Allocate Success Response containing a non-
    ANY (ANY as defined above) XOR-RELAYED-ADDRESS attribute for each of
@@ -263,7 +257,7 @@ Internet-Draft                    SSODA                       March 2014
    desired address families, or might be a non-SSODA server that
    misinterpreted the included REQUESTED-ADDRESS-FAMILY attributes in
    the Allocate request.  The client SHOULD retry its IPv4 request on
-   the same 5-tuple, with no REQUSTED-ADDRESS-FAMILY attribute, and MAY
+   the same 5-tuple, with no REQUESTED-ADDRESS-FAMILY attribute, and MAY
    retry other address families on different local ports, by sending an
    Allocate request with only one REQUESTED-ADDRESS-FAMILY attribute.
 
@@ -275,19 +269,19 @@ Internet-Draft                    SSODA                       March 2014
    SSODA during the allocation creation described in Section 2.1.
    Otherwise, revert back to RFC 5766 or RFC 6156 behaviour.
 
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 5]
-
-Internet-Draft                    SSODA                       March 2014
-
-
-
 3.1.  Sending a Refresh Request
 
    To perform an allocation refresh, the client generates a Refresh
    Request as described in Section 7.1 of [RFC5766].  When refreshing a
    dual allocation, the client SHOULD include one or more REQUESTED-
+
+
+
+Martinsen, et al.      Expires September 18, 2014               [Page 5]
+
+Internet-Draft                    SSODA                       March 2014
+
+
    ADDRESS-FAMILY attributes describing the the family types that should
    be refreshed; the client MUST only include family types that it
    previously allocated and has not yet deleted.  When refreshing a
@@ -329,21 +323,20 @@ Internet-Draft                    SSODA                       March 2014
 
 3.3.2.  Receiving a CreatePermission Request
 
-
-
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 6]
-
-Internet-Draft                    SSODA                       March 2014
-
-
-
    If an XOR-PEER-ADDRESS attribute contains an address of an address
    family different than that any of the relayed transport addresses
    allocated, the server MUST generate an error response with the 443
    (Peer Address Family Mismatch) response code, which is defined in
    Section 6.2.1 of [RFC6156].
+
+
+
+
+
+Martinsen, et al.      Expires September 18, 2014               [Page 6]
+
+Internet-Draft                    SSODA                       March 2014
+
 
 4.  Channels
 
@@ -383,24 +376,22 @@ Authors' Addresses
    Email: palmarti@cisco.com
 
 
-
-
-
-
-
-
-Martinsen, et al.      Expires September 15, 2014               [Page 7]
-
-Internet-Draft                    SSODA                       March 2014
-
-
-
    Justin Uberti
    Google
    Kirkland, WA
    USA
 
    Email: justin@uberti.name
+
+
+
+
+
+
+
+Martinsen, et al.      Expires September 18, 2014               [Page 7]
+
+Internet-Draft                    SSODA                       March 2014
 
 
    Oleg Moskalenko
@@ -445,4 +436,13 @@ Internet-Draft                    SSODA                       March 2014
 
 
 
-Martinsen, et al.      Expires September 15, 2014               [Page 8]
+
+
+
+
+
+
+
+
+
+Martinsen, et al.      Expires September 18, 2014               [Page 8]

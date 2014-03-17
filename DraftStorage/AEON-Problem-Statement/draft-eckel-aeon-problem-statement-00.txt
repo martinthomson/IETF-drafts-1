@@ -73,7 +73,6 @@ Table of Contents
    4.  Efforts in Progress . . . . . . . . . . . . . . . . . . . . .   4
    5.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   5
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
@@ -106,6 +105,7 @@ Table of Contents
    computationally expensive and becomes a greater challenge with the
    wider adoption of encrypted signaling and secured media.  An
    additional drawback of DPI is that any insights are not available, or
+
 
 
 
@@ -158,9 +158,9 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
    o  Extensions to signaling protocols can result in false negatives or
       false positives during inspection.
 
-
-
-
+   o  Network services leveraging DPI traffic classification impact the
+      application behavior by impacting its traffic, but they do not
+      provide explicit feedback to the application.  This results in a
 
 
 
@@ -170,10 +170,6 @@ Eckel & Reddy            Expires August 18, 2014                [Page 3]
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
-
-   o  Network services leveraging DPI traffic classification impact the
-      application behavior by impacting its traffic, but they do not
-      provide explicit feedback to the application.  This results in a
       lost opportunity for the application to gain insight and adjust
       its operation accordingly.
 
@@ -219,6 +215,10 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
       traversal capabilities and determining the best local and remote
       addresses for peer-to-peer connectivity (ICE).
 
+   o  Port Control Protocol (PCP) provides a mechanism to describe a
+      flow to the network.  The primary driver for PCP has been creating
+      port mappings on NAT and firewall devices.  When doing this, PCP
+
 
 
 Eckel & Reddy            Expires August 18, 2014                [Page 4]
@@ -226,10 +226,6 @@ Eckel & Reddy            Expires August 18, 2014                [Page 4]
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
 
-
-   o  Port Control Protocol (PCP) provides a mechanism to describe a
-      flow to the network.  The primary driver for PCP has been creating
-      port mappings on NAT and firewall devices.  When doing this, PCP
       pushes flow information from the host into the network
       (specifically to the network's NAT or firewall device), and
       receives information back from the network (from the NAT or
@@ -274,6 +270,10 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
    Req-4:  Allow applications to receive resulting flow descriptions as
       feedback from the network.
 
+   Req-5:  Complement existing heuristic based mechanisms.
+
+   Req-6:  Provide differentiated service for both directions of a flow,
+      including flows that cross administrative boundaries.
 
 
 
@@ -281,12 +281,6 @@ Eckel & Reddy            Expires August 18, 2014                [Page 5]
 
 Internet-Draft       AEON Problem Statement and Req        February 2014
 
-
-
-   Req-5:  Complement existing heuristic based mechanisms.
-
-   Req-6:  Provide differentiated service for both directions of a flow,
-      including flows that cross administrative boundaries.
 
    Req-7:  Provide mechanism to authenticate and authorize endpoints/
       applications to signal flow characteristics.
@@ -298,8 +292,6 @@ Internet-Draft       AEON Problem Statement and Req        February 2014
 
    The authors thank Toerless Eckert, Reinaldo Penno, Dan Wing, Amine
    Choukir, and Paul Jones for their contributions to this draft.
-
-7.  References
 
 Authors' Addresses
 
@@ -320,6 +312,14 @@ Authors' Addresses
    India
 
    Email: tireddy@cisco.com
+
+
+
+
+
+
+
+
 
 
 

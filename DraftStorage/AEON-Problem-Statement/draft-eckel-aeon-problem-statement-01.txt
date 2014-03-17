@@ -5,7 +5,7 @@
 Internet Engineering Task Force                                 C. Eckel
 Internet-Draft                                                  T. Reddy
 Intended status: Informational                       Cisco Systems, Inc.
-Expires: September 09, 2014                               March 08, 2014
+Expires: September 9, 2014                                 March 8, 2014
 
 
 Application Enabled Open Networking: Problem Statement and Requirements
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 09, 2014.
+   This Internet-Draft will expire on September 9, 2014.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Eckel & Reddy          Expires September 09, 2014               [Page 1]
+Eckel & Reddy           Expires September 9, 2014               [Page 1]
 
 Internet-Draft       AEON Problem Statement and Req           March 2014
 
@@ -74,7 +74,6 @@ Table of Contents
    4.  Efforts in Progress . . . . . . . . . . . . . . . . . . . . .   4
    5.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   5
    6.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .   6
-   7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
@@ -106,15 +105,15 @@ Table of Contents
    error prone and increase network management complexity.  DPI is
    computationally expensive and becomes a greater challenge with the
    wider adoption of encrypted signaling and secured media.  An
+   additional drawback of DPI is that any insights are not available, or
 
 
 
-Eckel & Reddy          Expires September 09, 2014               [Page 2]
+Eckel & Reddy           Expires September 9, 2014               [Page 2]
 
 Internet-Draft       AEON Problem Statement and Req           March 2014
 
 
-   additional drawback of DPI is that any insights are not available, or
    need to be recomputed, at network nodes further down the application
    flow path.
 
@@ -165,7 +164,8 @@ Internet-Draft       AEON Problem Statement and Req           March 2014
 
 
 
-Eckel & Reddy          Expires September 09, 2014               [Page 3]
+
+Eckel & Reddy           Expires September 9, 2014               [Page 3]
 
 Internet-Draft       AEON Problem Statement and Req           March 2014
 
@@ -221,7 +221,7 @@ Internet-Draft       AEON Problem Statement and Req           March 2014
 
 
 
-Eckel & Reddy          Expires September 09, 2014               [Page 4]
+Eckel & Reddy           Expires September 9, 2014               [Page 4]
 
 Internet-Draft       AEON Problem Statement and Req           March 2014
 
@@ -277,10 +277,9 @@ Internet-Draft       AEON Problem Statement and Req           March 2014
 
 
 
-Eckel & Reddy          Expires September 09, 2014               [Page 5]
+Eckel & Reddy           Expires September 9, 2014               [Page 5]
 
 Internet-Draft       AEON Problem Statement and Req           March 2014
-
 
 
    Req-7:  Provide mechanism to authenticate and authorize endpoints/
@@ -293,8 +292,6 @@ Internet-Draft       AEON Problem Statement and Req           March 2014
 
    The authors thank Toerless Eckert, Reinaldo Penno, Dan Wing, Amine
    Choukir, and Paul Jones for their contributions to this draft.
-
-7.  References
 
 Authors' Addresses
 
@@ -333,4 +330,7 @@ Authors' Addresses
 
 
 
-Eckel & Reddy          Expires September 09, 2014               [Page 6]
+
+
+
+Eckel & Reddy           Expires September 9, 2014               [Page 6]

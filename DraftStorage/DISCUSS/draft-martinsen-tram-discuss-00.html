@@ -12,6 +12,28 @@
 	  a {
 	  text-decoration: none;
 	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
 	  a.smpl {
 	  color: black;
 	  }
@@ -324,7 +346,7 @@
 		   content: "December 2010"; 
 	  } 
 	  @top-center {
-		   content: "Abbreviated Title";3
+		   content: "Abbreviated Title";
 	  } 
 	  @bottom-left {
 		   content: "Doe"; 
@@ -371,7 +393,7 @@
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.4.5 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Martinsen, P. and H. Wildfeuer" />
@@ -460,7 +482,7 @@
 
   <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> Introduction</h1>
 <p id="rfc.section.1.p.1">In the context of Content, Mobile, Fixed Service, Service Providers, Enterprise and Private networks have a need to prioritize packet flows end-to-end. These flows are often dynamic, time-bound, encrypted, peer-to-peer, possibly asymmetric, and might have different priorities depending on network conditions, direction, time of the day, dynamic user preferences and other factors. These factors may be time variant, and thus need to be signalled. Moreover, in many cases of peer-to-peer communication, flow information is known only to the endpoint. These considerations, coupled with the trend to use encryption for browser-to-browser communication <a href="#I-D.ietf-rtcweb-security-arch">[I-D.ietf-rtcweb-security-arch]</a>, imply that access lists, deep packet inspection and other static prioritization methods cannot be employed successfully to prioritize packet flows.  </p>
-<p id="rfc.section.1.p.2">There is a need for a solution that is easy for the application developer to use. That means consistent behaviour on all supported platforms and preferably without need of administrative privileges to set and read values. The solution also needs to be able to cross administrative domains without the risk of being rewritten.  </p>
+<p id="rfc.section.1.p.2">There is a need for a solution that is easy for the application developer to use. That means consistent behaviour on all supported platforms and preferably without need of administrative privileges to set and read values. The solution also needs to be able to cross administrative domains without the risk of being rewritten.  <a id="Q1" class="info">[Q1]<span class="info">palmarti: This draft will only offer tamper detection of some of the values. Further discussion regarding the incentive to lie is needed.  </span></a> </p>
 <p id="rfc.section.1.p.3">This draft describes how these problems can be solved by defining a few strictly defined STUN <a href="#RFC5389">[RFC5389]</a> attributes which can be added to any STUN message the client wants to send. STUN messages are typically sent during the ICE <a href="#RFC5245">[RFC5245]</a> connectivity check phase when the media session is established, or when keep-alive STUN messages are sent after the session is established. The application is not limited to those two scenarios, if some communication between application and network is needed it can choose to do so at any time.  </p>
 <p id="rfc.section.1.p.4">Devices on the media path can use the information in the STUN attributes to prioritize the flow, perform traffic engineering, provide network analytics or as a gateway to existing methods for prioritizing flows (DSCP <a href="#RFC2474">[RFC2474]</a>). Applications can use information in network status attribute to influence rate stating points or rate adaption mechanisms.  </p>
 <p id="rfc.section.1.p.5">The functionality described here is referred to as DISCUSS. Due to the security implications described in <a href="#I-D.thomson-mmusic-ice-webrtc">[I-D.thomson-mmusic-ice-webrtc]</a> where large STUN packet are used amplify an attack, keeping the added STUN attributes is an important design consideration. To avoid unwanted information leakage the new defined STUN attributes are strictly defined in this draft.  </p>
@@ -471,8 +493,8 @@
 <p id="rfc.section.2.p.4">If an agent receives a STUN request with a NETWORK-STATUS attribute after the INTEGRITY attribute, it should copy the content into a new NETWORK-STATUS attribute and add it before the INTEGRITY attribute when sending the STUN response. A new null NETWORK-STATUS attribute can be added after the INTEGRITY attribute. New STUN attributes described in this draft can also be added describing the stream in this direction.  </p>
 <p id="rfc.section.2.p.5">If an agent receives a STUN response with a NETWORK-STATUS attribute before the INTEGRITY attribute, this describes the stream in the upstream direction. A NETWORK-STATUS attribute after the INTEGRITY attribute describes the stream in the downstream direction.  </p>
 <p id="rfc.section.2.p.6">It might make sense to distinguish DISCUSS packets from normal STUN packets. This would prevent unnecessary processing of normal STUN packets on the network nodes.  </p>
-<p/>
-<p/>
+<p><a id="Q2" class="info">[Q2]<span class="info">palmarti: A few alternatives (Needs discussion): ---1: Alter the STUN magic cookie. (But than i would not be a STUN packet anymore, and that raises a new set of problems) ---2: Add a special this is DISCUSS attribute. This must be the first attribute in the message. This allows for network node to look for DISCUSS packets at a fixed offset without needing to parse the entire packet.  ---3: Alter the transaction id. This might be problematic if using it in conjunction with ICE connectivity checks. But probably fine in other scenarios.  ---4: Define a new STUN Method. Also brakes ICE, makes it harder to tag onto attributes to already in use messages.  </span></a> </p>
+<p><a id="Q3" class="info">[Q3]<span class="info">palmarti: Do we want to restrict this to req/resp or do we want to allow for the attributes to be added in this fashion for indications as well?</span></a> </p>
 <pre>  
   Alice                router1            router2              Bob
    |                      |                   |                  |
@@ -523,7 +545,7 @@
 <h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Interaction with ICE</h1>
 <p id="rfc.section.4.p.1">An ICE connectivity check is performed by sending a STUN Binding indication. Prior to sending the agent can add one STREAM-TYPE attribute. If added, only one MUST be added. This is to avoid unnecessary large STUN packets during the connectivity checks. If the connectivity check is sent on a 5-tuple that multiplexes different types of media and more detailed information wants to be signalled it should be done after the connectivity check phase is finished.  </p>
 <p id="rfc.section.4.p.2">This limits the information the STUN messages are able to convey during the connectivity checks, but also avoids adding network confusion with BANDWIDTH-USAGE attributes describing different paths that never going to be utilized.  </p>
-<p/>
+<p><a id="Q4" class="info">[Q4]<span class="info">palmarti: Problem with consent freshness if not based on STUN.  </span></a> </p>
 <h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> Multiplexed Streams</h1>
 <p id="rfc.section.5.p.1">In some scenarios a 5-tuple can be used to transport several media streams. BUNDLE <a href="#I-D.ietf-mmusic-sdp-bundle-negotiation">[I-D.ietf-mmusic-sdp-bundle-negotiation]</a> describes such a mechanism.  </p>
 <p id="rfc.section.5.p.2">When describing the stream with a STREAM-TYPE attribute there are two possibilities to describe the streams that are multiplexed. Adding one attribute for each type (Audio, Video,++), or to save a few bits on the wire it is also possible to construct the STREAM-TYPE so a one type value describes several types. For example audio have the value of 1 and application data have the value of 4. If the STREAM_TYPE value is set to 5 the only combination that gives that is audio and application data.  </p>
@@ -536,7 +558,6 @@
       0xXXX2: STREAM-PRIORITY
       0xYYYY: NETWORK-STATUS
            </pre>
-<p class="figure"></p>
 <h1 id="rfc.section.6.1"><a href="#rfc.section.6.1">6.1.</a> STREAM-TYPE</h1>
 <p id="rfc.section.6.1.p.1">This attribute have a length that are multiples of 4 (32) so no padding is necessary.  </p>
 <div id="rfc.figure.1"/>
@@ -632,7 +653,7 @@
 
 <p> </p>
 <h1 id="rfc.section.6.4"><a href="#rfc.section.6.4">6.4.</a> NETWORK-STATUS</h1>
-<p id="rfc.section.6.4.p.1">This attribute have a length that are multiples of 4 (32) so no padding is necessary. The values are kept in the same attribute to make it easier for the network element to process it. Only one attribute, with static placement of the fields.  </p>
+<p id="rfc.section.6.4.p.1">This attribute have a length that are multiples of 4 (32) so no padding is necessary. The values are kept in the same attribute to make it easier for the network element to process it. Only one attribute, with static placement of the fields.  <a id="Q5" class="info">[Q5]<span class="info">palmarti: Does this matter? Could we have several attributes with possible different ordering without any problem for the network element? </span></a> </p>
 <p id="rfc.section.6.4.p.2">This attribute MUST be added after any INTEGRITY attribute in the STUN message. Values in this attribute can be updated along the network path by nodes that are not able to regenerate a correct INTEGRITY attribute.  </p>
 <div id="rfc.figure.6"/>
 <div id="network_status_attr"/>
@@ -706,7 +727,7 @@
       <td class="reference">
         <b id="I-D.dhesikan-tsvwg-rtcweb-qos">[I-D.dhesikan-tsvwg-rtcweb-qos]</b>
       </td>
-      <td class="top"><a>Dhesikan, S.</a>, <a>Druta, D.</a>, <a>Jones, P.</a> and <a>J. Polk</a>, "<a href="http://tools.ietf.org/html/draft-dhesikan-tsvwg-rtcweb-qos-05">DSCP and other packet markings for RTCWeb QoS</a>", Internet-Draft draft-dhesikan-tsvwg-rtcweb-qos-05, March 2014.</td>
+      <td class="top"><a>Dhesikan, S.</a>, <a>Druta, D.</a>, <a>Jones, P.</a> and <a>J. Polk</a>, "<a href="http://tools.ietf.org/html/draft-dhesikan-tsvwg-rtcweb-qos-06">DSCP and other packet markings for RTCWeb QoS</a>", Internet-Draft draft-dhesikan-tsvwg-rtcweb-qos-06, March 2014.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -729,7 +750,7 @@
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>Philip Pedersens vei 20</span>
+	  <span class="vcardline">Philip Pedersens vei 20</span>
 
 	  <span class="vcardline">
 		<span class="locality">Lysaker</span>,  
@@ -751,7 +772,7 @@
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>821 Alder Drive</span>
+	  <span class="vcardline">821 Alder Drive</span>
 
 	  <span class="vcardline">
 		<span class="locality">Milpitas</span>,  

@@ -5,9 +5,9 @@
 MMUSIC                                                           D. Wing
 Internet-Draft                                                  T. Reddy
 Intended status: Standards Track                                P. Patil
-Expires: August 08, 2014                                    P. Martinsen
+Expires: August 8, 2014                                     P. Martinsen
                                                                    Cisco
-                                                       February 04, 2014
+                                                        February 4, 2014
 
 
                         Mobility with ICE (MICE)
@@ -34,7 +34,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 08, 2014.
+   This Internet-Draft will expire on August 8, 2014.
 
 Copyright Notice
 
@@ -53,10 +53,9 @@ Copyright Notice
 
 
 
-Wing, et al.             Expires August 08, 2014                [Page 1]
+Wing, et al.             Expires August 8, 2014                 [Page 1]
 
 Internet-Draft                    MICE                     February 2014
-
 
 
 Table of Contents
@@ -69,35 +68,35 @@ Table of Contents
      3.2.  Keeping unused relayed candidates active  . . . . . . . .   7
      3.3.  New STUN Attributes . . . . . . . . . . . . . . . . . . .   8
    4.  Make Before Break . . . . . . . . . . . . . . . . . . . . . .   8
-   5.  Mobility using TURN . . . . . . . . . . . . . . . . . . . . .   9
-     5.1.  Creating an Allocation  . . . . . . . . . . . . . . . . .  10
-       5.1.1.  Sending an Allocate Request . . . . . . . . . . . . .  10
+   5.  Mobility using TURN . . . . . . . . . . . . . . . . . . . . .   8
+     5.1.  Creating an Allocation  . . . . . . . . . . . . . . . . .   9
+       5.1.1.  Sending an Allocate Request . . . . . . . . . . . . .   9
        5.1.2.  Receiving an Allocate Request . . . . . . . . . . . .  10
-       5.1.3.  Receiving an Allocate Success Response  . . . . . . .  11
-       5.1.4.  Receiving an Allocate Error Response  . . . . . . . .  11
+       5.1.3.  Receiving an Allocate Success Response  . . . . . . .  10
+       5.1.4.  Receiving an Allocate Error Response  . . . . . . . .  10
      5.2.  Refreshing an Allocation  . . . . . . . . . . . . . . . .  11
        5.2.1.  Sending a Refresh Request . . . . . . . . . . . . . .  11
        5.2.2.  Receiving a Refresh Request . . . . . . . . . . . . .  11
-       5.2.3.  Receiving a Refresh Response  . . . . . . . . . . . .  12
+       5.2.3.  Receiving a Refresh Response  . . . . . . . . . . . .  11
      5.3.  New STUN Attribute MOBILITY-TICKET  . . . . . . . . . . .  12
      5.4.  New STUN Error Response Code  . . . . . . . . . . . . . .  12
    6.  Comparison to ICE Restart and Trickle ICE . . . . . . . . . .  12
      6.1.  Break Before Make - ICE Restart . . . . . . . . . . . . .  12
      6.2.  Break Before Make - Trickle ICE . . . . . . . . . . . . .  13
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  14
-   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  15
+   8.  Implementation Status . . . . . . . . . . . . . . . . . . . .  14
      8.1.  open-sys  . . . . . . . . . . . . . . . . . . . . . . . .  15
-   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  16
-     9.1.  Considerations for ICE mechanism  . . . . . . . . . . . .  16
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  15
+     9.1.  Considerations for ICE mechanism  . . . . . . . . . . . .  15
      9.2.  Considerations for TURN mechanism . . . . . . . . . . . .  16
    10. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  16
    11. Change History  . . . . . . . . . . . . . . . . . . . . . . .  16
      11.1.  Changes from draft-wing-mmusic-ice-mobility-00 to -01  .  16
-     11.2.  Changes from draft-wing-mmusic-ice-mobility-01 to -02  .  17
-     11.3.  Changes from draft-wing-mmusic-ice-mobility-02 to -03  .  17
-     11.4.  Changes from draft-wing-mmusic-ice-mobility-03 to -04  .  17
-     11.5.  Changes from draft-wing-mmusic-ice-mobility-04 to -05  .  17
-     11.6.  Changes from draft-wing-mmusic-ice-mobility-05 to -06  .  17
+     11.2.  Changes from draft-wing-mmusic-ice-mobility-01 to -02  .  16
+     11.3.  Changes from draft-wing-mmusic-ice-mobility-02 to -03  .  16
+     11.4.  Changes from draft-wing-mmusic-ice-mobility-03 to -04  .  16
+     11.5.  Changes from draft-wing-mmusic-ice-mobility-04 to -05  .  16
+     11.6.  Changes from draft-wing-mmusic-ice-mobility-05 to -06  .  16
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  17
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  17
      12.2.  Informative References . . . . . . . . . . . . . . . . .  17
@@ -105,16 +104,15 @@ Table of Contents
      A.1.  Presence of other interfaces in Valid list  . . . . . . .  18
        A.1.1.  Receiving ICE Mobility event  . . . . . . . . . . . .  19
      A.2.  Losing an Interface . . . . . . . . . . . . . . . . . . .  19
-       A.2.1.  Keeping unused candidates in the valid list active  .  20
+       A.2.1.  Keeping unused candidates in the valid list active  .  19
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
 
 
-Wing, et al.             Expires August 08, 2014                [Page 2]
+Wing, et al.             Expires August 8, 2014                 [Page 2]
 
 Internet-Draft                    MICE                     February 2014
 
-
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  21
 
 1.  Introduction
 
@@ -165,10 +163,11 @@ Internet-Draft                    MICE                     February 2014
 
 
 
-Wing, et al.             Expires August 08, 2014                [Page 3]
+
+
+Wing, et al.             Expires August 8, 2014                 [Page 3]
 
 Internet-Draft                    MICE                     February 2014
-
 
 
 2.  Notational Conventions
@@ -218,15 +217,15 @@ Internet-Draft                    MICE                     February 2014
    Endpoints that support ICE Mobility perform ICE normally, and MUST
    also include the MOBILITY-SUPPORT attribute in all of their STUN
    requests and their STUN responses.  The inclusion of this attribute
+   allows the ICE peer to determine if it can achieve mobility using ICE
 
 
 
-Wing, et al.             Expires August 08, 2014                [Page 4]
+Wing, et al.             Expires August 8, 2014                 [Page 4]
 
 Internet-Draft                    MICE                     February 2014
 
 
-   allows the ICE peer to determine if it can achieve mobility using ICE
    or needs to use TURN.  To force the use of TURN to achieve ICE
    mobility, the ICE endpoint SHOULD NOT respond to ICE connectivity
    checks that have an IP address and port different from the TURN
@@ -274,15 +273,15 @@ Internet-Draft                    MICE                     February 2014
 
    5.  The ICE endpoint performs "Discovering Peer Reflexive Candidates"
        (Section 7.1.3.2.1 of [RFC5245]), "Constructing a Valid Pair"
+       (Section 7.1.3.2.2 of [RFC5245]), "Updating Pair States"
 
 
 
-Wing, et al.             Expires August 08, 2014                [Page 5]
+Wing, et al.             Expires August 8, 2014                 [Page 5]
 
 Internet-Draft                    MICE                     February 2014
 
 
-       (Section 7.1.3.2.2 of [RFC5245]), "Updating Pair States"
        (Section 7.1.3.2.3 of [RFC5245]), and "Updating the Nominated
        Flag" (Section 7.1.3.2.4 of [RFC5245]).  When the valid list
        contains a candidate pair for each component then ICE processing
@@ -322,23 +321,6 @@ Internet-Draft                    MICE                     February 2014
 
 3.1.1.  Receiving ICE Mobility event
 
-
-
-
-
-
-
-
-
-
-
-
-Wing, et al.             Expires August 08, 2014                [Page 6]
-
-Internet-Draft                    MICE                     February 2014
-
-
-
    A STUN Binding Request containing the MOBILITY-EVENT attribute MAY be
    received by an ICE endpoint.  The agent MUST use short-term
    credential to authenticate the STUN request containing the MOBILITY-
@@ -348,6 +330,13 @@ Internet-Draft                    MICE                     February 2014
    If STUN Request containing the MOBILITY-EVENT attribute is received
    before the endpoint is in the ICE Completed state, it should be
    silently discarded.
+
+
+
+Wing, et al.             Expires August 8, 2014                 [Page 6]
+
+Internet-Draft                    MICE                     February 2014
+
 
    The agent remembers the highest-priority nominated pairs in the Valid
    list for each component of the media stream, called the previous
@@ -387,14 +376,6 @@ Internet-Draft                    MICE                     February 2014
    1.  The ICE agent will keep the relayed candidates alive using
        Refresh transaction, as described in [RFC5766].
 
-
-
-Wing, et al.             Expires August 08, 2014                [Page 7]
-
-Internet-Draft                    MICE                     February 2014
-
-
-
    2.  When the endpoint IP address changes due to mobility, the ICE
        agent will refresh it's allocation with TURN server using
        Section 5.2.
@@ -405,6 +386,14 @@ Internet-Draft                    MICE                     February 2014
    4.  If the ICE connectivity check succeeds only with local and remote
        relayed candidates, it suggests that either other peer is roaming
        at the same time or is behind Address-Dependent Filtering NAT.
+
+
+
+Wing, et al.             Expires August 8, 2014                 [Page 7]
+
+Internet-Draft                    MICE                     February 2014
+
+
        The ICE agent adds the relayed candidate pair to the valid list
        and marks it as selected.  The ICE agent can now send media using
        the newly selected relayed candidate pair.  The Mobile device
@@ -435,22 +424,6 @@ Internet-Draft                    MICE                     February 2014
 
 4.  Make Before Break
 
-
-
-
-
-
-
-
-
-
-
-Wing, et al.             Expires August 08, 2014                [Page 8]
-
-Internet-Draft                    MICE                     February 2014
-
-
-
    When a new interface comes up and initially selected interface
    becomes deprioritized (e.g due to a low cost interface becoming
    available).  The ICE endpoint re-connects to the SIP proxy using the
@@ -469,6 +442,14 @@ Internet-Draft                    MICE                     February 2014
    When the client sends the initial Allocate request to the TURN
    server, it will also include the new STUN attribute MOBILITY-TICKET
    (with zero length value), which indicates that the client is capable
+
+
+
+Wing, et al.             Expires August 8, 2014                 [Page 8]
+
+Internet-Draft                    MICE                     February 2014
+
+
    of mobility and desires a ticket.  The TURN server provisions a
    ticket that is sent inside the new STUN attribute MOBILITY-TICKET in
    the Allocate Success response to the client.  The ticket will be used
@@ -498,14 +479,6 @@ Internet-Draft                    MICE                     February 2014
        |   + MOBILITY-TICKET (length=0)     |             |
        |                                    |             |
        |<---------- Allocate success resp --|             |
-
-
-
-Wing, et al.             Expires August 08, 2014                [Page 9]
-
-Internet-Draft                    MICE                     February 2014
-
-
        |            + MOBILITY-TICKET       |             |
       ...                                  ...           ...
    (changes IP address)
@@ -517,7 +490,6 @@ Internet-Draft                    MICE                     February 2014
        |   + MOBILITY-TICKET                |             |
        |                                    |             |
 
-
 5.1.  Creating an Allocation
 
 5.1.1.  Sending an Allocate Request
@@ -525,6 +497,14 @@ Internet-Draft                    MICE                     February 2014
    In addition to the process described in Section 6.1 of [RFC5766], the
    client includes the MOBILITY-TICKET attribute with length 0.  This
    indicates the client is a mobile node and wants a ticket.
+
+
+
+
+Wing, et al.             Expires August 8, 2014                 [Page 9]
+
+Internet-Draft                    MICE                     February 2014
+
 
 5.1.2.  Receiving an Allocate Request
 
@@ -553,16 +533,6 @@ Internet-Draft                    MICE                     February 2014
    128-bit key for Advance Encryption Standard (AES) and 256-bit key for
    HMAC-SHA-256 for integrity protection.
 
-
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 10]
-
-Internet-Draft                    MICE                     February 2014
-
-
-
 5.1.3.  Receiving an Allocate Success Response
 
    In addition to the process described in Section 6.3 of [RFC5766], the
@@ -583,6 +553,14 @@ Internet-Draft                    MICE                     February 2014
    fixed.
 
    All other error responses must be handled as described in [RFC5766].
+
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 10]
+
+Internet-Draft                    MICE                     February 2014
+
 
 5.2.  Refreshing an Allocation
 
@@ -610,15 +588,6 @@ Internet-Draft                    MICE                     February 2014
    obtained does not identify an existing allocation then the server
    MUST reject the request with an error.
 
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 11]
-
-Internet-Draft                    MICE                     February 2014
-
-
-
    If the source IP address and port of the Refresh Request is different
    from the stored 5-tuple allocation, the TURN server proceeds with
    MESSAGE-INTEGRITY validation to identify the that it is the same user
@@ -642,6 +611,13 @@ Internet-Draft                    MICE                     February 2014
    response.  This attribute will be presented by the client to the
    server during a subsequent Refresh Request to aid mobility.
 
+
+
+Wing, et al.             Expires August 8, 2014                [Page 11]
+
+Internet-Draft                    MICE                     February 2014
+
+
 5.3.  New STUN Attribute MOBILITY-TICKET
 
    This attribute is used to retain an Allocation on the TURN server.
@@ -664,16 +640,6 @@ Internet-Draft                    MICE                     February 2014
    [I-D.rescorla-mmusic-ice-trickle] compare with ICE Mobility.
 
 6.1.  Break Before Make - ICE Restart
-
-
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 12]
-
-Internet-Draft                    MICE                     February 2014
-
-
 
    o  If ICE Restart is used for RTP Mobility then in case of Break
       before Make,
@@ -700,6 +666,14 @@ Internet-Draft                    MICE                     February 2014
 
       2.  While performing the above steps to re-establish SIP
           connectivity with its SIP proxy, the endpoint will gather host
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 12]
+
+Internet-Draft                    MICE                     February 2014
+
+
           candidates which incur no network traffic, server-reflexive
           candidates which incur a round-trip to a STUN server, and
           relayed candidates which incurs three round trips (two for re-
@@ -720,16 +694,6 @@ Internet-Draft                    MICE                     February 2014
           (both endpoints sending INVITEs at the same time).
 
 6.2.  Break Before Make - Trickle ICE
-
-
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 13]
-
-Internet-Draft                    MICE                     February 2014
-
-
 
    o  If Trickle ICE [I-D.rescorla-mmusic-ice-trickle] is used for RTP
       Mobility then in case of Break before Make,
@@ -758,6 +722,14 @@ Internet-Draft                    MICE                     February 2014
 
           b.  If the endpoint is behind NAT and ICE peer is behind
               endpoint-dependent filtering NAT then ICE connectivity
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 13]
+
+Internet-Draft                    MICE                     February 2014
+
+
               checks using the first offer/answer will fail but will
               later succeed in subsequent offer/answer where the
               endpoint provides server-reflexive candidates.
@@ -777,15 +749,6 @@ Internet-Draft                    MICE                     February 2014
    o  MOBILITY-TICKET (0x802E, in the comprehension-optional range)
 
    o  MOBILITY-EVENT (0x802, in the comprehension-required range)
-
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 14]
-
-Internet-Draft                    MICE                     February 2014
-
-
 
    o  MOBILITY-SUPPORT (0x8000, in the comprehension-optional range)
 
@@ -814,6 +777,15 @@ Internet-Draft                    MICE                     February 2014
    to assign due consideration to documents that have the benefit of
    running code, which may serve as evidence of valuable experimentation
    and feedback that have made the implemented protocols more mature.
+
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 14]
+
+Internet-Draft                    MICE                     February 2014
+
+
    It is up to the individual working groups to use this information as
    they see fit".
 
@@ -834,14 +806,6 @@ Internet-Draft                    MICE                     February 2014
       implemented, but not widely used, yet..
 
    Coverage:   Fully implements MICE with TURN protocol.
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 15]
-
-Internet-Draft                    MICE                     February 2014
-
-
 
    Licensing:   BSD: http://turnserver.open-sys.org/downloads/LICENSE
 
@@ -868,6 +832,16 @@ Internet-Draft                    MICE                     February 2014
    ufrags, and can cause the endpoints to perform HMAC-SHA1 validation
    by sending messages from any IP address.
 
+
+
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 15]
+
+Internet-Draft                    MICE                     February 2014
+
+
 9.2.  Considerations for TURN mechanism
 
    TURN server MUST use strong encryption and integrity protection for
@@ -890,14 +864,6 @@ Internet-Draft                    MICE                     February 2014
 11.1.  Changes from draft-wing-mmusic-ice-mobility-00 to -01
 
    o  Updated section 3
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 16]
-
-Internet-Draft                    MICE                     February 2014
-
-
 
 11.2.  Changes from draft-wing-mmusic-ice-mobility-01 to -02
 
@@ -924,6 +890,14 @@ Internet-Draft                    MICE                     February 2014
 
    o  Added Implementation Status section.
 
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 16]
+
+Internet-Draft                    MICE                     February 2014
+
+
 12.  References
 
 12.1.  Normative References
@@ -945,15 +919,6 @@ Internet-Draft                    MICE                     February 2014
               Traversal Utilities for NAT (STUN)", RFC 5766, April 2010.
 
 12.2.  Informative References
-
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 17]
-
-Internet-Draft                    MICE                     February 2014
-
-
 
    [I-D.rescorla-mmusic-ice-trickle]
               Rescorla, E., Uberti, J., and E. Ivov, "Trickle ICE:
@@ -979,12 +944,22 @@ Internet-Draft                    MICE                     February 2014
               Keeping Alive the NAT Mappings Associated with RTP / RTP
               Control Protocol (RTCP) Flows", RFC 6263, June 2011.
 
+
+
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 17]
+
+Internet-Draft                    MICE                     February 2014
+
+
    [RFC6982]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
               Code: The Implementation Status Section", RFC 6982, July
               2013.
 
    [iana-stun]
-              IANA, ., "IANA: STUN Attributes", April 2011,
+              IANA, , "IANA: STUN Attributes", April 2011,
               <http://www.iana.org/assignments/stun-parameters/stun-pa
               rameters.xml>.
 
@@ -1002,14 +977,6 @@ A.1.  Presence of other interfaces in Valid list
    unavailable.  If other interfaces are available and local candidates
    from these interfaces are already present in the valid list then ICE
    endpoint will perform the following steps:
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 18]
-
-Internet-Draft                    MICE                     February 2014
-
-
 
    1.  The ICE endpoint based on the locally configured host policy
        preferences, will select a interface whose candidates are already
@@ -1036,6 +1003,13 @@ Internet-Draft                    MICE                     February 2014
        the DEFAULT CANDIDATES) do not match ICE's SELECTED CANDIDATES
        (also see Appendix B.9 of [RFC5245]).
 
+
+
+Wing, et al.             Expires August 8, 2014                [Page 18]
+
+Internet-Draft                    MICE                     February 2014
+
+
    The ICE endpoint after Mobility using ICE is successful can issue an
    updated offer indicating ICE restart if higher priority interface
    becomes available.
@@ -1058,14 +1032,6 @@ A.2.  Losing an Interface
 
    Likewise, this specification recommends that ICE candidate addresses
    in valid list be maintained actively, subject to the host's policy.
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 19]
-
-Internet-Draft                    MICE                     February 2014
-
-
    For example, battery operated hosts have a strong incentive to not
    maintain NAT binding for server reflexive candidates learnt through
    STUN Binding Request, as the maintenance requires sending periodic
@@ -1090,6 +1056,16 @@ A.2.1.  Keeping unused candidates in the valid list active
    seconds.  It is recommended to only keep host/server-reflexive
    candidates active in the valid list and not the relayed candidates.
 
+
+
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 19]
+
+Internet-Draft                    MICE                     February 2014
+
+
 A.2.1.1.  Sending keep alive requests
 
    Application Mechanism for Keeping Alive the NAT Mappings Associated
@@ -1109,19 +1085,6 @@ A.2.1.1.  Sending keep alive requests
    from valid list.
 
 A.2.1.2.  Receiving keep alive requests
-
-
-
-
-
-
-
-
-Wing, et al.             Expires August 08, 2014               [Page 20]
-
-Internet-Draft                    MICE                     February 2014
-
-
 
    Upon receiving a STUN binding request containing a MOBILITY-SUPPORT
    attribute even when ICE processing is in the Completed state, the ICE
@@ -1150,6 +1113,15 @@ Authors' Addresses
    Email: tireddy@cisco.com
 
 
+
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 20]
+
+Internet-Draft                    MICE                     February 2014
+
+
    Prashanth Patil
    Cisco Systems, Inc.
    Cessna Business Park, Varthur Hobli
@@ -1173,4 +1145,32 @@ Authors' Addresses
 
 
 
-Wing, et al.             Expires August 08, 2014               [Page 21]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Wing, et al.             Expires August 8, 2014                [Page 21]

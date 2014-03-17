@@ -45,10 +45,10 @@ Status of This Memo
 
    This Internet-Draft will expire on August 16, 2014.
 
+Copyright Notice
 
-
-
-
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
 
 
 
@@ -57,12 +57,6 @@ Martinsen & Wildfeuer    Expires August 16, 2014                [Page 1]
 
 Internet-Draft                   DISCUSS                   February 2014
 
-
-
-Copyright Notice
-
-   Copyright (c) 2014 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
@@ -78,7 +72,7 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  General Usage . . . . . . . . . . . . . . . . . . . . . . . .   3
-   3.  Network Processing  . . . . . . . . . . . . . . . . . . . . .   5
+   3.  Network Processing  . . . . . . . . . . . . . . . . . . . . .   6
      3.1.  Packet Processing by Network Device . . . . . . . . . . .   6
      3.2.  Interaction with DSCP . . . . . . . . . . . . . . . . . .   7
    4.  Interaction with ICE  . . . . . . . . . . . . . . . . . . . .   7
@@ -106,6 +100,12 @@ Table of Contents
    Moreover, in many cases of peer-to-peer communication, flow
    information is known only to the endpoint.  These considerations,
    coupled with the trend to use encryption for browser-to-browser
+   communication [I-D.ietf-rtcweb-security-arch], imply that access
+   lists, deep packet inspection and other static prioritization methods
+   cannot be employed successfully to prioritize packet flows.
+
+   There is a need for a solution that is easy for the application
+   developer to use.  That means consistent behaviour on all supported
 
 
 
@@ -114,17 +114,12 @@ Martinsen & Wildfeuer    Expires August 16, 2014                [Page 2]
 Internet-Draft                   DISCUSS                   February 2014
 
 
-   communication [I-D.ietf-rtcweb-security-arch], imply that access
-   lists, deep packet inspection and other static prioritization methods
-   cannot be employed successfully to prioritize packet flows.
-
-   There is a need for a solution that is easy for the application
-   developer to use.  That means consistent behaviour on all supported
    platforms and preferably without need of administrative privileges to
    set and read values.  The solution also needs to be able to cross
-   administrative domains without the risk of being rewritten.  [[:
-   Q1This draft will only offer tamper detection of some of the values.
-   Further discussion regarding the incentive to lie is needed.  ]]
+   administrative domains without the risk of being rewritten.  [[Q1:
+   This draft will only offer tamper detection of some of the values.
+   Further discussion regarding the incentive to lie is needed.
+   --palmarti]]
 
    This draft describes how these problems can be solved by defining a
    few strictly defined STUN [RFC5389] attributes which can be added to
@@ -159,18 +154,6 @@ Internet-Draft                   DISCUSS                   February 2014
    gathered to be sent back to the requesting agent in the the STUN
    response.
 
-
-
-
-
-
-
-Martinsen & Wildfeuer    Expires August 16, 2014                [Page 3]
-
-Internet-Draft                   DISCUSS                   February 2014
-
-
-
    The STREAM-TYPE, BANDWIDTH-USAGE, STREAM-PRIORITY attributes MUST be
    added before any INTEGRITY attribute.  It is RECOMMENDED to only add
    these attributes to STUN messages containing a INTEGRITY attribute as
@@ -179,6 +162,14 @@ Internet-Draft                   DISCUSS                   February 2014
    If the client wants to receive feedback from the network it must add
    a null NETWORK-STATUS attribute.  A null NETWORK_STATUS attribute
    consists of the attribute with the Node Cnt field set to zero (0) and
+
+
+
+Martinsen & Wildfeuer    Expires August 16, 2014                [Page 3]
+
+Internet-Draft                   DISCUSS                   February 2014
+
+
    the CS bit set to 0 (Off).  This attribute MUST be added after the
    INTEGRITY attribute, as on-path devices may write information into
    this attribute.  Having a readily available attribute to write into
@@ -203,7 +194,7 @@ Internet-Draft                   DISCUSS                   February 2014
    packets.  This would prevent unnecessary processing of normal STUN
    packets on the network nodes.
 
-   [[: Q2A few alternatives (Needs discussion): ---1: Alter the STUN
+   [[Q2: A few alternatives (Needs discussion): ---1: Alter the STUN
    magic cookie.  (But than i would not be a STUN packet anymore, and
    that raises a new set of problems) ---2: Add a special this is
    DISCUSS attribute.  This must be the first attribute in the message.
@@ -212,11 +203,20 @@ Internet-Draft                   DISCUSS                   February 2014
    transaction id.  This might be problematic if using it in conjunction
    with ICE connectivity checks.  But probably fine in other scenarios.
    ---4: Define a new STUN Method.  Also brakes ICE, makes it harder to
-   tag onto attributes to already in use messages.  ]]
+   tag onto attributes to already in use messages.  --palmarti]]
 
-   [[: Q3Do we want to restrict this to req/resp or do we want to allow
+   [[Q3: Do we want to restrict this to req/resp or do we want to allow
    for the attributes to be added in this fashion for indications as
-   well?]]
+   well? --palmarti]]
+
+
+
+
+
+
+
+
+
 
 
 
@@ -224,7 +224,6 @@ Internet-Draft                   DISCUSS                   February 2014
 Martinsen & Wildfeuer    Expires August 16, 2014                [Page 4]
 
 Internet-Draft                   DISCUSS                   February 2014
-
 
 
      Alice                router1            router2              Bob
@@ -272,7 +271,8 @@ Internet-Draft                   DISCUSS                   February 2014
        what the remote agent is sending and how the status of both the
        upstream and downstream path.
 
-3.  Network Processing
+
+
 
 
 
@@ -282,6 +282,7 @@ Martinsen & Wildfeuer    Expires August 16, 2014                [Page 5]
 Internet-Draft                   DISCUSS                   February 2014
 
 
+3.  Network Processing
 
    This section describes the processing of DISCUSS packets by network
    devices.
@@ -329,7 +330,6 @@ Internet-Draft                   DISCUSS                   February 2014
    loss of packets in its flow (s).  The application can then react to
    this indication by altering its encoding of information in the packet
    to deal with congestion/packet loss, e.g. reduce its encoding rate or
-   switch to embedded encoding.  Devices SHOULD ensure that the DISCUSS
 
 
 
@@ -338,6 +338,7 @@ Martinsen & Wildfeuer    Expires August 16, 2014                [Page 6]
 Internet-Draft                   DISCUSS                   February 2014
 
 
+   switch to embedded encoding.  Devices SHOULD ensure that the DISCUSS
    capable applications that do react to congestion notification by
    reducing their transmission rate be treated properly to ensure
    fairness with non reacting applications (i.e. ensure fairness for
@@ -388,11 +389,9 @@ Internet-Draft                   DISCUSS                   February 2014
 
 
 
-
 Martinsen & Wildfeuer    Expires August 16, 2014                [Page 7]
 
 Internet-Draft                   DISCUSS                   February 2014
-
 
 
    This limits the information the STUN messages are able to convey
@@ -400,7 +399,8 @@ Internet-Draft                   DISCUSS                   February 2014
    confusion with BANDWIDTH-USAGE attributes describing different paths
    that never going to be utilized.
 
-   [[: Q4Problem with consent freshness if not based on STUN.  ]]
+   [[Q4: Problem with consent freshness if not based on STUN.
+   --palmarti]]
 
 5.  Multiplexed Streams
 
@@ -425,22 +425,22 @@ Internet-Draft                   DISCUSS                   February 2014
 
    This STUN extension defines the following new attributes:
 
-      0xXXX0: STREAM-TYPE
-      0xXXX1: BANDWIDTH-USAGE
-      0xXXX2: STREAM-PRIORITY
-      0xYYYY: NETWORK-STATUS
-
+         0xXXX0: STREAM-TYPE
+         0xXXX1: BANDWIDTH-USAGE
+         0xXXX2: STREAM-PRIORITY
+         0xYYYY: NETWORK-STATUS
 
 6.1.  STREAM-TYPE
 
    This attribute have a length that are multiples of 4 (32) so no
    padding is necessary.
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |              TYPE             | Interactivity |               |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+
+
+
+
 
 
 
@@ -450,25 +450,31 @@ Martinsen & Wildfeuer    Expires August 16, 2014                [Page 8]
 Internet-Draft                   DISCUSS                   February 2014
 
 
+   0                   1                   2                   3
+   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |              TYPE             | Interactivity |               |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
 
                       Figure 1: STREAM TYPE Attribute
 
    TYPE:  STREAM TYPE is a 16 bit value defined in Figure 2 below
       describing the flow.
 
-     0x0001 Audio
-     0x0002 Video
-     0x0004 Application Data
-     0x0008 Other
+        0x0001 Audio
+        0x0002 Video
+        0x0004 Application Data
+        0x0008 Other
 
                           Figure 2: STREAM Types
 
    Interactivity:  Is a 8 bit value defined in Figure 3 below describing
       the flow.
 
-     0x00 Undef
-     0x01 Stream (Broadcast? Oneway?)
-     0x02 Interactive
+        0x00 Undef
+        0x01 Stream (Broadcast? Oneway?)
+        0x02 Interactive
 
                        Figure 3: Interactivity Types
 
@@ -495,23 +501,16 @@ Internet-Draft                   DISCUSS                   February 2014
 
 
 
-
-
-
-
-
-
 Martinsen & Wildfeuer    Expires August 16, 2014                [Page 9]
 
 Internet-Draft                   DISCUSS                   February 2014
 
 
-
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |             AVERAGE (kbps)    |           MAX (kbps)          |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |             AVERAGE (kbps)    |           MAX (kbps)          |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                     Figure 4: BANDWIDTH USAGE Attribute
@@ -530,13 +529,13 @@ Internet-Draft                   DISCUSS                   February 2014
    This attribute have a length that are multiples of 4 (32) so no
    padding is necessary.
 
-   0                   1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | Priority      |D|    TBD      |           Stream IDX          |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |                           Session ID                          |
-   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       | Priority      |D|    TBD      |           Stream IDX          |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |                           Session ID                          |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                     Figure 5: STREAM PRIORITY Attribute
@@ -553,7 +552,8 @@ Internet-Draft                   DISCUSS                   February 2014
       network.  A reasonable value can foe example be the index have in
       the SDP.
 
-
+   Session ID:  Identification to distinguish what session this stream
+      is part of.  This MUST have the same value for all the media
 
 
 
@@ -562,9 +562,6 @@ Martinsen & Wildfeuer    Expires August 16, 2014               [Page 10]
 Internet-Draft                   DISCUSS                   February 2014
 
 
-
-   Session ID:  Identification to distinguish what session this stream
-      is part of.  This MUST have the same value for all the media
       streams the application wants to give differentiated services.
       (Note that this ID may overlap with other streams that originates
       from a different IP address.  The network element MUST only
@@ -576,20 +573,20 @@ Internet-Draft                   DISCUSS                   February 2014
    This attribute have a length that are multiples of 4 (32) so no
    padding is necessary.  The values are kept in the same attribute to
    make it easier for the network element to process it.  Only one
-   attribute, with static placement of the fields.  [[: Q5Does this
+   attribute, with static placement of the fields.  [[Q5: Does this
    matter?  Could we have several attributes with possible different
-   ordering without any problem for the network element? ]]
+   ordering without any problem for the network element?  --palmarti]]
 
    This attribute MUST be added after any INTEGRITY attribute in the
    STUN message.  Values in this attribute can be updated along the
    network path by nodes that are not able to regenerate a correct
    INTEGRITY attribute.
 
-    0                    1                   2                   3
-    0  1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |CS|   Node Cnt    |           0x7FFFFF                          |
-   +--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       0                    1                   2                   3
+       0  1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      +--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |CS|   Node Cnt    |           0x7FFFFF                          |
+      +--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                     Figure 6: NETWORK-STATUS Attribute
@@ -609,6 +606,9 @@ Internet-Draft                   DISCUSS                   February 2014
 
 7.  Acknowledgements
 
+   Authors would like to thank Dan Wing, Anca Zamfir and Cullen Jennings
+   for their comments and review.
+
 
 
 
@@ -617,10 +617,6 @@ Martinsen & Wildfeuer    Expires August 16, 2014               [Page 11]
 
 Internet-Draft                   DISCUSS                   February 2014
 
-
-
-   Authors would like to thank Dan Wing, Anca Zamfir and Cullen Jennings
-   for their comments and review.
 
 8.  References
 
@@ -658,7 +654,7 @@ Internet-Draft                   DISCUSS                   February 2014
    [I-D.dhesikan-tsvwg-rtcweb-qos]
               Dhesikan, S., Druta, D., Jones, P., and J. Polk, "DSCP and
               other packet markings for RTCWeb QoS", draft-dhesikan-
-              tsvwg-rtcweb-qos-05 (work in progress), March 2014.
+              tsvwg-rtcweb-qos-06 (work in progress), March 2014.
 
    [I-D.ietf-mmusic-sdp-bundle-negotiation]
               Holmberg, C., Alvestrand, H., and C. Jennings,
@@ -669,10 +665,13 @@ Internet-Draft                   DISCUSS                   February 2014
 
 
 
+
+
+
+
 Martinsen & Wildfeuer    Expires August 16, 2014               [Page 12]
 
 Internet-Draft                   DISCUSS                   February 2014
-
 
 
 Authors' Addresses
@@ -693,6 +692,7 @@ Authors' Addresses
    United States
 
    Email: hwildfeu@cisco.com
+
 
 
 

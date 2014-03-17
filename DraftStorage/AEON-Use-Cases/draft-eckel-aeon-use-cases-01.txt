@@ -42,13 +42,13 @@ Copyright Notice
    Copyright (c) 2014 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
-
-
-
-
-
-
-
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
 
 
 
@@ -58,14 +58,6 @@ Eckel & Reddy            Expires August 18, 2014                [Page 1]
 Internet-Draft               AEON Use Cases                February 2014
 
 
-
-   This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
    the Trust Legal Provisions and are provided without warranty as
    described in the Simplified BSD License.
 
@@ -76,9 +68,9 @@ Table of Contents
      2.1.  Home: Consistent experience of video conferencing with
            competing traffic . . . . . . . . . . . . . . . . . . . .   5
        2.1.1.  Description of Problem  . . . . . . . . . . . . . . .   5
-       2.1.2.  Proposed Solution . . . . . . . . . . . . . . . . . .   6
-       2.1.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .   6
-       2.1.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .   6
+       2.1.2.  Proposed Solution . . . . . . . . . . . . . . . . . .   5
+       2.1.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .   5
+       2.1.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .   5
        2.1.5.  Flow characteristics provided by application  . . . .   6
        2.1.6.  Action taken by network as result of receiving flow
                characteristics . . . . . . . . . . . . . . . . . . .   6
@@ -86,17 +78,17 @@ Table of Contents
        2.1.8.  Security and Privacy Considerations . . . . . . . . .   6
      2.2.  Firewall Traversal: Identification of new applications  .   6
        2.2.1.  Description of Problem  . . . . . . . . . . . . . . .   6
-       2.2.2.  Proposed Solution . . . . . . . . . . . . . . . . . .   7
+       2.2.2.  Proposed Solution . . . . . . . . . . . . . . . . . .   6
        2.2.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .   7
        2.2.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .   7
        2.2.5.  Flow characteristics provided by application  . . . .   7
        2.2.6.  Action taken by firewall as result of receiving flow
                characteristics . . . . . . . . . . . . . . . . . . .   7
        2.2.7.  Feedback provided by firewall . . . . . . . . . . . .   7
-       2.2.8.  Security and Privacy Considerations . . . . . . . . .   8
+       2.2.8.  Security and Privacy Considerations . . . . . . . . .   7
      2.3.  Load Balancing: Identification of application for better
            load balancing without solely relying on inspection
-           techniques  . . . . . . . . . . . . . . . . . . . . . . .   8
+           techniques  . . . . . . . . . . . . . . . . . . . . . . .   7
        2.3.1.  Description of Problem  . . . . . . . . . . . . . . .   8
        2.3.2.  Proposed Solution . . . . . . . . . . . . . . . . . .   8
        2.3.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .   8
@@ -106,14 +98,6 @@ Table of Contents
                characteristics . . . . . . . . . . . . . . . . . . .   8
        2.3.7.  Feedback provided by network  . . . . . . . . . . . .   8
        2.3.8.  Security and Privacy Considerations . . . . . . . . .   8
-
-
-
-Eckel & Reddy            Expires August 18, 2014                [Page 2]
-
-Internet-Draft               AEON Use Cases                February 2014
-
-
      2.4.  Scavenger class: Creation of a scavenger class. Use
            metadata to shift high-bandwidth, low priority traffic to
            off-peak hours  . . . . . . . . . . . . . . . . . . . . .   8
@@ -122,27 +106,35 @@ Internet-Draft               AEON Use Cases                February 2014
        2.4.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .   8
        2.4.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .   8
        2.4.5.  Flow characteristics provided by application  . . . .   8
+
+
+
+Eckel & Reddy            Expires August 18, 2014                [Page 2]
+
+Internet-Draft               AEON Use Cases                February 2014
+
+
        2.4.6.  Action taken by network as result of receiving flow
-               characteristics . . . . . . . . . . . . . . . . . . .   9
-       2.4.7.  Feedback provided by network  . . . . . . . . . . . .   9
-       2.4.8.  Security and Privacy Considerations . . . . . . . . .   9
+               characteristics . . . . . . . . . . . . . . . . . . .   8
+       2.4.7.  Feedback provided by network  . . . . . . . . . . . .   8
+       2.4.8.  Security and Privacy Considerations . . . . . . . . .   8
      2.5.  Video Adaptation: Use client metadata to help video bit
-           rate selection  . . . . . . . . . . . . . . . . . . . . .   9
+           rate selection  . . . . . . . . . . . . . . . . . . . . .   8
        2.5.1.  Description of Problem  . . . . . . . . . . . . . . .   9
-       2.5.2.  Proposed Solution . . . . . . . . . . . . . . . . . .  10
+       2.5.2.  Proposed Solution . . . . . . . . . . . . . . . . . .   9
        2.5.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .  10
        2.5.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .  10
        2.5.5.  Flow characteristics provided by application  . . . .  10
        2.5.6.  Action taken by network as result of receiving flow
                characteristics . . . . . . . . . . . . . . . . . . .  10
        2.5.7.  Feedback provided by network  . . . . . . . . . . . .  10
-       2.5.8.  Security and Privacy Considerations . . . . . . . . .  11
+       2.5.8.  Security and Privacy Considerations . . . . . . . . .  10
      2.6.  Mobile Host/App Metadata: Use metadata for
-           troubleshooting and network planning  . . . . . . . . . .  11
-       2.6.1.  Description of Problem  . . . . . . . . . . . . . . .  11
-       2.6.2.  Proposed Solution . . . . . . . . . . . . . . . . . .  11
-       2.6.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .  11
-       2.6.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .  11
+           troubleshooting and network planning  . . . . . . . . . .  10
+       2.6.1.  Description of Problem  . . . . . . . . . . . . . . .  10
+       2.6.2.  Proposed Solution . . . . . . . . . . . . . . . . . .  10
+       2.6.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .  10
+       2.6.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .  10
        2.6.5.  Flow characteristics provided by application  . . . .  11
        2.6.6.  Action taken by network as result of receiving flow
                characteristics . . . . . . . . . . . . . . . . . . .  11
@@ -153,8 +145,8 @@ Internet-Draft               AEON Use Cases                February 2014
        2.7.1.  Description of Problem  . . . . . . . . . . . . . . .  11
        2.7.2.  Proposed Solution . . . . . . . . . . . . . . . . . .  11
        2.7.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .  11
-       2.7.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .  12
-       2.7.5.  Flow characteristics provided by application  . . . .  12
+       2.7.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .  11
+       2.7.5.  Flow characteristics provided by application  . . . .  11
        2.7.6.  Action taken by network as result of receiving flow
                characteristics . . . . . . . . . . . . . . . . . . .  12
        2.7.7.  Feedback provided by network  . . . . . . . . . . . .  12
@@ -162,6 +154,14 @@ Internet-Draft               AEON Use Cases                February 2014
      2.8.  Session Identification: Identification of multiple media
            flows belonging to a common application session . . . . .  12
        2.8.1.  Description of Problem  . . . . . . . . . . . . . . .  12
+       2.8.2.  Proposed Solution . . . . . . . . . . . . . . . . . .  12
+       2.8.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .  13
+       2.8.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .  13
+       2.8.5.  Flow characteristics provided by application  . . . .  13
+       2.8.6.  Action taken by network as result of receiving flow
+               characteristics . . . . . . . . . . . . . . . . . . .  13
+       2.8.7.  Feedback provided by network  . . . . . . . . . . . .  13
+       2.8.8.  Security and Privacy Considerations . . . . . . . . .  13
 
 
 
@@ -170,16 +170,8 @@ Eckel & Reddy            Expires August 18, 2014                [Page 3]
 Internet-Draft               AEON Use Cases                February 2014
 
 
-       2.8.2.  Proposed Solution . . . . . . . . . . . . . . . . . .  13
-       2.8.3.  User Benefit  . . . . . . . . . . . . . . . . . . . .  13
-       2.8.4.  Operator Benefit  . . . . . . . . . . . . . . . . . .  13
-       2.8.5.  Flow characteristics provided by application  . . . .  13
-       2.8.6.  Action taken by network as result of receiving flow
-               characteristics . . . . . . . . . . . . . . . . . . .  13
-       2.8.7.  Feedback provided by network  . . . . . . . . . . . .  13
-       2.8.8.  Security and Privacy Considerations . . . . . . . . .  14
-   3.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  14
-   4.  Informative References  . . . . . . . . . . . . . . . . . . .  14
+   3.  Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  13
+   4.  Informative References  . . . . . . . . . . . . . . . . . . .  13
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  14
 
 1.  Introduction
@@ -218,15 +210,6 @@ Internet-Draft               AEON Use Cases                February 2014
    1.  Traffic Prioritization: Consistent experience of video
        conferencing with competing traffic.
 
-
-
-
-Eckel & Reddy            Expires August 18, 2014                [Page 4]
-
-Internet-Draft               AEON Use Cases                February 2014
-
-
-
    2.  Firewall Traversal: Identification of new applications.
 
    3.  Load Balancing: Identification of application for better load
@@ -235,6 +218,14 @@ Internet-Draft               AEON Use Cases                February 2014
    4.  Scavenger class: Creation of a scavenger class.  Use metadata to
        shift high-bandwidth, low priority traffic to off-peak hours.
        TODO: That drifts from a use-case to a solution ("use metadata to
+
+
+
+Eckel & Reddy            Expires August 18, 2014                [Page 4]
+
+Internet-Draft               AEON Use Cases                February 2014
+
+
        ...").  Also, it appears to mix two things: (a) scavenger class
        and (b) time-shifting traffic.  This is confusing.
 
@@ -274,6 +265,15 @@ Internet-Draft               AEON Use Cases                February 2014
 
 2.1.1.  Description of Problem
 
+2.1.2.  Proposed Solution
+
+2.1.3.  User Benefit
+
+2.1.4.  Operator Benefit
+
+
+
+
 
 
 
@@ -281,13 +281,6 @@ Eckel & Reddy            Expires August 18, 2014                [Page 5]
 
 Internet-Draft               AEON Use Cases                February 2014
 
-
-
-2.1.2.  Proposed Solution
-
-2.1.3.  User Benefit
-
-2.1.4.  Operator Benefit
 
 2.1.5.  Flow characteristics provided by application
 
@@ -325,8 +318,15 @@ Internet-Draft               AEON Use Cases                February 2014
    block new applications like WebRTC and delay deployment of killer
    applications.
 
+2.2.2.  Proposed Solution
 
-
+   The above problems can be addressed by the host getting authorization
+   from the Application Server trusted by the network in order to
+   install flows and associated actions (e.g., policies).  PCP third
+   party authorization (draft-wing-pcp-third-party-authz-01) solves this
+   problem by associating the media session with the signaling session.
+   This is done by sending a cryptographic token in the signaling which
+   authorizes the firewall mapping for the media session.
 
 
 
@@ -337,17 +337,6 @@ Eckel & Reddy            Expires August 18, 2014                [Page 6]
 
 Internet-Draft               AEON Use Cases                February 2014
 
-
-
-2.2.2.  Proposed Solution
-
-   The above problems can be addressed by the host getting authorization
-   from the Application Server trusted by the network in order to
-   install flows and associated actions (e.g., policies).  PCP third
-   party authorization (draft-wing-pcp-third-party-authz-01) solves this
-   problem by associating the media session with the signaling session.
-   This is done by sending a cryptographic token in the signaling which
-   authorizes the firewall mapping for the media session.
 
 2.2.3.  User Benefit
 
@@ -382,6 +371,17 @@ Internet-Draft               AEON Use Cases                February 2014
 
 2.2.7.  Feedback provided by firewall
 
+   Firewall matches the authorization data with what is requested in the
+   request sent by the client.  If the authorization sets match, the
+   firewall processes the request made by the client.  If the token is
+   invalid or the request exceeds what is authorized by the token then
+   firewall rejects the request.
+
+2.2.8.  Security and Privacy Considerations
+
+2.3.  Load Balancing: Identification of application for better load
+      balancing without solely relying on inspection techniques
+
 
 
 
@@ -393,18 +393,6 @@ Eckel & Reddy            Expires August 18, 2014                [Page 7]
 
 Internet-Draft               AEON Use Cases                February 2014
 
-
-
-   Firewall matches the authorization data with what is requested in the
-   request sent by the client.  If the authorization sets match, the
-   firewall processes the request made by the client.  If the token is
-   invalid or the request exceeds what is authorized by the token then
-   firewall rejects the request.
-
-2.2.8.  Security and Privacy Considerations
-
-2.3.  Load Balancing: Identification of application for better load
-      balancing without solely relying on inspection techniques
 
 2.3.1.  Description of Problem
 
@@ -436,21 +424,6 @@ Internet-Draft               AEON Use Cases                February 2014
 
 2.4.5.  Flow characteristics provided by application
 
-
-
-
-
-
-
-
-
-
-Eckel & Reddy            Expires August 18, 2014                [Page 8]
-
-Internet-Draft               AEON Use Cases                February 2014
-
-
-
 2.4.6.  Action taken by network as result of receiving flow
         characteristics
 
@@ -467,6 +440,15 @@ Internet-Draft               AEON Use Cases                February 2014
    HAS client first requests and receives a Manifest File, and then,
    after parsing the information in the Manifest File, proceeds with
    sequentially requesting the chunks listed in the Manifest File.
+
+
+
+
+
+Eckel & Reddy            Expires August 18, 2014                [Page 8]
+
+Internet-Draft               AEON Use Cases                February 2014
+
 
 2.5.1.  Description of Problem
 
@@ -497,16 +479,6 @@ Internet-Draft               AEON Use Cases                February 2014
           also no way to differentiate content which could be available
           in different bitrates.
 
-
-
-
-
-Eckel & Reddy            Expires August 18, 2014                [Page 9]
-
-Internet-Draft               AEON Use Cases                February 2014
-
-
-
       2.  If HAS client is behind NAT and content provider uses RESTful
           API (OneAPI) to install differentiated QoS then ISP will
           struggle to find the pre-NAT information.  Content provider
@@ -526,6 +498,13 @@ Internet-Draft               AEON Use Cases                February 2014
    cryptographic token from the authorizing network element, then
    including that token in the request along with relevant flow
    characteristics.  ISP validates the token and grants the request.
+
+
+
+Eckel & Reddy            Expires August 18, 2014                [Page 9]
+
+Internet-Draft               AEON Use Cases                February 2014
+
 
 2.5.3.  User Benefit
 
@@ -554,15 +533,6 @@ Internet-Draft               AEON Use Cases                February 2014
 
 2.5.7.  Feedback provided by network
 
-
-
-
-Eckel & Reddy            Expires August 18, 2014               [Page 10]
-
-Internet-Draft               AEON Use Cases                February 2014
-
-
-
    The network responds that the client request can be fully or
    partially accommodated.  It also notifies the client when conditions
    change.
@@ -579,6 +549,18 @@ Internet-Draft               AEON Use Cases                February 2014
 2.6.3.  User Benefit
 
 2.6.4.  Operator Benefit
+
+
+
+
+
+
+
+
+Eckel & Reddy            Expires August 18, 2014               [Page 10]
+
+Internet-Draft               AEON Use Cases                February 2014
+
 
 2.6.5.  Flow characteristics provided by application
 
@@ -609,16 +591,6 @@ Internet-Draft               AEON Use Cases                February 2014
 
 2.7.3.  User Benefit
 
-
-
-
-
-Eckel & Reddy            Expires August 18, 2014               [Page 11]
-
-Internet-Draft               AEON Use Cases                February 2014
-
-
-
    Applications can choose the best interface for communication using
    AEON.
 
@@ -638,6 +610,14 @@ Internet-Draft               AEON Use Cases                February 2014
    first to communicate with the server or remote peer.  For example
    draft-reddy-mmusic-ice-best-interface-pcp-00 explains the mechanism
    where Interactive Connectivity Establishment (ICE) agent on a host
+
+
+
+Eckel & Reddy            Expires August 18, 2014               [Page 11]
+
+Internet-Draft               AEON Use Cases                February 2014
+
+
    with multiple interfaces uses AEON to determine the link
    characteristics of the host's interfaces, which influences the ICE
    candidate priority.  Similarly draft-wing-mptcp-pcp-00 explains how
@@ -667,14 +647,6 @@ Internet-Draft               AEON Use Cases                February 2014
    session is often difficult, making it hard to provide application
    level troubleshooting, traffic analysis, and QoS.
 
-
-
-Eckel & Reddy            Expires August 18, 2014               [Page 12]
-
-Internet-Draft               AEON Use Cases                February 2014
-
-
-
 2.8.2.  Proposed Solution
 
    Including a session identify (e.g. as defined in
@@ -693,6 +665,15 @@ Internet-Draft               AEON Use Cases                February 2014
       when there is some form of multi-level preemption).  Giving more
       bandwidth to additional flows on established sessions might cause
       some newer sessions to fail due to resource unavailability while
+
+
+
+
+Eckel & Reddy            Expires August 18, 2014               [Page 12]
+
+Internet-Draft               AEON Use Cases                February 2014
+
+
       established sessions continue without degradation, which is the
       preferred outcome in most cases.
 
@@ -722,15 +703,6 @@ Internet-Draft               AEON Use Cases                February 2014
 
 2.8.7.  Feedback provided by network
 
-
-
-
-Eckel & Reddy            Expires August 18, 2014               [Page 13]
-
-Internet-Draft               AEON Use Cases                February 2014
-
-
-
    The network may provide feedback to the application indicating the
    amount of bandwidth it expects to be able to provide for its session.
    It may also be provide indications of the expected amount of delay,
@@ -750,6 +722,13 @@ Internet-Draft               AEON Use Cases                February 2014
               Framework for Signaling Flow Characteristics between
               Applications and the Network", draft-eckert-intarea-flow-
               metadata-framework-02 (work in progress), October 2013.
+
+
+
+Eckel & Reddy            Expires August 18, 2014               [Page 13]
+
+Internet-Draft               AEON Use Cases                February 2014
+
 
    [I-D.ietf-insipid-session-id-reqts]
               Jones, P., Salgueiro, G., Polk, J., Liess, L., and H.
@@ -777,6 +756,27 @@ Authors' Addresses
    India
 
    Email: tireddy@cisco.com
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -12,6 +12,28 @@
 	  a {
 	  text-decoration: none;
 	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
 	  a.smpl {
 	  color: black;
 	  }
@@ -324,7 +346,7 @@
 		   content: "December 2010"; 
 	  } 
 	  @top-center {
-		   content: "Abbreviated Title";3
+		   content: "Abbreviated Title";
 	  } 
 	  @bottom-left {
 		   content: "Doe"; 
@@ -402,7 +424,7 @@
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.4.2 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.4.5 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Penno, R., Ed., Martinsen, P., Wing, D., and A. Zamfir" />
@@ -668,7 +690,6 @@
      STUN request + {MDlr(i)} + flag ----&gt;   \  L's
               &lt;----- STUN response           /  check
                      + {MDlr(i)}</pre>
-<p class="figure"></p>
 <p id="rfc.section.3.5.p.2">Notations:</p>
 <p id="rfc.section.3.5.p.3">L is the controlling agent.</p>
 <p id="rfc.section.3.5.p.4">{MDrl(i)} is the set of metadata attributes sent from R to L in the request. In the (2nd, 3rd,..) response back they will also include the result. Similar notation for the checks in the other direction.</p>
@@ -1025,7 +1046,6 @@
      0x0C04: MD-RESP-DN
      0x0C05: MD-PEER-CHECK
       </pre>
-<p class="figure"></p>
 <h1 id="rfc.section.9.1.1"><a href="#rfc.section.9.1.1">9.1.1.</a> MD-AGENT Attribute</h1>
 <p id="rfc.section.9.1.1.p.1">Metadata attributes are encoded in sub-TLV format with each sub-TLV corresponding to an information element or metadata. Section 10.3 describes in detail the information elements that can be included in the MD-AGENT attribute. When parsing the STUN request and response, the MD-AGENT STUN attribute Length should be used to identify the location of next STUN attribute.</p>
 <div id="rfc.figure.1"/>
@@ -1224,7 +1244,7 @@
       <td class="reference">
         <b id="RFC4732">[RFC4732]</b>
       </td>
-      <td class="top"><a>Handley, M.</a>, <a>Rescorla, E.</a>, <a>IAB</a>, "<a href="http://tools.ietf.org/html/rfc4732">Internet Denial-of-Service Considerations</a>", RFC 4732, December 2006.</td>
+      <td class="top"><a>Handley, M.</a>, <a>Rescorla, E.</a> and <a>IAB</a>, "<a href="http://tools.ietf.org/html/rfc4732">Internet Denial-of-Service Considerations</a>", RFC 4732, December 2006.</td>
     </tr>
     <tr>
       <td class="reference">
@@ -1276,7 +1296,7 @@
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>170 West Tasman Drive</span>
+	  <span class="vcardline">170 West Tasman Drive</span>
 
 	  <span class="vcardline">
 		<span class="locality">San Jose</span>,  
@@ -1298,7 +1318,7 @@
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>Philip Pedersens vei 20</span>
+	  <span class="vcardline">Philip Pedersens vei 20</span>
 
 	  <span class="vcardline">
 		<span class="locality">Lysaker</span>,  
@@ -1320,7 +1340,7 @@
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>170 West Tasman Drive</span>
+	  <span class="vcardline">170 West Tasman Drive</span>
 
 	  <span class="vcardline">
 		<span class="locality">San Jose</span>,  
@@ -1342,7 +1362,7 @@
 	</span>
 	<span class="org vcardline">Cisco Systems, Inc.</span>
 	<span class="adr">
-	  <span>EPFL, Quartier de l'Innovation</span>
+	  <span class="vcardline">EPFL, Quartier de l'Innovation</span>
 
 	  <span class="vcardline">
 		<span class="locality">Ecublens</span>,  
