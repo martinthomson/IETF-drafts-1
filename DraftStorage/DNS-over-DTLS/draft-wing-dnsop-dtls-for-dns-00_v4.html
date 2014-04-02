@@ -1,0 +1,744 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>DNS over DTLS</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Terminology"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Usage"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Polling"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 In Band Signaling"/>
+<link href="#rfc.section.5.1" rel="Chapter" title="5.1 Use by  DNS clients"/>
+<link href="#rfc.section.5.1.1" rel="Chapter" title="5.1.1 Sending Queries"/>
+<link href="#rfc.section.5.1.2" rel="Chapter" title="5.1.2 Receiving Responses"/>
+<link href="#rfc.section.5.2" rel="Chapter" title="5.2 Use by DNS Servers"/>
+<link href="#rfc.section.5.2.1" rel="Chapter" title="5.2.1 Receving Queries"/>
+<link href="#rfc.section.5.2.2" rel="Chapter" title="5.2.2 Sending Responses"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Established sessions"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 Security Considerations"/>
+<link href="#rfc.section.9" rel="Chapter" title="9 Acknowledgements"/>
+<link href="#rfc.references" rel="Chapter" title="10 References"/>
+<link href="#rfc.references.1" rel="Chapter" title="10.1 Normative References"/>
+<link href="#rfc.references.2" rel="Chapter" title="10.2 Informative References"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.4.5 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Reddy, T., Wing, D., and P. Patil" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-wing-dnsop-dtls-over-dns-00" />
+  <meta name="dct.issued" scheme="ISO8601" content="2014-3-31" />
+  <meta name="dct.abstract" content="This document proposes the use of Datagram Transport Layer Security (DTLS) for DNS. Encryption provided by DTLS eliminates opportunities for eavesdropping of DNS messages. The proposed mechanism is backward compatible with clients and servers that do not support DNS over DTLS." />
+  <meta name="description" content="This document proposes the use of Datagram Transport Layer Security (DTLS) for DNS. Encryption provided by DTLS eliminates opportunities for eavesdropping of DNS messages. The proposed mechanism is backward compatible with clients and servers that do not support DNS over DTLS." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">Network Working Group</td>
+  <td class="right">T. Reddy</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">D. Wing</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Standards Track</td>
+  <td class="right">P. Patil</td>
+</tr>
+<tr>
+  <td class="left">Expires: October 2, 2014</td>
+  <td class="right">Cisco</td>
+</tr>
+<tr>
+  <td class="left"></td>
+  <td class="right">March 31, 2014</td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">DNS over DTLS<br />
+  <span class="filename">draft-wing-dnsop-dtls-over-dns-00</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>This document proposes the use of Datagram Transport Layer Security (DTLS) for DNS. Encryption provided by DTLS eliminates opportunities for eavesdropping of DNS messages. The proposed mechanism is backward compatible with clients and servers that do not support DNS over DTLS.</p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on October 2, 2014.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2014 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<li>2.   <a href="#rfc.section.2">Terminology</a></li>
+<li>3.   <a href="#rfc.section.3">Usage</a></li>
+<li>4.   <a href="#rfc.section.4">Polling</a></li>
+<li>5.   <a href="#rfc.section.5">In Band Signaling</a></li>
+<li>5.1.   <a href="#rfc.section.5.1">Use by  DNS clients</a></li>
+<li>5.1.1.   <a href="#rfc.section.5.1.1">Sending Queries</a></li>
+<li>5.1.2.   <a href="#rfc.section.5.1.2">Receiving Responses</a></li>
+<li>5.2.   <a href="#rfc.section.5.2">Use by DNS Servers</a></li>
+<li>5.2.1.   <a href="#rfc.section.5.2.1">Receving Queries</a></li>
+<li>5.2.2.   <a href="#rfc.section.5.2.2">Sending Responses</a></li>
+<li>6.   <a href="#rfc.section.6">Established sessions</a></li>
+<li>7.   <a href="#rfc.section.7">IANA Considerations</a></li>
+<li>8.   <a href="#rfc.section.8">Security Considerations</a></li>
+<li>9.   <a href="#rfc.section.9">Acknowledgements</a></li>
+<li>10.   <a href="#rfc.references">References</a></li>
+<li>10.1.   <a href="#rfc.references.1">Normative References</a></li>
+<li>10.2.   <a href="#rfc.references.2">Informative References</a></li>
+<li><a href="#rfc.authors">Authors' Addresses</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#introduction" id="introduction">Introduction</a></h1>
+<p id="rfc.section.1.p.1">The Domain Name System is specified in <a href="#RFC1034">[RFC1034]</a> and <a href="#RFC1035">[RFC1035]</a>. DNS messages, when exchanged unencrypted, are vulnerable to eavesdropping on the network channel. Such eavesdropping can result in an undesired entity learning domains that a host wishes to access, thus resulting in privacy leakage. DNS privacy problem is further discussed in <a href="#I-D.bortzmeyer-dnsop-dns-privacy">[I-D.bortzmeyer-dnsop-dns-privacy]</a>.</p>
+<p id="rfc.section.1.p.2">The mechanism described in this document provides a means for confidential DNS communication for stub resolvers, recursive resolvers, iterative resolvers and authoritative servers. The document only defines protocol extensions necessary to support DTLS negotiation. Since clients identify DNS servers by IP addresses, DNS servers have to acquire certificates for IP addresses instead of the usual way of acquiring certificates for domain/subject names. Unless a DNS server does this or a DNS client is configured to trust specific certificates, a DNS client may not be able to validate certificates. The docuement, thus, does not describe how DNS clients might validate server certificates or specify trusted certificate authorities. The DNS client MAY, in such cases, perform opportunistic encryption.</p>
+<p id="rfc.section.1.p.3">DNS Security Extensions (DNSSEC, <a href="#RFC4033">[RFC4033]</a>) provides response integrity by defining mechanisms to cryptographically sign zones, allowing end-users (or their first-hop resolver) to verify replies are correct. DNSSEC however does nothing to ensure DNS request or response privacy. Authenticity and integrity may be provided by DNSSEC, DNS over DTLS does not change DNSSEC and does not offer the means to authenticate responses. DNS over DTLS, however, does not preclude the use of DNSSEC. Since, in some cases, encryption is opportunistic with the use of DNS over DTLS, a DNS client may opt for DNSSEC for security reasons.</p>
+<p id="rfc.section.1.p.4">DNS over DTLS can run over standard UDP port 53 (decimal) as defined in <a href="#RFC1035">[RFC1035]</a>.</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#term" id="term">Terminology</a></h1>
+<p id="rfc.section.2.p.1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in <a href="#RFC2119">[RFC2119]</a>.</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#problem_stmt" id="problem_stmt">Usage</a></h1>
+<p/>
+
+<ol style="list-style-type: lower-alpha">
+  <li>Incremental <ol><li>DNS forwarder uses DNS over DTLS to communicate with ISP DNS resolver and thus offers confidentiality in the last mile even if the stub resolver does not support DNS over DTLS.</li><li>If a DNS resolver in an ISP does not support DNS over DTLS, the DNS forwarder or stub resolver can be configured to send DNS queries to DNS resolvers offered by public DNS servers.</li></ol></li>
+</ol>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> Polling</h1>
+<p id="rfc.section.4.p.1">[Note - This section requires further discussion]</p>
+<p id="rfc.section.4.p.2">In this mechanism, a host, after joining a network, determines if a DNS server supports DNS over DTLS by attempting to establish DTLS over UDP port 53 (decimal). A DNS server that does not support DNS will not respond to ClientHello messages sent by the client. The client MUST use timer values defined in 4.2.4.1 of <a href="#RFC6347">[RFC6347]</a> for retransmission of ClientHello message and if no response is received from the DNS server then give up sending ClientHello after 15 seconds.  The client may periodically probe and find if the DNS server has been upgraded to support DNS over DTLS. This mechnism requires no additional signaling between the client and server. </p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#protocol" id="protocol">In Band Signaling</a></h1>
+<p id="rfc.section.5.p.1">An alternate mechanism is to signal support for DTLS in band.</p>
+<p id="rfc.section.5.p.2">Clients and servers indicate their support for, and desire to use, DNS over DTLS by setting a bit in the Flags field of the EDNS0 <a href="#RFC6891">[RFC6891]</a> OPT meta-RR. The "DTLS OK" (SO) bit is defined as the third bit of the third and fourth bytes of the "extended RCODE and flags" portion of the EDNS0 OPT meta-RR, immediately adjacent to the "TLS OK" (TO) bit <a href="#I-D.hzhwm-start-tls-for-dns">[I-D.hzhwm-start-tls-for-dns]</a>.</p>
+<pre>                       +0 (MSB)                +1 (LSB)
+              +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+           0: |   EXTENDED-RCODE      |       VERSION         |
+              +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+           2: |DO|TO|SO|               Z                      |
+              +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+
+</pre>
+<p class="figure">OPT pseudo-RR</p>
+<p/>
+<h1 id="rfc.section.5.1"><a href="#rfc.section.5.1">5.1.</a> Use by  DNS clients</h1>
+<h1 id="rfc.section.5.1.1"><a href="#rfc.section.5.1.1">5.1.1.</a> Sending Queries</h1>
+<p id="rfc.section.5.1.1.p.1">DNS clients MAY set the SO bit in queries sent using UDP transport to signal their general ability to support DNS over DTLS.  [For discussion: is this a bad idea because ignorant middleboxes might drop the SO=1 UDP queries?]</p>
+<p id="rfc.section.5.1.1.p.2">DNS clients MAY set the SO bit in the initial query sent to a server using UDP transport to signal their desire that the UDP connection be upgraded to DTLS. DNS clients MUST NOT set the SO bit on subsequent queries when already using DNS over DTLS.</p>
+<p id="rfc.section.5.1.1.p.3">Since the motivation for DNS over DTLS is to preserve privacy, DNS clients SHOULD use a query that reveals no private information in the initial SO=1 query to a server. To provide a standard "dummy" query, it is RECOMMENDED to send the initial query with RD=0, QNAME="STARTDTLS", QCLASS=CH, and QTYPE=TXT ("STARTDTLS/CH/TXT") analogous to administrative queries already in widespread use <a href="#RFC4892">[RFC4892]</a>.</p>
+<p id="rfc.section.5.1.1.p.4">After sending the initial SO=1 query using UDP transport, DNS clients MUST wait for the initial response before sending any subsequent queries over the same UDP connection.</p>
+<h1 id="rfc.section.5.1.2"><a href="#rfc.section.5.1.2">5.1.2.</a> Receiving Responses</h1>
+<p id="rfc.section.5.1.2.p.1">A DNS client that receives a response using UDP transport that has the SO bit set MUST handle that response as usual. It MAY record the server's support for DNS over DTLS and use that information as part of its server selection algorithm in the case where multiple servers are available to service a particular query. [For discussion: UDP is subject to spoofing and a client which depends on SO=1 in a UDP response may be tricked into never upgrading to DTLS.]</p>
+<p id="rfc.section.5.1.2.p.2">A DNS client that receives a response to its initial query using UDP transport that has the SO bit set MUST immediately initiate a DTLS handshake using the procedure described in <a href="#RFC6347">[RFC6347]</a>.</p>
+<p id="rfc.section.5.1.2.p.3">A DNS client that receives a response to its initial query using UDP transport that has the SO bit clear MUST not initiate a DTLS handshake and SHOULD utilize the existing UDP connection for subsequent queries. DNS clients SHOULD remember server IP addresses that don't support DNS over DTLS and SHOULD NOT request DNS over DTLS from them for reasonable period. (We suggest 1 hour, or when the client discovers a new resolver)</p>
+<h1 id="rfc.section.5.2"><a href="#rfc.section.5.2">5.2.</a> Use by DNS Servers</h1>
+<h1 id="rfc.section.5.2.1"><a href="#rfc.section.5.2.1">5.2.1.</a> Receving Queries</h1>
+<p id="rfc.section.5.2.1.p.1">A DNS server receiving a query over TCP MUST ignore the SO bit.</p>
+<p id="rfc.section.5.2.1.p.2">A DNS server receiving a query over an existing DTLS session MUST ignore the SO bit.</p>
+<p id="rfc.section.5.2.1.p.3">A DNS server receiving an initial query over UDP that has the SO bit set MAY inform the client it is willing to establish a DTLS session, as described in the next section.</p>
+<p id="rfc.section.5.2.1.p.4">A DNS server receiving subsequent queries over a DTLS session MUST ignore the SO bit.</p>
+<h1 id="rfc.section.5.2.2"><a href="#rfc.section.5.2.2">5.2.2.</a> Sending Responses</h1>
+<p id="rfc.section.5.2.2.p.1">A DNS server sending a response over UDP SHOULD set the SO bit to indicate its general support for DNS over DTLS, as long as it is willing and able to support a DTLS connection with the particular client. A DNS server receiving an initial query over UDP that has the SO bit set MAY set the TO bit in its response. The server MUST then proceed with the DTLS handshake protocol. A DNS server receiving a "dummy" STARTDTLS/CH/TXT query over UDP MUST respond with RCODE=0 and a TXT RR in the Answer section. Contents of the TXT RR are strictly informative (for humans) and MUST NOT be interpreted by the client software. Recommended TXT RDATA values are "STARTDTLS" or "NO_DTLS".</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#DTLS" id="DTLS">Established sessions</a></h1>
+<p id="rfc.section.6.p.1">In DTLS, all data is protected using the same record encoding and mechanisms. When the mechanism described in this document is in effect, DNS messages are encrypted using the standard DTLS record encoding. When a user of DTLS wishes to send an DNS message, it delivers it to the DTLS implementation as an ordinary application data write (e.g., SSL_write()). A single DTLS session can be used to receive multiple DNS requests and generate DNS multiple responses.</p>
+<pre>
+   Client                                          Server
+   ------                                          ------
+
+   ClientHello             --------&gt;  
+                         
+
+                           &lt;-------    HelloVerifyRequest  
+                                         (contains cookie)    
+
+   ClientHello             --------&gt;     
+   (contains cookie)                      
+   (empty SessionTicket extension)
+                                              ServerHello  
+                                       (empty SessionTicket extension)  
+                                             Certificate*    
+                                       ServerKeyExchange*      
+                                      CertificateRequest*     
+                           &lt;--------      ServerHelloDone    
+
+   Certificate*                                             
+   ClientKeyExchange                                          
+   CertificateVerify*                                          
+   [ChangeCipherSpec]                                         
+   Finished                --------&gt;                         
+                                         NewSessionTicket
+                                       [ChangeCipherSpec]    
+                           &lt;--------             Finished    
+
+  
+   DNS Request             ---------&gt;
+
+                           &lt;---------  DNS Response
+
+</pre>
+<p class="figure">Message Flow for Full Handshake Issuing New Session Ticket</p>
+<p/>
+<p id="rfc.section.6.p.3">After DTLS negotiation completes, the connection will be encrypted and is now protected from eavesdropping and normal DNS queries SHOULD take place. To avoid storing state on the DNS server and to reduce DTLS round-trips for another query, it is strongly RECOMMENDED both client and server support <a href="#RFC5077">[RFC5077]</a>.</p>
+<pre>
+   Client                                          Server
+   ------                                          ------
+
+   ClientHello
+   (SessionTicket extension) --------&gt;
+                                             ServerHello
+                          (empty SessionTicket extension)
+                                        NewSessionTicket
+                                      [ChangeCipherSpec]
+                             &lt;--------          Finished
+   [ChangeCipherSpec]
+   Finished                  --------&gt;
+
+   DNS Request             ---------&gt;
+
+                           &lt;---------  DNS Response
+
+</pre>
+<p class="figure">Message Flow for Abbreviated Handshake Using New Session Ticket</p>
+<p/>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> IANA Considerations</h1>
+<p id="rfc.section.7.p.1">This document defines a new bit ("SO") in the Flags field of the EDNS0 OPT meta-RR. At the time of approval of this draft in the standards track, as per the IANA Considerations of <a href="#RFC6891">[RFC6891]</a>, IANA is requested to reserve the third leftmost bit of the flags as the SO bit, immediately adjacent to the DNSSEC SO bit, as shown in <a href="#protocol">Section 5</a>.</p>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#security" id="security">Security Considerations</a></h1>
+<p id="rfc.section.8.p.1">Security considerations discussed in <a href="#RFC6347">[RFC6347]</a> apply to this document.</p>
+<h1 id="rfc.section.9"><a href="#rfc.section.9">9.</a> <a href="#ack" id="ack">Acknowledgements</a></h1>
+<p id="rfc.section.9.p.1">The Protocol changes described in <a href="#protocol">Section 5</a> of this document was derived from the similar technique described in DNS-over-TLS <a href="#I-D.hzhwm-start-tls-for-dns">[I-D.hzhwm-start-tls-for-dns]</a>.</p>
+<h1 id="rfc.references"><a href="#rfc.references">10.</a> References</h1>
+<h1 id="rfc.references.1"><a href="#rfc.references.1">10.1.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC1034">[RFC1034]</b>
+      </td>
+      <td class="top"><a title="Information Sciences Institute (ISI)">Mockapetris, P.</a>, "<a href="http://tools.ietf.org/html/rfc1034">Domain names - concepts and facilities</a>", STD 13, RFC 1034, November 1987.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC1035">[RFC1035]</b>
+      </td>
+      <td class="top"><a title="USC/ISI">Mockapetris, P.</a>, "<a href="http://tools.ietf.org/html/rfc1035">Domain names - implementation and specification</a>", STD 13, RFC 1035, November 1987.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC2119">[RFC2119]</b>
+      </td>
+      <td class="top"><a href="mailto:sob@harvard.edu" title="Harvard University">Bradner, S.</a>, "<a href="http://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>", BCP 14, RFC 2119, March 1997.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4033">[RFC4033]</b>
+      </td>
+      <td class="top"><a>Arends, R.</a>, <a>Austein, R.</a>, <a>Larson, M.</a>, <a>Massey, D.</a> and <a>S. Rose</a>, "<a href="http://tools.ietf.org/html/rfc4033">DNS Security Introduction and Requirements</a>", RFC 4033, March 2005.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC5077">[RFC5077]</b>
+      </td>
+      <td class="top"><a>Salowey, J.</a>, <a>Zhou, H.</a>, <a>Eronen, P.</a> and <a>H. Tschofenig</a>, "<a href="http://tools.ietf.org/html/rfc5077">Transport Layer Security (TLS) Session Resumption without Server-Side State</a>", RFC 5077, January 2008.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6347">[RFC6347]</b>
+      </td>
+      <td class="top"><a>Rescorla, E.</a> and <a>N. Modadugu</a>, "<a href="http://tools.ietf.org/html/rfc6347">Datagram Transport Layer Security Version 1.2</a>", RFC 6347, January 2012.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC6891">[RFC6891]</b>
+      </td>
+      <td class="top"><a>Damas, J.</a>, <a>Graff, M.</a> and <a>P. Vixie</a>, "<a href="http://tools.ietf.org/html/rfc6891">Extension Mechanisms for DNS (EDNS(0))</a>", STD 75, RFC 6891, April 2013.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.references.2"><a href="#rfc.references.2">10.2.</a> Informative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="I-D.bortzmeyer-dnsop-dns-privacy">[I-D.bortzmeyer-dnsop-dns-privacy]</b>
+      </td>
+      <td class="top"><a>Bortzmeyer, S.</a>, "<a href="http://tools.ietf.org/html/draft-bortzmeyer-dnsop-dns-privacy-01">DNS privacy problem statement</a>", Internet-Draft draft-bortzmeyer-dnsop-dns-privacy-01, December 2013.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="I-D.hzhwm-start-tls-for-dns">[I-D.hzhwm-start-tls-for-dns]</b>
+      </td>
+      <td class="top"><a>Zi, Z.</a>, <a>Zhu, L.</a>, <a>Heidemann, J.</a>, <a>Mankin, A.</a> and <a>D. Wessels</a>, "<a href="http://tools.ietf.org/html/draft-hzhwm-start-tls-for-dns-00">Starting TLS over DNS</a>", Internet-Draft draft-hzhwm-start-tls-for-dns-00, February 2014.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4892">[RFC4892]</b>
+      </td>
+      <td class="top"><a>Woolf, S.</a> and <a>D. Conrad</a>, "<a href="http://tools.ietf.org/html/rfc4892">Requirements for a Mechanism Identifying a Name Server Instance</a>", RFC 4892, June 2007.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Authors' Addresses</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Tirumaleswar Reddy</span> 
+	  <span class="n hidden">
+		<span class="family-name">Reddy</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span class="vcardline">Cessna Business Park, Varthur Hobli</span>
+<span class="vcardline">Sarjapur Marathalli Outer Ring Road</span>
+
+	  <span class="vcardline">
+		<span class="locality">Bangalore</span>,  
+		<span class="region">Karnataka</span> 
+		<span class="code">560103</span>
+	  </span>
+	  <span class="country-name vcardline">India</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:tireddy@cisco.com">tireddy@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Dan Wing</span> 
+	  <span class="n hidden">
+		<span class="family-name">Wing</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  <span class="vcardline">170 West Tasman Drive</span>
+
+	  <span class="vcardline">
+		<span class="locality">San Jose</span>,  
+		<span class="region">California</span> 
+		<span class="code">95134</span>
+	  </span>
+	  <span class="country-name vcardline">USA</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:dwing@cisco.com">dwing@cisco.com</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Prashanth Patil</span> 
+	  <span class="n hidden">
+		<span class="family-name">Patil</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Cisco Systems, Inc.</span>
+	<span class="adr">
+	  
+	  <span class="vcardline">
+		<span class="locality">Bangalore</span>,  
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline">India</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:praspati@cisco.com">praspati@cisco.com</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,407 @@
+
+
+
+
+Network Working Group                                           T. Reddy
+Internet-Draft                                                   D. Wing
+Intended status: Standards Track                                P. Patil
+Expires: October 2, 2014                                           Cisco
+                                                          March 31, 2014
+
+
+                             DNS over DTLS
+                   draft-wing-dnsop-dtls-over-dns-00
+
+Abstract
+
+   This document proposes the use of Datagram Transport Layer Security
+   (DTLS) for DNS.  Encryption provided by DTLS eliminates opportunities
+   for eavesdropping of DNS messages.  The proposed mechanism is
+   backward compatible with clients and servers that do not support DNS
+   over DTLS.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on October 2, 2014.
+
+Copyright Notice
+
+   Copyright (c) 2014 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Terminology
+   3.  Usage
+   4.  Polling
+   5.  In Band Signaling
+     5.1.  Use by  DNS clients
+       5.1.1.  Sending Queries
+       5.1.2.  Receiving Responses
+     5.2.  Use by DNS Servers
+       5.2.1.  Receving Queries
+       5.2.2.  Sending Responses
+   6.  Established sessions
+   7.  IANA Considerations
+   8.  Security Considerations
+   9.  Acknowledgements
+   10. References
+     10.1.  Normative References
+     10.2.  Informative References
+   Authors' Addresses
+
+1.  Introduction
+
+   The Domain Name System is specified in [RFC1034] and [RFC1035].  DNS
+   messages, when exchanged unencrypted, are vulnerable to eavesdropping
+   on the network channel.  Such eavesdropping can result in an
+   undesired entity learning domains that a host wishes to access, thus
+   resulting in privacy leakage.  DNS privacy problem is further
+   discussed in [I-D.bortzmeyer-dnsop-dns-privacy].
+
+   The mechanism described in this document provides a means for
+   confidential DNS communication for stub resolvers, recursive
+   resolvers, iterative resolvers and authoritative servers.  The
+   document only defines protocol extensions necessary to support DTLS
+   negotiation.  Since clients identify DNS servers by IP addresses, DNS
+   servers have to acquire certificates for IP addresses instead of the
+   usual way of acquiring certificates for domain/subject names.  Unless
+   a DNS server does this or a DNS client is configured to trust
+   specific certificates, a DNS client may not be able to validate
+   certificates.  The docuement, thus, does not describe how DNS clients
+   might validate server certificates or specify trusted certificate
+   authorities.  The DNS client MAY, in such cases, perform
+   opportunistic encryption.
+
+   DNS Security Extensions (DNSSEC, [RFC4033]) provides response
+   integrity by defining mechanisms to cryptographically sign zones,
+   allowing end-users (or their first-hop resolver) to verify replies
+   are correct.  DNSSEC however does nothing to ensure DNS request or
+   response privacy.  Authenticity and integrity may be provided by
+   DNSSEC, DNS over DTLS does not change DNSSEC and does not offer the
+   means to authenticate responses.  DNS over DTLS, however, does not
+   preclude the use of DNSSEC.  Since, in some cases, encryption is
+   opportunistic with the use of DNS over DTLS, a DNS client may opt for
+   DNSSEC for security reasons.
+
+   DNS over DTLS can run over standard UDP port 53 (decimal) as defined
+   in [RFC1035].
+
+2.  Terminology
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in [RFC2119].
+
+3.  Usage
+
+   a.  Incremental
+
+       1.  DNS forwarder uses DNS over DTLS to communicate with ISP DNS
+           resolver and thus offers confidentiality in the last mile
+           even if the stub resolver does not support DNS over DTLS.
+
+       2.  If a DNS resolver in an ISP does not support DNS over DTLS,
+           the DNS forwarder or stub resolver can be configured to send
+           DNS queries to DNS resolvers offered by public DNS servers.
+
+4.  Polling
+
+   [Note - This section requires further discussion]
+
+   In this mechanism, a host, after joining a network, determines if a
+   DNS server supports DNS over DTLS by attempting to establish DTLS
+   over UDP port 53 (decimal).  A DNS server that does not support DNS
+   will not respond to ClientHello messages sent by the client.  The
+   client MUST use timer values defined in 4.2.4.1 of [RFC6347] for
+   retransmission of ClientHello message and if no response is received
+   from the DNS server then give up sending ClientHello after 15
+   seconds.  The client may periodically probe and find if the DNS
+   server has been upgraded to support DNS over DTLS.  This mechnism
+   requires no additional signaling between the client and server.
+
+5.  In Band Signaling
+
+   An alternate mechanism is to signal support for DTLS in band.
+
+   Clients and servers indicate their support for, and desire to use,
+   DNS over DTLS by setting a bit in the Flags field of the EDNS0
+   [RFC6891] OPT meta-RR.  The "DTLS OK" (SO) bit is defined as the
+   third bit of the third and fourth bytes of the "extended RCODE and
+   flags" portion of the EDNS0 OPT meta-RR, immediately adjacent to the
+   "TLS OK" (TO) bit [I-D.hzhwm-start-tls-for-dns].
+
+                          +0 (MSB)                +1 (LSB)
+                 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+              0: |   EXTENDED-RCODE      |       VERSION         |
+                 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+              2: |DO|TO|SO|               Z                      |
+                 +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+
+
+                               OPT pseudo-RR
+
+5.1.  Use by DNS clients
+
+5.1.1.  Sending Queries
+
+   DNS clients MAY set the SO bit in queries sent using UDP transport to
+   signal their general ability to support DNS over DTLS.  [For
+   discussion: is this a bad idea because ignorant middleboxes might
+   drop the SO=1 UDP queries?]
+
+   DNS clients MAY set the SO bit in the initial query sent to a server
+   using UDP transport to signal their desire that the UDP connection be
+   upgraded to DTLS.  DNS clients MUST NOT set the SO bit on subsequent
+   queries when already using DNS over DTLS.
+
+   Since the motivation for DNS over DTLS is to preserve privacy, DNS
+   clients SHOULD use a query that reveals no private information in the
+   initial SO=1 query to a server.  To provide a standard "dummy" query,
+   it is RECOMMENDED to send the initial query with RD=0,
+   QNAME="STARTDTLS", QCLASS=CH, and QTYPE=TXT ("STARTDTLS/CH/TXT")
+   analogous to administrative queries already in widespread use
+   [RFC4892].
+
+   After sending the initial SO=1 query using UDP transport, DNS clients
+   MUST wait for the initial response before sending any subsequent
+   queries over the same UDP connection.
+
+5.1.2.  Receiving Responses
+
+   A DNS client that receives a response using UDP transport that has
+   the SO bit set MUST handle that response as usual.  It MAY record the
+   server's support for DNS over DTLS and use that information as part
+   of its server selection algorithm in the case where multiple servers
+   are available to service a particular query.  [For discussion: UDP is
+   subject to spoofing and a client which depends on SO=1 in a UDP
+   response may be tricked into never upgrading to DTLS.]
+
+   A DNS client that receives a response to its initial query using UDP
+   transport that has the SO bit set MUST immediately initiate a DTLS
+   handshake using the procedure described in [RFC6347].
+
+   A DNS client that receives a response to its initial query using UDP
+   transport that has the SO bit clear MUST not initiate a DTLS
+   handshake and SHOULD utilize the existing UDP connection for
+   subsequent queries.  DNS clients SHOULD remember server IP addresses
+   that don't support DNS over DTLS and SHOULD NOT request DNS over DTLS
+   from them for reasonable period.  (We suggest 1 hour, or when the
+   client discovers a new resolver)
+
+5.2.  Use by DNS Servers
+
+5.2.1.  Receving Queries
+
+   A DNS server receiving a query over TCP MUST ignore the SO bit.
+
+   A DNS server receiving a query over an existing DTLS session MUST
+   ignore the SO bit.
+
+   A DNS server receiving an initial query over UDP that has the SO bit
+   set MAY inform the client it is willing to establish a DTLS session,
+   as described in the next section.
+
+   A DNS server receiving subsequent queries over a DTLS session MUST
+   ignore the SO bit.
+
+5.2.2.  Sending Responses
+
+   A DNS server sending a response over UDP SHOULD set the SO bit to
+   indicate its general support for DNS over DTLS, as long as it is
+   willing and able to support a DTLS connection with the particular
+   client.  A DNS server receiving an initial query over UDP that has
+   the SO bit set MAY set the TO bit in its response.  The server MUST
+   then proceed with the DTLS handshake protocol.  A DNS server
+   receiving a "dummy" STARTDTLS/CH/TXT query over UDP MUST respond with
+   RCODE=0 and a TXT RR in the Answer section.  Contents of the TXT RR
+   are strictly informative (for humans) and MUST NOT be interpreted by
+   the client software.  Recommended TXT RDATA values are "STARTDTLS" or
+   "NO_DTLS".
+
+6.  Established sessions
+
+   In DTLS, all data is protected using the same record encoding and
+   mechanisms.  When the mechanism described in this document is in
+   effect, DNS messages are encrypted using the standard DTLS record
+   encoding.  When a user of DTLS wishes to send an DNS message, it
+   delivers it to the DTLS implementation as an ordinary application
+   data write (e.g., SSL_write()).  A single DTLS session can be used to
+   receive multiple DNS requests and generate DNS multiple responses.
+
+     Client                                          Server
+     ------                                          ------
+
+     ClientHello             -------->
+
+
+                             <-------    HelloVerifyRequest
+                                           (contains cookie)
+
+     ClientHello             -------->
+     (contains cookie)
+     (empty SessionTicket extension)
+                                                ServerHello
+                                         (empty SessionTicket extension)
+                                               Certificate*
+                                         ServerKeyExchange*
+                                        CertificateRequest*
+                             <--------      ServerHelloDone
+
+     Certificate*
+     ClientKeyExchange
+     CertificateVerify*
+     [ChangeCipherSpec]
+     Finished                -------->
+                                           NewSessionTicket
+                                         [ChangeCipherSpec]
+                             <--------             Finished
+
+
+     DNS Request             --------->
+
+                             <---------  DNS Response
+
+
+        Message Flow for Full Handshake Issuing New Session Ticket
+
+   After DTLS negotiation completes, the connection will be encrypted
+   and is now protected from eavesdropping and normal DNS queries SHOULD
+   take place.  To avoid storing state on the DNS server and to reduce
+   DTLS round-trips for another query, it is strongly RECOMMENDED both
+   client and server support [RFC5077].
+
+      Client                                          Server
+      ------                                          ------
+
+      ClientHello
+      (SessionTicket extension) -------->
+                                                ServerHello
+                             (empty SessionTicket extension)
+                                           NewSessionTicket
+                                         [ChangeCipherSpec]
+                                <--------          Finished
+      [ChangeCipherSpec]
+      Finished                  -------->
+
+      DNS Request             --------->
+
+                              <---------  DNS Response
+
+
+      Message Flow for Abbreviated Handshake Using New Session Ticket
+
+7.  IANA Considerations
+
+   This document defines a new bit ("SO") in the Flags field of the
+   EDNS0 OPT meta-RR.  At the time of approval of this draft in the
+   standards track, as per the IANA Considerations of [RFC6891], IANA is
+   requested to reserve the third leftmost bit of the flags as the SO
+   bit, immediately adjacent to the DNSSEC SO bit, as shown in
+   Section 5.
+
+8.  Security Considerations
+
+   Security considerations discussed in [RFC6347] apply to this
+   document.
+
+9.  Acknowledgements
+
+   The Protocol changes described in Section 5 of this document was
+   derived from the similar technique described in DNS-over-TLS
+   [I-D.hzhwm-start-tls-for-dns].
+
+10.  References
+
+10.1.  Normative References
+
+   [RFC1034]  Mockapetris, P., "Domain names - concepts and facilities",
+              STD 13, RFC 1034, November 1987.
+
+   [RFC1035]  Mockapetris, P., "Domain names - implementation and
+              specification", STD 13, RFC 1035, November 1987.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, March 1997.
+
+   [RFC4033]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
+              Rose, "DNS Security Introduction and Requirements", RFC
+              4033, March 2005.
+
+   [RFC5077]  Salowey, J., Zhou, H., Eronen, P., and H. Tschofenig,
+              "Transport Layer Security (TLS) Session Resumption without
+              Server-Side State", RFC 5077, January 2008.
+
+   [RFC6347]  Rescorla, E. and N. Modadugu, "Datagram Transport Layer
+              Security Version 1.2", RFC 6347, January 2012.
+
+   [RFC6891]  Damas, J., Graff, M., and P. Vixie, "Extension Mechanisms
+              for DNS (EDNS(0))", STD 75, RFC 6891, April 2013.
+
+10.2.  Informative References
+
+   [I-D.bortzmeyer-dnsop-dns-privacy]
+              Bortzmeyer, S., "DNS privacy problem statement", draft-
+              bortzmeyer-dnsop-dns-privacy-01 (work in progress),
+              December 2013.
+
+   [I-D.hzhwm-start-tls-for-dns]
+              Zi, Z., Zhu, L., Heidemann, J., Mankin, A., and D.
+              Wessels, "Starting TLS over DNS", draft-hzhwm-start-tls-
+              for-dns-00 (work in progress), February 2014.
+
+   [RFC4892]  Woolf, S. and D. Conrad, "Requirements for a Mechanism
+              Identifying a Name Server Instance", RFC 4892, June 2007.
+
+Authors' Addresses
+
+   Tirumaleswar Reddy
+   Cisco Systems, Inc.
+   Cessna Business Park, Varthur Hobli
+   Sarjapur Marathalli Outer Ring Road
+   Bangalore, Karnataka  560103
+   India
+
+   Email: tireddy@cisco.com
+
+
+   Dan Wing
+   Cisco Systems, Inc.
+   170 West Tasman Drive
+   San Jose, California  95134
+   USA
+
+   Email: dwing@cisco.com
+
+
+   Prashanth Patil
+   Cisco Systems, Inc.
+   Bangalore
+   India
+
+   Email: praspati@cisco.com
+
