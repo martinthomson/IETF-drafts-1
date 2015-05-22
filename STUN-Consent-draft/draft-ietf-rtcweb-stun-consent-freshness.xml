@@ -201,11 +201,18 @@ keying distributions, receipt of an authenticated SRTP packet is not
 sufficient to verify consent.
 </t>
 </section>
+
 <section title="Solution">
 <t>
-There are two ways consent to send traffic is revoked: expiration of
-consent and immediate revocation of consent, which are discussed in the
-following sections.
+Initial consent to send traffic is obtained using <xref
+target="RFC5245">ICE</xref>. An endpoint gains consent to send on a candidate
+pair when the pair enters Succeeded ICE state.  consent; this document
+establishes a 30 second expiry time on consent.
+</t>
+<t>
+ICE does not identify when consent to send traffic ends. This document describes
+two ways in which consent to send ends: expiration of consent and immediate
+revocation of consent, which are discussed in the following sections.
 </t>
 <section title="Expiration of Consent">
 <t>
@@ -237,7 +244,7 @@ target="RFC6062"></xref>).
 </list>
 </t>
 <t>
-Initial consent to send traffic is obtained using ICE.  Consent expires
+Consent expires
 after 30  seconds. That is, if a valid STUN binding response corresponding
 to any STUN request sent in the last 30 seconds has not been received from
 the remote peer's transport address, the endpoint MUST cease transmission
