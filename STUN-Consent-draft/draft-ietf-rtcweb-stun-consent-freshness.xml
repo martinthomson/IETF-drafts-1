@@ -261,9 +261,9 @@ of 4 to 6 seconds.  This timer is independent of the consent expiry timeout.
 Each STUN binding request for consent MUST use a new STUN transaction identifier
 for every consent binding request, as described in Section 6 of <xref
 target="RFC5389"/>. Each STUN binding request for consent is transmitted once
-only. Hence, the sender cannot assume that it will receive a response for each
-consent request, and a response might be for a previous request (rather than for
-the most recently sent request).
+only. A sender therefore cannot assume
+that it will receive a response for every consent request, and a response might
+be for a previous request (rather than for the most recently sent request).
 </t>
 <t>
 Consent expiration causes immediate
