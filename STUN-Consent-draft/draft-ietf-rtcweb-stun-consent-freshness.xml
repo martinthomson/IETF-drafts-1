@@ -92,9 +92,9 @@ surname="Ravindranath">
 <workgroup>RTCWEB</workgroup>
 <abstract>
 <t>
-To prevent sending excessive traffic to an endpoint, periodic consent
-needs to be obtained from that remote endpoint. To prevent attacks on peers, endpoints
-have to ensure the remote peer is willing to receive traffic.
+To prevent browsers supporting WebRTC from being used to launch denial of
+service attacks by sending media to unwilling victims, periodic consent to send
+needs to be obtained from remote endpoints.
 </t>
 <t>
 This document describes a consent mechanism using a new Session
