@@ -216,16 +216,16 @@ revocation of consent, which are discussed in the following sections.
 </t>
 <section title="Expiration of Consent">
 <t>
- A full ICE implementation performs consent freshness test using STUN
- request/response as described below:
+A full ICE implementation obtains consent to send using ICE. After a successful
+ICE connectivity check on a particular transport address (i.e., a candidate pair
+has been marked as Succeeded), consent MUST be maintained following the
+procedure described in this document.
 </t>
 <t>
-An endpoint MUST NOT send data other than paced STUN connectivity
-checks or responses toward any transport address unless the receiving
-endpoint consents to receive data.  That is, no application data (e.g., RTP or DTLS)
-can be sent until consent is obtained. After a successful ICE connectivity check
-on a particular transport address, consent MUST be maintained following the
-procedure described in this document.
+An endpoint MUST NOT send data other than paced STUN connectivity checks or
+responses toward any transport address unless the receiving endpoint consents to
+receive data.  That is, no application data (e.g., RTP or DTLS) can be sent
+until consent is obtained.
 </t>
 <t>
 Explicit consent to send is obtained and maintained by sending an STUN
