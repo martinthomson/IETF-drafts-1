@@ -93,12 +93,12 @@ surname="Ravindranath">
 <abstract>
 <t>
 To prevent sending excessive traffic to an endpoint, periodic consent
-needs to be obtained from that remote endpoint. To prevent attacks on peers, endpoints 
+needs to be obtained from that remote endpoint. To prevent attacks on peers, endpoints
 have to ensure the remote peer is willing to receive traffic.
 </t>
 <t>
 This document describes a consent mechanism using a new Session
-Traversal Utilities for NAT (STUN) usage. 
+Traversal Utilities for NAT (STUN) usage.
 </t>
 </abstract>
 </front>
@@ -127,10 +127,10 @@ in consent is not described in this document. The consent mechanism does not upd
 ICE procedures defined in <xref target="RFC5245"/>.
 </t>
 <t>
-Consent is obtained only by full ICE implementations. An ICE-lite implementation as defined 
-in section 2.7 of <xref target="RFC5245"/> will not generate consent checks, but will just 
+Consent is obtained only by full ICE implementations. An ICE-lite implementation as defined
+in section 2.7 of <xref target="RFC5245"/> will not generate consent checks, but will just
 respond to consent checks it receives. No changes are required to ICE-lite implementations
- in order to respond to consent checks, as they are processed as normal ICE connectivity 
+ in order to respond to consent checks, as they are processed as normal ICE connectivity
  checks.
 </t>
 </section>
@@ -177,11 +177,11 @@ Although ICE requires periodic keepalive traffic to keep NAT bindings
 alive (Section 10 of <xref target="RFC5245"></xref>, <xref
 target="RFC6263"></xref>), those keepalives are sent as STUN Indications
 which are send-and-forget, and do not evoke a response. A response is
-necessary for consent to continue sending traffic. Thus, we need a 
-request/response mechanism for consent freshness. ICE can be used for 
+necessary for consent to continue sending traffic. Thus, we need a
+request/response mechanism for consent freshness. ICE can be used for
 that mechanism because ICE implementations are already required to continue
  listening for ICE messages, as described in section 10 of
-  <xref target="RFC5245"></xref>. If consent is performed then there is 
+  <xref target="RFC5245"></xref>. If consent is performed then there is
   no need to send keepalive messages.
 </t>
 
@@ -209,15 +209,15 @@ following sections.
 </t>
 <section title="Expiration of Consent">
 <t>
- A full ICE implementation performs consent freshness test using STUN 
+ A full ICE implementation performs consent freshness test using STUN
  request/response as described below:
 </t>
 <t>
 An endpoint MUST NOT send data other than paced STUN connectivity
-checks or responses toward any transport address unless the receiving 
+checks or responses toward any transport address unless the receiving
 endpoint consents to receive data.  That is, no application data (e.g., RTP or DTLS)
-can be sent until consent is obtained. After a successful ICE connectivity check 
-on a particular transport address, consent MUST be maintained following the 
+can be sent until consent is obtained. After a successful ICE connectivity check
+on a particular transport address, consent MUST be maintained following the
 procedure described in this document.
 </t>
 <t>
@@ -237,11 +237,11 @@ target="RFC6062"></xref>).
 </list>
 </t>
 <t>
-Initial consent to send traffic is obtained using ICE.  Consent expires 
-after 30  seconds. That is, if a valid STUN binding response corresponding 
-to any STUN request sent in the last 30 seconds has not been received from 
+Initial consent to send traffic is obtained using ICE.  Consent expires
+after 30  seconds. That is, if a valid STUN binding response corresponding
+to any STUN request sent in the last 30 seconds has not been received from
 the remote peer's transport address, the endpoint MUST cease transmission
- on that 5-tuple. STUN consent responses received after consent expiry do not 
+ on that 5-tuple. STUN consent responses received after consent expiry do not
 re-establish consent, and may be discarded or cause an ICMP error.
 </t>
 <t>
@@ -257,9 +257,9 @@ target="RFC4086">cryptographically strong</xref> STUN transaction
 ID. Each STUN binding requests for consent is transmitted once
 only. Hence, the sender cannot assume that it will receive a response
 for each consent request, and a response might be for a previous request
-(rather than for the most recently sent request).  Consent expiration causes 
-immediate termination of all outstanding STUN consent transactions. Each 
-STUN transaction is maintained until one of the following criteria is 
+(rather than for the most recently sent request).  Consent expiration causes
+immediate termination of all outstanding STUN consent transactions. Each
+STUN transaction is maintained until one of the following criteria is
 fulfilled:<list style="symbols">
 <t>A STUN response associated with the transaction is received; or</t>
 <t>A STUN response associated to a newer transaction is received.</t>
@@ -290,9 +290,9 @@ to send once the consent timer expires (30 seconds).
 An endpoint that is not sending any application data does not need to
 maintain consent. However, not sending any traffic could cause NAT or
 firewall mappings to expire.  Furthermore, having one peer unable to send
- is detrimental to many protocols.  Absent better information about the 
- network, if an endpoint needs to ensure its NAT or firewall mappings do 
- not expire, it can be done using keepalive or  other techniques (see 
+ is detrimental to many protocols.  Absent better information about the
+ network, if an endpoint needs to ensure its NAT or firewall mappings do
+ not expire, it can be done using keepalive or  other techniques (see
  Section 10 of <xref target="RFC5245"/> and see <xref target="RFC6263"/>).
 
 </t>
@@ -354,16 +354,16 @@ the scope of this document.
 
 <section title="API Recommendations">
 <t>
-The W3C specification <xref target="W3C-WEBRTC"/> may provide an API hook that generates an event 
-when consent has expired for a given 5-tuple, meaning that transmission of data 
-has ceased.  This could indicate what application data is affected, such as 
+The W3C specification <xref target="W3C-WEBRTC"/> may provide an API hook that generates an event
+when consent has expired for a given 5-tuple, meaning that transmission of data
+has ceased.  This could indicate what application data is affected, such as
 media or data channels.
 </t>
 </section>
 
 <section title="Security Considerations">
 <t>
-This document describes a security mechanism details of which are mentioned in section 4.1 
+This document describes a security mechanism details of which are mentioned in section 4.1
 and section 4.2. Consent requires 96 bits transaction ID to be uniformly and randomly
 chosen from the interval 0 .. 2**96-1, and be cryptographically strong.
 This is good enough security against an off-path attacker replaying old
@@ -383,8 +383,8 @@ This document does not require any action from IANA.
 <t>
 Thanks to Eric Rescorla, Harald Alvestrand, Bernard Aboba, Magnus
 Westerland, Cullen Jennings, Christer Holmberg, Simon Perreault, Paul
-Kyzivat, Emil Ivov, Jonathan Lennox, Inaki Baz Castillo, Rajmohan Banavi, 
-Christian Groves, Meral Shirazipour and David Black for their valuable inputs and comments. 
+Kyzivat, Emil Ivov, Jonathan Lennox, Inaki Baz Castillo, Rajmohan Banavi,
+Christian Groves, Meral Shirazipour and David Black for their valuable inputs and comments.
 Thanks to Christer Holmberg for doing a thorough review.
 </t>
 </section>
@@ -429,7 +429,7 @@ Thanks to Christer Holmberg for doing a thorough review.
           <date day="10" month="february" year="2015" />
         </front>
    <format target="http://www.w3.org/TR/webrtc" type="HTML" />
- </reference>  
+ </reference>
 </references>
 </back>
 </rfc>
