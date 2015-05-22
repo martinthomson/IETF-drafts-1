@@ -244,12 +244,11 @@ target="RFC6062"></xref>).
 </list>
 </t>
 <t>
-Consent expires
-after 30  seconds. That is, if a valid STUN binding response corresponding
-to any STUN request sent in the last 30 seconds has not been received from
-the remote peer's transport address, the endpoint MUST cease transmission
- on that 5-tuple. STUN consent responses received after consent expiry do not
-re-establish consent, and may be discarded or cause an ICMP error.
+Consent expires after 30 seconds. That is, if a valid STUN binding response has
+not been received from the remote peer's transport address in 30 seconds, the
+endpoint MUST cease transmission on that 5-tuple. STUN consent responses
+received after consent expiry do not re-establish consent, and may be discarded
+or cause an ICMP error.
 </t>
 <t>
 To prevent expiry of consent, a STUN binding request can be sent
