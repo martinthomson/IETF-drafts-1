@@ -306,9 +306,9 @@ firewall mappings to expire.  Furthermore, having one peer unable to send
 
 </t>
 <t>
-After consent is lost for any reason, the same ICE credentials MUST NOT be used
-on the affected 5-tuple again. That means that a new session, or an ICE restart,
-is needed to obtain consent to send on the affected candidate pair.
+After consent is lost, the same ICE credentials MUST NOT be used on the affected
+5-tuple again. That means that a new session, or an ICE restart, is needed to
+obtain consent to send on the affected candidate pair.
 </t>
 </section>
 <section title="Immediate Revocation of Consent">
