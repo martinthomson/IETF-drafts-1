@@ -252,21 +252,24 @@ or cause an ICMP error.
 </t>
 <t>
 To prevent expiry of consent, a STUN binding request can be sent
-periodically. To prevent synchronization of consent checks, each
-interval MUST be randomized from between 0.8 and 1.2 times the basic
-period. Implementations SHOULD set a default interval of 5 seconds,
-resulting in a period between checks of 4 to 6 seconds.
+periodically. To prevent synchronization of consent checks, each interval MUST
+be randomized from between 0.8 and 1.2 times the basic period. Implementations
+SHOULD set a default interval of 5 seconds, resulting in a period between checks
+of 4 to 6 seconds.  This timer is independent of the consent expiry timeout.
 </t>
 <t>
-Each STUN binding request for consent MUST use a new <xref
-target="RFC4086">cryptographically strong</xref> STUN transaction
-ID. Each STUN binding requests for consent is transmitted once
-only. Hence, the sender cannot assume that it will receive a response
-for each consent request, and a response might be for a previous request
-(rather than for the most recently sent request).  Consent expiration causes
-immediate termination of all outstanding STUN consent transactions. Each
-STUN transaction is maintained until one of the following criteria is
-fulfilled:<list style="symbols">
+Each STUN binding request for consent MUST use a new STUN transaction identifier
+for every consent binding request, as described in Section 6 of <xref
+target="RFC5389"/>. Each STUN binding request for consent is transmitted once
+only. Hence, the sender cannot assume that it will receive a response for each
+consent request, and a response might be for a previous request (rather than for
+the most recently sent request).
+</t>
+<t>
+Consent expiration causes immediate
+termination of all outstanding STUN consent transactions. Each STUN transaction
+is maintained until one of the following criteria is fulfilled:
+<list style="symbols">
 <t>A STUN response associated with the transaction is received; or</t>
 <t>A STUN response associated to a newer transaction is received.</t>
 </list>
@@ -399,7 +402,6 @@ Thanks to Christer Holmberg for doing a thorough review.
 <references title="Normative References">
 <?rfc include="reference.RFC.2119"?>
 <?rfc include="reference.RFC.5245"?>
-<?rfc include="reference.RFC.4086"?>
 <?rfc include="reference.RFC.6263"?>
 
 </references>
