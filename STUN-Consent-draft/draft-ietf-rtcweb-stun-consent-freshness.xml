@@ -206,8 +206,8 @@ sufficient to verify consent.
 <t>
 Initial consent to send traffic is obtained using <xref
 target="RFC5245">ICE</xref>. An endpoint gains consent to send on a candidate
-pair when the pair enters Succeeded ICE state.  consent; this document
-establishes a 30 second expiry time on consent.
+pair when the pair enters Succeeded ICE state. This document establishes a 30
+second expiry time on consent.
 </t>
 <t>
 ICE does not identify when consent to send traffic ends. This document describes
@@ -269,10 +269,9 @@ be for a previous request (rather than for the most recently sent request).
 An endpoint SHOULD await a binding response for each request it sends for a time
 based on the estimated round-trip time (RTT) (see Section 7.2.1 of <xref
 target="RFC5389"/>) with an allowance for variation in network delay.  The RTT
-value can be updated as described in <xref target="RFC5389"/>.  After this time
-elapses, an endpoint can discard associated state and ignore any late responses.
-All outstanding STUN consent transactions for a candidate pair MUST be discarded
-when consent expires.
+value can be updated as described in <xref target="RFC5389"/>.  All outstanding
+STUN consent transactions for a candidate pair MUST be discarded when consent
+expires.
 </t>
 <t>
 To meet the security needs of consent, an untrusted application (e.g.,
